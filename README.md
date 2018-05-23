@@ -17,10 +17,19 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Encryption](#encryption)
 
 ## Logical Data Model
-This document introduces the four generic transaction patterns that are supported in a logical version of the Interoperability API. Additionally, all logical services that are part of the API are presented on a high-level.
+This document introduces the four generic transaction patterns that are supported in a logical version of the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as "the API"). Additionally, all logical services that are part of the API are presented on a high-level.
 
 ## Generic Transaction Patterns
-This document specifies the logical data model used by Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as "the API"). Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
+This document specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
+
+## Use Cases
+The purpose of this document is to define a set of use cases that can be implemented using the API. The use cases referenced within this document provide an overview of transaction processing flows and business rules of each transaction step as well as relevant error conditions. The primary purpose of the API is to support the movement of financial transactions between one Financial Services Provider (FSP) and another.
+
+It should be noted that the API is only responsible for message exchange between FSPs and a Switch when a cross-FSP transaction is initiated by an End User in one of the FSPs. This can occur in either of two scenarios: 
+- A bilateral scenario in which FSPs communicate with each other
+- A Switch based scenario in which all communication goes through a Switch 
+
+Reconciliation, clearing and settlement after real time transactions is out of scope for the API. Additionally, account lookup is supported by the API, but it relies on the implementation in a local market in which a third party or Switch would provide such services. Therefore, the need for effective on-boarding processes and appropriate scheme rules must be considered when implementing use cases.
 
 ## API Definition
 The **API Definition** document introduces and describes **the API**. The purpose of the API is to enable interoperable financial transactions between a Payer (a payer of electronic funds in a payment transaction) located in one FSP (an entity that provides a digital financial service to an end user) and a Payee (a recipient of electronic funds in a payment transaction) located in another FSP. The API does not specify any front-end services between a Payer or Payee and its own FSP; all services defined in the API are between FSPs. FSPs are connected either (a) directly to each other or (b) by a Switch placed between the FSPs to route financial transactions to the correct FSP. 
