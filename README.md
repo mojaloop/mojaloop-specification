@@ -42,6 +42,17 @@ This document:
 - Defines an asynchronous REST binding of the logical API introduced in Generic Transaction Patterns.
 - Adds to and builds on the information provided in Open API for FSP Interoperability Specification. The contents of the Specification are listed in Section **Open API for FSP Interoperability Specification**.
 
+## Scheme Rules
+This document defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
+1.	Business Scheme Rules:
+a.	These business rules should be governed by FSPs and an optional regulatory authority implementing the API within a scheme. 
+b.	The regulatory authority or implementing authority should identify valid values for these business scheme rules in their API policy document.
+2.	API implementation Scheme Rules:
+a.	These API parameters should be agreed on by FSPs and the optional Switch. These parameters should be part of the implementation policy of a scheme.
+b.	All participants should configure these API parameters as indicated by the API-level scheme rules for the implementation with which they are working.
+3.	Security and Non-Functional Scheme Rules. 
+a.	Security and non-functional scheme rules should be determined and identified in the implementation policy of a scheme.
+
 ## JSON Binding Rules
 The purpose of this document is to express the data model used by **the API** in the form of JSON Schema binding rules, along with validation rules for the corresponding instances.
 
