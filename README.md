@@ -16,8 +16,15 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Signature](#signature)
 * [Encryption](#encryption)
 
+## Glossary
+This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as "the API"). Terms have been compiled from three sources:
+•	ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
+•	Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
+•	Feedback from the L1P IST Reference Implementation team (RI).
+Information is shared in accordance with Creative Commons Licensing.
+
 ## Logical Data Model
-This document introduces the four generic transaction patterns that are supported in a logical version of the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as "the API"). Additionally, all logical services that are part of the API are presented on a high-level.
+This document introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
 
 ## Generic Transaction Patterns
 This document specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
