@@ -17,11 +17,11 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Encryption](#encryption)
 
 ## Glossary
-This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as "the API"). Terms have been compiled from three sources:
-•	ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
-•	Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
-•	Feedback from the L1P IST Reference Implementation team (RI).
-Information is shared in accordance with Creative Commons Licensing.
+This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
+- ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
+- Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
+- Feedback from the L1P IST Reference Implementation team (RI).
+Information is shared in accordance with **Creative Commons Licensing**.
 
 ## Logical Data Model
 This document introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
@@ -49,17 +49,6 @@ This document:
 - Defines an asynchronous REST binding of the logical API introduced in Generic Transaction Patterns.
 - Adds to and builds on the information provided in Open API for FSP Interoperability Specification. The contents of the Specification are listed in Section **Open API for FSP Interoperability Specification**.
 
-## Scheme Rules
-This document defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
-1.	**Business** Scheme Rules:   
-a.	These business rules should be governed by FSPs and an optional regulatory authority implementing the API within a scheme.   
-b.	The regulatory authority or implementing authority should identify valid values for these business scheme rules in their API policy document.   
-2.	**API implementation** Scheme Rules:   
-a.	These API parameters should be agreed on by FSPs and the optional Switch. These parameters should be part of the implementation policy of a scheme.   
-b.	All participants should configure these API parameters as indicated by the API-level scheme rules for the implementation with which they are working.   
-3.	**Security** and **Non-Functional** Scheme Rules.   
-a.	Security and non-functional scheme rules should be determined and identified in the implementation policy of a scheme.   
-
 ## JSON Binding Rules
 The purpose of this document is to express the data model used by **the API** in the form of JSON Schema binding rules, along with validation rules for the corresponding instances.
 
@@ -70,6 +59,17 @@ The types used in the PDP API fall primarily into three categories:
 - Complex types
 
 The various types used in API Definition, Data Model and the Open API Specification, as well as the JSON transformation rules to which their instances must adhere, are identified in the following sections.
+
+## Scheme Rules
+This document defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
+1.	**Business** Scheme Rules:   
+a.	These business rules should be governed by FSPs and an optional regulatory authority implementing the API within a scheme.   
+b.	The regulatory authority or implementing authority should identify valid values for these business scheme rules in their API policy document.   
+2.	**API implementation** Scheme Rules:   
+a.	These API parameters should be agreed on by FSPs and the optional Switch. These parameters should be part of the implementation policy of a scheme.   
+b.	All participants should configure these API parameters as indicated by the API-level scheme rules for the implementation with which they are working.   
+3.	**Security** and **Non-Functional** Scheme Rules.   
+a.	Security and non-functional scheme rules should be determined and identified in the implementation policy of a scheme.   
 
 ## PKI Best Practices
 This document explains Public Key Infrastructure (PKI)  best practices to apply in **the API** deployment. See Chapter 2, PKI Background, for more information about PKI. 
