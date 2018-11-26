@@ -10,10 +10,7 @@ info:
 basePath: /fsp
 schemes:
 - http
-consumes:
-- application/json
-produces:
-- application/json
+- https
 
 paths:
   /participants/{ID}/error:
