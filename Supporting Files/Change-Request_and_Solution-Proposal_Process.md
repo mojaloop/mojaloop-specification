@@ -1,3 +1,5 @@
+### The CCB currently adopted the below process to address Change Requests. First, a change request is used to describe the issue, and then a solution proposal to describe the solution for the issue. See the numbered list below for the proposal if you would like to change something in the API:
+
 1. Discuss an issue, bug, or discrepancy at a high-level first in the CCB
 2. Request an ID for a new Change Request
 3. Create the new Change Request, describe the background of the issue and reason for the request (as per the template)
