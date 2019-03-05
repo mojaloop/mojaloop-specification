@@ -23,6 +23,13 @@ This document provides the glossary for the Open API (Application Programming In
 - Feedback from the L1P IST Reference Implementation team (RI).
 Information is shared in accordance with **Creative Commons Licensing**.
 
+## Glossary
+This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
+- ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
+- Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
+- Feedback from the L1P IST Reference Implementation team (RI).
+Information is shared in accordance with **Creative Commons Licensing**.
+
 ## Logical Data Model
 This document introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
 
