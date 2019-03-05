@@ -2,17 +2,19 @@
 The Open API for FSP Interoperability Specification includes the following documents.
 
 #### Logical Documents
-* [Logical Data Model](#logical-data-model)  [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/Logical%20Data%20Model.pdf)
-* [Generic Transaction Patterns](#generic-transaction-patterns)  [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/Generic%20Transaction%20Patterns.pdf)
-* [Use Cases](#use-cases)  [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/Use%20Cases.pdf)
+* [Logical Data Model](#logical-data-model)
+* [Generic Transaction Patterns](#generic-transaction-patterns)
+* [Use Cases](#use-cases)
   
 #### Asynchronous REST Binding Documents
-* [API Definition](#api-definition) [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/API%20Definition%20v1.0.pdf) 
-* [JSON Binding Rules](#json-binding-rules) [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/JSON%20Binding%20Rules.pdf)
-* [Scheme Rules](#scheme-rules)  [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/Scheme%20Rules.pdf)
+* [API Definition](#api-definition) 
+* [JSON Binding Rules](#json-binding-rules) 
+* [Scheme Rules](#scheme-rules)  
   
 #### Data Integrity, Confidentiality, and Non-Repudiation
-* [PKI Best Practices](#pki-best-practices)  [Direct link](https://github.com/mojaloop/mojaloop-specification/blob/master/PKI%20Best%20Practices.pdf)
+* [PKI Best Practices](#pki-best-practices)  
+* [Signature](#signature)  
+* [Encryption](#encryption)  
 
 ## Glossary
 This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
