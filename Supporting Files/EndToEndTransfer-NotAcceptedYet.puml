@@ -1,0 +1,108 @@
+@startuml
+
+title End-to-end transfer schematic
+autonumber
+actor "Mats\nHagman" as p1
+participant "Bank\nNrOne" as b1
+participant "Switch" as s1
+participant "Mobile\nMoney" as b2
+actor "Henrik\nKarlsson" as p2
+
+autonumber
+activate b2
+b2->s1:**POST /participants/MSISDN/123456789**\n(fspId=MobileMoney)
+activate s1
+s1-->b2:**HTTP 202** (Accepted)
+s1->s1:Save FSP information for\nMSISDN 123456789
+s1->b2:**PUT /participants/MSISDN/123456789**\n(fspId=MobileMoney)
+b2-->s1:**HTTP 200** (OK)
+deactivate b2
+deactivate s1
+
+activate p1
+p1->b1:I would like to pay the user with\nMSISDN +123456789
+activate b1
+b1->b1:MSISDN +123456789\nnot within BankNrOne
+b1->s1:**GET /parties/MSISDN/123456789**
+activate s1
+s1-->b1:**HTTP 202** (Accepted)
+deactivate b1
+s1->s1:Lookup which FSP MSISDN\n+123456789 belongs to
+s1->b2:**GET /parties/MSISDN/123456789**
+activate b2
+b2-->s1:**HTTP 202** (Accepted)
+deactivate s1
+b2->b2:Lookup party information\nregarding MSISDN +12345678
+b2->s1:**PUT /parties/MSISDN/123456789**\n(Party Information)
+activate s1
+s1-->b2:**HTTP 200** (OK)
+deactivate b2
+s1->b1:**PUT /parties/MSISDN/123456789**\n(Party Information)
+activate b1
+b1-->s1:**HTTP 200** (OK)
+deactivate s1
+b1->p1:Based on your request, Henrik\nKarlsson is the intended Payee
+deactivate b1
+
+p1->b1:I would like Henrik Karlsson\nto receive 100 USD
+activate b1
+b1->s1:**POST /quotes**\n(amountType=RECEIVE, amount=100)
+activate s1
+s1-->b1:**HTTP 202** (Accepted)
+deactivate b1
+s1->b2:**POST /quotes**\n(amountType=RECEIVE, amount=100)
+activate b2
+b2-->s1:**HTTP 202** (Accepted)
+deactivate s1
+b2->b2:Internal rating for fees/commission,\n1 USD in FSP commission, generate\nand store fulfilment, generate\ncondition out of fulfilment
+b2->s1:**PUT /quotes/<ID>**\n(transferAmount=99 USD\npayeeFspCommission=1 USD)
+activate s1
+s1-->b2:**HTTP 200** (OK)
+deactivate b2
+s1->b1:**PUT /quotes/<ID>**\n(transferAmount=99 USD\npayeeFspCommission=1 USD)
+activate b1
+b1-->s1:**HTTP 200** (OK)
+deactivate s1
+b1->b1:BankNrOne keeps commission as\nfee, transaction is free for Mats
+b1->p1:Transferring 100 USD to Henrik\nKarlsson will cost 0 USD in fees
+deactivate b1
+
+p1->b1:I approve the transaction
+activate b1
+b1->b1:Reserve 100 USD from Mats\nHagman's account,\n99 USD to Switch and\n1 USD to FSP commission
+b1->s1:**POST /transfers**\n(amount=99 USD, payerFsp=BankNrOne,\npayeeFsp=MobileMoney)
+activate s1
+s1-->b1:**HTTP 202** (Accepted)
+s1->s1:Reserve 99 USD from\nBankNrOne to MobileMoney
+deactivate b1
+s1->b2:**POST /transfers**\n(amount=99 USD, payerFsp=BankNrOne,\npayeeFsp=MobileMoney)
+activate b2
+b2-->s1:**HTTP 202** (Accepted)
+deactivate s1
+b2->b2:Retrieve fulfilment
+
+alt If confirmation required
+b2->s1:**PUT /transfers/<ID>**\n(Fulfilment)
+activate s1
+s1-->b2:**HTTP 202** (Accepted)
+s1->s1:Commit transfer from\nBankNrOne to MobileMoney
+s1->b2:**PUT /transfers/<ID>**\n(Fulfilment)
+b2-->s1:**HTTP 200** (OK)
+else No confirmation required
+b2->s1:**PUT /transfers/<ID>**\n(Fulfilment)
+s1-->b2:**HTTP 200** (OK)
+s1->s1:Commit transfer from\nBankNrOne to MobileMoney
+end
+
+b2->b2:Perform transfer of 100 USD to\nHenrik Karlsson's account,\n99 USD from Switch\naccount, and 1 USD from FSP\ncommission account
+b2->p2:You have received 100 USD\nfrom Mats Hagman
+deactivate b2
+s1->b1:**PUT /transfers/<ID>**\n(Fulfilment)
+activate b1
+b1-->s1:**HTTP 200** (OK)
+deactivate s1
+b1->b1:Commit transfer from Mats\nHagman's account to\nSwitch account
+b1->p1:You have transferred 100 USD\nto Henrik Karlsson
+deactivate b1
+
+@enduml
