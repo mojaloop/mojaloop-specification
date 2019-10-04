@@ -1,8 +1,10 @@
----
-Title: API Definitions
-Draft: Version 1.0
-Last Modified: 2018-11-01
----
+___
+**Title:**  API Definitions
+ 
+**Draft:**  Version 1.0 
+ 
+**Last Modified:**  2018-11-01 
+___
 
 # API Definition
 
@@ -406,13 +408,13 @@ The API is based on the REST (REpresentational State Transfer<sup>1</sup>) archi
 
 -   **Client decides common ID** -- In a typical REST implementation, in which there is a clear distinction between client and server, it is the server that generates the ID of an object when the object is created on the server. In this API, a quote or a financial transaction resides both in the Payer and Payee FSP as the services are decentralized. Therefore, there is a need for a common ID of the object. The reason for having the client decide the common ID is two-fold:
   - The common ID is used in the URI of the asynchronous callback to the client. The client therefore knows which URI to listen to for a callback regarding the request.
-  - The client can use the common ID in an HTTP **GET** request directly if it does not receive a callback from the server (see Section [3.2.2](322-http-methods) for more information).
+  - The client can use the common ID in an HTTP **GET** request directly if it does not receive a callback from the server (see Section [3.2.2](#322-http-methods) for more information).
 
-  To keep the common IDs unique, each common ID is defined as a UUID (Universally Unique IDentifier<sup>2</sup> (UUID). To further guarantee uniqueness, it is recommended that a server should separate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receives a non-unique common ID during an HTTP **POST** request (see Section [3.2.2](322-http-methods) for more details). The request should be handled as detailed in Section [3.2.5.]()
+  To keep the common IDs unique, each common ID is defined as a UUID (Universally Unique IDentifier<sup>2</sup> (UUID). To further guarantee uniqueness, it is recommended that a server should separate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receives a non-unique common ID during an HTTP **POST** request (see Section [3.2.2](#322-http-methods) for more details). The request should be handled as detailed in Section [3.2.5.](#325-idempotent-services-in-server)
 
 #### 3.1.2 Application-Level Protocol
 
-HTTP, as defined in RFC 7230<sup>3</sup>, is used as the application-level protocol in the API. All communication in production environments should be secured using HTTPS (HTTP over TLS<sup>4</sup>). For more details about the use of HTTP in the API, see Section [3.2.]()
+HTTP, as defined in RFC 7230<sup>3</sup>, is used as the application-level protocol in the API. All communication in production environments should be secured using HTTPS (HTTP over TLS<sup>4</sup>). For more details about the use of HTTP in the API, see Section [3.2.](#32-http-details)
 
 #### 3.1.3 URI Syntax
 
@@ -443,7 +445,7 @@ The host is the server's address. It can be either an IP address or a hostname. 
 
 ###### 3.1.3.2.3 Port
 
-The port number is optional; by default, the HTTP port is **80** and HTTPS is **443,** but other ports could also be used. Which port to use might differ from deployment to deployment.
+The port number is optional; by default, the HTTP port is **80** and HTTPS is **443**, but other ports could also be used. Which port to use might differ from deployment to deployment.
 
 ##### 3.1.3.3 Path
 
@@ -459,13 +461,13 @@ The path points to an actual API resource or service. The resources in the API a
 - **bulkQuotes**
 - **bulkTransfers**
 
-All resources found above are also organized further in a hierarchical form, separated by one or more forward slashes (`**/**`). Resources support different services depending on the HTTP method used. All supported API resources and services, tabulated with URI and HTTP method, appear in [Table 5.](#table-5)
+All resources found above are also organized further in a hierarchical form, separated by one or more forward slashes (**'/'**). Resources support different services depending on the HTTP method used. All supported API resources and services, tabulated with URI and HTTP method, appear in [Table 5.](#table-5)
 
 ##### 3.1.3.4 Query
 
 The query is an optional part of a URI; it is currently only used and supported by a few services in the API. See the API resources in Section [6, API Services,]() for more details about which services support query strings. All other services should ignore the query string part of the URI, as query strings may be added in future minor versions of the API (see Section [3.3.2)](#322-http-methods).
 
-If more than one key-value pair is used in the query string, the pairs should be separated by an ampersand symbol (`**&**`).
+If more than one key-value pair is used in the query string, the pairs should be separated by an ampersand symbol (**'&'**).
 
 [Listing 2](#listing-2) shows a URI example from the API resource **/authorization**, in which four different key-value pairs are present in the query string, separated by an ampersand symbol.
 
@@ -508,17 +510,17 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|<strong>Accept</strong>|<strong>application/vnd.interoperability.resource+json</strong>|<p>0..1</p><p>Mandatory in a request from a client. Not used in a callback from the server.</p>|The <strong>Accept</strong><sup>10</sup> header field indicates the version of the API the client would like the server to use. See HTTP Accept Header (Section 3.3.4.1) for more information on requesting a specific version of the API.|
-|<strong>Content-Length</strong>|<strong>3495</strong>|0..1|<p>The <strong>Content-Length</strong><sup>11</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.</p> <p><strong>Note</strong>: The API supports a maximum size of 5242880 bytes (5 Megabytes).</p>|
-|<strong>Content-Type</strong>|<strong>application/vnd.interoperability.resource+json;version=1.0</strong>|1|The <strong>Content-Type</strong><sup>12</sup> header indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
-|<strong>Date</strong>|<strong>Tue, 15 Nov 1994 08:12:31 GMT</strong>|1|The <strong>Date</strong><sup>13</sub> header field indicates the date when the request was sent.|
-|<strong>X- Forwarded- For</strong>|<strong>X-Forwarded-For: 192.168.0.4, 136.225.27.13</strong>|1..0|<p>The <strong>X-Forwarded-For</strong><sup>14</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple <strong>X-Forwarded-For</strong> values as in the example shown here should be expected and supported by implementers of the API.</p><p><strong>Note</strong>: An alternative to <strong>X-Forwarded-For</strong> is defined in RFC 723915. However, as of 2018, RFC 7239 is less-used and supported than <strong>X-Forwarded-For</strong>.|
-|<strong>FSPIOP- Source</strong>|<strong>FSP321</strong>|1|The <strong>FSPIOP-Source</strong> header field is a non- HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing (see Section 3.2.3.5) and signature verification (see header field <strong>FSPIOP-Signature</strong>).|
-|<strong>FSPIOP- Destination</strong>|<strong>FSP123</strong>|0..1|The <strong>FSPIOP-Destination</strong> header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field should be set by the original sender of the request (if known), so that any entities between the client and the server do not need to parse the payload for routing purposes (see Section 3.2.3.5).|
-|<strong>FSPIOP- Encryption</strong>||0..1|<p>The <strong>FSPIOP-Encryption</strong> header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.</p><p>For more information, see API Encryption.</p>|
-|<strong>FSPIOP- Signature</strong>||0..1|<p>The <strong>FSPIOP-Signature</strong> header field is a non-HTTP standard field used by the API for applying an end-to-end request signature.<p></p>For more information, see API Signature.</p|
-|<strong>FSPIOP-URI</strong>|<strong>/parties/msisdn/123456789</strong>|0..1|The <strong>FSPIOP-URI</strong> header field is a non- HTTP standard field used by the API for signature verification, should contain the service URI. Required if signature verification is used, for more information see <italic>API Signature</italic>.|
-|<strong>FSPIOP- HTTP- Method</strong>|<strong>GET</strong>|0..1|The <strong>FSPIOP-HTTP-Method</strong> header field is a non-HTTP standard field used by the API for signature verification, should contain the service HTTP method. Required if signature verification is used, for more information see API Signature.|
+|**Accept**|**application/vnd.interoperability.resource+json**|<p>0..1</p><p>Mandatory in a request from a client. Not used in a callback from the server.</p>|The **Accept**<sup>10</sup> header field indicates the version of the API the client would like the server to use. See HTTP Accept Header (Section 3.3.4.1) for more information on requesting a specific version of the API.|
+|**Content-Length**|**3495**|0..1|<p>The **Content-Length**<sup>11</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.</p><p>**Note**: The API supports a maximum size of 5242880 bytes (5 Megabytes).</p>|
+|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>12</sup> header indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
+|**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**<sup>13</sub> header field indicates the date when the request was sent.|
+|**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|<p>The **X-Forwarded-For**<sup>14</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple **X-Forwarded-For** values as in the example shown here should be expected and supported by implementers of the API.</p><p>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 723915. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.|
+|**FSPIOP- Source**|**FSP321**|1|The **FSPIOP-Source** header field is a non- HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing (see Section 3.2.3.5) and signature verification (see header field **FSPIOP-Signature**).|
+|**FSPIOP- Destination**|**FSP123**|0..1|The **FSPIOP-Destination** header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field should be set by the original sender of the request (if known), so that any entities between the client and the server do not need to parse the payload for routing purposes (see Section 3.2.3.5).|
+|**FSPIOP- Encryption**||0..1|<p>The **FSPIOP-Encryption** header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.</p><p>For more information, see API Encryption.</p>|
+|**FSPIOP- Signature**||0..1|<p>The **FSPIOP-Signature** header field is a non-HTTP standard field used by the API for applying an end-to-end request signature.<p></p>For more information, see API Signature.</p|
+|**FSPIOP-URI**|**/parties/msisdn/123456789**|0..1|The **FSPIOP-URI** header field is a non- HTTP standard field used by the API for signature verification, should contain the service URI. Required if signature verification is used, for more information see _API Signature_.|
+|**FSPIOP- HTTP- Method**|**GET**|0..1|The **FSPIOP-HTTP-Method** header field is a non-HTTP standard field used by the API for signature verification, should contain the service HTTP method. Required if signature verification is used, for more information see API Signature.|
 
 **Table 1 -- HTTP request header fields**
 
@@ -530,8 +532,8 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|<strong>Content-Lenght</strong>|<strong>3495</strong>|0..1|The <strong>Content-Length</strong><sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
-|<strong>Content-Type</strong>|<strong>application/vnd.interoperability.resource+json;version=1.0</strong>|1|The <strong>Content-Type</strong><sup>17</sup> header field indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
+|**Content-Lenght**|**3495**|0..1|The **Content-Length**<sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
+|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>17</sup> header field indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
 
 **Table 2 -- HTTP response header fields**
 
@@ -561,27 +563,27 @@ All the sequences and related services use an asynchronous call flow. No service
 
 ###### Figure 1
 
-(./html-format/API Definition-1.fld/images003.png)
+![Http POST call flow](./html-format/API-Definition-1.fld/image003.png)
 
 **Figure 1 -- HTTP POST call flow**
 
 ##### 3.2.3.2 HTTP GET Call Flow
 
-[Figure 2](#figure-2) shows the normal API call flow for a request to get information about an object in a Peer FSP using HTTP **GET**. The service **/service/***\<ID\>* in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP **GET** method.
+[Figure 2](#figure-2) shows the normal API call flow for a request to get information about an object in a Peer FSP using HTTP **GET**. The service **/service/**_\<ID\>_ in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP **GET** method.
 
 ####### Figure 2
 
-(./html-format/API Definition-1.fld/image004.png)
+![HTTP GET call flow](./html-format/API-Definition-1.fld/image004.png)
 
 **Figure 2 -- HTTP GET call flow**
 
 ##### 3.2.3.3 HTTP DELETE Call Flow
 
-[Figure 3](#figure-3) contains the normal API call flow to delete FSP information about a Party in an ALS using HTTP **DELETE**. The service **/service/***\<ID\>* in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP DELETE method. HTTP DELETE is only supported in a common ALS, which is why the figure shows the ALS entity as a server only.
+[Figure 3](#figure-3) contains the normal API call flow to delete FSP information about a Party in an ALS using HTTP **DELETE**. The service **/service/**_\<ID\>_ in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP DELETE method. HTTP DELETE is only supported in a common ALS, which is why the figure shows the ALS entity as a server only.
 
 ###### Figure 3
 
-(./html-format/API Definition-1.fld/image005.png)
+![HTTP DELETE call flow](./html-format/API-Definition-1.fld/image005.png)
 
 **Figure 3 -- HTTP DELETE call flow**
 
@@ -601,15 +603,15 @@ The non-standard HTTP header fields **FSPIOP-Destination** and **FSPIOP-Source**
 
 ###### Figure 4
 
-(./html-format/API Definition-1.fld/image007.png)
+![Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source](./html-format/API-Definition-1.fld/image006.png)
 
 **Figure 4 -- Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source**
 
 For some services when a Switch is used, the destination FSP might be unknown. An example of this scenario is when an FSP sends a **GET /parties** to the Switch without knowing which Peer FSP that owns the Party (see Section [6.3.1]() describing the scenario). **FSPIOP-Destination** will in that case be empty (or set to the Switch's ID) from the FSP, but will subsequently be set by the Switch to the correct Peer FSP. See [Figure 5](#figure-5) for an example describing the usage of **FSPIOP-Destination** and **FSPIOP-Source**.
 
-# Figure 5
+###### Figure 5
 
-(./html-format/API Definition-1.fld/image008.png)
+![Example scenario where FSPIOP-Destination is unknown by FSP](./html-format/API-Definition-1.fld/image007.png)
 
 **Figure 5 -- Example scenario where FSPIOP-Destination is unknown by FSP**
 
@@ -621,20 +623,20 @@ The API supports the HTTP response status codes19 in [Table 3.](#table-3)
 
 |Status Code|Reason|Description|
 |---|---|---|
-|<strong>200</strong>|OK|Standard response for a successful request. Used in the API by the client as a response on a callback to mark the completion of an asynchronous service.|
-|<strong>202</strong>|Accepted|The request has been accepted for future processing at the server, but the server cannot guarantee that the outcome of the request will be successful. Used in the API to acknowledge that the server has received an asynchronous request.|
-|<strong>400</strong>| Bad Request|The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.|
-|<strong>401</strong>|Unauthorized|The request requires authentication in order to be processed.|
-|<strong>403</strong>|Forbidden|The request was denied and will be denied in the future.|
-|<strong>404</strong>|Not Found|The resource specified in the URI was not found.|
-|<strong>405</strong>|Method Not Allowed|An unsupported HTTP method for the request was used; see Table 5 for information on which HTTP methods are allowed in which services.|
-|<strong>406</strong>|Not acceptable|The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.|
-|<strong>501</strong>|Not Implemented|The server does not support the requested service. The client should not retry.|
-|<strong>503</strong>|Service Unavailable|The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.|
+|**200**|OK|Standard response for a successful request. Used in the API by the client as a response on a callback to mark the completion of an asynchronous service.|
+|**202**|Accepted|The request has been accepted for future processing at the server, but the server cannot guarantee that the outcome of the request will be successful. Used in the API to acknowledge that the server has received an asynchronous request.|
+|**400**| Bad Request|The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.|
+|**401**|Unauthorized|The request requires authentication in order to be processed.|
+|**403**|Forbidden|The request was denied and will be denied in the future.|
+|**404**|Not Found|The resource specified in the URI was not found.|
+|**405**|Method Not Allowed|An unsupported HTTP method for the request was used; see Table 5 for information on which HTTP methods are allowed in which services.|
+|**406**|Not acceptable|The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.|
+|**501**|Not Implemented|The server does not support the requested service. The client should not retry.|
+|**503**|Service Unavailable|The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.|
 
  **Table 3 -- HTTP response status codes supported in the API**
 
-Any HTTP status codes 3*xx*20 returned by the server should not be retried and require manual investigation.
+Any HTTP status codes 3*xx*<sup>20</sup> returned by the server should not be retried and require manual investigation.
 
 An implementation of the API should also be capable of handling other errors not defined above as the request could potentially be routed through proxy servers.
 
@@ -646,7 +648,7 @@ In addition to the HTTP response code, all HTTP error responses (4*xx* and 5*xx*
 
 #### 3.2.5 Idempotent Services in Server
 
-All services that support HTTP **GET** must be *idempotent*; that is, the same request can be sent from a client any number of times without changing the object on the server. The server is allowed to change the state of the object; for example, a transaction state can be changed, but the FSP sending the **GET** request cannot change the state.
+All services that support HTTP **GET** must be _idempotent_; that is, the same request can be sent from a client any number of times without changing the object on the server. The server is allowed to change the state of the object; for example, a transaction state can be changed, but the FSP sending the **GET** request cannot change the state.
 
 All services that support HTTP **POST** must be idempotent in case the client is sending the same service ID again; that is, the server must not create a new service object if a client sends the same **POST** request again. The reason behind this is to simplify the handling of resends during error-handling in a client; however, this creates some extra requirements of the server that receives the request. An example in which the same **POST** request is sent several times can be seen in Section [9.4.]()
 
@@ -673,7 +675,7 @@ There are two types of API resource versions: *Minor* versions, which are backwa
 
 - Whenever a change is made to a specific service in the API, a new version of the corresponding resource will be released.
 
-The format of the resource version is *x**.**y* where *x* is the major version and *y* is the minor version. Both major and minor versions are sequentially numbered. When a new major version of a service is released, the minor version is reset to **0**. The initial version of each resource in the API is **1.0**.
+The format of the resource version is _x_._y_ where _x_ is the major version and _y_ is the minor version. Both major and minor versions are sequentially numbered. When a new major version of a service is released, the minor version is reset to **0**. The initial version of each resource in the API is **1.0**.
 
 #### 3.3.1 Changes not Affecting the API Resource Version
 
@@ -711,7 +713,7 @@ The API supports basic version negotiation by using HTTP content negotiation bet
 See below for an example of a simplified HTTP request which only includes an **Accept** header<sup>23</sup>. The **Accept** header should be used from a client requesting a service from a server specifying a major version of the API service. The example in [Listing 3](#listing-3) should be interpreted as "I would like to use major version 1 of the API resource, but if that version is not supported by the server then give me the latest supported version".
 
 ###### Listing 3
-```bash
+```
 POST /service HTTP/1.1
 Accept: application/vnd.interoperability.\<*resource*\>+json;version=1,
 application/vnd.interoperability.\<*resource*\>+json
@@ -818,17 +820,17 @@ sion list for supported version(s).",
 
 ## 4. Interledger Protocol
 
-The current version of the API includes basic support for the Interledger Protocol (ILP), by defining a concrete implementation of the Interledger Payment Request protocol<sup>24</sup> in [API Resource **/quotes**,](#page90) Section [6.5,]() and [API Resource **/transfers**,]() Section [6.7.]()
+The current version of the API includes basic support for the Interledger Protocol (ILP), by defining a concrete implementation of the Interledger Payment Request protocol<sup>24</sup> in [API Resource **/quotes**,]() Section [6.5,]() and [API Resource **/transfers**,]() Section [6.7.]()
 
 ### 4.1 More Information
 
-This document contains ILP information that is relevant to the API. For more information about the ILP protocol, see the Interledger project website25, the Interledger Whitepaper26, and the Interledger architecture specification27.
+This document contains ILP information that is relevant to the API. For more information about the ILP protocol, see the Interledger project website<sup>25</sup>, the Interledger Whitepaper<sup>26</sup>, and the Interledger architecture specification<sup>27</sup>.
 
 ### 4.2 Introduction to Interledger
 
 ILP is a standard for internetworking payment networks. In the same way that the Internet Protocol (IP) establishes a set of basic standards for the transmission and addressing of data packets between different data networks, ILP establishes a set of basic standards for the addressing of financial transactions and transfer of value between accounts on different payment networks.
 
-ILP is not a scheme. It is a set of standards that, if implemented by multiple payment schemes, will allow those schemes to be interoperable. Therefore, implementing ILP involves adapting an existing scheme to conform to those standards. Conformance means ensuring that transfers between accounts within the scheme are done in two phases (*reserve* and *commit*) and defining a mapping between the accounts in the scheme and the global ILP Addressing scheme. This can be done by modifying the scheme itself, or by the entities that provide ILP-conformant access to the scheme using scheme adaptors.
+ILP is not a scheme. It is a set of standards that, if implemented by multiple payment schemes, will allow those schemes to be interoperable. Therefore, implementing ILP involves adapting an existing scheme to conform to those standards. Conformance means ensuring that transfers between accounts within the scheme are done in two phases (_reserve_ and _commit_) and defining a mapping between the accounts in the scheme and the global ILP Addressing scheme. This can be done by modifying the scheme itself, or by the entities that provide ILP-conformant access to the scheme using scheme adaptors.
 
 The basic prerequisites for an ILP payment are the Payee ILP address
 (see Section [4.3)](#43-ilp-addressing) and the condition (see Section
@@ -839,7 +841,7 @@ Resource]() [**/quotes**,]() **see** Section
 
 ### 4.3 ILP Addressing
 
-A key component of the ILP standard is the ILP addressing28 scheme. It is a hierarchical scheme that defines one or more addresses for every account on a ledger.
+A key component of the ILP standard is the ILP addressing<sup>28</sup> scheme. It is a hierarchical scheme that defines one or more addresses for every account on a ledger.
 
 [Table 4](#table-4) shows some examples of ILP addresses that could be used in different scenarios, for different accounts. Note that while the structure of addresses is standardized, the content is not, except for the first segment (up to the first period (**.**)).
 
@@ -902,7 +904,7 @@ The packet has a strictly defined binary format, because it may be passed throug
 
 The ILP Packet is the common thread that connects all the individual ledger transfers that make up an end-to-end ILP payment. The packet is parsed by the Payee of the first transfer and used to determine where to make the next transfer, and for how much. It is attached to that transfer and parsed by the Payee of the next transfer, who again determines where to make the next transfer, and for how much. This process is repeated until the Payee of the transfer is the Payee in the end-to-end financial transaction, who fulfils the condition, and the transfers are committed in sequence starting with the last and ending with the first.
 
-The ILP Packet format is defined in ASN.129 (Abstract Syntax Notation One), shown in [Listing 6.](#listing-6) The packet is encoded using the canonical Octet Encoding Rules.
+The ILP Packet format is defined in ASN.1<sup>29</sup> (Abstract Syntax Notation One), shown in [Listing 6.](#listing-6) The packet is encoded using the canonical Octet Encoding Rules.
 
 ###### Listing 6
 ```
@@ -924,16 +926,16 @@ InterledgerProtocolPaymentMessage ::= SEQUENCE {
 
 <sup>25</sub>  [https://interledger.org/](https://interledger.org/) -- Interledger
 
-<sup26</sup> [https://interledger.org/interledger.pdf](https://interledger.org/interledger.pdf) -- A Protocol for Interledger Payments
+<sup>26</sup> [https://interledger.org/interledger.pdf](https://interledger.org/interledger.pdf) -- A Protocol for Interledger Payments
 
 <sub>27</sup>  [https://interledger.org/rfcs/0001-interledger-architecture/](https://interledger.org/rfcs/0001-interledger-architecture/) -- Interledger Architecture
 
-<sup>28,/sup>  [https://interledger.org/rfcs/0015-ilp-addresses/](https://interledger.org/rfcs/0015-ilp-addresses/) -- ILP Addresses
+<sup>28</sup>  [https://interledger.org/rfcs/0015-ilp-addresses/](https://interledger.org/rfcs/0015-ilp-addresses/) -- ILP Addresses
 
 
 <sup>29</sup>  [https://www.itu.int/rec/dologin\_pub.asp?lang=e&id=T-REC-X.696-201508-I!!PDF-E&type=items](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.696-201508-I!!PDF-E&type=items) -- Information technology -- ASN.1 encoding rules: Specification of Octet Encoding Rules (OER)
 
-+++++  <strong>***END OF POC***</strong>  +++++  <strong>***END OF POC***</strong>  +++++  <strong>***END OF POC***</strong>  +++++
++++++  ***END OF POC***  +++++  ***END OF POC***  +++++  ***END OF POC***  +++++
 
 ## 5. Common API Functionality
 
