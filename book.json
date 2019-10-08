@@ -1,0 +1,51 @@
+{
+    "gitbook": "3.x.x",
+    "plugins": [
+        "swagger",
+        "editlink",
+        "include",
+        "insert-logo",
+        "plantuml-svg",
+        "collapsible-chapters",
+        "back-to-top-button",
+        "theme-api",
+        "variables",
+        "changelog",
+        "page-toc"
+    ],
+    "pluginsConfig": {
+        "theme-gestalt": {
+            "logo": "https://mojaloop.io/images/logo.png",
+            "favicon": "https://mojaloop.io/images/logo.png",
+            "baseUrl": null,
+            "excludeDefaultStyles": false,
+            "doNotHideChildrenChapters": false
+        },
+        "editlink": {
+            "base": "https://github.com/mojaloop/mojaloop-specification/edit/master",
+            "label": "Edit This Page",
+            "multilingual": true
+        },
+        "insert-logo": {
+            "url": "https://mojaloop.io/images/logo.png",
+            "style": "background: none; max-height: 140px; max-width: 140px;"
+        },
+        "theme-api": {
+            "theme": "dark"
+        },
+        "variables": {
+            "files": {
+                "importedVars": "book_variables.yml"
+            }
+        },
+        "page-toc": {
+            "selector": ".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4",
+            "position": "before-first",
+            "showByDefault": true
+        },
+        "uml": {
+            "format": "png",
+            "nailgun": false
+        }
+    }
+}
