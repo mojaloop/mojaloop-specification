@@ -13,4 +13,3 @@ mojaloop:
     version: v1.0
     uri:
       doc: https://github.com/mojaloop/mojaloop-specification/blob/master/API%20Definition%20v1.0.pdf
-      api: https://github.com/mojaloop/mojaloop-specification/blob/master/Supporting%20Files/fspiop-rest-v1.0-OpenAPI-implementation.yaml

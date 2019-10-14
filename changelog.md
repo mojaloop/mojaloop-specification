@@ -1,6 +1,6 @@
 # Changelog
 
-[![Git Releases](https://img.shields.io/github/release/mojaloop/mojaloop-specification.svg?style=flat)](https://github.com/mojaloop/specification/releases)
+[![Git Releases](https://img.shields.io/github/release/mojaloop/mojaloop-specification.svg?style=flat)](https://github.com/mojaloop/mojaloop-specification/releases)
 
 {% changelog %}
     {% date %}

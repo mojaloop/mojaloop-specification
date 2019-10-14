@@ -103,33 +103,33 @@ The Open API for FSP Interoperability Specification includes the following docum
 
 #### 2.1.1 General Documents
 
--   *Glossary*
+- *Glossary*
 
 #### 2.1.2 Logical Documents
 
--   *Logical Data Model*
--   *Generic Transaction Patterns*
--   *Use Cases*
+- *Logical Data Model*
+- *Generic Transaction Patterns*
+- *Use Cases*
 
 #### 2.1.3 Asynchronous REST Binding Documents
 
--   *API Definition*
--   *JSON Binding Rules*
--   *Scheme Rules*
+- *API Definition*
+- *JSON Binding Rules*
+- *Scheme Rules*
 
 #### 2.1.4 Data Integrity, Confidentiality, and Non-Repudiation
 
--   *PKI Best Practices*
--   *Signature*
--   *Encryption*
+- *PKI Best Practices*
+- *Signature*
+- *Encryption*
 
 ## 3. API Definition
 
 This section introduces the technology used by the API, including:
 
--   [General Characteristics](#31-general-characteristics)
--   [HTTP Details](#32-http-details)
--   [API Versioning](#33-api-versioning)
+- [General Characteristics](#31-general-characteristics)
+- [HTTP Details](#32-http-details)
+- [API Versioning](#33-api-versioning)
 
 ### 3.1 General Characteristics
 
@@ -137,7 +137,7 @@ This section describes the general characteristics of the API.
 
 #### 3.1.1 Architectural Style
 
-The API is based on the REST (REpresentational State Transfer[^1]) architectural style. There are, however, some differences between a typical REST implementation and this one. These differences include:
+The API is based on the REST (REpresentational State Transfer<sup>1</sup>) architectural style. There are, however, some differences between a typical REST implementation and this one. These differences include:
 
 - **Fully asynchronous API** -- To be able to handle numerous concurrent long-running processes and to have a single mechanism for handling requests, all API services are asynchronous. Examples of long-running processes are:
   - Financial transactions done in bulk
@@ -151,22 +151,23 @@ The API is based on the REST (REpresentational State Transfer[^1]) architectural
   - The common ID is used in the URI of the asynchronous callback to the client. The client therefore knows which URI to listen to for a callback regarding the request.
   - The client can use the common ID in an HTTP **GET** request directly if it does not receive a callback from the server (see Section [3.2.2](#322-http-methods) for more information).
 
-  To keep the common IDs unique, each common ID is defined as a UUID (Universally Unique IDentifier[^2] (UUID). To further guarantee uniqueness, it is recommended that a server should separate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receives a non-unique common ID during an HTTP **POST** request (see Section [3.2.2](#322-http-methods) for more details). The request should be handled as detailed in Section [3.2.5.](#325-idempotent-services-in-server)
+  To keep the common IDs unique, each common ID is defined as a UUID (Universally Unique IDentifier<sup>2</sup> (UUID). To further guarantee uniqueness, it is recommended that a server should separate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receives a non-unique common ID during an HTTP **POST** request (see Section [3.2.2](#322-http-methods) for more details). The request should be handled as detailed in Section [3.2.5.](#325-idempotent-services-in-server)
 
 #### 3.1.2 Application-Level Protocol
 
-HTTP, as defined in RFC 7230[^3], is used as the application-level protocol in the API. All communication in production environments should be secured using HTTPS (HTTP over TLS[^4]). For more details about the use of HTTP in the API, see Section [3.2.](#32-http-details)
+HTTP, as defined in RFC 7230<sup>3</sup>, is used as the application-level protocol in the API. All communication in production environments should be secured using HTTPS (HTTP over TLS<sup>4</sup>). For more details about the use of HTTP in the API, see Section [3.2.](#32-http-details)
 
 #### 3.1.3 URI Syntax
 
-The syntax of URIs follows RFC 3986[^5] to identify resources and services provided by the API. This section introduces and notes implementation subjects specific to each syntax part.
+The syntax of URIs follows RFC 3986<sup>5</sup> to identify resources and services provided by the API. This section introduces and notes implementation subjects specific to each syntax part.
 
 A generic URI has the form shown in [Listing 1,](#listing-1) where the part \[*user:password@*\]*host*\[*:port*\] is the Authority part described in Section [3.1.3.2.](#3132-authority)
 \<*resource*\>
+##### Listing 1
 ```text
 scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
 ```
-**Listing 1 -- Generic URI format**
+**Generic URI format**
 
 ##### 3.1.3.1 Scheme
 
@@ -211,11 +212,11 @@ The query is an optional part of a URI; it is currently only used and supported 
 If more than one key-value pair is used in the query string, the pairs should be separated by an ampersand symbol (**'&'**).
 
 [Listing 2](#listing-2) shows a URI example from the API resource **/authorization**, in which four different key-value pairs are present in the query string, separated by an ampersand symbol.
-
+##### Listing 2
 ```text
 /authorization/3d492671-b7af-4f3f-88de-76169b1bdf88?authenticationType=OTP&retriesLeft=2&amount=102&currency=USD
 ```
-**Listing 2 -- Example URI containing several key-value pairs in the query string**
+**Example URI containing several key-value pairs in the query string**
 
 ##### 3.1.3.5 Fragment
 
@@ -223,15 +224,15 @@ The fragment is an optional part of a URI. It is not supported for use by any se
 
 #### 3.1.4 URI Normalization and Comparison
 
-As specified in RFC 7230[^6], the scheme (Section [3.1.3.1)](#3131-scheme) and host (Section [3.1.3.2.2)](#31322-host) part of the URI should be considered case-insensitive. All other parts of the URI should be processed in a case-sensitive manner.
+As specified in RFC 7230<sup>6</sup>, the scheme (Section [3.1.3.1)](#3131-scheme) and host (Section [3.1.3.2.2)](#31322-host) part of the URI should be considered case-insensitive. All other parts of the URI should be processed in a case-sensitive manner.
 
 #### 3.1.5 Character Set
 
-The character set should always be assumed to be UTF-8, defined in 3629[^7]; therefore, it does not need to be sent in any of the HTTP header fields (see Section [3.2.1)](#321-http-header-fields). No character set other than UTF-8 is supported by the API.
+The character set should always be assumed to be UTF-8, defined in 3629<sup>7</sup>; therefore, it does not need to be sent in any of the HTTP header fields (see Section [3.2.1)](#321-http-header-fields). No character set other than UTF-8 is supported by the API.
 
 #### 3.1.6 Data Exchange Format
 
-The API uses JSON (JavaScript Object Notation), defined in RFC 7159[^8], as its data exchange format. JSON is an open, lightweight, human-readable and platform-independent format, well-suited for interchanging data between systems.
+The API uses JSON (JavaScript Object Notation), defined in RFC 7159<sup>8</sup>, as its data exchange format. JSON is an open, lightweight, human-readable and platform-independent format, well-suited for interchanging data between systems.
 
 ### 3.2 HTTP Details
 
@@ -239,7 +240,7 @@ This section contains detailed information regarding the use of the application-
 
 #### 3.2.1 HTTP Header Fields
 
-HTTP Headers are generally described in RFC 7230[^9]. The following two sections describes the HTTP header fields that should be expected and implemented in the API.
+HTTP Headers are generally described in RFC 7230<sup>9</sup>. The following two sections describes the HTTP header fields that should be expected and implemented in the API.
 
 The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header.
 
@@ -247,15 +248,15 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 
 [Table 1](#table-1) contains the HTTP request header fields that must be supported by implementers of the API. An implementation should also expect other standard and non-standard HTTP request header fields not listed here.
 
-###### Table 1
+##### Table 1
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|**Accept**|**application/vnd.interoperability.resource+json**|<p>0..1</p><p>Mandatory in a request from a client. Not used in a callback from the server.</p>|The **Accept**[^10] header field indicates the version of the API the client would like the server to use. See HTTP Accept Header (Section 3.3.4.1) for more information on requesting a specific version of the API.|
-|**Content-Length**|**3495**|0..1|<p>The <strong>Content-Type</strong>[^11] header field indicates the anticipated size of the payload body. Only sent if there is a body.</p><p><strong>Note</strong>: The API supports a maximum size of 5242880 bytes (5 Megabytes).</p>|
-|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**[^12] header indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
-|**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**[^13] header field indicates the date when the request was sent.|
-|**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|<p>The <strong>X-Forwarded-For</strong>[^14] header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple <strong>X-Forwarded-For</strong> values as in the example shown here should be expected and supported by implementers of the API.</p><p>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 7239[^15]. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.|
+|**Accept**|**application/vnd.interoperability.resource+json**|<p>0..1</p><p>Mandatory in a request from a client. Not used in a callback from the server.</p>|The **Accept**<sup>10</sup> header field indicates the version of the API the client would like the server to use. See HTTP Accept Header (Section 3.3.4.1) for more information on requesting a specific version of the API.|
+|**Content-Length**|**3495**|0..1|<p>The <strong>Content-Type</strong><sup>11</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.</p><p><strong>Note</strong>: The API supports a maximum size of 5242880 bytes (5 Megabytes).</p>|
+|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>12</sup>] header indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
+|**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**<sup>13</sup> header field indicates the date when the request was sent.|
+|**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|<p>The <strong>X-Forwarded-For</strong><sup>14</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple <strong>X-Forwarded-For</strong> values as in the example shown here should be expected and supported by implementers of the API.</p><p>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 7239<sup>15</sup>. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.|
 |**FSPIOP- Source**|**FSP321**|1|The **FSPIOP-Source** header field is a non- HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing (see Section 3.2.3.5) and signature verification (see header field **FSPIOP-Signature**).|
 |**FSPIOP- Destination**|**FSP123**|0..1|The **FSPIOP-Destination** header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field should be set by the original sender of the request (if known), so that any entities between the client and the server do not need to parse the payload for routing purposes (see Section 3.2.3.5).|
 |**FSPIOP- Encryption**||0..1|<p>The <strong>FSPIOP-Encryption</strong.> header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.</p><p>For more information, see API Encryption.</p>|
@@ -263,24 +264,24 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 |**FSPIOP-URI**|**/parties/msisdn/123456789**|0..1|The **FSPIOP-URI** header field is a non- HTTP standard field used by the API for signature verification, should contain the service URI. Required if signature verification is used, for more information see _API Signature_.|
 |**FSPIOP- HTTP- Method**|**GET**|0..1|The **FSPIOP-HTTP-Method** header field is a non-HTTP standard field used by the API for signature verification, should contain the service HTTP method. Required if signature verification is used, for more information see API Signature.|
 
-**Table 1 -- HTTP request header fields**
+**HTTP request header fields**
 
 ##### 3.2.1.2 HTTP Response Header Fields
 
 [Table 2](#table-2) contains the HTTP response header fields that must be supported by implementers of the API. An implementation should also expect other standard and non-standard HTTP response header fields that are not listed here.
 
-###### Table 2
+##### Table 2
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|**Content-Lenght**|**3495**|0..1|The **Content-Length**[^16] header field indicates the anticipated size of the payload body. Only sent if there is a body.|
-|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**[^17] header field indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
+|**Content-Lenght**|**3495**|0..1|The **Content-Length**<sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
+|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>17</sup> header field indicates the specific version of the API used to send the payload body. See Section 3.3.4.2 for more information.|
 
-**Table 2 -- HTTP response header fields**
+**HTTP response header fields**
 
 #### 3.2.2 HTTP Methods
 
-The following HTTP methods, as defined in RFC 7231[^18], are supported by the API:
+The following HTTP methods, as defined in RFC 7231<sup>18</sup>, are supported by the API:
 
 - **GET** -- The HTTP **GET** method is used from a client to request information about a previously-created object on a server. As all services in the API are asynchronous, the response to the **GET** method will not contain the requested object. The requested object will instead come as part of a callback using the HTTP **PUT** method.
 
@@ -302,34 +303,34 @@ All the sequences and related services use an asynchronous call flow. No service
 
 [Figure 1](#figure-1) shows the normal API call flow for a request to create an object in a Peer FSP using HTTP **POST**. The service ***/service*** in the flow should be renamed to any of the services in [Table 5]() that support the HTTP **POST** method.
 
-###### Figure 1
+##### Figure 1
 
 {% uml src="assets/diagrams/sequence/figure1.plantuml" %}
 {% enduml %}
 
-**Figure 1 -- HTTP POST call flow**
+**HTTP POST call flow**
 
 ##### 3.2.3.2 HTTP GET Call Flow
 
-[Figure 2](#figure-2) shows the normal API call flow for a request to get information about an object in a Peer FSP using HTTP **GET**. The service **/service/**_`<ID>`_ in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP **GET** method.
+[Figure 2](#figure-2) shows the normal API call flow for a request to get information about an object in a Peer FSP using HTTP **GET**. The service **/service/**<i>`<ID>`</i> in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP **GET** method.
 
-###### Figure 2
+##### Figure 2
 
 {% uml src="assets/diagrams/sequence/figure2.plantuml" %}
 {% enduml %}
 
-**Figure 2 -- HTTP GET call flow**
+**HTTP GET call flow**
 
 ##### 3.2.3.3 HTTP DELETE Call Flow
 
-[Figure 3](#figure-3) contains the normal API call flow to delete FSP information about a Party in an ALS using HTTP **DELETE**. The service **/service/**_`<ID>`_ in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP DELETE method. HTTP DELETE is only supported in a common ALS, which is why the figure shows the ALS entity as a server only.
+[Figure 3](#figure-3) contains the normal API call flow to delete FSP information about a Party in an ALS using HTTP **DELETE**. The service **/service/**<i>`<ID>`</i> in the flow should be renamed to any of the services in [Table 5]() that supports the HTTP DELETE method. HTTP DELETE is only supported in a common ALS, which is why the figure shows the ALS entity as a server only.
 
-###### Figure 3
+##### Figure 3
 
 {% uml src="assets/diagrams/sequence/figure3.plantuml" %}
 {% enduml %}
 
-**Figure 3 -- HTTP DELETE call flow**
+**HTTP DELETE call flow**
 
 **Note:** It is also possible that requests to the ALS be routed through a Switch, or that the ALS and the Switch are the same server.
 
@@ -343,27 +344,27 @@ The call flow of a **PUT** request and response can be seen in [Figure 1,](#figu
 
 The non-standard HTTP header fields **FSPIOP-Destination** and **FSPIOP-Source** are used for routing and message signature verification purposes (see *API Signature* for more information regarding signature verification). [Figure 4](#figure-4) shows how the header fields are used for routing in an abstract **POST /service** call flow, where the destination (Peer) FSP is known.
 
-###### Figure 4
+##### Figure 4
 
 {% uml src="assets/diagrams/sequence/figure4.plantuml" %}
 {% enduml %}
 
-**Figure 4 -- Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source**
+**Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source**
 
 For some services when a Switch is used, the destination FSP might be unknown. An example of this scenario is when an FSP sends a **GET /parties** to the Switch without knowing which Peer FSP that owns the Party (see Section [6.3.1]() describing the scenario). **FSPIOP-Destination** will in that case be empty (or set to the Switch's ID) from the FSP, but will subsequently be set by the Switch to the correct Peer FSP. See [Figure 5](#figure-5) for an example describing the usage of **FSPIOP-Destination** and **FSPIOP-Source**.
 
-###### Figure 5
+##### Figure 5
 
 {% uml src="assets/diagrams/sequence/figure5.plantuml" %}
 {% enduml %}
 
-**Figure 5 -- Example scenario where FSPIOP-Destination is unknown by FSP**
+**Example scenario where FSPIOP-Destination is unknown by FSP**
 
 #### 3.2.4 HTTP Response Status Codes
 
-The API supports the HTTP response status codes[^19] in [Table 3.](#table-3)
+The API supports the HTTP response status codes<sup>19</sup> in [Table 3.](#table-3)
 
-###### Table 3
+##### Table 3
 
 |Status Code|Reason|Description|
 |---|---|---|
@@ -378,13 +379,13 @@ The API supports the HTTP response status codes[^19] in [Table 3.](#table-3)
 |**501**|Not Implemented|The server does not support the requested service. The client should not retry.|
 |**503**|Service Unavailable|The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.|
 
- **Table 3 -- HTTP response status codes supported in the API**
+ **HTTP response status codes supported in the API**
 
-Any HTTP status codes 3*xx*[^20] returned by the server should not be retried and require manual investigation.
+Any HTTP status codes 3*xx*<sup>20</sup> returned by the server should not be retried and require manual investigation.
 
 An implementation of the API should also be capable of handling other errors not defined above as the request could potentially be routed through proxy servers.
 
-As all requests in the API are asynchronous, additional HTTP error codes for server errors (error codes starting with 5*xx*[^21] that are *not* defined in [Table 3)](#table-3) are not used by the API itself. Any error on the server during actual processing of a request will be sent as part of an error callback to the client (see Section [9.2)]().
+As all requests in the API are asynchronous, additional HTTP error codes for server errors (error codes starting with 5*xx*<sup>21</sup> that are *not* defined in [Table 3)](#table-3) are not used by the API itself. Any error on the server during actual processing of a request will be sent as part of an error callback to the client (see Section [9.2)]().
 
 ##### 3.2.4.1 Error Information in HTTP Response
 
@@ -450,13 +451,13 @@ These types of changes affect the major API service version. Please note that th
 
 #### 3.3.4 Version Negotiation between Client and Server
 
-The API supports basic version negotiation by using HTTP content negotiation between the server and the client. A client should send the API resource version that it would like to use in the **Accept** header to the server (see Section [3.3.4.1)](#3341-http-accept-header). If the server supports that version, it should use that version in the callback (see Section [3.3.4.2)](#3342-acceptable-version-requested-by-client). If the server does not support the requested version, the server should reply with HTTP status 406[^22] including a list of supported versions (see Section [3.3.4.3)](#3343-non-acceptable-version-requested-by-client).
+The API supports basic version negotiation by using HTTP content negotiation between the server and the client. A client should send the API resource version that it would like to use in the **Accept** header to the server (see Section [3.3.4.1)](#3341-http-accept-header). If the server supports that version, it should use that version in the callback (see Section [3.3.4.2)](#3342-acceptable-version-requested-by-client). If the server does not support the requested version, the server should reply with HTTP status 406<sup>22</sup> including a list of supported versions (see Section [3.3.4.3)](#3343-non-acceptable-version-requested-by-client).
 
 #### 3.3.4.1 HTTP Accept Header
 
-See below for an example of a simplified HTTP request which only includes an **Accept** header[^23]. The **Accept** header should be used from a client requesting a service from a server specifying a major version of the API service. The example in [Listing 3](#listing-3) should be interpreted as "I would like to use major version 1 of the API resource, but if that version is not supported by the server then give me the latest supported version".
+See below for an example of a simplified HTTP request which only includes an **Accept** header<sup>23</sup>. The **Accept** header should be used from a client requesting a service from a server specifying a major version of the API service. The example in [Listing 3](#listing-3) should be interpreted as "I would like to use major version 1 of the API resource, but if that version is not supported by the server then give me the latest supported version".
 
-###### Listing 3
+##### Listing 3
 ```
 POST /service HTTP/1.1
 Accept: application/vnd.interoperability.\<*resource*\>+json;version=1,
@@ -466,7 +467,7 @@ application/vnd.interoperability.\<*resource*\>+json
     ...
 }
 ```
-**Listing 3 -- HTTP Accept header example, requesting version 1 or the latest supported version**
+**HTTP Accept header example, requesting version 1 or the latest supported version**
 
 Regarding the example in [Listing 3:](#listing-3)
 
@@ -481,11 +482,11 @@ Regarding the example in [Listing 3:](#listing-3)
 
 If the server supports the API resource version requested by the client in the Accept Headers, it should use that version in the subsequent callback. The used *major.minor* version should always be indicated in the **Content-Type** header by the server, even if the client only requested a major version of the API. See the example in [Listing 4,](#listing-4) which indicates that version 1.0 is used by the server:
 
-###### Listing 4
+##### Listing 4
 ```
 Content-Type: application/vnd.interoperability.resource+json;version=1.0
 ```
-**Listing 4 -- Content-Type HTTP header field example**
+**Content-Type HTTP header field example**
 
 ##### 3.3.4.3 Non-Acceptable Version Requested by Client
 
@@ -495,7 +496,7 @@ If the server does not support the version requested by the client in the **Acce
 
 Along with HTTP status 406, the supported versions should be listed as part of the error message in the extensions list, using the major version number as *key* and minor version number as *value*. Please see error information in the example in [Listing 5,](#listing-5) describing the server's supported versions. The example should be interpreted as "I do not support the resource version that you requested, but I do support versions 1.0, 2.1, and 4.2".
 
-###### Listing 5
+##### Listing 5
 ```json
 {
     "errorInformation": {
@@ -510,65 +511,65 @@ sion list for supported version(s).",
     }
 }
 ```
-**Listing 5 -- Example error message when server does not support the requested version**
+**Example error message when server does not support the requested version**
 
-[^1]  [http://www.ics.uci.edu/\~fielding/pubs/dissertation/rest\_arch\_style.htm](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) -- Representational State Transfer (REST)
+<sup>1</sup>  [http://www.ics.uci.edu/\~fielding/pubs/dissertation/rest\_arch\_style.htm](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) -- Representational State Transfer (REST)
 
-[^2]  [https://tools.ietf.org/html/rfc4122](https://tools.ietf.org/html/rfc4122) -- A Universally Unique IDentifier (UUID) URN Namespace
+<sup>2</sup>  [https://tools.ietf.org/html/rfc4122](https://tools.ietf.org/html/rfc4122) -- A Universally Unique IDentifier (UUID) URN Namespace
 
-[^3]  [https://tools.ietf.org/html/rfc7230](https://tools.ietf.org/html/rfc7230) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
+<sup>3</sup>  [https://tools.ietf.org/html/rfc7230](https://tools.ietf.org/html/rfc7230) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
 
-[^4]  [https://tools.ietf.org/html/rfc5246](https://tools.ietf.org/html/rfc5246) -- The Transport Layer Security (TLS) Protocol - Version 1.2
+<sup>4</sup>  [https://tools.ietf.org/html/rfc5246](https://tools.ietf.org/html/rfc5246) -- The Transport Layer Security (TLS) Protocol - Version 1.2
 
-[^5]  [https://tools.ietf.org/html/rfc3986](https://tools.ietf.org/html/rfc3986) -- Uniform Resource Identifier (URI): Generic Syntax
+<sup>5</sup>  [https://tools.ietf.org/html/rfc3986](https://tools.ietf.org/html/rfc3986) -- Uniform Resource Identifier (URI): Generic Syntax
 
-[^6]  [https://tools.ietf.org/html/rfc7230\#section-2.7.3](https://tools.ietf.org/html/rfc7230#section-2.7.3) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - http and https URI Normalization and Comparison
+<sup>6</sup>  [https://tools.ietf.org/html/rfc7230\#section-2.7.3](https://tools.ietf.org/html/rfc7230#section-2.7.3) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - http and https URI Normalization and Comparison
 
-[^7]  [https://tools.ietf.org/html/rfc3629](https://tools.ietf.org/html/rfc3629) -- UTF-8, a transformation format of ISO 10646
+<sup>7</sup>  [https://tools.ietf.org/html/rfc3629](https://tools.ietf.org/html/rfc3629) -- UTF-8, a transformation format of ISO 10646
 
-[^8]  [https://tools.ietf.org/html/rfc7159](https://tools.ietf.org/html/rfc7159) -- The JavaScript Object Notation (JSON) Data Interchange Format
+<sup>8</sup>  [https://tools.ietf.org/html/rfc7159](https://tools.ietf.org/html/rfc7159) -- The JavaScript Object Notation (JSON) Data Interchange Format
 
-[^9]  [https://tools.ietf.org/html/rfc7230\#section-3.2](https://tools.ietf.org/html/rfc7230#section-3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - Header Fields
+<sup>9</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.2](https://tools.ietf.org/html/rfc7230#section-3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - Header Fields
 
-[^10]  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Accept
+<sup>10</sup>  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Accept
 
-[^11]  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
+<sup>11</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
 
-[^12]  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
+<sup>12</sup>  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
 
-[^13]  [https://tools.ietf.org/html/rfc7231\#section-7.1.1.2](https://tools.ietf.org/html/rfc7231#section-7.1.1.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Date
+<sup>13</sup>  [https://tools.ietf.org/html/rfc7231\#section-7.1.1.2](https://tools.ietf.org/html/rfc7231#section-7.1.1.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Date
 
-[^14]  [https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) -- X-Forwarded-For
+<sup>14</sup>  [https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) -- X-Forwarded-For
 
-[^15]  [https://tools.ietf.org/html/rfc7239](https://tools.ietf.org/html/rfc7239) -- Forwarded HTTP Extension
+<sup>15</sup>  [https://tools.ietf.org/html/rfc7239](https://tools.ietf.org/html/rfc7239) -- Forwarded HTTP Extension
 
-[^16]  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
+<sup>16</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
 
-[^17]  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
+<sup>17</sup>  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
 
-[^18]  [https://tools.ietf.org/html/rfc7231\#section-4](https://tools.ietf.org/html/rfc7231#section-4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Request Methods
+<sup>18</sup>  [https://tools.ietf.org/html/rfc7231\#section-4](https://tools.ietf.org/html/rfc7231#section-4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Request Methods
 
-[^19]  [https://tools.ietf.org/html/rfc7231\#section-6](https://tools.ietf.org/html/rfc7231#section-6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Response Status Codes
+<sup>19</sup>  [https://tools.ietf.org/html/rfc7231\#section-6](https://tools.ietf.org/html/rfc7231#section-6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Response Status Codes
 
-[^20]  [https://tools.ietf.org/html/rfc7231\#section-6.4](https://tools.ietf.org/html/rfc7231#section-6.4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Redirection 3xx
+<sup>20</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.4](https://tools.ietf.org/html/rfc7231#section-6.4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Redirection 3xx
 
-[^21]  [https://tools.ietf.org/html/rfc7231\#section-6.6](https://tools.ietf.org/html/rfc7231#section-6.6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Server Error 5xx
+<sup>21</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.6](https://tools.ietf.org/html/rfc7231#section-6.6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Server Error 5xx
 
-[^22]  [https://tools.ietf.org/html/rfc7231\#section-6.5.6](https://tools.ietf.org/html/rfc7231#section-6.5.6)
+<sup>22</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.5.6](https://tools.ietf.org/html/rfc7231#section-6.5.6)
     -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -
     406 Not Acceptable
 
-[^23]  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2)
+<sup>23</sup>  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2)
     -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -
     Accept
 
 ## 4. Interledger Protocol
 
-The current version of the API includes basic support for the Interledger Protocol (ILP), by defining a concrete implementation of the Interledger Payment Request protocol[^24] in [API Resource **/quotes**,]() Section [6.5,]() and [API Resource **/transfers**,]() Section [6.7.]()
+The current version of the API includes basic support for the Interledger Protocol (ILP), by defining a concrete implementation of the Interledger Payment Request protocol<sup>24</sup> in [API Resource **/quotes**,]() Section [6.5,]() and [API Resource **/transfers**,]() Section [6.7.]()
 
 ### 4.1 More Information
 
-This document contains ILP information that is relevant to the API. For more information about the ILP protocol, see the Interledger project website[^25], the Interledger Whitepaper[^26], and the Interledger architecture specification[^27].
+This document contains ILP information that is relevant to the API. For more information about the ILP protocol, see the Interledger project websit<sup>25</sup>, the Interledger Whitepaper<sup>26</sup>, and the Interledger architecture specification<sup>27</sup>.
 
 ### 4.2 Introduction to Interledger
 
@@ -585,17 +586,17 @@ Resource]() [**/quotes**,]() **see** Section
 
 ### 4.3 ILP Addressing
 
-A key component of the ILP standard is the ILP addressing[^28] scheme. It is a hierarchical scheme that defines one or more addresses for every account on a ledger.
+A key component of the ILP standard is the ILP addressing<sup>28</sup> scheme. It is a hierarchical scheme that defines one or more addresses for every account on a ledger.
 
 [Table 4](#table-4) shows some examples of ILP addresses that could be used in different scenarios, for different accounts. Note that while the structure of addresses is standardized, the content is not, except for the first segment (up to the first period (**.**)).
 
-###### Table 4
+##### Table 4
 |ILP Address|Description|
 |---|---|
 |<strong>g.tz.fsp1.msisdn.1234567890</strong>|A mobile money account at **FSP1** for the user with **MSISDN 1234567890**.|
 |**g.pk.fsp2.ac03396c-4dba-4743**|A mobile money account at **FSP2** identified by an opaque account id.|
 |**g.us.bank1.bob**|A bank account at **Bank1** for the user **bob**.|
-**Table 4 -- ILP address examples**
+**ILP address examples**
 
 The primary purpose of an ILP addresses is to identify an account in order to route a financial transaction to that account.
 
@@ -649,9 +650,9 @@ The packet has a strictly defined binary format, because it may be passed throug
 
 The ILP Packet is the common thread that connects all the individual ledger transfers that make up an end-to-end ILP payment. The packet is parsed by the Payee of the first transfer and used to determine where to make the next transfer, and for how much. It is attached to that transfer and parsed by the Payee of the next transfer, who again determines where to make the next transfer, and for how much. This process is repeated until the Payee of the transfer is the Payee in the end-to-end financial transaction, who fulfils the condition, and the transfers are committed in sequence starting with the last and ending with the first.
 
-The ILP Packet format is defined in ASN.1[^29] (Abstract Syntax Notation One), shown in [Listing 6.](#listing-6) The packet is encoded using the canonical Octet Encoding Rules.
+The ILP Packet format is defined in ASN.<sup>29</sup> (Abstract Syntax Notation One), shown in [Listing 6.](#listing-6) The packet is encoded using the canonical Octet Encoding Rules.
 
-###### Listing 6
+##### Listing 6
 ```
 InterledgerProtocolPaymentMessage ::= SEQUENCE {
     -- Amount which must be received at the destination amount UInt64,
@@ -663,21 +664,21 @@ InterledgerProtocolPaymentMessage ::= SEQUENCE {
     }
 }
 ```
-**Listing 6 -- The ILP Packet format in ASN.1 format**
+**The ILP Packet format in ASN.1 format**
 
 **Note:** The only mandatory data elements in the ILP Packet are the amount to be transferred to the account of the Payee and the ILP Address of the Payee.
 
-[^24]  [https://interledger.org/rfcs/0011-interledger-payment-request/](https://interledger.org/rfcs/0011-interledger-payment-request/) -- Interledger Payment Request (IPR)
+<sup>24</sup>  [https://interledger.org/rfcs/0011-interledger-payment-request/](https://interledger.org/rfcs/0011-interledger-payment-request/) -- Interledger Payment Request (IPR)
 
-[^25]  [https://interledger.org/](https://interledger.org/) -- Interledger
+<sup>25</sup>  [https://interledger.org/](https://interledger.org/) -- Interledger
 
-[^26] [https://interledger.org/interledger.pdf](https://interledger.org/interledger.pdf) -- A Protocol for Interledger Payments
+<sup>26</sup> [https://interledger.org/interledger.pdf](https://interledger.org/interledger.pdf) -- A Protocol for Interledger Payments
 
-[^27]  [https://interledger.org/rfcs/0001-interledger-architecture/](https://interledger.org/rfcs/0001-interledger-architecture/) -- Interledger Architecture
+<sup>27</sup>  [https://interledger.org/rfcs/0001-interledger-architecture/](https://interledger.org/rfcs/0001-interledger-architecture/) -- Interledger Architecture
 
-[^28]  [https://interledger.org/rfcs/0015-ilp-addresses/](https://interledger.org/rfcs/0015-ilp-addresses/) -- ILP Addresses
+<sup>28</sup>  [https://interledger.org/rfcs/0015-ilp-addresses/](https://interledger.org/rfcs/0015-ilp-addresses/) -- ILP Addresses
 
 
-[^29]  [https://www.itu.int/rec/dologin\_pub.asp?lang=e&id=T-REC-X.696-201508-I!!PDF-E&type=items](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.696-201508-I!!PDF-E&type=items) -- Information technology -- ASN.1 encoding rules: Specification of Octet Encoding Rules (OER)
+<sup>29</sup>  [https://www.itu.int/rec/dologin\_pub.asp?lang=e&id=T-REC-X.696-201508-I!!PDF-E&type=items](https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-X.696-201508-I!!PDF-E&type=items) -- Information technology -- ASN.1 encoding rules: Specification of Octet Encoding Rules (OER)
 
 +++++  ***END OF POC***  +++++  ***END OF POC***  +++++  ***END OF POC***  +++++
