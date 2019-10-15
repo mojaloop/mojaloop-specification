@@ -22,3 +22,6 @@ _book
 *.log
 
 *.jar
+API-html-to-markdown.md
+API-pdf-to-word.docx
+API-word-to-html.html

@@ -43,9 +43,10 @@ const commitMessage = exec('git log -1 --pretty=%B', { cwd }).toString('utf8')
 // exec('rm -rf web', { cwd })
 // exec('git clone https://github.com/HenkKodde/mojaloop-specification.git --branch gh-pages --single-branch web', { cwd })
 // exec('cp -r ????-* web', { cwd })
-//exec('cp -r shared web', { cwd })
+// exec('cp -r shared web', { cwd })
 
-const template = ejs.compile(fs.readFileSync('tmpl/api.ejs.html', 'utf8'))
+const template = ejs.compile(fs.readFileSync('/Users/henkkodde/Projects/mojaloop/mojaloop-specification/tmpl/api.ejs.html', 'utf8'))
+// const template = ejs.compile(fs.readFileSync('tmpl/api.ejs.html', 'utf8'))
 const files = glob.sync('????-*/????-*.md')
 if (commitMessage.includes("Skip Version Check")) {
     console.log('Skipping version checks. Will overwrite index.html for all specs.')

@@ -1,9 +1,0 @@
-.circleci
-node_modules
-.dockerignore
-*Dockerfile
-index.js
-package.json
-package-lock.json
-*.sh
-.nvmrc
