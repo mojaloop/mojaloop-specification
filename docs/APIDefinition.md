@@ -1,5 +1,9 @@
+---
+id: APIDefinition
+title: API Definition
+---
 ___
-**Title:**  API Definitions
+**Title:**  API Definition
 
 **Draft:**  Version 1.0
 
