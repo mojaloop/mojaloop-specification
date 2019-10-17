@@ -1,23 +1,24 @@
-# [Change ID] – [Change Request Name]
+# _[Change ID] – [Change Request Name]_
 
 ## Open API for FSP Interoperability - Change Request
 
-**Table of Contents**
-[1. Preface](#1.-preface)
-[1.1 Change Request Information](#1.1-change-request-information)
-[1.2 Document Version Information](#1.2-document-version-information)
-[2. Problem Description](#2.-problem-description)
-[2.1 Background](#2.1-background)
-[2.2 Current Behaviour](#2.2-current-behavior)
-[2.3 Requested Behaviour](#2.3-requested-behavior)
-[3 Proposed Solution Options](#3.-proposed-solution-options)
+### **Table of Contents**
 
+* [1. Preface](#1-preface)
+  * [1.1 Change Request Information](#11-change-request-information)
+  * [1.2 Document Version Information](#12-document-version-information)
+* [2. Problem Description](#2-problem-description)
+  * [2.1 Background](#21-background)
+  * [2.2 Current Behaviour](#22-current-behaviour)
+  * [2.3 Requested Behaviour](#23-requested-behaviour)
+* [3 Proposed Solution Options](#3-proposed-solution-options)
 
-**1. Preface**
+## **1. Preface**
+___
 
 This section contains basic information regarding the change request.
 
-**1.1** Change Request Information
+#### 1.1 Change Request Information
 
 | Change Request ID | TEMPLATE\_1 |
 | --- | --- |
@@ -26,15 +27,16 @@ This section contains basic information regarding the change request.
 | Change Request Status | In review ☒  / Approved ☐ / Rejected ☐ |
 | Approved/Rejected Date |   |
 
-**1.2** Document Version Information
+#### 1.2 Document Version Information
 
 | Version | Date | Author | Change Description |
 | --- | --- | --- | --- |
 | 1.0 | 2019-02-04 | Henrik Karlsson | Initial version of template. Sent out for review. |
 
-**2. Problem Description**
+## **2. Problem Description**
+___
 
-**2.1** Background
+#### 2.1 Background
 
 Explain the background of the change request so that others can understand the reason for the change request.
 
@@ -49,7 +51,7 @@ At present, the quote response contains an ILP packet, which contains a data fie
 
 However, this is not an efficient way of proceeding. This connection must be established for every transfer request, since there is no other way of knowing which private key to apply. It therefore makes good sense to provide a quick and simple way of connecting the transfer request with the quote response that was used to authorize it.
 
-**2.2** Current Behaviour
+#### 2.2 Current Behaviour
 
 Explain how the API currently behaves.
 
@@ -57,7 +59,7 @@ Explain how the API currently behaves.
 
 It is not possible to easily to link a quote from a transfer, as a decode of the ILP Packet is necessary for each incoming **POST /transfers**.
 
-**2.3** Requested Behaviour
+#### 2.3 Requested Behaviour
 
 Explain how you would like the API to behave.
 
@@ -65,7 +67,8 @@ Explain how you would like the API to behave.
 
 A simple way of linking a quote from transfer.
 
-**3. Proposed Solution Options**
+## **3. Proposed Solution Options**
+___
 
 This section does not need to be filled in. But if you already have one or more simple solution alternatives, then please describe them here. It should not be a complete solution at this stage, unless it is a very limited change request. Feel free to add any pros and cons of each solution propsosal if you have any.
 
