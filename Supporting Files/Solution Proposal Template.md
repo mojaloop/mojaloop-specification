@@ -113,16 +113,20 @@ unique among all resources.
 
 #### 3.1.1 Current text
 
-![Figure 1](../assets/img/figure1.png)
-
-Figure 1 -- Current text in Section 3.1.1
+> - The common ID is used in the asynchronous callback to the client. The client therefore knows which URI to listen to for a callback regarding the request.
+>- The client can use the common ID in an HTTP **GET** request directly if it does not receive a callback from the server(see Section 3.2.2 for more information).
+>To keep the common IDs unique, each common ID is defined as a Universally Unique IDentifier<sup>2</sup>(UUID). To furture guarantee uniqueness, it is recommended that a server should seperate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receive a non-unique common ID during an HTTP **POST** request(see Section 3.2.2 for more detals). The request should be handled as detailed in Section 3.2.5.
 
 #### 3.1.2 New proposed text
 
-![Figure 2](../assets/img/figure2.png)
-
-Figure2  -- New proposed text in Section 3.1.1 including more information
-on uniqueness of IDs
+> - The common ID is used in the asynchronous callback to the client. The client therefore knows which URI to listen to for a callback regarding the request.
+>- The client can use the common ID in an HTTP **GET** request directly if it does not receive a callback from the server(see Section 3.2.2 for more information).
+>#### 3.1.1.1 ID Uniqueness
+>To keep the common IDs unique, each common ID is defined as a Universally Unique IDentifier<sup>2</sup>(UUID). To futher guarantee uniqueness, it is recommended that a server should seperate each client FSP's IDs by mapping the FSP ID and object ID together.
+>
+>IDs are allowed to be non-unique between resources. It is up to the implementers of the API to decide if the same common ID should be reused between resources, or if the IDs are uniquely generated per resource. For example, it is allowed to use the same ID in first the **POST /quotes** request and then the subsequent **POST /transfer** request for a single transaction.
+>
+>If a server recieves a non-unique common ID during an HTTP **POST** request(see Section 3.2.2 for more detals), the request should be handled as detailed in Section 3.2.5.
 
 #### 3.2 Add quote ID to POST /transfers data model
 
@@ -137,15 +141,30 @@ resource, from version 1.0 to version 2.0.
 
 #### 3.2.1 Current POST /transfers data model
 
-![Figure 3](../assets/img/figure2.png)
-
-Figure 3 -- Current POST /transfers data model
+>| Name | Cardinality | Type | Description |
+>| --- | --- | --- | --- |
+>|transferId|1|CorrelationId|The common Id between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. The ID should be reused for resends of the same transfer. A new ID should be generated for each new transfer.|
+>|payeeFsp|1|FspId|Payee FSP in the proposed financial transaction.|
+>|payerFsp|1|FpsId|Payer FSP in the proposed financial transaction.|
+>|amount|1|Money|The transfer amount to be sent|
+>|ilpPacket|1|IlpPacket|The ILP Packat containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data.|
+>|condition|1|IlpCondition|The condition that must be fulfilled to commit the transfer.|
+>|expiration|1|DateTime|Expiration can be set to get a quick failure expiration of the transfer. The transfer should be rolled back if no fulfilment is delivered before this time.|
+>|extensionList|0..1|ExtensionList|Optional extension, specific to deployment.|
 
 #### 3.2.2 Proposed POST /transfers data model
 
-![Figure 4](../assets/img/figure4.png)
-
-Figure 4 -- Proposed POST /transfers data model including the quoteId
+>| Name | Cardinality | Type | Description |
+>| --- | --- | --- | --- |
+>|transferId|1|CorrelationId|The common Id between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. The ID should be reused for resends of the same transfer. A new ID should be generated for each new transfer.|
+>|quoteId|1|CorrelationId|Reference to the earlier agreed quote.|
+>|payeeFsp|1|FspId|Payee FSP in the proposed financial transaction.|
+>|payerFsp|1|FpsId|Payer FSP in the proposed financial transaction.|
+>|amount|1|Money|The transfer amount to be sent|
+>|ilpPacket|1|IlpPacket|The ILP Packat containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data.|
+>|condition|1|IlpCondition|The condition that must be fulfilled to commit the transfer.|
+>|expiration|1|DateTime|Expiration can be set to get a quick failure expiration of the transfer. The transfer should be rolled back if no fulfilment is delivered before this time.|
+>|extensionList|0..1|ExtensionList|Optional extension, specific to deployment.|
 
 ## **4. Other Considered Solutions**
 ___
