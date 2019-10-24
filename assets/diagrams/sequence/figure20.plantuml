@@ -1,0 +1,96 @@
+/'*****
+ License
+ --------------
+ Copyright © 2017 Bill & Melinda Gates Foundation
+ The Mojaloop files are made available by the Bill & Melinda Gates Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, the Mojaloop files are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ Contributors
+ --------------
+ This is the official list of the Mojaloop project contributors for this file.
+ Names of the original copyright holders (individuals or organizations)
+ should be listed with a '*' in the first column. People who have
+ contributed from an organization can be listed under the organization
+ that actually holds the copyright for their contributions (see the
+ Gates Foundation organization for an example). Those individuals should have
+ their names indented and be marked with a '-'. Email address can be added
+ optionally within square brackets <email>.
+ * Gates Foundation
+ - Name Surname <name.surname@gatesfoundation.com>
+
+ * Henk Kodde <henk.kodde@modusbox.com>
+ --------------
+ ******'/
+
+@startuml
+' declaring skinparam
+skinparam sequenceMessageAlign center
+
+' declare title
+title Agent-initiated Cash-In example with send amount
+
+' Actor Keys:
+' participant - FSP or Switch
+' actor - Payee, Payer or Payer(OTC)
+
+' declare actors
+actor "Payer\n (OTC)" as PayerOTC
+actor "Payer" as Payer
+participant "Payer FSP" as PayerFSP
+participant "Switch" as SWITCH
+participant "Payee FSP" as PayeeFSP
+Actor "Payee" as Payee
+
+' start flow
+
+' activate Payer
+PayerOTC ->> Payer: I would like to Cash-in\n this 100 USD bill
+PayerOTC <<- Payer: OK, you will receive a\n notification from your FSP\n displaying the fees
+Payer ->> PayerFSP: I would like to send\n 100 USD to Payee
+activate PayerFSP
+PayerFSP -> PayerFSP: Fee is 2 USD in Payer\n FSP for Cash-in,\n Payer will receive 1\n USD in internal commission.
+PayerFSP ->> SWITCH: **POST /quotes**\n (amountType = SEND,\n amount = 98 USD, fees = 2 USD)
+activate SWITCH
+PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
+SWITCH ->> PayeeFSP: **POST /quotes**\n (amountType = SEND,\n amount = 98 USD, fees = 2 USD)
+activate PayeeFSP
+SWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: PayeeFSP decides to give\n 2 USD in FSP commission to\n Payer so that\n Cash-in is free
+PayeeFSP ->> Payee: By paying 100 USD in cash\n to Payer, you will receive\n 100 USD to your account
+PayeeFSP <<-- Payee: OK
+SWITCH <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 98 USD,\n payeeReceiveAmount = 100 USD,\n payeeFspCommission = 2 USD)
+SWITCH -->> PayeeFSP: **HTTP 200** (OK)
+deactivate PayeeFSP
+PayerFSP <<- SWITCH: **PUT /quotes/**<i><ID></i>\n (transferAmount = 98 USD,\n payeeReceiveAmount = 100 USD,\n payeeFspCommission = 2 USD)
+PayerFSP -->> SWITCH: **HTTP 200** (OK)
+deactivate SWITCH
+Payer <<- PayerFSP: Payee will receive 100 USD\n and has accepted the\n quote, you will receive\n 1 USD in commission
+deactivate PayerFSP
+PayerOTC <<- Payer: You will receive 100 USD\n on your account. Please give\n me the 100 USD bill
+' deactivate Payer
+PayerOTC ->> Payer: OK, here is 100 USD
+Payer ->> PayerFSP: Perform transaction
+activate PayerFSP
+PayerFSP -> PayerFSP: Reserve 100 USD from Payer\n account, 98 USD to Switch\n account and 2 USD to fee account,\n 1 USD from agent commission\n account to Payer
+PayerFSP ->> SWITCH: **POST /transfer**\n (amount = 98 USD)
+activate SWITCH
+SWITCH -> SWITCH: Reserve 98 USD from Payer FSP\n account to Payee FSP account
+PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
+SWITCH -> SWITCH: Reserve 98 USD from Payer FSP\n account to Payee FSP account
+SWITCH ->> PayeeFSP: **POST /transfer**\n (amount = 98 USD)
+activate PayeeFSP
+SWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: Transfer 98 USD from Switch\n account and 2 USD from\n FSP commission account\n to Payee account
+PayeeFSP ->> Payee: You have Cash-in 100 USD
+SWITCH <<- PayeeFSP: **PUT /transfer/**<i><ID></i>
+SWITCH -->> PayeeFSP: **HTTP 200** (OK)
+deactivate PayeeFSP
+SWITCH -> SWITCH: Commit reserved transfer
+PayerFSP <<- SWITCH: **PUT /transfer/**<i><ID></i>
+PayerFSP -->> SWITCH: **HTTP 200** (OK)
+deactivate SWITCH
+PayerFSP -> PayerFSP: Commit reserved transfer
+Payer <<- PayerFSP: Transaction successful, you have\n sent 100 USD and received\n 1 USD in commission
+deactivate PayerFSP
+PayerOTC <<- Payer: Thank you!
+@enduml

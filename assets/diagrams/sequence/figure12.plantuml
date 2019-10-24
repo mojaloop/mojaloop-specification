@@ -1,0 +1,73 @@
+/'*****
+ License
+ --------------
+ Copyright © 2017 Bill & Melinda Gates Foundation
+ The Mojaloop files are made available by the Bill & Melinda Gates Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, the Mojaloop files are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ Contributors
+ --------------
+ This is the official list of the Mojaloop project contributors for this file.
+ Names of the original copyright holders (individuals or organizations)
+ should be listed with a '*' in the first column. People who have
+ contributed from an organization can be listed under the organization
+ that actually holds the copyright for their contributions (see the
+ Gates Foundation organization for an example). Those individuals should have
+ their names indented and be marked with a '-'. Email address can be added
+ optionally within square brackets <email>.
+ * Gates Foundation
+ - Name Surname <name.surname@gatesfoundation.com>
+
+ * Henk Kodde <henk.kodde@modusbox.com>
+ --------------
+ ******'/
+
+@startuml
+' declaring skinparam
+skinparam sequenceMessageAlign center
+
+' declare title
+title Example of disclosing receive amount
+
+' Actor Keys:
+' participant - FSP or Switch
+
+' declare actors
+Actor "Payer" as Payer
+participant "Payer FSP" as PayerFSP
+participant "Optional Switch" as OPTSWITCH
+participant "Payee FSP" as PayeeFSP
+Actor "Payee" as Payee
+
+' start flow
+
+'activate Payer
+Payer ->> PayerFSP: I would like to Payee to\nsend 100 USD to Payee
+activate PayerFSP
+PayerFSP -> PayerFSP: Rate fee for Payer for\n handling transaction in\n Payer FSP => fee 1 USD
+PayerFSP ->> OPTSWITCH: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD, fees = 1 USD)
+activate OPTSWITCH
+PayerFSP <<-- OPTSWITCH: **HTTP 202** (Accepted)
+OPTSWITCH ->> PayeeFSP: **POST /quotes**\n(amountType = RECEIVE,\namount = 100 USD, fees = 1 USD)
+activate PayeeFSP
+OPTSWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: Rate transaction fee or\n commission for handeling\n transaction in Payee FSP =>\n FSP commission 1 USD
+group Optional
+PayeeFSP ->> Payee: If accepted, you will receive\n 100 USD
+hnote left of PayeeFSP
+    Notify/Ask Payee 
+    for approval
+end note
+PayeeFSP <<- Payee: OK
+end
+OPTSWITCH <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n PayeeFspCommission = 1 USD,\n payeeReceivedAmount = 100 USD)
+OPTSWITCH -->> PayeeFSP: **HTTP 200** (OK)
+deactivate PayeeFSP
+PayerFSP <<- OPTSWITCH: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n PayeeFspCommission = 1 USD\n payeeReceivedAmouint = 100 USD)
+PayerFSP -->> OPTSWITCH: **HTTP 200** (OK)
+deactivate OPTSWITCH
+PayerFSP -> PayerFSP: Transaction is subsidized with the\n commission as feees are disclosed,\n show total fees to Payer
+PayerFSP ->> Payer: Sending 100 USD to Payee\n will cost 0 USD in fees
+deactivate PayerFSP
+'deactivate Payer
+@enduml

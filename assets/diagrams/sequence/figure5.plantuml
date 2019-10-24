@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source
+title Example scenario where FSPIOP-Destination is unknown by FSP
 
 ' Actor Keys:
 ' participant - FSP or Switch

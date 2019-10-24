@@ -1,0 +1,85 @@
+/'*****
+ License
+ --------------
+ Copyright © 2017 Bill & Melinda Gates Foundation
+ The Mojaloop files are made available by the Bill & Melinda Gates Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, the Mojaloop files are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ Contributors
+ --------------
+ This is the official list of the Mojaloop project contributors for this file.
+ Names of the original copyright holders (individuals or organizations)
+ should be listed with a '*' in the first column. People who have
+ contributed from an organization can be listed under the organization
+ that actually holds the copyright for their contributions (see the
+ Gates Foundation organization for an example). Those individuals should have
+ their names indented and be marked with a '-'. Email address can be added
+ optionally within square brackets <email>.
+ * Gates Foundation
+ - Name Surname <name.surname@gatesfoundation.com>
+
+ * Henk Kodde <henk.kodde@modusbox.com>
+ --------------
+ ******'/
+
+@startuml
+' declaring skinparam
+skinparam sequenceMessageAlign center
+
+' declare title
+title P2P Transfer example with receive amount
+
+' Actor Keys:
+' participant - FSP or Switch
+' actor - Payee or Payer
+
+' declare actors
+actor "Payer" as Payer
+participant "Payer FSP" as PayerFSP
+participant "Switch" as SWITCH
+participant "Payee FSP" as PayeeFSP
+Actor "Payee" as Payee
+
+' start flow
+
+Payer ->> PayerFSP: I would like Payee\n to receive 100 USD
+activate PayerFSP
+PayerFSP ->> SWITCH: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD)
+activate SWITCH
+PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
+SWITCH ->> PayeeFSP: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD)
+activate PayeeFSP
+SWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: Commission is 1 USD in\n Payee FSP for P2P
+SWITCH <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n payeeReceivedAmount = 100 USD,\n payeeFspCommission = 1 USD)
+SWITCH -->> PayeeFSP: **HTTP 200** (OK)
+deactivate PayeeFSP
+PayerFSP <<- SWITCH: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n payeeReceiveAmount = 100 USD\n payeeFspCommission = 1 USD)
+PayerFSP -->> SWITCH: **HTTP 200** (OK)
+deactivate SWITCH
+PayerFSP -> PayerFSP: Payer FSP keeps commission\n as fee, Payer also should pay\n fee of 1 USD
+PayerFSP ->> Payer: Transfering 100 USD to Payee\n will cost you 101 USD\n including fees
+deactivate PayerFSP
+Payer ->> PayerFSP: Perform transaction
+activate PayerFSP
+PayerFSP -> PayerFSP: Receive 101 USD from Payer\n account, 99 USD to Switch\n account, 1 USD to fee account,\n 1 USD to FSP commission account
+PayerFSP ->> SWITCH: **POST /transfer**\n (amount = 99 USD)
+activate SWITCH
+SWITCH -> SWITCH: Receive 99 USD from Payer FSP\n account to Payee FSP account
+PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
+SWITCH ->> PayeeFSP: **POST /transfer**\n (amount = 99 USD)
+activate PayeeFSP
+SWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: Transfer 99 USD from Switch\n account and 1 USD from\n commission account\n to Payee account
+PayeeFSP -> Payee: You have received 100 USD\n from Payer
+SWITCH <<- PayeeFSP: **PUT /transfer/**<i><ID></i>
+SWITCH -->> PayeeFSP: **HTTP 200** (OK)
+SWITCH -> SWITCH: Commit reserved transfer
+deactivate PayeeFSP
+PayerFSP <<- SWITCH: **PUT /transfer/**<i><ID></i>
+PayerFSP -->> SWITCH: **HTTP 200** (OK)
+deactivate SWITCH
+PayerFSP -> PayerFSP: Commit reserved transfer
+PayerFSP ->> Payer: Transaction successful,\n you have paid 1 USD in fee
+deactivate PayerFSP
+@enduml
