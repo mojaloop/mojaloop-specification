@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title HTTP GET call flow
+' title HTTP GET call flow
 
 ' Actor Keys:
 ' participant - FSP or Switch

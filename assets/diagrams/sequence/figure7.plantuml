@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title Example of non-disclosing receive amount
+' title Example of non-disclosing receive amount
 
 ' Actor Keys:
 ' participant - FSP or Switch

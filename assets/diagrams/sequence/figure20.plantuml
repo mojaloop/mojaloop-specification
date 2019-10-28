@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title Agent-initiated Cash-In example with send amount
+' title Agent-initiated Cash-In example with send amount
 
 ' Actor Keys:
 ' participant - FSP or Switch

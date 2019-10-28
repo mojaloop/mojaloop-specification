@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title HTTP DELETE call flow
+' title HTTP DELETE call flow
 
 ' Actor Keys:
 ' participant - FSP or Switch

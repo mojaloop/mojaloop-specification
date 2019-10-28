@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title Merchant-Initiated Merchant Payment example
+' title Merchant-Initiated Merchant Payment example
 
 ' Actor Keys:
 ' participant - FSP or Switch

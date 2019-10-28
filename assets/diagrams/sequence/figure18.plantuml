@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title P2P Transfer example with receive amount
+' title P2P Transfer example with receive amount
 
 ' Actor Keys:
 ' participant - FSP or Switch

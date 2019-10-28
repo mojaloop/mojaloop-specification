@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title Example scenario where FSPIOP-Destination is unknown by FSP
+' title Example scenario where FSPIOP-Destination is unknown by FSP
 
 ' Actor Keys:
 ' participant - FSP or Switch

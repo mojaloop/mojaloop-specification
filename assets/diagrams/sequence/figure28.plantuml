@@ -27,7 +27,7 @@
 skinparam sequenceMessageAlign center
 
 ' declare title
-title Customer-Initiated Cash-Out example (send amount)
+' title Customer-Initiated Cash-Out example (send amount)
 
 ' Actor Keys:
 ' participant - FSP or Switch
