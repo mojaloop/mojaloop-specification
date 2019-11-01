@@ -101,7 +101,7 @@ HTTP, as defined in RFC 7230<sup>3</sup>, is used as the application-level proto
 
 The syntax of URIs follows RFC 3986<sup>5</sup> to identify resources and services provided by the API. This section introduces and notes implementation subjects specific to each syntax part.
 
-A generic URI has the form shown in [Listing 1,](#listing-1) where the part \[_user:password@_\]_host_\[_:port_\] is the Authority part described in Section [3.1.3.2.](#3132-authority)
+A generic URI has the form shown in [Listing 1,](#listing-1) where the part [_user:password@_]_host_[_:port_] is the Authority part described in Section [3.1.3.2.](#3132-authority)
 _{resource}_
 
 ###### Listing 1
@@ -247,7 +247,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 #### 3.2.3.1 HTTP POST Call Flow
 
-[Figure 1](#figure-1) shows the normal API call flow for a request to create an object in a Peer FSP using HTTP **POST**. The service ***/service*** in the flow should be renamed to any of the services in [Table 5]() that support the HTTP **POST** method.
+[Figure 1](#figure-1) shows the normal API call flow for a request to create an object in a Peer FSP using HTTP **POST**. The service **_/service_** in the flow should be renamed to any of the services in [Table 5]() that support the HTTP **POST** method.
 
 ###### Figure 1
 
@@ -785,7 +785,7 @@ To calculate the element **transferAmount** in the Payee FSP for a disclosing se
 ###### Listing 10
 
 ```
-If (Payer Fee \<= Payee FSP Commission)
+If (Payer Fee <= Payee FSP Commission)
     Transfer amount = Quote Amount
 Else
     Transfer amount = Quote Amount -- (Payer Fee - Payee FSP Commission)
@@ -1402,7 +1402,7 @@ The HTTP request **POST /participants/** _{Type}_ **/** _{ID}_ (or **POST /parti
 Callback and data model information for **POST /participants**/_{Type}_**/**_{ID}_ (alternative **POST** **/participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
 - Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6.2.3.1-put-/participants/_{Type}_/_{ID}_)
-- Error Callback ***--*** [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6.2.4.1-put-/participants/{Type}/{ID}/error)
+- Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6.2.4.1-put-/participants/{Type}/{ID}/error)
 - Data Model -- See [Table 7](#table-7)
 
 ####### Table 7
@@ -1819,7 +1819,7 @@ The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a p
 Callback and data model information for **GET /quotes/**_{ID}_:
 
 - Callback -- [**PUT /quotes/**{ID}](#6.5.3.1-PUT-/quotes/{ID})
-- Error Callback -- [**PUT /quotes/**_{ID}_**/*error***](#6.5.4.1-PUT-/quotes/{ID}/error)
+- Error Callback -- [**PUT /quotes/**_{ID}_**/_error_**](#6.5.4.1-PUT-/quotes/{ID}/error)
 - Data Model -- Empty body
 
 #### 6.5.2.2 POST /quotes
@@ -2522,7 +2522,7 @@ The HTTP request **POST /bulkTransfers** is used to request the creation of a bu
 
 #### 6.10.3 Callbacks
 
-This section describes the callbacks that are used by the server under the resource ***/*bulkTransfers**.
+This section describes the callbacks that are used by the server under the resource **/bulkTransfers**.
 
 #### 6.10.3.1 PUT /bulkTransfers/_{ID}_
 
@@ -3986,7 +3986,7 @@ Low level categories defined under client Errors:
 | **3209** | Bulk quote ID not found |Provided Bulk Quote ID was not found on the server. |||||||| X | X |
 | **3210** | Bulk transfer ID not found |Provided Bulk Transfer ID was not found on the server. ||||||||| X |
 
-**Table 103 -- Identifier errors -- 32*xx***
+**Table 103 -- Identifier errors -- 32_xx_**
 
 ###### Table 104
 
@@ -4102,2042 +4102,897 @@ See [Table 106](#table-106) for all Payee errors defined in the API.
 
 ## 8 Generic Transaction Patterns Binding
 
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
+This section provides information about how the logical transaction patterns from _Generic Transaction Patterns_ are used in the asynchronous REST binding of the API. Much of the information is provided by way of sequence diagrams. For more information regarding the steps in these diagrams, see _Generic Transaction Patterns_.
 
-This section provides information about how the logical transaction
-patterns from *Generic Transaction Patterns* are used in the
-asynchronous REST binding of the API. Much of the information is
-provided by way of sequence diagrams. For more information regarding the
-steps in these diagrams, see *Generic Transaction Patterns*.
+### 8.1 Payer Initiated Transaction
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payer would like to transfer funds to another Party whom is not located in the same FSP as the Payer. [Figure](#figure-63) [63](#figure-63) shows the sequence diagram for a _Payer Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
-Last Modified 2018-11-01 Version 1.0 Page 156 of 190
+###### Figure 63
 
-[]{#page157 .anchor}**API Definition**
+`Figure 63 - Place Holder`
 
-> **Open API for FSP Interoperability Specification**
->
-> **Payer Initiated Transaction**
+**Figure 63 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
 
-![](media/image195.jpeg){width="0.24861111111111112in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
+### 8.2 Payee Initiated Transaction
 
-The *Payer Initiated Transaction* pattern is introduced in *Generic
-Transaction Patterns*. On a high-level, the pattern should be used
-whenever a Payer would like to transfer funds to another Party whom is
-not located in the same FSP as the Payer. [Figure](#page158)
-[63](#page158) shows the sequence diagram for a *Payer Initiated
-Transaction* using the asynchronous REST binding of the logical version.
-The process for each number in the sequence diagram is described in
-*Generic Transaction Patterns*.
+The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payee would like to request that Payer transfer funds to a Payee. The Payer and the Payee are assumed to be in different FSPs, and the approval of the transaction is performed in the Payer FSP. If the transaction information and approval occur on a Payee device instead, use the related [_Payee Initiated Transaction using OTP_](#8.3-payee-initiated-transaction-using-otp) pattern described in Section [8.3](#8.3-payee-initiated-transaction-using-otp) instead. [Figure 64](#figure-64) shows the sequence diagram for a _Payee Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+###### Figure-64
 
-Last Modified 2018-11-01 Version 1.0 Page 157 of 190
+`Figure 64 - Place Holder`
 
-[]{#page158 .anchor}**API Definition**
+**Figure 64 -- Payee Initiated Transaction pattern using the asynchronous REST binding**
 
-**Open API for FSP Interoperability Specification**
+### 8.3 Payee Initiated Transaction using OTP
 
-![](media/image196.jpeg){width="6.456944444444445in"
-height="8.538194444444445in"}
+The _Payee Initiated Transaction using OTP_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, this pattern is like the [Payee Initiated Transaction](#8.2-payee-initiated-transaction) described in Section [8.2;](#8.2-payee-initiated-transaction) however, in this pattern the transaction information and approval for the Payer is shown and entered on a Payee device instead. As in other transaction patterns, the Payer and the Payee are assumed to be in different FSPs. [Figure 65](#figure-65) shows the sequence diagram for a _Payee Initiated Transaction using OTP_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
-**Figure 63 -- Payer Initiated Transaction pattern using the
-asynchronous REST binding**
+###### Figure 65
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+`Figure65 - Place Holder`
 
-Last Modified 2018-11-01 Version 1.0 Page 158 of 190
+**Figure 65 -- Payee Initiated Transaction using OTP pattern using the asynchronous REST binding**
 
-[]{#page159 .anchor}**API Definition**
+## 8.4 Bulk Transactions
 
-> **Open API for FSP Interoperability Specification**
->
-> **Payee Initiated Transaction**
+The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern is used whenever a Payer would like to transfer funds to multiple Payees using one single transaction. The Payees can be in different FSPs. [Figure 66](#figure-66) shows the sequence diagram for a _Bulk Transactions_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
-![](media/image197.jpeg){width="0.2520833333333333in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
+###### Figure 66
 
-The *Payee Initiated Transaction* pattern is introduced in *Generic
-Transaction Patterns*. On a high-level, the pattern should be used
-whenever a Payee would like to request that Payer transfer funds to a
-Payee. The Payer and the Payee are assumed to be in different FSPs, and
-the approval of the transaction is performed in the Payer FSP. If the
-transaction information and approval occur on a Payee device instead,
-use the related [*Payee Initiated Transaction using OTP*](#page161)
-pattern described in Section [8.3](#page161) instead. [Figure
-64](#page160) shows the sequence diagram for a *Payee Initiated
-Transaction* using the asynchronous REST binding of the logical version.
-The process for each number in the sequence diagram is described in
-*Generic Transaction Patterns*.
+`Figure 66 - Place Holder`
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+**Figure 66 -- Bulk Transactions pattern using the asynchronous REST binding**
 
-Last Modified 2018-11-01 Version 1.0 Page 159 of 190
+## 9 API Error Handling
 
-[]{#page160 .anchor}**API Definition**
+This section describes how to handle missing responses or callbacks, as well as how to handle errors in a server during processing of a request.
 
-**Open API for FSP Interoperability Specification**
+### 9.1 Erroneous Request
 
-![](media/image198.jpeg){width="5.350694444444445in"
-height="8.578472222222222in"}
+If a server receives an erroneous service request that can be handled immediately (for example, malformed syntax or resource not found), a valid HTTP client error code (starting with **4_xx_**<sup>39</sup>) should be returned to the client in the response. The HTTP error codes defined in the API appear in [Table 3](#table-3). The HTTP response may also contain an [**ErrorInformation**](#7.4.2-errorinformation) element for the purpose of describing the error in more detail (for more information, see Section [3.2.4.1)](#3.2.4.1-error-information-in-http-response).
 
-**Figure 64 -- Payee Initiated Transaction pattern using the
-asynchronous REST binding**
+### 9.2 Error in Server During Processing of Request
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+[Figure 67](#figure-67) shows an example of how to handle an error on a server during processing.
 
-Last Modified 2018-11-01 Version 1.0 Page 160 of 190
+###### Figure 67
 
-[]{#page161 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> **Payee Initiated Transaction using OTP**
-
-![](media/image199.jpeg){width="0.24861111111111112in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-The *Payee Initiated Transaction using OTP* pattern is introduced in
-*Generic Transaction Patterns*. On a high-level, this pattern is like
-the [Payee Initiated Transaction](#page159) described in Section
-[8.2;](#page159) however, in this pattern the transaction information
-and approval for the Payer is shown and entered on a Payee device
-instead. As in other transaction patterns, the Payer and the Payee are
-assumed to be in different FSPs. [Figure 65](#page162) shows the
-sequence diagram for a *Payee Initiated Transaction using OTP* using the
-asynchronous REST binding of the logical version. The process for each
-number in the sequence diagram is described in *Generic* *Transaction
-Patterns*.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 161 of 190
-
-[]{#page162 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-![](media/image200.jpeg){width="4.8in" height="8.588194444444444in"}
-
-**Figure 65 -- Payee Initiated Transaction using OTP pattern using the
-asynchronous REST binding**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 162 of 190
-
-[]{#page163 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> **Bulk Transactions**
-
-![](media/image201.jpeg){width="0.25555555555555554in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-The *Bulk Transaction* pattern is introduced in *Generic Transaction
-Patterns*. On a high-level, the pattern is used whenever a Payer would
-like to transfer funds to multiple Payees using one single transaction.
-The Payees can be in different FSPs. [Figure](#page164) [66](#page164)
-shows the sequence diagram for a *Bulk Transactions* using the
-asynchronous REST binding of the logical version. The process for each
-number in the sequence diagram is described in *Generic Transaction
-Patterns*.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 163 of 190
-
-[]{#page164 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-![](media/image202.jpeg){width="7.199305555555555in"
-height="8.477083333333333in"}
-
-**Figure 66 -- Bulk Transactions pattern using the asynchronous REST
-binding**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 164 of 190
-
-[]{#page165 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
-
-
-**9** **API Error Handling**
-
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-This section describes how to handle missing responses or callbacks, as
-well as how to handle errors in a server during processing of a request.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 165 of 190
-
-[]{#page166 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> **Erroneous Request**
-
-![](media/image203.jpeg){width="0.24861111111111112in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-> If a server receives an erroneous service request that can be handled
-> immediately (for example, malformed syntax or resource not found), a
-> valid HTTP client error code (starting with **4*xx***39) should be
-> returned to the client in the response. The HTTP error codes defined
-> in the API appear in [Table](#page26) 3.The HTTP response may also
-> contain an [**ErrorInformation**](#page136) element for the purpose of
-> describing the error in more detail (for more information, see Section
-> [3.2.4.1)](#page26).
-
-39. [[https://tools.ietf.org/html/rfc7231\#section-6.5]{.underline}](https://tools.ietf.org/html/rfc7231#section-6.5)
-    -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -
-    Client Error 4xx
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-> Last Modified 2018-11-01 Version 1.0 Page 166 of 190
-
-[]{#page167 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> **Error in Server During Processing of Request**
-
-![](media/image204.jpeg){width="0.2520833333333333in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-[Figure 67](#page167) shows an example of how to handle an error on a
-server during processing.
-
-![](media/image205.jpeg){width="3.9895833333333335in"
-height="1.7083333333333333in"}
+`Figure 67 - Place Holder`
 
 **Figure 67 -- Error on server during processing of request**
 
-**9.2.1 Internal Processing Steps**
+#### 9.2.1 Internal Processing Steps
 
-The following list describes the steps in the sequence (see [Figure
-67)](#page167).
+The following list describes the steps in the sequence (see [Figure 67)](#figure-67).
 
-1.  The client would like the server to create a new service object and
-    > thus uses a **POST** request.
+1. The client would like the server to create a new service object and thus uses a **POST** request.
 
-2.  The server receives the request. It immediately sends an
-    > **accepted** response to the client, and then tries to create the
-    > object based on the service request. A processing error occurs,
-    > and the request cannot be handled as requested. The server sends
-    > the callback ***PUT /**\<resource\>***/***\<ID\>***/error**
-    > including an error code (Section [7.6)](#page147) and error
-    > description to notify the client of the error.
+2. The server receives the request. It immediately sends an **accepted** response to the client, and then tries to create the object based on the service request. A processing error occurs, and the request cannot be handled as requested. The server sends the callback **_PUT_ /**_{resource}_**/**_{ID}_**/error** including an error code [(Section 7.6)](#7.6-error-codes) and error description to notify the client of the error.
 
-3.  The client receives the error callback and immediately responds with
-    > **OK**. The client then handles the error.
+3. The client receives the error callback and immediately responds with **OK**. The client then handles the error.
 
-4.  The server receives the **OK** response and the process is
-    > completed.
+4. The server receives the **OK** response and the process is completed.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+### 9.3 Client Handling on Error Callback
 
-Last Modified 2018-11-01 Version 1.0 Page 167 of 190
+The following sections explain how a client handles error callbacks from a server.
 
-[]{#page168 .anchor}**API Definition**
+#### 9.3.1 API Resource /participants
 
-> **Open API for FSP Interoperability Specification**
->
-> **Client Handling on Error Callback**
+The typical error from the **/participants** service is that the requested Party could not be found. The client could either try another server, or notify the end user that the requested Party could not be found.
 
-![](media/image206.jpeg){width="0.24861111111111112in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
+#### 9.3.2 API Resource /parties
 
-The following sections explain how a client handles error callbacks from
-a server.
+The typical error from the **/parties** service is that the requested Party could not be found. The client could either try another server, or notify the end user that information regarding the requested Party could not be found.
 
-**9.3.1 API Resource /participants**
+#### 9.3.3 API Resource /quotes
 
-The typical error from the **/participants** service is that the
-requested Party could not be found. The client could either try another
-server, or notify the end user that the requested Party could not be
-found.
+The typical error from the **/quotes** service is that a quote could not be calculated for the requested transaction. The client should notify the end user that the requested transaction could not be performed.
 
-**9.3.2 API Resource /parties**
+#### 9.3.4 API Resource /transactionRequests
 
-The typical error from the **/parties** service is that the requested
-Party could not be found. The client could either try another server, or
-notify the end user that information regarding the requested Party could
-not be found.
+The typical error from the **/transactionRequests** service is that the Payer rejected the transaction or that an automatic validation failed. The client should notify the Payee that the transaction request failed.
 
-**9.3.3 API Resource /quotes**
+#### 9.3.5 API Resource /authorizations
 
-The typical error from the **/quotes** service is that a quote could not
-be calculated for the requested transaction. The client should notify
-the end user that the requested transaction could not be performed.
+The typical error from the **/authorizations** service is that the transaction request could not be found. The client should notify the Payer that the transaction request has been cancelled.
 
-**9.3.4 API Resource /transactionRequests**
+#### 9.3.6 API Resource /transfers
 
-The typical error from the **/transactionRequests** service is that the
-Payer rejected the transaction or that an automatic validation failed.
-The client should notify the Payee that the transaction request failed.
+The typical error from the **/transfers** service is that either the hop-to-hop transfer process or the end-to-end financial transaction failed. For example, a limit breach was discovered, or the Payee could not be found. The client (the Payer FSP) should in any error case cancel the reservation for the financial transaction that was performed before requesting the transaction to be performed on the server (the Payee FSP). See [Figure 68](#figure-68) for an example including a financial Switch between the FSPs.
 
-**9.3.5 API Resource /authorizations**
+###### Figure 68
 
-The typical error from the **/authorizations** service is that the
-transaction request could not be found. The client should notify the
-Payer that the transaction request has been cancelled.
-
-**9.3.6 API Resource /transfers**
-
-The typical error from the **/transfers** service is that either the
-hop-to-hop transfer process or the end-to-end financial transaction
-failed. For example, a limit breach was discovered, or the Payee could
-not be found. The client (the Payer FSP) should in any error case cancel
-the reservation for the financial transaction that was performed before
-requesting the transaction to be performed on the server (the Payee
-FSP). See [Figure 68](#page169) for an example including a financial
-Switch between the FSPs.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 168 of 190
-
-[]{#page169 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-![](media/image207.jpeg){width="6.188194444444444in" height="4.75625in"}
+`Figure 68 - Place Holder`
 
 **Figure 68 -- Handling of error callback from POST /transfers**
 
-**9.3.6.1 Internal Processing Steps**
+##### 9.3.6.1 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in
-the sequence (see [Figure 68)](#page169).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 68)](#figure-68).
 
-1.  The transfer is reserved from the Payer's account to either a
-    > combined Switch account or a Payee FSP account, depending on
-    > setup. After the transfer has been successfully reserved, the
-    > request [**POST /transfers**](#page106) is used on the Switch. The
-    > transfer is now irrevocable from the Payer FSP. The Payer FSP then
-    > waits for an **accepted** response from the Switch.
+1. The transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After the transfer has been successfully reserved, the request [**POST /transfers**](#6.7.2.2-post-/transfers) is used on the Switch. The transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
-2.  The Switch receives the request [**POST /transfers**](#page106) and
-    > immediately sends an **accepted** response to the Payer FSP. The
-    > Switch then performs all applicable internal transfer validations.
-    > If the validations are successful, a transfer is reserved from a
-    > Payer FSP account to a Payee FSP account. After the transfer has
-    > been successfully reserved, the request [**POST**](#page106)
-    > [**/transfers**](#page106) is used on the Payee FSP. The transfer
-    > is now irrevocable from the Switch. The Switch then waits for an
-    > **accepted** response from the Payee FSP.
+2. The Switch receives the request [**POST /transfers**](#6.7.2.2-post-/transfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, a transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfer has been successfully reserved, the request [**POST /transfers**](#6.7.2.2-post-/transfers) is used on the Payee FSP. The transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
 
-3.  The Payee FSP receives the [**POST /transfers**](#page106) and
-    > immediately sends an **accepted** response to the Switch. The
-    > Payee FSP then performs all applicable internal transaction
-    > validations. The validation is assumed to fail at this point, for
-    > example, due to a limit breach. The error callback [**PUT
-    > /transfers/***\<ID\>***/error**](#page107) is used on the Switch
-    > to inform the Payer FSP about the error. The Payee FSP then waits
-    > for an **OK** response from the Switch to complete the transfer
-    > process.
+3. The Payee FSP receives the [**POST /transfers**](#6.7.2.2-post-/transfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal transaction validations. The validation is assumed to fail at this point, for example, due to a limit breach. The error callback [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers/{id}/error) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the transfer process.
 
-4.  The Switch receives the error callback [**PUT
-    > /transfers/***\<ID\>***/error**](#page107) and immediately
-    > responds with an **OK** response. The Switch then cancels the
-    > earlier reserved transfer, as it has received an error callback.
-    > The Switch will then use the
+4. The Switch receives the error callback [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers/{id}/error) and immediately responds with an **OK** response. The Switch then cancels the earlier reserved transfer, as it has received an error callback. The Switch will then use the callback [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers/{id}/error) to the Payer FSP, using the same parameters, and wait for an **OK** response to complete the transfer process.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+5. The Payer FSP receives the callback [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers/{id}/error) and immediately responds with an **OK** response. The Payer FSP then cancels the earlier reserved transfer because it has received an error callback.
 
-Last Modified 2018-11-01 Version 1.0 Page 169 of 190
+#### 9.3.7 API Resource /transactions
 
-[]{#page170 .anchor}**API Definition**
+The normal error case from the **/transactions** service is that the transaction could not be found in the Peer FSP.
 
-**Open API for FSP Interoperability Specification**
+#### 9.3.8 API Resource /bulkQuotes
 
-> callback [**PUT /transfers/***\<ID\>***/error**](#page107) to the
-> Payer FSP, using the same parameters, and wait for an **OK** response
-> to complete the transfer process.
+The typical error from the **/bulkQuotes** service is that a quote could not be calculated for the requested transaction. The client should notify the end user that the requested transaction could not be performed.
 
-5.  The Payer FSP receives the callback [**PUT
-    > /transfers/***\<ID\>***/error**](#page107) and immediately
-    > responds with an **OK** response. The Payer FSP then cancels the
-    > earlier reserved transfer because it has received an error
-    > callback.
+#### 9.3.9 API Resource /bulkTransfers
 
-**9.3.7 API Resource /transactions**
+The typical error case from the **/bulkTransfers** service is that the bulk transaction was not accepted; for example, due to a validation error. The client (the Payer FSP) should in any error case cancel the reservation for the financial transaction that was performed before requesting that the transaction be performed on the server (the Payee FSP). See [Figure 69](#figure-69) for an example including a financial Switch between the FSPs.
 
-The normal error case from the **/transactions** service is that the
-transaction could not be found in the Peer FSP.
+###### Figure 69
 
-**9.3.8 API Resource /bulkQuotes**
+`Figure-69 - Place Holder`
 
-The typical error from the **/bulkQuotes** service is that a quote could
-not be calculated for the requested transaction. The client should
-notify the end user that the requested transaction could not be
-performed.
+**Figure 69 -- Handling of error callback from API Service /bulkTransfers**
 
-**9.3.9 API Resource /bulkTransfers**
+##### 9.3.9.1 Internal Processing Steps
 
-The typical error case from the **/bulkTransfers** service is that the
-bulk transaction was not accepted; for example, due to a validation
-error. The client (the Payer FSP) should in any error case cancel the
-reservation for the financial transaction that was performed before
-requesting that the transaction be performed on the server (the Payee
-FSP). See [Figure 69](#page170) for an example including a financial
-Switch between the FSPs.
+The following list describes the steps in the sequence (see [Figure 69)](#figure-69).
 
-![](media/image208.jpeg){width="6.188194444444444in"
-height="4.3180555555555555in"}
+1. Each individual transfer in the bulk transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After each transfer has been successfully reserved, the request [**POST /bulkTransfers**](#6.10.2.2-post-/bulktransfers) is used on the Switch. The bulk transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
-**Figure 69 -- Handling of error callback from API Service
-/bulkTransfers**
+2. The Switch receives the request [**POST /bulkTransfers**](#6.10.2.2-post-/bulktransfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, each individual transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfers have been successfully reserved, the request [**POST /bulkTransfers**](#6.10.2.2-post-/bulktransfers) is used on the Payee FSP. The bulk transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
 
-**9.3.9.1 Internal Processing Steps**
+3. The Payee FSP receives [**POST /bulkTransfers**](#6.10.2.2-post-/bulktransfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal bulk transfer validations. The validation is assumed to fail due to some reason; for example, a validation failure that prevents the entire bulk transfer from being performed. The error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#6.10.4.1-put-/bulkTransfers/{ID}/error) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the bulk transfer process.
 
-The following list describes the steps in the sequence (see [Figure
-69)](#page170).
+4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#6.10.4.1-put-/bulkTransfers/{ID}/error) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#6.10.4.1-put-/bulkTransfers/{ID}/error) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
 
-1.  Each individual transfer in the bulk transfer is reserved from the
-    > Payer's account to either a combined Switch account or a Payee FSP
-    > account, depending on setup. After each transfer has been
-    > successfully reserved, the request [**POST**](#page118)
+5. The Payer FSP receives the callback [**PUT /bulkTransfers/**_{ID}_**/error**](##6.10.4.1-put-/bulkTransfers/{ID}/error) and immediately responds with an **OK** response. The Payer FSP then cancels all the earlier reserved transfers, as it has received an error callback.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+### 9.4 Client Missing Response from Server - Using Resend of Request
 
-Last Modified 2018-11-01 Version 1.0 Page 170 of 190
+[Figure 70](#figure-70) shows an example UML (Unified Modeling Language) sequence diagram in which a client (FSP or Switch) performs error handling when the client misses a response from a server (Switch or Peer FSP) pertaining to a service request, using resend of the same service request.
 
-**API Definition**
+###### Figure 70
 
-**Open API for FSP Interoperability Specification**
-
-> [**/bulkTransfers**](#page118) is used on the Switch. The bulk
-> transfer is now irrevocable from the Payer FSP. The Payer FSP then
-> waits for an **accepted** response from the Switch.
-
-2.  The Switch receives the request [**POST /bulkTransfers**](#page118)
-    > and immediately sends an **accepted** response to the Payer FSP.
-    > The Switch then performs all applicable internal transfer
-    > validations. If the validations are successful, each individual
-    > transfer is reserved from a Payer FSP account to a Payee FSP
-    > account. After the transfers have been successfully reserved, the
-    > request [**POST /bulkTransfers**](#page118) is used on the Payee
-    > FSP. The bulk transfer is now irrevocable from the Switch. The
-    > Switch then waits for an **accepted** response from the Payee FSP.
-
-3.  The Payee FSP receives [**POST /bulkTransfers**](#page118) and
-    > immediately sends an **accepted** response to the Switch. The
-    > Payee FSP then performs all applicable internal bulk transfer
-    > validations. The validation is assumed to fail due to some reason;
-    > for example, a validation failure that prevents the entire bulk
-    > transfer from being performed. The error callback [**PUT
-    > /bulkTransfers/***\<ID\>***/error**](#page119) is used on the
-    > Switch to inform the Payer FSP about the error. The Payee FSP then
-    > waits for an **OK** response from the Switch to complete the bulk
-    > transfer process.
-
-4.  The Switch receives the error callback [**PUT
-    > /bulkTransfers/***\<ID\>***/error**](#page119) and immediately
-    > responds with an **OK** response. The Switch then cancels all the
-    > previous reserved transfers, because it has received an error
-    > callback. The Switch then uses the callback [**PUT
-    > /bulkTransfers/***\<ID\>***/error**](#page119) to the Payer FSP,
-    > using the same parameters, and waits for an **OK** response to
-    > complete the bulk transfer process.
-
-5.  The Payer FSP receives the callback [**PUT
-    > /bulkTransfers/***\<ID\>***/error**](#page119) and immediately
-    > responds with an **OK** response. The Payer FSP then cancels all
-    > the earlier reserved transfers, as it has received an error
-    > callback.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 171 of 190
-
-[]{#page172 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-> **Client Missing Response from Server - Using Resend of Request**
-
-![](media/image209.jpeg){width="0.25555555555555554in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-[Figure 70](#page172) shows an example UML (Unified Modeling Language)
-sequence diagram in which a client (FSP or Switch) performs error
-handling when the client misses a response from a server (Switch or Peer
-FSP) pertaining to a service request, using resend of the same service
-request.
-
-![](media/image210.jpeg){width="2.8645833333333335in"
-height="2.5819444444444444in"}
+`Figure 70 - Place Holder`
 
 **Figure 70 -- Error handling from client using resend of request**
 
-**9.4.1 Internal Processing Steps**
+#### 9.4.1 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in
-the sequence (see [Figure 70)](#page172).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 70)](#figure-70).
 
-1.  The client would like the server to create a new service object. The
-    > HTTP request is lost somewhere on the way to the server.
+1. The client would like the server to create a new service object. The HTTP request is lost somewhere on the way to the server.
 
-2.  The client notes that no response has been received from the server
-    > within a specified timeout. The client resends the service
-    > request.
+2. The client notes that no response has been received from the server within a specified timeout. The client resends the service request.
 
-3.  The server receives the resent request. It immediately sends an
-    > **accepted** response to the client, and then creates the object
-    > in accordance with the service request.
+3. The server receives the resent request. It immediately sends an **accepted** response to the client, and then creates the object in accordance with the service request.
 
-4.  The **accepted** HTTP response from the server is lost on the way to
-    > the client, and the client notes that no response has been
-    > received from the server within a specified timeout. The client
-    > resends the service request.
+4. The **accepted** HTTP response from the server is lost on the way to the client, and the client notes that no response has been received from the server within a specified timeout. The client resends the service request.
 
-5.  The server receives the resent request. It immediately sends an
-    > **accepted** response to the client, and then notes that the
-    > service request is the same as in Step [3.](#page172) As the
-    > service request is a resend, the server should not create a new
-    > object based on the service request. The server sends a callback
-    > to notify the client about the object created in Step
-    > [3.](#page172)
+5. The server receives the resent request. It immediately sends an **accepted** response to the client, and then notes that the service request is the same as in [Step 3.](#figure-70) As the service request is a resend, the server should not create a new object based on the service request. The server sends a callback to notify the client about the object created in [Step 3.](#figure-70)
 
-6.  The client receives the callback regarding the created object. The
-    > client sends an **OK** HTTP response to the server to complete the
-    > process.
+6. The client receives the callback regarding the created object. The client sends an **OK** HTTP response to the server to complete the process.
 
-7.  The server receives the **OK** HTTP response from the client,
-    > completing the process.
+7. The server receives the **OK** HTTP response from the client, completing the process.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+### 9.5 Server Missing Response from Client
 
-Last Modified 2018-11-01 Version 1.0 Page 172 of 190
+A server using the API is not responsible for making sure that a callback is properly delivered to a client. However, it is considered good practice to retry if the server does not receive an **OK** response from the client.
 
-[]{#page173 .anchor}**API Definition**
+#### 9.5.1 Client Missing Callback - Using GET request
 
-> **Open API for FSP Interoperability Specification**
->
-> **Server Missing Response from Client**
+[Figure 71](#figure-71) is a UML sequence diagram showing how a client (Switch or Peer FSP) would perform error handling in case of no callback from a client (FSP or Switch) within a reasonable time.
 
-![](media/image211.jpeg){width="0.24861111111111112in"
-height="0.14444444444444443in"}![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
+###### Figure 71
 
-A server using the API is not responsible for making sure that a
-callback is properly delivered to a client. However, it is considered
-good practice to retry if the server does not receive an **OK** response
-from the client.
-
-**9.5.1 Client Missing Callback - Using GET request**
-
-[Figure 71](#page173) is a UML sequence diagram showing how a client
-(Switch or Peer FSP) would perform error handling in case of no callback
-from a client (FSP or Switch) within a reasonable time.
-
-![](media/image212.jpeg){width="3.8305555555555557in"
-height="3.509027777777778in"}
+`Figure 71 - Place Holder`
 
 **Figure 71 -- Error handling from client using GET request**
 
-**9.5.2 Internal Processing Steps**
+#### 9.5.2 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in
-the sequence (see [Figure 71)](#page173).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 71)](#figure-71).
 
-1.  The client would like the server to create a new service object; a
-    > service request is sent.
+1. The client would like the server to create a new service object; a service request is sent.
 
-2.  The server receives the service request. It immediately sends an
-    > **accepted** response to the client, and then creates the object
-    > based on the service request. The object creation is a long
-    > running process; for example, a bulk transfer consisting of
-    > numerous financial transactions.
+2. The server receives the service request. It immediately sends an **accepted** response to the client, and then creates the object based on the service request. The object creation is a long running process; for example, a bulk transfer consisting of numerous financial transactions.
 
-3.  The server notes that no callback has been received from the client
-    > within a reasonable time. The client uses a **GET** service
-    > request with the ID that was provided in the original service
-    > request.
+3. The server notes that no callback has been received from the client within a reasonable time. The client uses a **GET** service request with the ID that was provided in the original service request.
 
-4.  The server receives the **GET** service request. The server sends an
-    > accepted HTTP response to the client to notify that the request
-    > will be handled.
+4. The server receives the **GET** service request. The server sends an accepted HTTP response to the client to notify that the request will be handled.
 
-5.  The client receives the **accepted** HTTP response and waits for the
-    > callback, which arrives sometime later; the client sends an **OK**
-    > HTTP response and the process is completed.
+5. The client receives the **accepted** HTTP response and waits for the callback, which arrives sometime later; the client sends an **OK** HTTP response and the process is completed.
 
-6.  The server sends the callback to the client containing the requested
-    > information, and an **OK** HTTP response is received from the
-    > client, which completes the process.
+6. The server sends the callback to the client containing the requested information, and an **OK** HTTP response is received from the client, which completes the process.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+<sup>39</sup> [[https://tools.ietf.org/html/rfc7231\#section-6.5]{.underline}](https://tools.ietf.org/html/rfc7231#section-6.5)     -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -     Client Error 4xx
 
-Last Modified 2018-11-01 Version 1.0 Page 173 of 190
+## 10 End-to-End Example
 
-[]{#page174 .anchor}**API Definition**
+This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see _Signature_) and field level encryption using JWE (see _Encryption_).
 
-> **Open API for FSP Interoperability Specification**
-
-**10 End-to-End Example**
-
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-This section contains an end-to-end example in which an account holder
-is provisioned, and then a P2P Transfer from a Payer located in one FSP
-to a Payee located in another FSP is performed. The example includes
-both HTTP requests and responses, HTTP headers, and data models in JSON,
-but without additional security features of using JWS (see *Signature*)
-and field level encryption using JWE (see *Encryption*).
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 174 of 190
-
-[]{#page175 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-![](media/image213.jpeg){width="0.33541666666666664in"
-height="0.14444444444444443in"} **Example Setup**
-
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
+### 10.1 Example Setup
 
 This section explains the setup of the example.
 
-**10.1.1 Nodes**
+#### 10.1.1 Nodes
 
-The nodes in the end-to-end example in this section are simplified by
-having only two FSPs, where one FSP is a bank (identifier **BankNrOne**)
-and the other FSP is a mobile money operator (identifier
-**MobileMoney**), and one Switch (identifier **Switch**). The Switch
-also acts as the Account Lookup System (ALS) in this simplified setup
-(see [Figure 72)](#page175).
+The nodes in the end-to-end example in this section are simplified by having only two FSPs, where one FSP is a bank (identifier **BankNrOne**) and the other FSP is a mobile money operator (identifier **MobileMoney**), and one Switch (identifier **Switch**). The Switch also acts as the Account Lookup System (ALS) in this simplified setup (see [Figure 72)](#figure-72).
 
-![](media/image214.jpeg){width="4.527083333333334in" height="1.21875in"}
+###### Figure 72
+
+`Figure 72 - Place Holder`
 
 **Figure 72 -- Nodes in end-to-end example**
 
-**10.1.2 Account Holders**
+#### 10.1.2 Account Holders
 
 The account holders in the example are:
 
--   One account holder in the FSP **BankNrOne** named Mats Hagman. Mats
-    > Hagman has a bank account with IBAN number
-    > **SE4550000000058398257466**. The currency of the account is USD.
+- One account holder in the FSP **BankNrOne** named Mats Hagman. Mats Hagman has a bank account with IBAN number **SE4550000000058398257466**. The currency of the account is USD.
 
--   One account holder in the FSP **MobileMoney** named Henrik Karlsson.
-    > Henrik Karlsson has a mobile money account that is identified by
-    > his phone number **123456789**. The currency of the account is
-    > USD.
-
-**10.1.3 Scenario**
-
-The scenario in the example is that Mats Hagman in FSP **BankNrOne**
-wants to transfer 100 USD to Henrik Karlsson in the FSP **MobileMoney**.
-Before Henrik Karlsson can be found by FSP **BankNrOne**, Henrik's FSP
-**MobileMoney** should provide information to the Switch specifying in
-which FSP Henrik Karlsson can be found in. The end-to-end flow including
-all used services can be found in Section [10.1.4.](#page175)
-
-**10.1.4 Other Notes**
-
-The JSON messages used in the examples are formatted with color coding,
-indentations, and line breaks for very long lines to simplify the read
-of the examples.
-
-Both FSPs are assumed to have a pre-funded Switch account in their
-respective FSPs.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 175 of 190
-
-[]{#page176 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
-
-![](media/image215.jpeg){width="0.3388888888888889in"
-height="0.14444444444444443in"} **End-to-End Flow**
-
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-[Figure 73](#page176) shows the end-to-end flow of the entire example,
-from provisioning of FSP information to the actual transaction.
-
-![](media/image216.jpeg){width="6.315972222222222in"
-height="7.970138888888889in"}
-
-**Figure 73 -- End-to-end flow, from provision of account holder FSP
-information to a successful transaction**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 176 of 190
-
-[]{#page177 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
-
-![](media/image217.jpeg){width="0.33541666666666664in"
-height="0.14444444444444443in"} **Provision Account Holder**
-
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-Before the Payee Henrik Karlsson can be found by the Payer FSP
-**BankNrOne**, Henrik Karlsson should be provisioned to the ALS, which
-is also the Switch in this simplified example, by Henrik's FSP
-(**MobileMoney**). This is performed through either one of the services
-[**POST /participants**](#page81) (bulk version) or [**POST
-/participants/***\<Type\>***/***\<ID\>*](#page81) (single version). As
-the Payee in this example is only one (Henrik Karlsson), the single
-[**POST /participants/***\<Type\>***/***\<ID\>*](#page81) version is
-used by FSP **MobileMoney**. The provision could happen anytime, for
-example when Henrik Karlsson signed up for the financial account, or
-when the FSP **MobileMoney** connected to the Switch for the first time.
-
-**10.3.1 FSP MobileMoney Provisions Henrik Karlsson -- Step 1 in
-End-to-End Flow**
-
-[Listing 29](#page177) shows the HTTP request where the FSP
-**MobileMoney** provisions FSP information for account holder Henrik
-Karlsson, identified by **MSISDN** and **123456789** (see Section
-[5.2](#page71) for more information about [Party Addressing)](#page71).
-The JSON element **fspId** is set to the FSP identifier (MobileMoney),
-and JSON element **currency** is set to the currency of the account
-(USD).
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.2.2.3](#page81) for more information about the service
-[**POST**](#page81)
-[**/participants/***\<Type\>***/***\<ID\>*.](#page81) **More**
-information regarding routing of requests using **FSPIOP-Destination**
-and **FSPIOP-Source** can be found in Section [3.2.3.5.](#page24)
-Information about API version negotiation can be found in Section
-[3.3.4.](#page29)
-
-> POST /participants/MSISDN/123456789 HTTP/1.1
->
-> Accept: application/vnd.interoperability.participants+json;version=1
->
-> Content-Length: 50
->
-> Content-Type:
-> application/vnd.interoperability.participants+json;version=1.0
->
-> Date: Tue, 14 Nov 2017 08:12:31 GMT
->
-> FSPIOP-Source: MobileMoney
->
-> FSPIOP-Destination: Switch
->
-> {
->
-> \"fspId\": \"MobileMoney\",
->
-> \"currency\": \"USD\"
->
-> }
->
-> **Listing 29 -- Provision FSP information for account holder Henrik
-> Karlsson**
-
-[Listing 30](#page177) shows the asynchronous HTTP response where the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the HTTP request in [Listing 29.](#page177)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-> HTTP/1.1 202 Accepted
->
-> Content-Type:
-> application/vnd.interoperability.participants+json;version=1.0
->
-> **Listing 30 -- Asynchronous response on provision request**
-
-**10.3.2 Switch Handles Provision -- Step 2 in End-to-End Flow**
-
-When the Switch has received the HTTP request in [Listing 29](#page177)
-and sent the asynchronous response in [Listing 30,](#page177) the Switch
-should verify the body of the request in [Listing 29.](#page177) An
-example verification is to check that the **fspId** element is the same
-as the **FSPIOP-Source** , as it should be the FSP of the account holder
-who provisions the information. A scheme could also have restrictions on
-which currencies are allowed, which means that the Switch should then
-check that the currency in the **currency** element is allowed.
-
-After the Switch has verified the request correctly, the information
-that the account holder identified by **MSISDN** and **123456789** is
-located in FSP **MobileMoney** should be stored in the Switch's
-database.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 177 of 190
-
-[]{#page178 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification 10.3.3 Switch Sends
-Successful Callback -- Step 3 in End-to-End Flow**
-
-When the Switch has successfully stored the information that the account
-holder identified by **MSISDN** and **123456789** is located in FSP
-**MobileMoney**, the Switch must send a callback using the service
-[**PUT /participants/***\<Type\>***/***\<ID\>*](#page82) to notify the
-FSP **MobileMoney** about the outcome of the request in [Listing
-29.](#page177) [Listing 31](#page178) shows the HTTP request for the
-callback.
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request.
-In the callback, the **Accept** header should not be used as this is a
-callback to an earlier requested service. The HTTP headers
-**FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared
-to the HTTP request in [Listing 29,](#page177) as detailed in Section
-[3.2.3.5.](#page24) See Section [6.2.3.1](#page82) for more information
-about the callback [**PUT
-/participants/***\<Type\>***/***\<ID\>*.](#page82)
-
-> PUT /participants/MSISDN/123456789 HTTP/1.1
->
-> Content-Length: 50
->
-> Content-Type:
-> application/vnd.interoperability.participants+json;version=1.0
->
-> Date: Tue, 14 Nov 2017 08:12:32 GMT
->
-> FSPIOP-Source: MobileMoney
->
-> FSPIOP-Destination: Switch
->
-> {
->
-> \"fspId\": \"MobileMoney\",
->
-> \"currency\": \"USD\"
->
-> }
->
-> **Listing 31 -- Callback for the earlier requested provision service**
-
-[Listing 32](#page178) shows the asynchronous HTTP response where the
-FSP **MobileMoney** immediately (after basic verification of for example
-required headers) acknowledges the completion of the process, after
-receiving the callback in [Listing 31.](#page178)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-> HTTP/1.1 200 OK
->
-> Content-Type:
-> application/vnd.interoperability.participants+json;version=1.0
->
-> **Listing 32 -- Asynchronous response for the callback**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 178 of 190
-
-[]{#page179 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-![](media/image218.jpeg){width="0.3423611111111111in"
-height="0.14444444444444443in"} **P2P Transfer**
-
-![](media/image47.png){width="6.593055555555556in"
-height="6.944444444444444e-3in"}
-
-As the intended Payee Henrik Karlsson is now known by the Switch (which
-is also the ALS) as detailed in Section [10.3,](#page177) Mats Hagman
-can now initiate and approve the use case P2P Transfer from his bank to
-Henrik Karlsson.
-
-**10.4.1 Initiate Use Case -- Step 4 in End-to-End Flow**
-
-Mats Hagman knows that Henrik Karlsson has phone number **123456789**,
-so he inputs that number on his device as recipient and 100 USD as
-amount. The actual communication between Mats' device and his bank
-**BankNrOne** is out of scope for this API.
-
-**10.4.2 Request Party Information from Switch -- Step 5 in End-to-End
-Flow**
-
-In Step 5 in the end-to-end flow, **BankNrOne** receives the request
-from Mats Hagman that he would like the phone number 123456789 to
-receive 100 USD. **BankNrOne** performs an internal search to see if
-123456789 exists within the bank, but fails to find the account
-internally. **BankNrOne** then uses the service [**GET
-/parties/***\<Type\>***/***\<ID\>*](#page84) in the Switch to see if the
-Switch knows anything about the account.
-
-[Listing 33](#page179) shows the HTTP request where the FSP
-**BankNrOne** asks the Switch for Party information regarding the
-account identified by **MSISDN** and **123456789**.
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.3.2.1](#page84) for more information about the service
-[**GET**](#page84) [**/parties/***\<Type\>* **/***\<ID\>*.](#page84)
-**More** information regarding routing of requests using
-**FSPIOP-Source** can be found in Section [3.2.3.5;](#page24) in this
-request, the FSP **BankNrOne** does not know in which FSP the other
-account holder resides. Thus, the **FSPIOP-Destination** is not present.
-Information about API version negotiation can be found in Section
-[3.3.4.](#page29)
-
-> GET /parties/MSISDN/123456789 HTTP/1.1
->
-> Accept: application/vnd.interoperability.parties+json;version=1
->
-> Content-Type:
-> application/vnd.interoperability.parties+json;version=1.0
->
-> Date: Tue, 15 Nov 2017 10:13:37 GMT
->
-> FSPIOP-Source: BankNrOne
->
-> **Listing 33 -- Get Party information for account identified by MSISDN
-> and 123456789 from FSP BankNrOne**
-
-[Listing 34](#page179) shows the asynchronous HTTP response where the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the HTTP request in [Listing 33.](#page179)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-> HTTP/1.1 202 Accepted
->
-> Content-Type:
-> application/vnd.interoperability.parties+json;version=1.0
->
-> **Listing 34 -- Asynchronous response on the request for Party
-> information**
-
-**10.4.3 Request Party Information from FSP -- Step 6 in End-to-End
-Flow**
-
-When the Switch has received the HTTP request in [Listing 33](#page179)
-and sent the asynchronous response in [Listing 34,](#page179) the Switch
-can proceed with checking its database if it has information regarding
-in which FSP the account holder identified by **MSISDN** and
-**123456789** is located. As that information was provisioned as
-detailed in Section [10.3,](#page177) the Switch knows that the account
-is in FSP **MobileMoney**. Therefore, the Switch sends the HTTP request
-in [Listing 35.](#page180)
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.3.2.1](#page84) for more information about the service
-[**GET**](#page84) [**/parties/***\<Type\>***/***\<ID\>*.](#page84)
-**More** information regarding routing of requests using
-**FSPIOP-Destination** and **FSPIOP-Source** can be found in Section
-[3.2.3.5;](#page24) in this request the Switch has added the header
-**FSPIOP-Destination** because the Switch knew to where the request
-should be routed. Information about API version negotiation can be found
-in Section [3.3.4.](#page29)
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 179 of 190
-
-[]{#page180 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> GET /parties/MSISDN/123456789 HTTP/1.1
->
-> Accept: application/vnd.interoperability.parties+json;version=1
->
-> Content-Type:
-> application/vnd.interoperability.parties+json;version=1.0
->
-> Date: Tue, 15 Nov 2017 10:13:38 GMT
->
-> FSPIOP-Source: BankNrOne
->
-> FSPIOP-Destination: MobileMoney
->
-> **Listing 35 -- Get Party information for account identified by MSISDN
-> and 123456789 from Switch**
-
-[Listing 36](#page180) shows the asynchronous HTTP response where the
-FSP **MobileMoney** immediately (after basic verification of for example
-required headers) acknowledges the HTTP request in [Listing
-35.](#page180)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-> HTTP/1.1 202 Accepted
->
-> Content-Type:
-> application/vnd.interoperability.parties+json;version=1.0
->
-> **Listing 36 -- Asynchronous response on request for Party
-> information**
-
-**10.4.4 Lookup Party Information in FSP MobileMoney -- Step 7 in
-End-to-End Flow**
-
-When the FSP **MobileMoney** has received the HTTP request in [Listing
-35](#page180) and sent the asynchronous response in [Listing
-36,](#page180) the FSP **MobileMoney** can proceed with checking its
-database for more information regarding the account identified by
-**MSISDN** and **123456789**. As the account exists and is owned by
-Henrik Karlsson, the FSP **MobileMoney** sends the callback in [Listing
-37.](#page180) The FSP **MobileMoney** does not want to share some
-details, for example birth date, with the other FSP (**BankNrOne**), so
-some optional elements are not sent.
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.3.3.1](#page85) for more information about the callback
-[**PUT**](#page85) [**/parties/***\<Type\>***/***\<ID\>*.](#page85)
-**In** the callback, the **Accept** header should not be sent. The HTTP
-headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted
-compared to the HTTP request in [Listing 35,](#page180) as detailed in
-Section [3.2.3.5.](#page24)
-
-> PUT /parties/MSISDN/123456789 HTTP/1.1
->
-> Content-Type:
-> application/vnd.interoperability.parties+json;version=1.0
->
-> Content-Length: 347
->
-> Date: Tue, 15 Nov 2017 10:13:39 GMT
->
-> FSPIOP-Source: MobileMoney
->
-> FSPIOP-Destination: BankNrOne
->
-> {
->
-> \"party\": {
->
-> \"partyIdInfo\": {
->
-> \"partyIdType\": \"MSISDN\",
->
-> \"partyIdentifier\": \"123456789\",
->
-> \"fspId\": \"MobileMoney\"
->
-> },
->
-> \"personalInfo\": {
->
-> \"complexName\": {
->
-> \"firstName\": \"Henrik\",
->
-> \"lastName\": \"Karlsson\"
->
-> }
->
-> }
->
-> }
->
-> }
->
-> **Listing 37 -- Callback to the request for Party information**
-
-[Listing 38](#page181) shows the asynchronous HTTP response where the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the completion of the process, after receiving the
-callback in [Listing 37.](#page180)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 180 of 190
-
-[]{#page181 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-> HTTP/1.1 200 OK
->
-> Content-Type:
-> application/vnd.interoperability.parties+json;version=1.0
->
-> **Listing 38 -- Asynchronous response for the Party information
-> callback**
-
-**10.4.5 Send Callback to FSP BankNrOne -- Step 8 in End-to-End Flow**
-
-When the Switch has received the callback in [Listing 37](#page180) and
-sent the asynchronous response in [Listing 38,](#page181) it should
-relay the exact same callback as in [Listing 37](#page180) to the FSP
-**BankNrOne**, and **BankNrOne** should then respond asynchronously with
-the exact same response as in [Listing 38.](#page181)
-
-The HTTP request and response are not repeated in this section, as they
-are the same as in the last section, but sent from the Switch to
-**BankNrOne** (HTTP request in [Listing 37)](#page180) and from
-**BankNrOne** to the Switch (HTTP response in [Listing 38)](#page181)
-instead.
-
-**10.4.6 Send Quote Request from FSP BankNrOne -- Step 9 in End-to-End
-Flow**
-
-After receiving Party information in the callback [**PUT
-/parties/***\<Type\>***/***\<ID\>*,](#page85) the FSP **BankNrOne** now
-knows that the account identified by **MSISDN** and **123456789** exists
-and that it is in the FSP **MobileMoney**. It also knows the name of the
-account holder. Depending on implementation, the name of the intended
-Payee (Henrik Karlsson) could be shown to Mats Hagman already in this
-step before sending the quote. In this example, a quote request is sent
-before showing the name and any fees.
-
-The FSP **BankNrOne** sends the HTTP request in [Listing 39](#page182)
-to request the quote. **BankNrOne** does not want to disclose its fees
-(see Section [5.1](#page38) for more information about quoting), which
-means that it does not include the **fees** element in the request. The
-**amountType** element is set to RECEIVE as Mats wants Henrik to receive
-100 USD. The **transactionType** is set according to Section
-[5.3.](#page72) Information about Mats is sent in the **payer** element.
-**BankNrOne** has also generated two UUIDs for the quote ID
-(7c23e80c-d078-4077-8263-2c047876fcf6) and the transaction ID
-(85feac2f-39b2-491b-817e-4a03203d4f14). These IDs must be unique, as
-described in Section [3.1.1.](#page16)
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.5.2.2](#page92) for more information about the service
-[**POST**](#page92) [**/quotes**.](#page92) **More** information
-regarding routing of requests using **FSPIOP-Destination** and
-**FSPIOP-Source** can be found in Section [3.2.3.5.](#page24)
-Information about API version negotiation can be found in Section
-[3.3.4.](#page29)
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 181 of 190
-
-[]{#page182 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> POST /quotes HTTP/1.1
->
-> Accept: application/vnd.interoperability.quotes+json;version=1
->
-> Content-Type: application/vnd.interoperability.quotes+json;version=1.0
->
-> Content-Length: 975
->
-> Date: Tue, 15 Nov 2017 10:13:40 GMT
->
-> FSPIOP-Source: BankNrOne
->
-> FSPIOP-Destination: MobileMoney
->
-> {
->
-> \"quoteId\": \"7c23e80c-d078-4077-8263-2c047876fcf6\",
->
-> \"transactionId\": \"85feac2f-39b2-491b-817e-4a03203d4f14\",
->
-> \"payee\": {
->
-> \"partyIdInfo\": {
->
-> \"partyIdType\": \"MSISDN\",
->
-> \"partyIdentifier\": \"123456789\",
->
-> \"fspId\": \"MobileMoney\"
->
-> }
->
-> },
->
-> \"payer\": {
->
-> \"personalInfo\": {
->
-> \"complexName\": {
->
-> \"firstName\": \"Mats\",
->
-> \"lastName\": \"Hagman\"
->
-> }
->
-> },
->
-> \"partyIdInfo\": {
->
-> \"partyIdType\": \"IBAN\",
->
-> \"partyIdentifier\": \"SE4550000000058398257466\",
->
-> \"fspId\": \"BankNrOne\"
->
-> }
->
-> },
->
-> \"amountType\": \"RECEIVE\",
->
-> \"amount\": {
->
-> \"amount\": \"100\",
->
-> \"currency\": \"USD\"
->
-> },
->
-> \"transactionType\": {
->
-> \"scenario\": \"TRANSFER\",
->
-> \"initiator\": \"PAYER\",
->
-> \"initiatorType\": \"CONSUMER\"
->
-> },
->
-> \"note\": \"From Mats\",
->
-> \"expiration\": \"2017-11-15T22:17:28.985-01:00\"
->
-> }
->
-> **Listing 39 -- Request quote for transaction of 100 USD**
-
-[Listing 40](#page182) shows the asynchronous HTTP response where the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the HTTP request in [Listing 39.](#page182)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-> HTTP/1.1 202 Accepted
->
-> Content-Type: application/vnd.interoperability.quotes+json;version=1.0
->
-> **Listing 40 -- Asynchronous response on quote request**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 182 of 190
-
-[]{#page183 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification 10.4.7 Send Quote
-> Request from Switch -- Step 10 in End-to-End Flow**
->
-> When the Switch has received the quote request in [Listing
-> 39](#page182) and sent the asynchronous response in [Listing
-> 40,](#page182) it should relay the same request as in [Listing
-> 39](#page182) to the FSP **MobileMoney**, and **MobileMoney** should
-> then respond asynchronously with the same response as in [Listing
-> 40.](#page182)
->
-> The HTTP request and response are not repeated in this section, as
-> they are the same as in the last section, but sent from the Switch to
-> **MobileMoney** (HTTP request in [Listing 39)](#page182) and from
-> **MobileMoney** to the Switch (HTTP response in [Listing
-> 40)](#page182) instead.
->
-> **10.4.8 Determine fees and FSP commission in FSP MobileMoney -- Step
-> 11 in End-to-End Flow**
->
-> When the FSP **MobileMoney** has received the HTTP request in [Listing
-> 39](#page182) and sent the asynchronous response in [Listing
-> 40,](#page182) the FSP **MobileMoney** should validate the request and
-> then proceed to determine the applicable fees and/or FSP commission
-> for performing the transaction in the quote request.
->
-> In this example, the FSP **MobileMoney** decides to give 1 USD in FSP
-> commission as the FSP **MobileMoney** will receive money, which should
-> later generate more income for the FSP (future possible fees). Since
-> the Payee Henrik Karlsson should receive 100 USD and the FSP
-> commission is determined to 1 USD, the FSP **BankNrOne** only needs to
-> transfer 99 USD to the FSP **MobileMoney** (see Section
-> [5.1.1.1](#page39) for the equation). The 99 USD is entered in the
-> transferAmount element in the callback, which is the amount that
-> should later be transferred between the FSPs.
->
-> To send the callback, the FSP **MobileMoney** then needs to create an
-> [ILP Packet](#page36) (see Section [4.5](#page36) for more
-> information) that is base64url-encoded, as the **ilpPacket** element
-> in the [**PUT /quotes/***\<ID\>*](#page93) callback is defined as a
-> [BinaryString](#page127) (see Section [7.2.17)](#page127). How to
-> populate the ILP Packet is explained in Section [6.5.1.2.](#page91)
-> Henrik's ILP address in the FSP **MobileMoney** has been set to
-> **g.se.mobilemoney.msisdn.123456789** (see Section [4.3](#page34) for
-> more information about ILP addressing). As the transfer amount is 99
-> USD and the currency USD's exponent is 2, the amount to be populated
-> in the ILP Packet is 9900 (99 \* 10\^2 = 9900). The remaining element
-> in the ILP Packet is the **data** element. As described in Section
-> [6.5.1.2,](#page91) this element should contain the
-> [Transaction](#page140) data model (see Section [7.4.17)](#page140).
-> With the information from the quote request, the Transaction in this
-> example becomes as shown in [Listing 41.](#page184) Base64url-encoding
-> the entire ILP Packet with the **amount**, **account**, and the
-> **data** element then results in the **ilpPacket** element in the
-> [**PUT /quotes/***\<ID\>*](#page93) callback.
->
-> When the ILP Packet has been created, the fulfilment and the condition
-> can be generated as defined in the algorithm in [Listing](#page91)
-
-12. Using a generated example secret shown in [Listing 42](#page184)
-    (shown as base64url-encoded), the fulfilment becomes as in
-    [Listing](#page184)
-
-<!-- -->
-
-43. (shown as base64url-encoded) after executing the HMAC SHA-256
-    algorithm on the ILP Packet using the generated secret as key. The
-    FSP **MobileMoney** is assumed to save the fulfilment in the
-    database, so that it does not have to be regenerated later. The
-    condition is then the result of executing the SHA-256 hash algorithm
-    on the fulfilment, which becomes as in [Listing 44](#page185) (shown
-    as base64url-encoded).
-
-> The complete callback to the quote request becomes as shown in
-> [Listing 45.](#page185)
->
-> See [Table 1](#page21) for the required HTTP headers in a HTTP
-> request, and Section [6.5.3.1](#page93) for more information about the
-> callback [**PUT**](#page93) [**/quotes/***\<ID\>*.](#page93) **The**
-> *\<ID\>* in the URI should be taken from the quote ID in the quote
-> request, which in the example is 7c23e80c-d078-4077-8263-2c047876fcf6.
-> In the callback, the **Accept** header should not be sent. The HTTP
-> headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted
-> compared to the HTTP request in [Listing 39,](#page182) as detailed in
-> Section [3.2.3.5.](#page24)
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-> Last Modified 2018-11-01 Version 1.0 Page 183 of 190
-
-[]{#page184 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-> {
->
-> \"transactionId\": \"85feac2f-39b2-491b-817e-4a03203d4f14\",
->
-> \"quoteId\": \"7c23e80c-d078-4077-8263-2c047876fcf6\",
->
-> \"payee\": {
->
-> \"partyIdInfo\": {
->
-> \"partyIdType\": \"MSISDN\",
->
-> \"partyIdentifier\": \"123456789\",
->
-> \"fspId\": \"MobileMoney\"
->
-> },
->
-> \"personalInfo\": {
->
-> \"complexName\": {
->
-> \"firstName\": \"Henrik\",
->
-> \"lastName\": \"Karlsson\"
->
-> }
->
-> }
->
-> },
->
-> \"payer\": {
->
-> \"personalInfo\": {
->
-> \"complexName\": {
->
-> \"firstName\": \"Mats\",
->
-> \"lastName\": \"Hagman\"
->
-> }
->
-> },
->
-> \"partyIdInfo\": {
->
-> \"partyIdType\": \"IBAN\",
->
-> \"partyIdentifier\": \"SE4550000000058398257466\",
->
-> \"fspId\": \"BankNrOne\"
->
-> }
->
-> },
->
-> \"amount\": {
->
-> \"amount\": \"99\",
->
-> \"currency\": \"USD\"
->
-> },
->
-> \"transactionType\": {
->
-> \"scenario\": \"TRANSFER\",
->
-> \"initiator\": \"PAYER\",
->
-> \"initiatorType\": \"CONSUMER\"
->
-> },
->
-> \"note\": \"From Mats\"
->
-> }
->
-> **Listing 41 -- The Transaction JSON object**
->
-> JdtBrN2tskq9fuFr6Kg6kdy8RANoZv6BqR9nSk3rUbY
->
-> **Listing 42 -- Generated secret, encoded in base64url**
->
-> mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s
->
-> **Listing 43 -- Calculated fulfilment from the ILP Packet and secret,
-> encoded in base64url**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 184 of 190
-
-[]{#page185 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG\_fqGnR7Xs
->
-> **Listing 44 -- Calculated condition from the fulfilment, encoded in
-> base64url**
->
-> PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6 HTTP/1.1
-> Content-Type: application/vnd.interoperability.quotes+json;version=1.0
-> Content-Length: 1802
->
-> Date: Tue, 15 Nov 2017 10:13:41 GMT
->
-> FSPIOP-Source: MobileMoney
->
-> FSPIOP-Destination: BankNrOne
->
-> {
->
-> \"transferAmount\": {
->
-> \"amount\": \"99\",
->
-> \"currency\": \"USD\"
->
-> },
->
-> \"payeeReceiveAmount\": {
->
-> \"amount\": \"100\",
->
-> \"currency\": \"USD\"
->
-> },
->
-> \"expiration\": \"2017-11-15T14:17:09.663+01:00\",
->
-> \"ilpPacket\":
-> \"AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY-
->
-> IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
->
-> WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
->
-> BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
->
-> CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
->
-> CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
->
-> CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
->
-> CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
->
-> CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
->
-> thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
->
-> OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
->
-> OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
->
-> CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
->
-> CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI-
->
-> CAgICAgICAicGFydHlJZGVudGlmaWVyI-
->
-> jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25
->
-> lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
->
-> MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
->
-> jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
->
-> jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
->
-> CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\\u003d\\u003d\",
->
-> \"condition\": \"fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG\_fqGnR7Xs\"
->
-> }
->
-> **Listing 45 -- Quote callback**
-
-**Note:** The element **ilpPacket** in [Listing 45](#page185) should be
-on a single line in a real implementation; it is shown with line breaks
-in this example in order to show the entire value.
-
-[Listing 46](#page186) shows the asynchronous HTTP response where the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the completion of the process, after receiving the
-callback in [Listing 45.](#page185)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 185 of 190
-
-[]{#page186 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-> HTTP/1.1 200 OK
->
-> Content-Type: application/vnd.interoperability.quotes+json;version=1.0
->
-> **Listing 46 -- Asynchronous response on the quote callback**
-
-**10.4.9 Send Callback to FSP BankNrOne -- Step 12 in End-to-End Flow**
-
-When the Switch has received the quote callback in [Listing
-45](#page185) and sent the asynchronous response in [Listing
-46,](#page186) it should relay the exact same callback as in [Listing
-45](#page185) to the FSP **BankNrOne**, and **BankNrOne** should then
-respond asynchronously with the exact same response as in [Listing
-46.](#page186)
-
-The HTTP request and response are not repeated in this section, as they
-are the same as in the last section, but sent from the Switch to
-**BankNrOne** (HTTP request in [Listing 45)](#page185) and from
-**BankNrOne** to the Switch (HTTP response in [Listing 46)](#page186)
-instead.
-
-**10.4.10** **Determine fees in FSP BankNrOne -- Step 13 in End-to-End
-Flow**
-
-When the FSP **BankNrOne** has received the quote callback in [Listing
-45](#page185) and sent the asynchronous response in [Listing
-46,](#page186) the FSP **BankNrOne** can proceed with determining the
-fees for the Payer Mats Hagman. In this example, the fee for the Payer
-is set to 0 USD, but the FSP commission from the FSP **MobileMoney** is
-kept as an income for the FSP **BankNrOne**. This means that for the
-Payee Henrik Karlsson to receive 100 USD, the Payer Mats Hagman must
-transfer 100 USD from his account. 99 USD will then be transferred
-between the FSPs **BankNrOne** and **MobileMoney**.
-
-The FSP **BankNrOne** then notifies Mats Hagman that the transaction to
-transfer 100 USD to Henrik Karlsson will cost 0 USD in fees. How Mats
-Hagman is notified is out of scope of this API.
-
-**10.4.11** **Payer Accepts Transaction -- Step 14 in End-to-End Flow**
-
-In this example, Mats Hagman accepts to perform the transaction. How the
-acceptance is sent is outside the scope of this API.
-
-**10.4.12** **Send Transfer Request from FSP BankNrOne -- Step 15 in
-End-to-End Flow**
-
-When Mats Hagman has accepted the transaction, FSP **BankNrOne**
-reserves the internal transfers needed to perform the transaction. This
-means that 100 USD will be reserved from Mats Hagman's account, where 1
-USD will end up as income for the FSP and 99 USD will be transferred to
-the prefunded Switch account. After the reservations are successfully
-performed, the FSP **BankNrOne** sends a [**POST /transfers**](#page106)
-to the Switch as in [Listing 47.](#page187) The same ilpPacket and
-condition elements are sent as was received in the quote callback and
-the **amount** is the same as the received **transferAmount**, see
-[Listing 45.](#page185)
-
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.7.2.2](#page106) for more [**/transfers**.](#page106)
-**More** information regarding routing of requests using
-**FSPIOP-Destination** and Section [3.2.3.5.](#page24) Information about
-API version negotiation can be found in Section [3.3.4.](#page29)
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-**\
-**
-
-information about the service [**POST**](#page106) **FSPIOP-Source** can
-be found in
-
-Last Modified 2018-11-01 Version 1.0 Page 186 of 190
-
-[]{#page187 .anchor}**API Definition**
-
-> **Open API for FSP Interoperability Specification**
->
-> POST /transfers HTTP/1.1
->
-> Accept: application/vnd.interoperability.transfers+json;version=1
->
-> Content-Type:
-> application/vnd.interoperability.transfers+json;version=1.0
->
-> Content-Length: 1820
->
-> Date: Tue, 15 Nov 2017 10:14:01
->
-> FSPIOP-Source: BankNrOne
->
-> FSPIOP-Destination: MobileMoney
->
-> {
->
-> \"transferId\":\"11436b17- c690
->
-> \"payerFsp\":\"BankNrOne\",
->
-> \"payeeFsp\": \"MobileMoney\",
->
-> \"amount\": {
->
-> \"amount\": \"99\",
->
-> \"currency\": \"USD\"
->
-> },
->
-> GMT
-
--4a30-8505-42a2c4eafb9d\",
-
-+-----------------------------------+-----------------------------------+
-| > \"expiration\":                 | > \"2017-11-15T11:17:01.663+01:00 |
-|                                   | \",                               |
-+===================================+===================================+
-| > \"ilpPacket\":                  | \"AQAAAAAAACasIWcuc2UubW9iaWxlbW9 |
-|                                   | uZXkubXNpc2RuLjEyMzQ1Njc4OY-      |
-+-----------------------------------+-----------------------------------+
-| IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI |                                   |
-| 6ICI4NWZlY-                       |                                   |
-+-----------------------------------+-----------------------------------+
-| WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMj |                                   |
-| AzZDRmMTQiLA0KICAgICJxdW90ZUlkIjo |                                   |
-| gIjdjMjNlOD-                      |                                   |
-+-----------------------------------+-----------------------------------+
-| BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc |                                   |
-| 2ZmNmNiIsDQogICAgInBheWVlIjogew0K |                                   |
-| ICAgICAgI-                        |                                   |
-+-----------------------------------+-----------------------------------+
-| CAicGFydHlJZEluZm8iOiB7DQogICAgIC |                                   |
-| AgICAgICAicGFydHlJZFR5cGUiOiAiTVN |                                   |
-| JU0ROIiwNCiAgI-                   |                                   |
-+-----------------------------------+-----------------------------------+
-| CAgICAgICAgICJwYXJ0eUlkZW50aWZpZX |                                   |
-| IiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICA |                                   |
-| gI-                               |                                   |
-+-----------------------------------+-----------------------------------+
-| CAgICJmc3BJZCI6ICJNb2JpbGVNb25leS |                                   |
-| INCiAgICAgICAgfSwNCiAgICAgI-      |                                   |
-+-----------------------------------+-----------------------------------+
-| CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgIC |                                   |
-| AgICAgICAgICJjb21wbGV4TmFtZSI6IHs |                                   |
-| NCiAgICAgICAgI-                   |                                   |
-+-----------------------------------+-----------------------------------+
-| CAgICAgICAiZmlyc3ROYW1lIjogIkhlbn |                                   |
-| JpayIsDQogICAgICAgICAgICAgICAgImx |                                   |
-| hc3ROYW1lIjogIk-                  |                                   |
-+-----------------------------------+-----------------------------------+
-| thcmxzc29uIg0KICAgICAgICAgICAgfQ0 |                                   |
-| KICAgICAgICB9DQogICAgfSwNCiAgICAi |                                   |
-| cGF5ZXIi-                         |                                   |
-+-----------------------------------+-----------------------------------+
-| OiB7DQogICAgICAgICJwZXJzb25hbEluZ |                                   |
-| m8iOiB7DQogICAgICAgICAgICAiY29tcG |                                   |
-| xleE5hbWUi-                       |                                   |
-+-----------------------------------+-----------------------------------+
-| OiB7DQogICAgICAgICAgICAgICAgImZpc |                                   |
-| nN0TmFtZSI6ICJNYXRzIiwNCiAgICAgIC |                                   |
-| AgICAgICAgI-                      |                                   |
-+-----------------------------------+-----------------------------------+
-| CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KIC |                                   |
-| AgICAgICAgICAgfQ0KICAgICAgICB9LA0 |                                   |
-| KICAgICAgI-                       |                                   |
-+-----------------------------------+-----------------------------------+
-| CAicGFydHlJZEluZm8iOiB7DQogICAgIC |                                   |
-| AgICAgICAicGFydHlJZFR5cGUiOiAiSUJ |                                   |
-| BTiIsDQogICAgI-                   |                                   |
-+-----------------------------------+-----------------------------------+
-| CAgICAgICAicGFydHlJZGVudGlmaWVyI- |                                   |
-+-----------------------------------+-----------------------------------+
-| jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1Nz |                                   |
-| Q2NiIsDQogICAgICAgICAgICAiZnNwSWQ |                                   |
-| iOiAiQmFua05yT25                  |                                   |
-+-----------------------------------+-----------------------------------+
-| lIg0KICAgICAgICB9DQogICAgfSwNCiAg |                                   |
-| ICAiYW1vdW50Ijogew0KICAgICAgICAiY |                                   |
-| W1vdW50IjogIjEw-                  |                                   |
-+-----------------------------------+-----------------------------------+
-| MCIsDQogICAgICAgICJjdXJyZW5jeSI6I |                                   |
-| CJVU0QiDQogICAgfSwNCiAgICAidHJhbn |                                   |
-| NhY3Rpb25UeXBlI-                  |                                   |
-+-----------------------------------+-----------------------------------+
-| jogew0KICAgICAgICAic2NlbmFyaW8iOi |                                   |
-| AiVFJBTlNGRVIiLA0KICAgICAgICAiaW5 |                                   |
-| pdGlhdG9yI-                       |                                   |
-+-----------------------------------+-----------------------------------+
-| jogIlBBWUVSIiwNCiAgICAgICAgImluaX |                                   |
-| RpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQo |                                   |
-| gICAgfSwNCiAgI-                   |                                   |
-+-----------------------------------+-----------------------------------+
-| CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQ |                                   |
-| o\\u003d\\u003d\",                |                                   |
-+-----------------------------------+-----------------------------------+
-| > \"condition\":                  | \"fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4 |
-|                                   | ApG\_fqGnR7Xs\"                   |
-+-----------------------------------+-----------------------------------+
-| }                                 |                                   |
-+-----------------------------------+-----------------------------------+
-| **Listing 47 -- Request to        |                                   |
-| transfer from FSP BankNrOne to    |                                   |
-| FSP MobileMoney**                 |                                   |
-+-----------------------------------+-----------------------------------+
-
-**Note:** The element **ilpPacket** in [Listing 47](#page187) should be
-on a single line in a real implementation, it is shown with line breaks
-in this example for being able to show the entire value.
-
-[Listing 48](#page187) shows the asynchronous HTTP response where the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the HTTP request in [Listing 47.](#page187)
-
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
-
-> HTTP/1.1 202 Accepted
->
-> Content-Type:
-> application/vnd.interoperability.transfers+json;version=1.0
->
-> **Listing 48 -- Asynchronous response on transfer request**
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 187 of 190
-
-[]{#page188 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-**10.4.13** **Send Transfer Request from Switch -- Step 16 in End-to-End
-Flow**
-
-When the Switch has received the transfer request in [Listing
-47](#page187) and sent the asynchronous response in [Listing
-48,](#page187) it should reserve the transfer from **BankNrOne**'s
-account in the Switch to **MobileMoney**'s account in the Switch. After
-the reservation is successful, the Switch relays nearly the same request
-as in [Listing 47](#page187) to the FSP **MobileMoney**; expect that the
-**expiration** element should be decreased as mentioned in Section
-[6.7.1.4.](#page102) [Listing 49](#page188) shows the HTTP request with
-the **expiration** decreased by 30 seconds compared to [Listing
-47.](#page187) The FSP **MobileMoney** should then respond
-asynchronously with the same response as in [Listing 48.](#page187)
-
-> POST /transfers HTTP/1.1
->
-> Accept: application/vnd.interoperability.transfers+json;version=1
->
-> Content-Type:
-> application/vnd.interoperability.transfers+json;version=1.0
->
-> Content-Length: 1820
->
-> Date: Tue, 15 Nov 2017 10:14:01 GMT
->
-> FSPIOP-Source: BankNrOne
->
-> FSPIOP-Destination: MobileMoney
->
-> {
->
-> \"transferId\":\"11436b17- c690-4a30-8505-42a2c4eafb9d\",
->
-> \"payerFsp\":\"BankNrOne\",
->
-> \"payeeFsp\": \"MobileMoney\",
->
-> \"amount\": {
->
-> \"amount\": \"99\",
->
-> \"currency\": \"USD\"
->
-> },
->
-> \"expiration\": \"2017-11-15T11:16:31.663+01:00\",
->
-> \"ilpPacket\":
-> \"AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY-
->
-> IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
->
-> WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
->
-> BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
->
-> CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
->
-> CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
->
-> CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
->
-> CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
->
-> CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
->
-> thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
->
-> OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
->
-> OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
->
-> CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
->
-> CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI-
->
-> CAgICAgICAicGFydHlJZGVudGlmaWVyI-
->
-> jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25
->
-> lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
->
-> MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
->
-> jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
->
-> jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
->
-> CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\\u003d\\u003d\",
->
-> \"condition\": \"fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG\_fqGnR7Xs\"
->
-> }
->
-> **Listing 49 -- Request to transfer from FSP BankNrOne to FSP
-> MobileMoney with decreased expiration**
-
-**Note:** The element **ilpPacket** in [Listing 49](#page188) should be
-on a single line in a real implementation; it is shown with line breaks
-in this example in order to show the entire value.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 188 of 190
-
-[]{#page189 .anchor}**API Definition**
-
-**Open API for FSP Interoperability Specification**
-
-**10.4.14** **Perform Transfer in FSP MobileMoney -- Step 17 in
-End-to-End Flow**
-
-When the FSP **MobileMoney** has received the transfer request in
-[Listing 47,](#page187) it should perform the transfer as detailed in
-the earlier quote request, this means that 100 USD should be transferred
-to Henrik Karlsson's account, where 99 USD is from the prefunded Switch
-account and 1 USD is from an FSP commission account.
-
-As proof of performing the transaction, the FSP **MobileMoney** then
-retrieves the stored fulfilment [(Listing 43)](#page184) from the
-database (stored in Section [10.4.8)](#page183) and enters that in the
-**fulfilment** element in the callback [**PUT
-/transfers/***\<ID\>*.](#page107) The **transferState** is set to
-COMMITTED and the **completedTimestamp** is set to when the transaction
-was completed; see [Listing 50](#page189) for the complete HTTP request.
+- One account holder in the FSP **MobileMoney** named Henrik Karlsson. Henrik Karlsson has a mobile money account that is identified by his phone number **123456789**. The currency of the account is USD.
+
+#### 10.1.3 Scenario
+
+The scenario in the example is that Mats Hagman in FSP **BankNrOne** wants to transfer 100 USD to Henrik Karlsson in the FSP **MobileMoney**. Before Henrik Karlsson can be found by FSP **BankNrOne**, Henrik's FSP **MobileMoney** should provide information to the Switch specifying in which FSP Henrik Karlsson can be found in. The end-to-end flow including all used services can be found in [Section 10.1.4.](#10.1.4-other-notes)
+
+#### 10.1.4 Other Notes
+
+The JSON messages used in the examples are formatted with color coding, indentations, and line breaks for very long lines to simplify the read of the examples.
+
+Both FSPs are assumed to have a pre-funded Switch account in their respective FSPs.
+
+### 10.2 End-to-End Flow
+
+[Figure 73](#fingure-73) shows the end-to-end flow of the entire example, from provisioning of FSP information to the actual transaction.
+
+###### Figure 73
+
+`Figure 73 - Place Holder`
+
+**Figure 73 -- End-to-end flow, from provision of account holder FSP information to a successful transaction**
+
+### 10.3 Provision Account Holder
+
+Before the Payee Henrik Karlsson can be found by the Payer FSP **BankNrOne**, Henrik Karlsson should be provisioned to the ALS, which is also the Switch in this simplified example, by Henrik's FSP (**MobileMoney**). This is performed through either one of the services [**POST /participants**](#6.2.2.2-post-/participants) (bulk version) or [**POST /participants/**_{Type}_**/**_{ID}_](#6.2.2.3-post-/participants/{Type}/{ID}) (single version). As the Payee in this example is only one (Henrik Karlsson), the single [**POST /participants/**_{Type}_**/**_{ID}_](#6.2.2.3-post-/participants/{Type}/{ID}) version is used by FSP **MobileMoney**. The provision could happen anytime, for example when Henrik Karlsson signed up for the financial account, or when the FSP **MobileMoney** connected to the Switch for the first time.
+
+#### 10.3.1 FSP MobileMoney Provisions Henrik Karlsson -- Step 1 in End-to-End Flow
+
+[Listing 29](#listing-29) shows the HTTP request where the FSP **MobileMoney** provisions FSP information for account holder Henrik Karlsson, identified by **MSISDN** and **123456789** (see [Section 5.2](#5.2-party-addressing) for more information about [Party Addressing)](#5.2-party-addressing). The JSON element **fspId** is set to the FSP identifier (MobileMoney), and JSON element **currency** is set to the currency of the account (USD).
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request,
+and [Section 6.2.2.3](#6.2.2.3-post-/participants/{Type}/{ID}) for more information about the service [**POST /participants/**_{Type}_**/**_{ID}_.](#6.2.2.3-post-/participants/{Type}/{ID}) **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5.](#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source) Information about API version negotiation can be found in [Section 3.3.4.](#3.3.4-version-negotiation-between-client-and-server) 
+
+###### Listing 29 
+
+```
+POST /participants/MSISDN/123456789 HTTP/1.1
+Accept: application/vnd.interoperability.participants+json;version=1
+Content-Length: 50
+Content-Type:
+application/vnd.interoperability.participants+json;version=1.0
+Date: Tue, 14 Nov 2017 08:12:31 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: Switch
+{
+    "fspId": "MobileMoney",
+    "currency": "USD"
+}
+```
+
+**Listing 29 -- Provision FSP information for account holder Henrik Karlsson**
+
+[Listing 30](#listing-30) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 29.](#listing-29)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 30
+
+```
+HTTP/1.1 202 Accepted
+Content-Type:
+application/vnd.interoperability.participants+json;version=1.0
+```
+
+**Listing 30 -- Asynchronous response on provision request**
+
+#### 10.3.2 Switch Handles Provision -- Step 2 in End-to-End Flow
+
+When the Switch has received the HTTP request in [Listing 29](#listing-29) and sent the asynchronous response in [Listing 30,](#listing-30) the Switch should verify the body of the request in [Listing 29.](#listing-29) An example verification is to check that the **fspId** element is the same as the **FSPIOP-Source** , as it should be the FSP of the account holder who provisions the information. A scheme could also have restrictions on which currencies are allowed, which means that the Switch should then check that the currency in the **currency** element is allowed.
+
+After the Switch has verified the request correctly, the information that the account holder identified by **MSISDN** and **123456789** is located in FSP **MobileMoney** should be stored in the Switch's database.
+
+#### 10.3.3 Switch Sends Successful Callback -- Step 3 in End-to-End Flow
+
+When the Switch has successfully stored the information that the account holder identified by **MSISDN** and **123456789** is located in FSP **MobileMoney**, the Switch must send a callback using the service [**PUT /participants/**_{Type}_**/**_{ID}_](#6.2.3.1-put-/participants/{Type}/{ID}) to notify the FSP **MobileMoney** about the outcome of the request in [Listing 29.](#listing-29) [Listing 31](#listing-31) shows the HTTP request for the callback.
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request. In the callback, the **Accept** header should not be used as this is a callback to an earlier requested service. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 29,](#listing 29) as detailed in [Section 3.2.3.5.](#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source) See [Section 6.2.3.1](#6.2.3.1-put-/participants/{type}/{id}) for more information about the callback [**PUT /participants/**_{Type}_**/**_{ID}_.](#6.2.3.1-put-/participants/{type}/{id})
+
+###### Listing 31 
+
+```
+PUT /participants/MSISDN/123456789 HTTP/1.1
+Content-Length: 50
+Content-Type:
+Date: Tue, 14 Nov 2017 08:12:32 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: Switch
+{
+    "fspId": "MobileMoney",
+    "currency": "USD"
+}
+```
+
+**Listing 31 -- Callback for the earlier requested provision service**
+
+[Listing 32](#listing-32) shows the asynchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 31.](#listing-31)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 32
+
+```
+HTTP/1.1 200 OK
+Content-Type:
+application/vnd.interoperability.participants+json;version=1.0
+```
+
+**Listing 32 -- Asynchronous response for the callback**
+
+### 10.4 P2P Transfer
+
+As the intended Payee Henrik Karlsson is now known by the Switch (which is also the ALS) as detailed in Section [10.3,](#page177) Mats Hagman can now initiate and approve the use case P2P Transfer from his bank to Henrik Karlsson.
+
+#### 10.4.1 Initiate Use Case -- Step 4 in End-to-End Flow
+
+Mats Hagman knows that Henrik Karlsson has phone number **123456789**, so he inputs that number on his device as recipient and 100 USD as amount. The actual communication between Mats' device and his bank **BankNrOne** is out of scope for this API.
+
+#### 10.4.2 Request Party Information from Switch -- Step 5 in End-to-End Flow
+
+In Step 5 in the end-to-end flow, **BankNrOne** receives the request from Mats Hagman that he would like the phone number 123456789 to receive 100 USD. **BankNrOne** performs an internal search to see if 123456789 exists within the bank, but fails to find the account internally. **BankNrOne** then uses the service [**GET /parties/**_{Type}_**/**_{ID}_](#6.3.2.1-get-/parties/{Type}/{ID}) in the Switch to see if the Switch knows anything about the account.
+
+[Listing 33](#listing-33) shows the HTTP request where the FSP **BankNrOne** asks the Switch for Party information regarding the account identified by **MSISDN** and **123456789**.
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.2.1](#6.3.2.1-get-/parties/{type}/{id}) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_.](#6.3.2.1-get-/parties/{type}/{id}) **More** information regarding routing of requests using **FSPIOP-Source** can be found in [Section 3.2.3.5];(#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source) in this request, the FSP **BankNrOne** does not know in which FSP the other account holder resides. Thus, the **FSPIOP-Destination** is not present. Information about API version negotiation can be found in [Section 3.3.4.](#3.3.4-version-negotiation-between-client-and-server)
+
+###### Listing 33
+
+```
+GET /parties/MSISDN/123456789 HTTP/1.1
+Accept: application/vnd.interoperability.parties+json;version=1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Date: Tue, 15 Nov 2017 10:13:37 GMT
+FSPIOP-Source: BankNrOne
+```
+
+**Listing 33 -- Get Party information for account identified by MSISDN and 123456789 from FSP BankNrOne**
+
+[Listing 34](#listing-34) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 33.](#listing-33)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 34
+
+```
+HTTP/1.1 202 Accepted
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+```
+
+**Listing 34 -- Asynchronous response on the request for Party information**
+
+#### 10.4.3 Request Party Information from FSP -- Step 6 in End-to-End Flow
+
+When the Switch has received the HTTP request in [Listing 33](#listing-33) and sent the asynchronous response in [Listing 34,](#listing-34) the Switch can proceed with checking its database if it has information regarding in which FSP the account holder identified by **MSISDN** and **123456789** is located. As that information was provisioned as detailed in [Section 10.3,](#10.3-provision-account-holder) the Switch knows that the account is in FSP **MobileMoney**. Therefore, the Switch sends the HTTP request in [Listing 35.](#listing-35)
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.2.1](#6.3.2.1-get-/parties{type}\{id}) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_.](#6.3.2.1-get-/parties{type}\{id}) **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source); in this request the Switch has added the header **FSPIOP-Destination** because the Switch knew to where the request should be routed. Information about API version negotiation can be found in [Section 3.3.4.](#3.3.4-version-negotiation-between-client-and-server)
+
+###### Listing 35
+
+```
+GET /parties/MSISDN/123456789 HTTP/1.1
+Accept: application/vnd.interoperability.parties+json;version=1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Date: Tue, 15 Nov 2017 10:13:38 GMT
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+```
+
+**Listing 35 -- Get Party information for account identified by MSISDN and 123456789 from Switch**
+
+[Listing 36](#listing-36) shows the asynchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 35.](#listing-35)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 36
+
+```
+HTTP/1.1 202 Accepted
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+```
+
+**Listing 36 -- Asynchronous response on request for Party information**
+
+#### 10.4.4 Lookup Party Information in FSP MobileMoney -- Step 7 in End-to-End Flow
+
+When the FSP **MobileMoney** has received the HTTP request in [Listing 35](#listing-35) and sent the asynchronous response in [Listing 36,](#listing-36) the FSP **MobileMoney** can proceed with checking its database for more information regarding the account identified by **MSISDN** and **123456789**. As the account exists and is owned by Henrik Karlsson, the FSP **MobileMoney** sends the callback in [Listing 37.](#listing-37) The FSP **MobileMoney** does not want to share some details, for example birth date, with the other FSP (**BankNrOne**), so some optional elements are not sent.
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request,
+and [Section 6.3.3.1](#6.3.3.1-put-/parties/{type}/{id}) for more information about the callback [**PUT /parties/**_{Type}_**/**_{ID}_.](#6.3.3.1-put-/parties/{type}/{id}) **In** the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 35,](#listing-35) as detailed in [Section 3.2.3.5.](#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source)
+
+###### Listing 37
+
+````    
+PUT /parties/MSISDN/123456789 HTTP/1.1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Content-Length: 347
+Date: Tue, 15 Nov 2017 10:13:39 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+{
+    "party\": {
+        "partyIdInfo\": {
+            "partyIdType\": \"MSISDN\",
+            "partyIdentifier\": \"123456789\",
+            "fspId\": \"MobileMoney\"
+        },
+        "personalInfo\": {
+            "complexName\": {
+                "firstName\": \"Henrik\",
+                "lastName\": \"Karlsson\"
+            }
+        }
+    }
+}
+````
+
+**Listing 37 -- Callback to the request for Party information**
+
+[Listing 38](#listing-38) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 37.](#listing-37)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 38
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+```
+
+**Listing 38 -- Asynchronous response for the Party information callback**
+
+#### 10.4.5 Send Callback to FSP BankNrOne -- Step 8 in End-to-End Flow
+
+When the Switch has received the callback in [Listing 37](#listing-37) and sent the asynchronous response in [Listing 38,](#listing-38) it should relay the exact same callback as in [Listing 37](#listing-37) to the FSP **BankNrOne**, and **BankNrOne** should then respond asynchronously with the exact same response as in [Listing 38.](#listing-38)
+
+The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **BankNrOne** (HTTP request in [Listing 37)](#listing-37) and from **BankNrOne** to the Switch (HTTP response in [Listing 38)](#listing-38) instead.
+
+#### 10.4.6 Send Quote Request from FSP BankNrOne -- Step 9 in End-to-End Flow
+
+After receiving Party information in the callback [**PUT /parties/**_{Type}_**/**_{ID}_,](#6.3.3.1-put-/parties/{type}/{id}) the FSP **BankNrOne** now knows that the account identified by **MSISDN** and **123456789** exists and that it is in the FSP **MobileMoney**. It also knows the name of the account holder. Depending on implementation, the name of the intended Payee (Henrik Karlsson) could be shown to Mats Hagman already in this step before sending the quote. In this example, a quote request is sent before showing the name and any fees.
+
+The FSP **BankNrOne** sends the HTTP request in [Listing 39](#listing-39) to request the quote. **BankNrOne** does not want to disclose its fees (see [Section 5.1](#5.1-quoting) for more information about quoting), which means that it does not include the **fees** element in the request. The **amountType** element is set to RECEIVE as Mats wants Henrik to receive 100 USD. The **transactionType** is set according to [Section 5.3.](#5.3-mapping-of-use-cases-to-transaction-types) Information about Mats is sent in the **payer** element. **BankNrOne** has also generated two UUIDs for the quote ID (7c23e80c-d078-4077-8263-2c047876fcf6) and the transaction ID (85feac2f-39b2-491b-817e-4a03203d4f14). These IDs must be unique, as described in [Section 3.1.1.](#3.1.1-architectural-style)
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.2.2](#6.5.2.2-post-/quotes) for more information about the service [**POST /quotes**.](#6.5.2.2-post-/quotes) **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5.] (#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source) Information about API version negotiation can be found in Section [3.3.4.](#3.3.4-version-negotiation-between-client-and-server)
+
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=1
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+Content-Length: 975
+Date: Tue, 15 Nov 2017 10:13:40 GMT
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+
+###### Listing 39
+
+````
+{
+    "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+    "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+    "payee": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "123456789",
+            "fspId": "MobileMoney"
+        }
+    },
+    "payer": {
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Mats",
+                "lastName": "Hagman"
+            }
+        },
+        "partyIdInfo": {
+            "partyIdType": "IBAN",
+            "partyIdentifier": "SE4550000000058398257466",
+            "fspId": "BankNrOne"
+        }
+    },
+    "amountType": "RECEIVE",
+    "amount": {
+        "amount": "100",
+        "currency": "USD"
+    },
+    "transactionType": {
+        "scenario": "TRANSFER",
+        "initiator": "PAYER",
+        "initiatorType": "CONSUMER"
+    },
+    "note": "From Mats",
+    "expiration": "2017-11-15T22:17:28.985-01:00"
+}
+````
+
+**Listing 39 -- Request quote for transaction of 100 USD**
+
+[Listing 40](#listing-40) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 39.](#listing-39)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 40
+
+```
+HTTP/1.1 202 Accepted
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+```
+
+**Listing 40 -- Asynchronous response on quote request**
+
+#### 10.4.7 Send Quote Request from Switch -- Step 10 in End-to-End Flow**
+
+When the Switch has received the quote request in [Listing 39](#listing-39) and sent the asynchronous response in [Listing 40,](#listing-40) it should relay the same request as in [Listing 39](#listing-39) to the FSP **MobileMoney**, and **MobileMoney** should then respond asynchronously with the same response as in [Listing 40.](#listing-40)
+
+The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **MobileMoney** (HTTP request in [Listing 39)](#listing-39) and from **MobileMoney** to the Switch (HTTP response in [Listing 40)](#listing-40) instead.
+
+#### 10.4.8 Determine fees and FSP commission in FSP MobileMoney -- Step 11 in End-to-End Flow
+
+When the FSP **MobileMoney** has received the HTTP request in [Listing 39](#listing-40) and sent the asynchronous response in [Listing 40,](#listing-40) the FSP **MobileMoney** should validate the request and then proceed to determine the applicable fees and/or FSP commission for performing the transaction in the quote request.
+
+In this example, the FSP **MobileMoney** decides to give 1 USD in FSP commission as the FSP **MobileMoney** will receive money, which should later generate more income for the FSP (future possible fees). Since the Payee Henrik Karlsson should receive 100 USD and the FSP commission is determined to 1 USD, the FSP **BankNrOne** only needs to transfer 99 USD to the FSP **MobileMoney** (see [Section 5.1.1.1](#5.1.1.1-non-disclosing-receive-amount) for the equation). The 99 USD is entered in the transferAmount element in the callback, which is the amount that should later be transferred between the FSPs.
+
+To send the callback, the FSP **MobileMoney** then needs to create an [ILP Packet](#4.5-ilp-packet) (see [Section 4.5](#4.5-ilp-packet) for more information) that is base64url-encoded, as the **ilpPacket** element in the [**PUT /quotes/**_{ID}_](#6.5.3.1-put-/quotes/{id}) callback is defined as a [BinaryString](#7.2.17-binarystring) (see [Section 7.2.17)](#7.2.17-binarystring). How to populate the ILP Packet is explained in Section [6.5.1.2.](#6.5.1.2-interledger-payment-request) Henrik's ILP address in the FSP **MobileMoney** has been set to **g.se.mobilemoney.msisdn.123456789** (see [Section 4.3](#4.3-ilp-addressing) for more information about ILP addressing). As the transfer amount is 99 USD and the currency USD's exponent is 2, the amount to be populated in the ILP Packet is 9900 (99 \* 10\^2 = 9900). The remaining element in the ILP Packet is the **data** element. As described in [Section 6.5.1.2,](#6.5.1.2-interledger-payment-request) this element should contain the [Transaction](#7.4.17-transaction) data model (see [Section 7.4.17)](#7.4.17-transaction). With the information from the quote request, the Transaction in this example becomes as shown in [Listing 41.](#listing-41) Base64url-encoding the entire ILP Packet with the **amount**, **account**, and the **data** element then results in the **ilpPacket** element in the [**PUT /quotes/**_{ID}_](#6.5.3.1-put-/quotes/{ID}) callback.
+
+When the ILP Packet has been created, the fulfilment and the condition can be generated as defined in the algorithm in [Listing 12.](#listing-12) Using a generated example secret shown in [Listing 42](#listing-42) (shown as base64url-encoded), the fulfilment becomes as in [Listing 43](#listing-43) (shown as base64url-encoded) after executing the HMAC SHA-256 algorithm on the ILP Packet using the generated secret as key. The FSP **MobileMoney** is assumed to save the fulfilment in the database, so that it does not have to be regenerated later. The condition is then the result of executing the SHA-256 hash algorithm on the fulfilment, which becomes as in [Listing 44](#listing-44) (shown as base64url-encoded).
+
+The complete callback to the quote request becomes as shown in [Listing 45.](#listing-45)
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.3.1](#6.5.3.1-put-/quotes/{id}) for more information about the callback [**PUT /quotes/**_{ID}_.](#6.5.3.1-put-/quotes/{id}) **The** _{ID}_ in the URI should be taken from the quote ID in the quote request, which in the example is 7c23e80c-d078-4077-8263-2c047876fcf6. In the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 39,](#listing-39) as detailed in [Section 3.2.3.5.](#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source)
+
+###### Listing 41
+
+```
+{
+    "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+    "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+    "payee": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "123456789",
+            "fspId": "MobileMoney"
+        },
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Henrik",
+                "lastName": "Karlsson"
+            }
+        }
+    },
+    "payer": {
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Mats",
+                "lastName": "Hagman"
+            }
+        },
+        "partyIdInfo": {
+            "partyIdType": "IBAN",
+            "partyIdentifier": "SE4550000000058398257466",
+            "fspId": "BankNrOne"
+        }
+    },
+    "amount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "transactionType": {
+        "scenario": "TRANSFER",
+        "initiator": "PAYER",
+        "initiatorType": "CONSUMER"
+    },
+    "note": "From Mats"
+}
+```
+
+**Listing 41 -- The Transaction JSON object**
+
+###### Listing 42
+
+```
+JdtBrN2tskq9fuFr6Kg6kdy8RANoZv6BqR9nSk3rUbY
+```
+
+**Listing 42 -- Generated secret, encoded in base64url**
+
+###### Listing 43
+
+```
+mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s
+```
+
+**Listing 43 -- Calculated fulfilment from the ILP Packet and secret, encoded in base64url**
+
+###### Listing 44
+
+```
+fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG\_fqGnR7Xs
+```
+
+**Listing 44 -- Calculated condition from the fulfilment, encoded in base64url**
+
+###### Listing 45
+
+```
+PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6 HTTP/1.1
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+Content-Length: 1802
+Date: Tue, 15 Nov 2017 10:13:41 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+{
+    "transferAmount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "payeeReceiveAmount": {
+        "amount": "100",
+        "currency": "USD"
+    },
+    "expiration": "2017-11-15T14:17:09.663+01:00",
+    "ilpPacket": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY-
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI-
+CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25
+lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
+    "condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs"
+}
+```
+
+**Listing 45 -- Quote callback**
+
+**Note:** The element **ilpPacket** in [Listing 45](#listing-45) should be on a single line in a real implementation; it is shown with line breaks in this example in order to show the entire value.
+
+[Listing 46](#listing-46) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 45.](#listing-45)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Listing 46
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+```
+
+**Listing 46 -- Asynchronous response on the quote callback**
+
+#### 10.4.9 Send Callback to FSP BankNrOne -- Step 12 in End-to-End Flow
+
+When the Switch has received the quote callback in [Listing 45](#listing-45) and sent the asynchronous response in [Listing 46,](#listing-46) it should relay the exact same callback as in [Listing 45](#listing-45) to the FSP **BankNrOne**, and **BankNrOne** should then respond asynchronously with the exact same response as in [Listing 46.](#listing-46)
+
+The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **BankNrOne** (HTTP request in [Listing 45)](#listing-45) and from **BankNrOne** to the Switch (HTTP response in [Listing 46)](#listing-46) instead.
+
+#### 10.4.10 Determine fees in FSP BankNrOne -- Step 13 in End-to-End Flow
+
+When the FSP **BankNrOne** has received the quote callback in [Listing 45](#listing-45) and sent the asynchronous response in [Listing 46,](#listing-46) the FSP **BankNrOne** can proceed with determining the fees for the Payer Mats Hagman. In this example, the fee for the Payer is set to 0 USD, but the FSP commission from the FSP **MobileMoney** is kept as an income for the FSP **BankNrOne**. This means that for the Payee Henrik Karlsson to receive 100 USD, the Payer Mats Hagman must transfer 100 USD from his account. 99 USD will then be transferred between the FSPs **BankNrOne** and **MobileMoney**.
+
+The FSP **BankNrOne** then notifies Mats Hagman that the transaction to transfer 100 USD to Henrik Karlsson will cost 0 USD in fees. How Mats Hagman is notified is out of scope of this API.
+
+#### 10.4.11 Payer Accepts Transaction -- Step 14 in End-to-End Flow
+
+In this example, Mats Hagman accepts to perform the transaction. How the acceptance is sent is outside the scope of this API.
+
+#### 10.4.12 Send Transfer Request from FSP BankNrOne -- Step 15 in End-to-End Flow
+
+When Mats Hagman has accepted the transaction, FSP **BankNrOne** reserves the internal transfers needed to perform the transaction. This means that 100 USD will be reserved from Mats Hagman's account, where 1 USD will end up as income for the FSP and 99 USD will be transferred to the prefunded Switch account. After the reservations are successfully performed, the FSP **BankNrOne** sends a [**POST /transfers**](#6.7.2.2-post-/transfers) to the Switch as in [Listing 47.](#listing-47) The same ilpPacket and condition elements are sent as was received in the quote callback and the **amount** is the same as the received **transferAmount**, see [Listing 45.](#listing-45)
+
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6.7.2.2-post-/transfers) for more [**/transfers**. (#6.7.2.2-post-/transfers) **More** information regarding routing of requests using **FSPIOP-Destination** and [Section 3.2.3.5.](#page24) Information about API version negotiation can be found in [Section 3.3.4.](#3.3.4-version-negotiation-between-client-and-server)
+
+###### Listing 47
+
+```
+POST /transfers HTTP/1.1
+Accept: application/vnd.interoperability.transfers+json;version=1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 1820
+Date: Tue, 15 Nov 2017 10:14:01
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+{
+    "transferId":"11436b17- c690
+    "payerFsp":"BankNrOne",
+    "payeeFsp": "MobileMoney",
+    "amount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "expiration": "2017-11-15T11:17:01.663+01:00",
+    "ilpPacket": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY- 
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI- CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25 lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
+"condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs" 
+}
+```
+
+**Listing 47 -- Request to transfer from FSP BankNrOne to FSP MobileMoney**
+
+**Note:** The element **ilpPacket** in [Listing 47](#listing-47) should be on a single line in a real implementation, it is shown with line breaks in this example for being able to show the entire value.
+
+[Listing 48](#listing-48) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 47.](#listing-47)
+
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+
+###### Figure 48
+
+```
+HTTP/1.1 202 Accepted
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+```
+
+**Listing 48 -- Asynchronous response on transfer request**
+
+#### 10.4.13 Send Transfer Request from Switch -- Step 16 in End-to-End Flow
+
+When the Switch has received the transfer request in [Listing 47](#listing-47) and sent the asynchronous response in [Listing 48,](#listing-48) it should reserve the transfer from **BankNrOne**'s account in the Switch to **MobileMoney**'s account in the Switch. After the reservation is successful, the Switch relays nearly the same request as in [Listing 47](#listing-47) to the FSP **MobileMoney**; expect that the **expiration** element should be decreased as mentioned in [Section 6.7.1.4.](#6.7.1.4-timeout-and-expiry) [Listing 49](#listing-49) shows the HTTP request with the **expiration** decreased by 30 seconds compared to [Listing 47.](#listing-47) The FSP **MobileMoney** should then respond asynchronously with the same response as in [Listing 48.](#listing-48)
+
+###### Listing 49
+
+```
+POST /transfers HTTP/1.1
+Accept: application/vnd.interoperability.transfers+json;version=1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 1820
+Date: Tue, 15 Nov 2017 10:14:01 GMT
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+{
+    "transferId\":\"11436b17- c690-4a30-8505-42a2c4eafb9d\",
+    "payerFsp\":\"BankNrOne\",
+    "payeeFsp\": \"MobileMoney\",
+    "amount\": {
+        "amount\": \"99\",
+        "currency\": \"USD\"
+    },
+    "expiration\": \"2017-11-15T11:16:31.663+01:00\",
+    "ilpPacket\": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY-
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI-
+CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25
+lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\\u003d\\u003d\",
+"condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs"
+}
+```
+
+**Listing 49 -- Request to transfer from FSP BankNrOne to FSP MobileMoney with decreased expiration**
+
+**Note:** The element **ilpPacket** in [Listing 49](#listing-49) should be on a single line in a real implementation; it is shown with line breaks in this example in order to show the entire value.
+
+### 10.4.14 Perform Transfer in FSP MobileMoney -- Step 17 in End-to-End Flow
+
+When the FSP **MobileMoney** has received the transfer request in [Listing 47,](#listing-47) it should perform the transfer as detailed in the earlier quote request, this means that 100 USD should be transferred to Henrik Karlsson's account, where 99 USD is from the prefunded Switch account and 1 USD is from an FSP commission account.
+
+As proof of performing the transaction, the FSP **MobileMoney** then retrieves the stored fulfilment [(Listing 43)](#listing-43) from the database (stored in [Section 10.4.8)](#10.4.8) and enters that in the **fulfilment** element in the callback [**PUT /transfers/**_{ID}_.](#6.7.3.1-put-/transfers/{ID}) The **transferState** is set to COMMITTED and the **completedTimestamp** is set to when the transaction was completed; see [Listing 50](#listing-50) for the complete HTTP request.
 
 At the same time, a notification is sent to the Payee Henrik Karlsson to
 say that he has received 100 USD from Mats Hagman.
 
 How the notification is sent is out of scope for this API.
 
-See [Table 1](#page21) for the required HTTP headers in a HTTP request,
-and Section [6.7.3.1](#page107) for more information about the callback
-[**PUT**](#page107) [**/transfers/***\<ID\>*.](#page107) **The**
-*\<ID\>* in the URI should be taken from the transfer ID in the transfer
-request, which in the example is 11436b17-c690-4a30-8505-42a2c4eafb9d.
-In the callback, the **Accept** header should not be sent. The HTTP
-headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted
-compared to the HTTP request in [Listing 47,](#page187) as detailed in
-Section [3.2.3.5.](#page24)
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.3.1](#6.7.3.1-put-/transfers/{ID}) for more information about the callback [**PUT /transfers/**_{ID}_.](#6.7.3.1-put-/transfers/{ID}) **The** _{ID}_ in the URI should be taken from the transfer ID in the transfer request, which in the example is 11436b17-c690-4a30-8505-42a2c4eafb9d. In the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 47,](#listing-47) as detailed in [Section 3.2.3.5.](#3.2.3.5-call-flow-routing-using-fspiop-destination-and-fspiop-source)
 
-> PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d HTTP/1.1
->
-> Content-Type:
-> application/vnd.interoperability.transfers+json;version=1.0
->
-> Content-Length: 166
->
-> Date: Tue, 15 Nov 2017 10:14:02 GMT
->
-> FSPIOP-Source: MobileMoney
->
-> FSPIOP-Destination: BankNrOne
->
-> {
->
-> \"fulfilment\": \"mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s\",
->
-> \"completedTimestamp\": \"2017- 11-16T04:15:35.513+01:00\",
->
-> \"transferState\": \"COMMITTED\"
->
-> }
->
-> **Listing 50 -- Callback for the transfer request**
+###### Listing 50
 
-[Listing 51](#page189) shows the asynchronous HTTP response in which the
-Switch immediately (after basic verification of for example required
-headers) acknowledges the completion of the process, after receiving the
-callback in [Listing 50.](#page189)
+```
+PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d HTTP/1.1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 166
+Date: Tue, 15 Nov 2017 10:14:02 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+{
+    "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
+    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "transferState": "COMMITTED"
+}
+```
 
-See [Table 2](#page21) for the required HTTP headers in a HTTP response.
+**Listing 50 -- Callback for the transfer request**
 
-> HTTP/1.1 200 OK
->
-> Content-Type:
-> application/vnd.interoperability.transfers+json;version=1.0
->
-> **Listing 51 -- Asynchronous response on the transfers callback**
+[Listing 51](#listing-50) shows the asynchronous HTTP response in which the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 50.](#listing-50)
 
-**10.4.15** **Payee Receives Transaction Notification -- Step 18 in
-End-to-End Flow**
+See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
-The Payee Henrik Karlsson receives the transaction notification, and is
-thereby informed of the successful transaction.
+###### Listing 51
 
-**10.4.16** **Perform Transfer in Switch -- Step 19 in End-to-End Flow**
+```
+HTTP/1.1 200 OK
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+```
 
-When the Switch has received the transfer callback in [Listing
-50](#page189) and sent the asynchronous response in [Listing
-51,](#page189) it should validate the fulfilment, perform the earlier
-reserved transfer and relay the exact same callback as in [Listing
-50](#page189) to the FSP **BankNrOne**, and **BankNrOne** should then
-respond asynchronously with the same response as in [Listing
-51.](#page189)
+**Listing 51 -- Asynchronous response on the transfers callback**
 
-The validation of the fulfilment is done by calculating the SHA-256 hash
-of the fulfilment and ensuring that the hash is equal to the condition
-from the transfer request.
+#### 10.4.15 Payee Receives Transaction Notification -- Step 18 in End-to-End Flow
 
-The HTTP request and response are not repeated in this section, as they
-are the same as in the last section, but sent from the Switch to
-**BankNrOne** (HTTP request in [Listing 50)](#page189) and from
-**BankNrOne** to the Switch (HTTP response in [Listing 51)](#page189)
-instead.
+The Payee Henrik Karlsson receives the transaction notification, and is thereby informed of the successful transaction.
 
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
+#### 10.4.16 Perform Transfer in Switch -- Step 19 in End-to-End Flow
 
-Last Modified 2018-11-01 Version 1.0 Page 189 of 190
+When the Switch has received the transfer callback in [Listing 50](#listing-50) and sent the asynchronous response in [Listing 51,](#listing-51) it should validate the fulfilment, perform the earlier reserved transfer and relay the exact same callback as in [Listing 50](#listing-50) to the FSP **BankNrOne**, and **BankNrOne** should then respond asynchronously with the same response as in [Listing 51.](#listing-51)
 
-**API Definition**
+The validation of the fulfilment is done by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition from the transfer request.
 
-**Open API for FSP Interoperability Specification**
+The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **BankNrOne** (HTTP request in [Listing 50)](#listing-51) and from **BankNrOne** to the Switch (HTTP response in [Listing 51)](#listing-51) instead.
 
-**10.4.17** **Perform Transfer in FSP BankNrOne -- Step 20 in End-to-End
-Flow**
+#### 10.4.17 Perform Transfer in FSP BankNrOne -- Step 20 in End-to-End Flow
 
-When the FSP **BankNrOne** has received the transfer callback in
-[Listing 50](#page189) and sent the asynchronous response in [Listing
-51,](#page189) the FSP **BankNrOne** should validate the fulfilment (see
-Section [10.4.16)](#page189) and then perform the earlier reserved
-transfer.
+When the FSP **BankNrOne** has received the transfer callback in [Listing 50](#listing-50) and sent the asynchronous response in [Listing 51,](#listing-51) the FSP **BankNrOne** should validate the fulfilment (see [Section 10.4.16)](#10.4.16) and then perform the earlier reserved transfer.
 
-After the reserved transfer has been performed, the Payer Mats Hagman
-should be notified of the successful transaction. How the notification
-is sent is outside the scope of this API.
+After the reserved transfer has been performed, the Payer Mats Hagman should be notified of the successful transaction. How the notification is sent is outside the scope of this API.
 
-**10.4.18** **Payer Receives Transaction Notification -- Step 21 in
-End-to-End Flow**
+#### 10.4.18 Payer Receives Transaction Notification -- Step 21 in End-to-End Flow
 
-The Payer Mats Hagman receives the transaction notification and is
-thereby informed of the successful transaction.
-
-![](media/image29.png){width="7.245833333333334in"
-height="6.944444444444444e-3in"}
-
-Last Modified 2018-11-01 Version 1.0 Page 190 of 190
+The Payer Mats Hagman receives the transaction notification and is thereby informed of the successful transaction.
