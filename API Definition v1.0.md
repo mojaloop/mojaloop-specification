@@ -1066,7 +1066,7 @@ See [Figure 35](#figure-35) for a highly simplified view of the movement of mone
 
 ###### Figure 35
 
-`Figure 35 - Place Holder`
+![Figure 35](/assets/diagrams/images/figure35.svg)
 
 **Figure 35 -- Simplified view of the movement of money for the ATM-Initiated Cash-Out example**
 
@@ -1086,7 +1086,7 @@ See [Figure 37](#figure-37) for a highly simplified view of the movement of mone
 
 ###### Figure 37
 
-`Figure 37 - Place Holder`
+![Figure 37](/assets/diagrams/images/figure37.svg)
 
 **Figure 37 -- Simplified view of the movement of money for the
 Merchant-Initiated Merchant Payment authorized on POS example**
@@ -1109,7 +1109,7 @@ See [Figure 39](#figure-39) for a highly simplified view of the movement of mone
 
 ###### Figure 39
 
-`Figure 39 - Place Holder`
+![Figure 39](/assets/diagrams/images/figure39.svg)
 
 **Figure 39 -- Simplified view of the movement of money for the Refund example**
 
@@ -1726,7 +1726,7 @@ The possible states of a transaction request can be seen in [Figure 45.](#figure
 
 **Note:** A server does not need to keep transaction request objects that have been rejected in their database. This means that a client should expect that an error callback could be received for a rejected transaction request.
 
-`Figure 45 - Place Holder`
+![Figure 45](/assets/diagrams/images/figure45.svg)
 
 **Figure 45 -- Possible states of a transaction request**
 
@@ -1907,13 +1907,13 @@ If the server is unable to find or create a quote, or some other processing erro
 
 #### 6.5.5 States
 
+###### Figure 47
+
 [Figure 47](#figure-47) contains the UML (Unified Modeling Language) state machine for the possible states of a quote object.
 
 **Note:** A server does not need to keep quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for an expired or rejected quote.
 
-###### Figure 47
-
-`Figure 47 - Place Holder`
+![Figure 47](/assets/diagrams/images/figure47.svg)
 
 **Figure 47 -- Possible states of a quote**
 
@@ -2230,11 +2230,11 @@ If the server is unable to find or create a transfer, or another processing erro
 
 **6.7.5 States**
 
-The possible states of a transfer can be seen in [Figure 55.](#figure-55)
-
 ###### Figure 55
 
-`Figure 55 - Place Holder`
+The possible states of a transfer can be seen in [Figure 55.](#figure-55)
+
+![Figure 55](/assets/diagrams/images/figure55.svg)
 
 **Figure 55 -- Possible states of a transfer**
 
@@ -2321,13 +2321,13 @@ If the server is unable to find or create a transaction, or another processing e
 
 #### 6.8.5 States
 
+###### Figure 57
+
 The possible states of a transaction can be seen in [Figure 57.](#figure-57)
 
 **Note:** For reconciliation purposes, a server must keep transaction objects that have been rejected in its database for a scheme-agreed time period. This means that a client should expect a proper callback about a transaction (if it has been received by the server) when requesting information regarding the same.
 
-###### Figure 57
-
-`Figure 57 - Place Holder`
+![Figure 57](/assets/diagrams/images/figure57.svg)
 
 **Figure 57 -- Possible states of a transaction**
 
@@ -2443,14 +2443,14 @@ If the server is unable to find or create a bulk quote, or another processing er
 
 #### 6.9.5 States
 
+###### Figure 59
+
 The possible states of a bulk quote can be seen in [Figure
 59.](#figure-59)
 
 **Note:** A server does not need to keep bulk quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for a rejected or expired bulk quote.
 
-###### Figure 59
-
-`Figure 59 - Place Holder`
+![Figure 59](/assets/diagrams/images/figure59.svg)
 
 **Figure 59 -- Possible states of a bulk quote**
 
@@ -2565,13 +2565,13 @@ If the server is unable to find or create a bulk transfer, or another processing
 
 #### 6.10.5 States
 
+###### Figure 61
+
 The possible states of a bulk transfer can be seen in [Figure 61.](#figure-61)
 
 **Note:** A server must keep bulk transfer objects that have been rejected in their database during a market agreed time-period for reconciliation purposes. This means that a client should expect a proper callback about a bulk transfer (if it has been received by the server) when requesting information regarding the same.
 
-###### Figure 61
-
-`Figure 61 - Place Holder`
+![Figure 61](/assets/diagrams/images/figure61.svg)
 
 **Figure 61 -- Possible states of a bulk transfer**
 
@@ -3865,11 +3865,11 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 
 ### 7.6 Error Codes
 
-Each error code in the API is a four-digit number, for example, **1234**, where the first number (**1** in the example) represents the high-level error category, the second number (**2** in the example) represents the low-level error category, and the last two numbers (**34** in the example) represents the specific error. [Figure 62](#figure-62) shows the structure of an error code. The following sections contain information about defined error codes for each high-level error category.
-
 ###### Figure 62
 
-`Figure 62 - Place Holder`
+Each error code in the API is a four-digit number, for example, **1234**, where the first number (**1** in the example) represents the high-level error category, the second number (**2** in the example) represents the low-level error category, and the last two numbers (**34** in the example) represents the specific error. [Figure 62](#figure-62) shows the structure of an error code. The following sections contain information about defined error codes for each high-level error category.
+
+![Figure 62](/assets/diagrams/images/figure62.svg)
 
 **Figure 62 -- Error code structure**
 
@@ -4324,11 +4324,11 @@ This section explains the setup of the example.
 
 #### 10.1.1 Nodes
 
-The nodes in the end-to-end example in this section are simplified by having only two FSPs, where one FSP is a bank (identifier **BankNrOne**) and the other FSP is a mobile money operator (identifier **MobileMoney**), and one Switch (identifier **Switch**). The Switch also acts as the Account Lookup System (ALS) in this simplified setup (see [Figure 72)](#figure-72).
-
 ###### Figure 72
 
-`Figure 72 - Place Holder`
+The nodes in the end-to-end example in this section are simplified by having only two FSPs, where one FSP is a bank (identifier **BankNrOne**) and the other FSP is a mobile money operator (identifier **MobileMoney**), and one Switch (identifier **Switch**). The Switch also acts as the Account Lookup System (ALS) in this simplified setup (see [Figure 72)](#figure-72).
+
+![Figure 72](/assets/diagrams/images/figure72.svg)
 
 **Figure 72 -- Nodes in end-to-end example**
 

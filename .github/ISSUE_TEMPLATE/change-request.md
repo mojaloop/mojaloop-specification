@@ -7,20 +7,18 @@ assignees: ''
 
 ---
 
-# _[Change ID] – [Change Request Name]_
-
 ## Open API for FSP Interoperability - Change Request
 
 ### **Table of Contents**
 
-* [1. Preface](#1-preface)
-  * [1.1 Change Request Information](#11-change-request-information)
-  * [1.2 Document Version Information](#12-document-version-information)
-* [2. Problem Description](#2-problem-description)
-  * [2.1 Background](#21-background)
-  * [2.2 Current Behaviour](#22-current-behaviour)
-  * [2.3 Requested Behaviour](#23-requested-behaviour)
-* [3 Proposed Solution Options](#3-proposed-solution-options)
+* [1. Preface](#1.-preface)
+  * [1.1 Change Request Information](#1.1-change-request-information)
+  * [1.2 Document Version Information](#1.2-document-version-information)
+* [2. Problem Description](#2.-problem-description)
+  * [2.1 Background](#2.1-background)
+  * [2.2 Current Behaviour](#2.2-current-behaviour)
+  * [2.3 Requested Behaviour](#2.3-requested-behaviour)
+* [3 Proposed Solution Options](#3.-proposed-solution-options)
 
 ## **1. Preface**
 ___
@@ -29,9 +27,6 @@ This section contains basic information regarding the change request.
 
 #### 1.1 Change Request Information
 
-| Change Request ID | TEMPLATE\_1 |
-| --- | --- |
-| Change Request Name | Template for Change Request |
 | Requested By | Henrik Karlsson, Ericsson |
 | Change Request Status | In review ☒  / Approved ☐ / Rejected ☐ |
 | Approved/Rejected Date |   |
