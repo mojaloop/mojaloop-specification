@@ -25,22 +25,31 @@
 @startuml
 ' declaring skinparam
 skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam defaultFontName Calibri
+skinparam monochrome true
+skinparam SequenceLifeLineBackgroundColor WhiteSmoke
+skinparam SequenceLifeLineBorderColor Black
+skinparam ParticipantFontStyle Bold
+skinparam ParticipantFontSize 15
+skinparam ParticipantBackgroundColor WhiteSmoke
+skinparam ArrowColor Black
 
 ' declare title
 ' title HTTP POST call flow
 
 ' Actor Keys:
-' participant - FSP or Switch
+' participant - FSP, Peer FSP and Optional Switch
 
 ' declare actors
 participant "FSP" as FSP
-participant "Optional Switch" as OPTSWITCH
+participant "Optional\n Switch" as OPTSWITCH
 participant "Peer FSP" as PEERFSP
 
 ' start flow
 
-activate FSP
 FSP ->> OPTSWITCH: **POST /service**\n(Service information, ID)
+activate FSP
 activate OPTSWITCH
 FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
 OPTSWITCH ->> PEERFSP: **POST /service**\n(Service information, ID)

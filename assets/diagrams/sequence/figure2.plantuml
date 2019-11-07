@@ -25,17 +25,26 @@
 @startuml
 ' declare skinparam
 skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam defaultFontName Calibri
+skinparam monochrome true
+skinparam SequenceLifeLineBackgroundColor WhiteSmoke
+skinparam SequenceLifeLineBorderColor Black
+skinparam ParticipantFontStyle Bold
+skinparam ParticipantFontSize 15
+skinparam ParticipantBackgroundColor WhiteSmoke
+skinparam ArrowColor Black
 
 ' declare title
 ' title HTTP GET call flow
 
 ' Actor Keys:
-' participant - FSP or Switch
+' participant - FSP, Peer FSP and Optional Switch
 
 ' declare actors
 participant "FSP" as FSP
-participant "Optional Switch" as OPTSWITCH
-participant "Peer FSP" as PEERFSP
+participant "Optional\nSwitch" as OPTSWITCH
+participant "Peer\nFSP" as PEERFSP
 
 ' start flow
 

@@ -25,16 +25,25 @@
 @startuml
 ' declaring skinparam
 skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam defaultFontName Calibri
+skinparam monochrome true
+skinparam SequenceLifeLineBackgroundColor WhiteSmoke
+skinparam SequenceLifeLineBorderColor Black
+skinparam ParticipantFontStyle Bold
+skinparam ParticipantFontSize 15
+skinparam ParticipantBackgroundColor WhiteSmoke
+skinparam ArrowColor Black
 
 ' declare title
 ' title HTTP DELETE call flow
 
 ' Actor Keys:
-' participant - FSP or Switch
+' participant - FSP and Account Lookup
 
 ' declare actors
 participant "FSP" as FSP
-participant "Account Lookup" as ALS
+participant "Account\nLookup" as ALS
 
 ' start flow
 
