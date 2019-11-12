@@ -26,9 +26,8 @@ Approved/Rejected Date: N/A
       - [Add `AccountList` and `Account` data types](#add-accountlist-and-account-data-types)
       - [Specify accountAddress in the Quote and Transfer to assist with routing](#specify-accountaddress-in-the-quote-and-transfer-to-assist-with-routing)
     - [Regulatory Data Exchange](#regulatory-data-exchange-1)
-      - [`Participant` data model](#participant-data-model)
-      - [Add `RequiredDataList` and `RequiredData` data types](#add-requireddatalist-and-requireddata-data-types)
-      - [`JsonWebKey` data type](#jsonwebkey-data-type)
+      - [`ParticipantList` and `Participant` data model](#participantlist-and-participant-data-model)
+      - [Add `RequiredDataList`, `ProvidedDataList` and `ProvidedData`](#add-requireddatalist-provideddatalist-and-provideddata)
       - [Fees and Rates](#fees-and-rates)
       - [Regulatory Data](#regulatory-data)
   - [Data Model Changes](#data-model-changes)
@@ -431,7 +430,15 @@ The data element is optional for single hop transactions (that consist of only
 one transfer) but required for transactions that consist of two or more
 transfers.
 
-#### `Participant` data model
+#### `ParticipantList` and `Participant` data model
+
+`ParticipantList`:
+
+| Data Element | Cardinality | Type          | Description                    |
+| ------------ | ----------- | ------------- | ------------------------------ |
+| participant  | 1..16       | `Participant` | Number of Participant elements |
+
+`Participant`:
 
 | Name             | Cardinality | Type               | Description                                                                                                 |
 | ---------------- | ----------- | ------------------ | ----------------------------------------------------------------------------------------------------------- |
@@ -529,7 +536,7 @@ requested or they can reject the transfer if the data provided is insufficient.
 | note                 | 0..1        | `Note`            | A memo that will be attached to the transaction.                                                        |
 | expiration           | 0..1        | `DateTime`        | Expiration is optional.                                                                                 |
 | accountAddress       | 0..1        | `AccountAddress`  | The address of the payee account, used for routing where the quote goes via one or more intermediaries. |
-| participants         | 0..16       | `Participant`     | The participants in the transaction.                                                                    |
+| participants         | 1           | `ParticipantList` | The participants in the transaction.                                                                    |
 | extensionList        | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                             |
 
 `PUT /quotes` response callback:
