@@ -26,7 +26,7 @@ Approved/Rejected Date: N/A
       - [Add `AccountList` and `Account` data types](#add-accountlist-and-account-data-types)
       - [Specify accountAddress in the Quote and Transfer to assist with routing](#specify-accountaddress-in-the-quote-and-transfer-to-assist-with-routing)
     - [Regulatory Data Exchange](#regulatory-data-exchange-1)
-      - [`ParticipantList` and `Participant` data model](#participantlist-and-participant-data-model)
+      - [Add `ParticipantList` and `Participant` data model](#add-participantlist-and-participant-data-model)
       - [Add `RequiredDataList`, `ProvidedDataList` and `ProvidedData`](#add-requireddatalist-provideddatalist-and-provideddata)
       - [Fees and Rates](#fees-and-rates)
       - [Regulatory Data](#regulatory-data)
@@ -430,7 +430,7 @@ The data element is optional for single hop transactions (that consist of only
 one transfer) but required for transactions that consist of two or more
 transfers.
 
-#### `ParticipantList` and `Participant` data model
+#### Add `ParticipantList` and `Participant` data model
 
 `ParticipantList`:
 
@@ -549,6 +549,7 @@ requested or they can reject the transfer if the data provided is insufficient.
 | payeeFspCommission | 0..1        | `Money`           | Transaction commission from the Payee FSP.                                                                  |
 | expiration         | 1           | `DateTime`        | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
 | geoCode            | 0..1        | `GeoCode`         | Longitude and Latitude of the Payee. Can be used to detect fraud.                                           |
+| transaction        | 1           | `Transaction`     | The end-to-end transaction.                                                                                 |
 | echoData           | 0..1        | `String(1..2048)` | Opaque data provided by the payee that must be echoed back unchanged in the transfer.                       |
 | condition          | 1           | `IlpCondition`    | The condition that must be attached to the transfer by the Payer.                                           |
 | participants       | 0..16       | `Participant`     | The participants in the transaction.                                                                        |
