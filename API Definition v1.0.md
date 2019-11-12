@@ -1056,7 +1056,8 @@ An ATM-Initiated Cash-Out is typically a receive amount, in which the Payer FSP 
 
 ###### Figure 34
 
-`Figure 34 - Place holder`
+{% uml src="assets/diagrams/sequence/figure34.plantuml" %}
+{% enduml %}
 
 **Figure 34 -- ATM-Initiated Cash-Out example**
 
@@ -1076,7 +1077,8 @@ A Merchant-Initiated Merchant Payment authorized on a POS device is typically a 
 
 ###### Figure 36
 
-`Figure 36 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure36.plantuml" %}
+{% enduml %}
 
 **Figure 36 -- Merchant-Initiated Merchant Payment authorized on POS example**
 
@@ -1099,7 +1101,8 @@ Agent-Initiated Cash-In (Receive amount)](#5.1.6.3-agent-initiated-cash-in)
 
 ###### Figure 38
 
-`Figure 38 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure38.plantuml" %}
+{% enduml %}
 
 **Figure 38 -- Refund example**
 
@@ -1331,7 +1334,8 @@ If this model is used, all FSPs should support being both client and server of t
 
 ###### Figure 40
 
-`Figure 40 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure40.plantuml" %}
+{% enduml %}
 
 **Figure 40 -- How to use the services provided by /participants if there is no common Account Lookup System**
 
@@ -1343,7 +1347,8 @@ The FSPs do not need to support the server side of the different HTTP **GET** se
 
 ###### Figure 41
 
-`Figure 41 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure41.plantuml" %}
+{% enduml %}
 
 **Figure 41 -- How to use the services provided by /participants if there is a common Account Lookup System**
 
@@ -1526,7 +1531,8 @@ The services provided by the resource **/parties** is used for finding out infor
 
 [Figure 42](#figure-42) contains an example process for the **/parties** resource. Alternative deployments could also exist; for example, a deployment in which the Switch and the ALS are in the same server, or one in which the User's FSP asks FSP 1 directly for information regarding the Party.
 
-`Figure 42 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure42.plantuml" %}
+{% enduml %}
 
 **Figure 42 -- Example process for /parties resource**
 
@@ -1611,7 +1617,8 @@ Alternatively, the Payer could make the decision manually.
 
 ###### Figure 43
 
-`Figure 43 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure43.plantuml" %}
+{% enduml %}
 
 **Figure 43 -- How to use the /transactionRequests service**
 
@@ -1625,7 +1632,8 @@ Alternatively, the Payer could make the decision manually.
 
 ###### Figure 44
 
-`Figure 44 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure44.plantuml" %}
+{% enduml %}
 
 **Figure 44 -- Example process in which a transaction request is rejected**
 
