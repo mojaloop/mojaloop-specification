@@ -541,34 +541,34 @@ requested or they can reject the transfer if the data provided is insufficient.
 
 `PUT /quotes` response callback:
 
-| Name               | Cardinality | Type              | Description                                                                                                 |
-| ------------------ | ----------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| transferAmount     | 1           | `Money`           | The amount of Money that the Payer FSP should transfer to the Payee FSP.                                    |
-| payeeReceiveAmount | 0..1        | `Money`           | The amount of Money that the Payee should receive in the end-to-end transaction.                            |
-| payeeFspFee        | 0..1        | `Money`           | Payee FSP’s part of the transaction fee.                                                                    |
-| payeeFspCommission | 0..1        | `Money`           | Transaction commission from the Payee FSP.                                                                  |
-| expiration         | 1           | `DateTime`        | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
-| geoCode            | 0..1        | `GeoCode`         | Longitude and Latitude of the Payee. Can be used to detect fraud.                                           |
-| transaction        | 1           | `Transaction`     | The end-to-end transaction.                                                                                 |
-| echoData           | 0..1        | `String(1..2048)` | Opaque data provided by the payee that must be echoed back unchanged in the transfer.                       |
-| condition          | 1           | `IlpCondition`    | The condition that must be attached to the transfer by the Payer.                                           |
-| participants       | 0..16       | `Participant`     | The participants in the transaction.                                                                        |
-| extensionList      | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                                 |
+| Name               | Cardinality | Type            | Description                                                                                                 |
+| ------------------ | ----------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| transferAmount     | 1           | `Money`         | The amount of Money that the Payer FSP should transfer to the Payee FSP.                                    |
+| payeeReceiveAmount | 0..1        | `Money`         | The amount of Money that the Payee should receive in the end-to-end transaction.                            |
+| payeeFspFee        | 0..1        | `Money`         | Payee FSP’s part of the transaction fee.                                                                    |
+| payeeFspCommission | 0..1        | `Money`         | Transaction commission from the Payee FSP.                                                                  |
+| expiration         | 1           | `DateTime`      | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
+| geoCode            | 0..1        | `GeoCode`       | Longitude and Latitude of the Payee. Can be used to detect fraud.                                           |
+| transaction        | 1           | `Transaction`   | The end-to-end transaction.                                                                                 |
+| echoData           | 0..1        | `EchoData`      | Opaque data provided by the payee that must be echoed back unchanged in the transfer.                       |
+| condition          | 1           | `IlpCondition`  | The condition that must be attached to the transfer by the Payer.                                           |
+| participants       | 0..16       | `Participant`   | The participants in the transaction.                                                                        |
+| extensionList      | 0..1        | `ExtensionList` | Optional extension, specific to deployment.                                                                 |
 
 `POST /transfers` request:
 
-| Name          | Cardinality | Type              | Description                                                                                               |
-| ------------- | ----------- | ----------------- | --------------------------------------------------------------------------------------------------------- |
-| transferId    | 1           | `CorrelationId`   | The common ID between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. |
-| payeeFsp      | 1           | `FspId`           | Payee FSP in the proposed financial transaction.                                                          |
-| payerFsp      | 1           | `FspId`           | Payer FSP in the proposed financial transaction.                                                          |
-| amount        | 1           | `Money`           | The transfer amount to be sent.                                                                           |
-| transaction   | 1           | `Transaction`     | The end-to-end transaction.                                                                               |
-| echoData      | 0..1        | `String(1..2048)` | Data provided by the Payee during quoting that is echoed back unchanged.                                  |
-| condition     | 1           | `IlpCondition`    | The condition that must be fulfilled to commit the transfer.                                              |
-| expiration    | 1           | `DateTime`        | The transfer should be rolled back if no fulfilment is delivered before this time.                        |
-| participants  | 0..16       | `Participant`     | The participants in the transaction.                                                                      |
-| extensionList | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                               |
+| Name          | Cardinality | Type            | Description                                                                                               |
+| ------------- | ----------- | --------------- | --------------------------------------------------------------------------------------------------------- |
+| transferId    | 1           | `CorrelationId` | The common ID between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. |
+| payeeFsp      | 1           | `FspId`         | Payee FSP in the proposed financial transaction.                                                          |
+| payerFsp      | 1           | `FspId`         | Payer FSP in the proposed financial transaction.                                                          |
+| amount        | 1           | `Money`         | The transfer amount to be sent.                                                                           |
+| transaction   | 1           | `Transaction`   | The end-to-end transaction.                                                                               |
+| echoData      | 0..1        | `EchoData`      | Data provided by the Payee during quoting that is echoed back unchanged.                                  |
+| condition     | 1           | `IlpCondition`  | The condition that must be fulfilled to commit the transfer.                                              |
+| expiration    | 1           | `DateTime`      | The transfer should be rolled back if no fulfilment is delivered before this time.                        |
+| participants  | 0..16       | `Participant`   | The participants in the transaction.                                                                      |
+| extensionList | 0..1        | `ExtensionList` | Optional extension, specific to deployment.                                                               |
 
 `PUT /transfers` response callback
 
@@ -579,6 +579,12 @@ requested or they can reject the transfer if the data provided is insufficient.
 | completedTimestamp | 0..1        | `DateTime`          | Time and date when the transfer was completed.              |
 | transferState      | 1           | `TransferState`     | State of the transfer.                                      |
 | extensionList      | 0..1        | `ExtensionList`     | Optional extension, specific to deployment.                 |
+
+`EchoData`:
+
+| Data Element | Cardinality | Type              | Description                                                                     |
+| ------------ | ----------- | ----------------- | ------------------------------------------------------------------------------- |
+| echoData     | 1           | `String(1..2048)` | Opaque data provided by the Payee during quoting that is echoed back unchanged. |
 
 `Account`:
 
