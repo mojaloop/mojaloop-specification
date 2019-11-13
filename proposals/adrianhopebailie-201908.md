@@ -26,7 +26,9 @@ Approved/Rejected Date: N/A
       - [Add `AccountList` and `Account` data types](#add-accountlist-and-account-data-types)
       - [Specify accountAddress in the Quote and Transfer to assist with routing](#specify-accountaddress-in-the-quote-and-transfer-to-assist-with-routing)
     - [Regulatory Data Exchange](#regulatory-data-exchange-1)
-      - [Add `ParticipantList` and `Participant` data model](#add-participantlist-and-participant-data-model)
+      - [Add `ParticipantList`, `Participant` and `Rate` data model](#add-participantlist-participant-and-rate-data-model)
+      - [`RateValue` data type:](#ratevalue-data-type)
+        - [`RateValue` Regular Expression](#ratevalue-regular-expression)
       - [Add `RequiredDataList`, `ProvidedDataList` and `ProvidedData`](#add-requireddatalist-provideddatalist-and-provideddata)
       - [Fees and Rates](#fees-and-rates)
       - [Regulatory Data](#regulatory-data)
@@ -430,7 +432,7 @@ The data element is optional for single hop transactions (that consist of only
 one transfer) but required for transactions that consist of two or more
 transfers.
 
-#### Add `ParticipantList` and `Participant` data model
+#### Add `ParticipantList`, `Participant` and `Rate` data model
 
 `ParticipantList`:
 
@@ -445,11 +447,29 @@ transfers.
 | fspId            | 1           | `FspId`            | The identity of the participant                                                                             |
 | transferCurrency | 1           | `Currency`         | The currency of the transfer that will be made by this participant.                                         |
 | fee              | 1           | `Money`            | The fee that will be charged by the participant.                                                            |
-| rate             | 0..1        | `Amount`           | The rate of exchange that will applied by this participant.                                                 |
+| rate             | 0..1        | `Rate`             | The rate of exchange that will applied by this participant.                                                 |
 | expiration       | 1           | `DateTime`         | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
 | dataRequired     | 0..1        | `RequiredDataList` | List of data required for compliance                                                                        |
 | encryptionKey    | 0..1        | `JsonWebKey`       | The Public Key of the participant used to encrypt data sent to the participant.                             |
 | dataProvided     | 0..32       | `ProvidedDataList` | The data provided by other participants for use by this participant.                                        |
+
+`Rate`:
+
+| Data Element | Cardinality | Type        | Description                                      |
+| ------------ | ----------- | ----------- | ------------------------------------------------ |
+| rate         | 1           | `RateValue` | Rate of exchange                                 |
+| fromCurrency | 1           | `Currency`  | Currency from which the conversion is being made |
+| toCurrency   | 1           | `Currency`  | Currency to which the conversion is being madre  |
+
+#### `RateValue` data type:
+
+The API data type `RateValue` is a JSON String consisting of digits only and an
+optional period. Negative numbers and leading zeroes are not allowed.
+
+##### `RateValue` Regular Expression
+
+The regular expression for restricting an Rate is
+`^(([1-9][0-9]{0,5}))([.][0-9]{0,8}[1-9])?$`
 
 #### Add `RequiredDataList`, `ProvidedDataList` and `ProvidedData`
 
