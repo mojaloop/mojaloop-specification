@@ -48,8 +48,8 @@ participant "Peer\nFSP" as PEERFSP
 
 ' start flow
 
-activate FSP
 FSP ->> OPTSWITCH: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
+activate FSP
 activate OPTSWITCH
 FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
 OPTSWITCH -> OPTSWITCH: Route message according\nto **FSPIOP-Destination**

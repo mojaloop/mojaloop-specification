@@ -1433,11 +1433,11 @@ This HTTP request should support a query string (see Section [3.1.3](#3.1.3-uri-
 
 Callback and data model information for **DELETE /participants/**_{Type}_**/**_{ID}_ (alternative **GET** **/participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
--   Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6.2.3.1-PUT-/participants/{Type}/{ID})
+- Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6.2.3.1-PUT-/participants/{Type}/{ID})
 
--   Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6.2.4.2-PUT-/participants/{ID}/error)
+- Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6.2.4.2-PUT-/participants/{ID}/error)
 
--   Data Model -- Empty body
+- Data Model -- Empty body
 
 **6.2.3 Callbacks**
 
@@ -1551,8 +1551,8 @@ The HTTP request **GET /parties/**_{Type}_/_{ID}_ (or **GET /parties/**_{Type}_/
 Callback and data model information for **GET /parties/**_{Type}_/_{ID}_ (alternative **GET /parties/**_{Type}_/_{ID}_/_{SubId}_):
 
 - Callback - [**PUT /parties/**_{Type}_/_{ID}_](#6.3.3.1-PUT-/parties/{Type}/{ID})
--   Error Callback - [**PUT /parties/**_{Type}_/_{ID}_**/error**](#6.3.4.1-PUT-/parties/{Type}/{ID}/error)
--   Data Model -- Empty body
+- Error Callback - [**PUT /parties/**_{Type}_/_{ID}_**/error**](#6.3.4.1-PUT-/parties/{Type}/{ID}/error)
+- Data Model -- Empty body
 
 #### 6.3.3 Callbacks
 
@@ -1626,9 +1626,9 @@ Alternatively, the Payer could make the decision manually.
 
 [Figure 44](#figure-44) shows the process by which a transaction request is rejected. Possible reasons for rejection include:
 
--   The Payer rejected the request manually.
--   An automatic limit was exceeded.
--   The Payer entered an OTP incorrectly more than the allowed number of times.
+- The Payer rejected the request manually.
+- An automatic limit was exceeded.
+- The Payer entered an OTP incorrectly more than the allowed number of times.
 
 ###### Figure 44
 
@@ -1651,9 +1651,9 @@ The HTTP request **GET /transactionRequests/**_{ID}_ is used to get information 
 
 Callback and data model information for **GET /transactionRequests/**_{ID}_:
 
--   Callback - [**PUT /transactionRequests/**_{ID}_](#6.4.3.1-PUT-/transactionRequests/{ID})
--   Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6.4.4.1-PUT-/transactionRequests/{ID}/error)
--   Data Model -- Empty body
+- Callback - [**PUT /transactionRequests/**_{ID}_](#6.4.3.1-PUT-/transactionRequests/{ID})
+- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6.4.4.1-PUT-/transactionRequests/{ID}/error)
+- Data Model -- Empty body
 
 #### 6.4.2.2 POST /transactionRequests
 
@@ -1756,7 +1756,8 @@ For more information regarding [Quoting,](#5.1-quoting) see Section [5.1.](#5.1-
 
 ###### Figure 46
 
-`Figure 46 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure46.plantuml" %}
+{% enduml %}
 
 **Figure 46 -- Example process for resource /quotes**
 
@@ -1937,7 +1938,8 @@ The API resource **/authorizations** is used to request the Payer to enter the a
 
 ###### Figure 48
 
-`Figure 48 - Place holder`
+{% uml src="assets/diagrams/sequence/figure48.plantuml" %}
+{% enduml %}
 
 **Figure 48 -- Example process for resource /authorizations**
 
@@ -1947,7 +1949,8 @@ If the notification containing the authorization value fails to reach the Payer,
 
 ###### Figure 49
 
-`Figure 49 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure49.plantuml" %}
+{% enduml %}
 
 **Figure 49 -- Payer requests resend of authorization value (OTP)**
 
@@ -1957,7 +1960,8 @@ The Payer FSP must decide the number of times a Payer can retry the authorizatio
 
 ###### Figure 50
 
-`Figure 50 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure50.plantuml" %}
+{% enduml %}
 
 **Figure 50 -- Payer enters incorrect authorization value (OTP)**
 
@@ -1990,9 +1994,9 @@ An example URI containing all the required key-value pairs in the query string i
 
 Callback and data model information for **GET /authorization/**_{ID}_:
 
--   Callback - [**PUT /authorizations/**_{ID}_](#6.6.3.1-put-/authorizations/{ID})
--   Error Callback - [**PUT /authorizations/**_{ID}_**/error**](#6.6.4.1-put-/authorizations/{ID}/error)
--   Data Model -- Empty body
+- Callback - [**PUT /authorizations/**_{ID}_](#6.6.3.1-put-/authorizations/{ID})
+- Error Callback - [**PUT /authorizations/**_{ID}_**/error**](#6.6.4.1-put-/authorizations/{ID}/error)
+- Data Model -- Empty body
 
 #### 6.6.3 Callbacks
 
@@ -2061,7 +2065,8 @@ This section provides details regarding hop-by-hop transfers and end-to-end fina
 
 ###### Figure 51
 
-`Figure 51 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure51.plantuml" %}
+{% enduml %}
 
 **Figure 51 -- How to use the POST /transfers service**
 
@@ -2091,7 +2096,8 @@ In [Figure 51,](#figure-51) an expiry has been set to 30 seconds from the curren
 
 ###### Figure 52
 
-`Figure 52 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure52.plantuml" %}
+{% enduml %}
 
 **Figure 52 -- Client receiving an expired transfer**
 
@@ -2107,7 +2113,8 @@ The use of the check is a business decision made by the Payee FSP (if  the schem
 
 ###### Figure 53
 
-`Figure 53 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure53.plantuml" %}
+{% enduml %}
 
 **Figure 53 -- Optional additional clearing check**
 
@@ -2117,7 +2124,8 @@ If the [**GET /transfers/**_{ID}_](#6.7.2.1-get-/transfers/{ID}) is received by 
 
 ###### Figure 54
 
-`Figure 54 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure54.plantuml" %}
+{% enduml %}
 
 **Figure 54 -- Optional additional clearing check where commit in Switch failed**
 
@@ -2158,9 +2166,9 @@ The HTTP request **GET /transfers/**_{ID}_ is used to get information regarding 
 
 Callback and data model information for **GET /transfer/**_{ID}_:
 
--   Callback -- [**PUT /transfers/**_{ID}_](#6.7.3.1-put-/transfers/{ID})
--   Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers/{ID}/error)
--   Data Model -- Empty body
+- Callback -- [**PUT /transfers/**_{ID}_](#6.7.3.1-put-/transfers/{ID})
+- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers/{ID}/error)
+- Data Model -- Empty body
 
 #### 6.7.2.2 POST /transfers
 
@@ -2172,9 +2180,9 @@ The HTTP request **POST /transfers** is used to request the creation of a transf
 
 Callback and data model information for **POST /transfers**:
 
--   Callback -- [**PUT /transfers/**_{ID}_](#6.7.3.1-put-/transfers/{ID})
--   Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers{ID}error)
--   Data Model -- See [Table 25](#table-25)
+- Callback -- [**PUT /transfers/**_{ID}_](#6.7.3.1-put-/transfers/{ID})
+- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6.7.4.1-put-/transfers{ID}error)
+- Data Model -- See [Table 25](#table-25)
 
 ###### Table 25
 
@@ -2261,7 +2269,8 @@ The actual financial transaction is performed using the services provided by the
 
 ###### Figure 56
 
-`Figure 56 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure56.plantuml" %}
+{% enduml %}
 
 **Figure 56 -- Example transaction process**
 
@@ -2359,7 +2368,8 @@ A created bulk quote object contains a quote for each individual transaction in 
 
 ###### Figure 58
 
-`Figure 58 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure58.plantuml" %}
+{% enduml %}
 
 **Figure 58 -- Example bulk quote process**
 
@@ -2393,9 +2403,9 @@ The HTTP request **POST /bulkQuotes** is used to request the creation of a bulk 
 
 Callback and data model information for **POST /bulkQuotes**:
 
--   Callback -- [**PUT /bulkQuotes/**_{ID}]_(#6.9.3.1-put-/bulkQuotes/{ID})
--   Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6.9.4.1-put-/bulkQuotes/{ID}/error)
--   Data Model -- See [Table 27](#table-27)
+- Callback -- [**PUT /bulkQuotes/**_{ID}]_(#6.9.3.1-put-/bulkQuotes/{ID})
+- Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6.9.4.1-put-/bulkQuotes/{ID}/error)
+- Data Model -- See [Table 27](#table-27)
 
 ###### Table 27
 
@@ -2480,7 +2490,8 @@ A bulk transfer is irrevocable; it cannot be changed, cancelled, or reversed aft
 
 ###### Figure 60
 
-`Figure 60 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure60.plantuml" %}
+{% enduml %}
 
 **Figure 60 -- Example bulk transfer process**
 
@@ -2583,7 +2594,7 @@ The possible states of a bulk transfer can be seen in [Figure 61.](#figure-61)
 
 **Figure 61 -- Possible states of a bulk transfer**
 
-## 7 API Supporting Data Models
+## 7. API Supporting Data Models
 
 This section provides information about additional supporting data models used by the API.
 
@@ -4108,7 +4119,7 @@ See [Table 106](#table-106) for all Payee errors defined in the API.
     -- Application Techniques for Checking and Transformation of Names
 
 
-## 8 Generic Transaction Patterns Binding
+## 8. Generic Transaction Patterns Binding
 
 This section provides information about how the logical transaction patterns from _Generic Transaction Patterns_ are used in the asynchronous REST binding of the API. Much of the information is provided by way of sequence diagrams. For more information regarding the steps in these diagrams, see _Generic Transaction Patterns_.
 
@@ -4142,7 +4153,7 @@ The _Payee Initiated Transaction using OTP_ pattern is introduced in _Generic Tr
 
 **Figure 65 -- Payee Initiated Transaction using OTP pattern using the asynchronous REST binding**
 
-## 8.4 Bulk Transactions
+### 8.4 Bulk Transactions
 
 The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern is used whenever a Payer would like to transfer funds to multiple Payees using one single transaction. The Payees can be in different FSPs. [Figure 66](#figure-66) shows the sequence diagram for a _Bulk Transactions_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
@@ -4152,7 +4163,7 @@ The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. 
 
 **Figure 66 -- Bulk Transactions pattern using the asynchronous REST binding**
 
-## 9 API Error Handling
+## 9. API Error Handling
 
 This section describes how to handle missing responses or callbacks, as well as how to handle errors in a server during processing of a request.
 
@@ -4322,7 +4333,7 @@ The following list provides a detailed description of all the steps in the seque
 
 <sup>39</sup> [[https://tools.ietf.org/html/rfc7231\#section-6.5]{.underline}](https://tools.ietf.org/html/rfc7231#section-6.5)     -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -     Client Error 4xx
 
-## 10 End-to-End Example
+## 10. End-to-End Example
 
 This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see _Signature_) and field level encryption using JWE (see _Encryption_).
 

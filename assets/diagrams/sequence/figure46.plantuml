@@ -101,36 +101,46 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title Example process for resource /quotes
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payer/Payee
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
-actor "<$actor>\nPayee" as Payee
+participant "Payee\nFSP(s)" as PayeeFSP
+actor "<$actor>\nPayee)" as Payee
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
+Payer ->> PayerFSP: I would like to pay 100 USD \nto +123456789
+activate PayerFSP
+PayerFSP -> PayerFSP: Lookup +123456789 \n(process not shown here)
+' ...
+PayerFSP -> PayerFSP: Rate Payer FSP quote \n(depending on fee model)
+PayerFSP ->> Switch: **POST /quotes/** \n(Transaction details)
 activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
+PayerFSP <<-- Switch: **HTTP 202**(Accepted)
+Switch ->> PayeeFSP: **POST /quotes/** \n(Transaction details)
+activate PayeeFSP
+Switch <<-- PayeeFSP: **HTTP 202**(Accepted)
+PayeeFSP -> PayeeFSP: Rate Payee FSP \nfees/commision, \ngenerate condition
+Group #OldLace Optional
+    hnote left of PayeeFSP #OldLace
+        Confirm quote
+    end hnote
+    PayeeFSP -> Payee: Here is the quote and Payer name
+    PayeeFSP <- Payee: I confirm
+end
+Switch <<- PayeeFSP: ** PUT /quotes/**<i><ID></i> \n(Payee FSP fee/commision, condition)
+Switch -->> PayeeFSP: **HTTP 200**(OK)
+deactivate PayeeFSP
+PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i> \n(Payee FSP fee/commision, condition)
+PayerFSP -->> Switch: **HTTP 200**(OK)
 deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+PayerFSP -> PayerFSP: Rate Payer FSP quote \n(depending on fee model)
+Payer <- PayerFSP: Present fees and optionally \npayee name
+deactivate PayerFSP
 @enduml

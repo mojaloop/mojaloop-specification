@@ -104,8 +104,8 @@ skinparam participant {
 ' title Example process in which a transaction request is rejected
 
 ' Actor Keys:
-' participant - FSP() and Switch
-' actor - Payee/Payer(User)
+' participant - FSP(Payer/Payee) and Switch
+' actor - Payee
 
 ' declare actors
 participant "Payer\nFSP" as payerfsp
@@ -114,8 +114,8 @@ participant "Payee\nFSP" as payeefsp
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-payerfsp -> payerfsp: Transaction request and\n quoting (process not shown)
 activate payerfsp
+payerfsp -> payerfsp: Transaction request and\n quoting (process not shown)
 payerfsp -> payerfsp: User rejection, OTP not correct,\n or automatic rejection
 payerfsp ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n (Rejected state)
 activate Switch

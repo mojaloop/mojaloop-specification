@@ -101,36 +101,52 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title Example bulk transfer process
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payer/Payee(s)
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
-actor "<$actor>\nPayee" as Payee
+participant "Payee\nFSP(s)" as PayeeFSP
+actor "<$actor>\nPayees\n(multiple)" as Payee
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
-deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+Payer -> PayerFSP: I would like to upload \na file of bulk transactions
+activate PayerFSP
+PayerFSP -> PayerFSP: Lookup in which FSP each \nPayee is located in, divide \nPayees into FSP separate files \n(process not shown here)
+PayerFSP -> PayerFSP: Perform bulk quoting per \nPayee FSP \n(process not shown here)
+Payer <- PayerFSP: Bulk has finished processing, \npresent fees
+Payer -> PayerFSP: Execute my bulk
+Loop #OldLace
+    hnote left of PayerFSP #OldLace
+        For each 
+        created bulk 
+        file per 
+        Payee FSP
+    end hnote
+    PayerFSP -> PayerFSP: Reserve each individual \ntransfer from Payer \naccount to Payee FSP account
+    PayerFSP ->> Switch: **POST /bulkTransfers/** \n(List of individual transfers \nincluding ILP packet and condition)
+    activate Switch
+    PayerFSP <<-- Switch: **HTTP 202**(Accepted)
+    Switch -> Switch: Reserve each individual \ntransfer from Payer FSP \nto Payee FSP
+    Switch ->> PayeeFSP: **POST /bulkTransfers/** \n(List of individual transfers \nincluding ILP packet and condition)
+    activate PayeeFSP
+    Switch <<-- PayeeFSP: **HTTP 202**(Accepted)
+    PayeeFSP -> PayeeFSP: Perform each transfer from \nPayer FSP account to Payee \naccount, generate fulfilments
+    PayeeFSP -> Payee: Transaction notification \nfor each Payee
+    Switch <<- PayeeFSP: **PUT /bulkTransfers/**<i><ID></i> \n(List of fulfilments)
+    Switch -->> PayeeFSP: **HTTP 200**(OK)
+    deactivate PayeeFSP
+    Switch -> Switch: Commit each successful \ntransfer from Payer \nFSP to Payee FSP
+    PayerFSP <<- Switch: **PUT /bulkTransfers/**<i><ID></i> \n(List of fulfilments)
+    PayerFSP -->> Switch: **HTTP 200**(OK)
+    deactivate Switch
+    PayerFSP -> PayerFSP: Commit each successful \ntransfer from Payer account \nto Payee account
+end Loop
+Payer <- PayerFSP: Your bulk has been executed
+deactivate PayerFSP
 @enduml

@@ -101,36 +101,45 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title Example bulk quote process
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payer
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
-actor "<$actor>\nPayee" as Payee
+participant "Payee\nFSP(s)" as PayeeFSP
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
-deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+Payer -> PayerFSP: I would like to upload \na file of bulk transactions
+activate PayerFSP
+PayerFSP -> PayerFSP: Lookup in which FSP each \nPayee is located in, divide \nPayees into FSP separate files \n(process not shown here)
+Loop #OldLace
+    hnote left of PayerFSP #OldLace
+        For each 
+        created bulk 
+        file per 
+        Payee FSP
+    end hnote
+    PayerFSP -> PayerFSP: Rate Payer FSP bulk quote \n(process not shown here)
+    PayerFSP ->> Switch: **POST /bulkQuotes/** \n(Bulk info and list of individual quotes)
+    activate Switch
+    PayerFSP <<-- Switch: **HTTP 202**(Accepted)
+    Switch ->> PayeeFSP: **POST /bulkQuotes/** \n(Bulk info and list of individual quotes)
+    activate PayeeFSP
+    Switch <<-- PayeeFSP: **HTTP 202**(Accepted)
+    PayeeFSP -> PayeeFSP: Rate Payee FSP \nfee/commission and \ngenerate condition per \nindividual transfer
+    Switch <<- PayeeFSP: **PUT /bulkQuotes/**<i><ID></i> \n(List of individual quote results \nand condition per transfer)
+    Switch -->> PayeeFSP: **HTTP 200**(OK)
+    deactivate PayeeFSP
+    PayerFSP <<- Switch: **PUT /bulkQuotes/**<i><ID></i> \n(List of individual quote results \nand condition per transfer)
+    PayerFSP -->> Switch: **HTTP 200**(OK)
+    deactivate Switch
+    PayerFSP -> PayerFSP: Rate payer FSP bulk quote \n(depending on fee model)
+end Loop
+PayerFSP -> PayerFSP: Handle quote results for \nall Payee FSPs
+' deactivate PayerFSP
 @enduml

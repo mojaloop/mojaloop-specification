@@ -101,36 +101,54 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title Example process for resource /authorizations
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payee/Payer(POS/ATM)
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+'actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
-actor "<$actor>\nPayee" as Payee
+participant "Payee\nFSP" as PayeeFSP
+actor "<$actor>\nPayee\n(POS/ATM)" as Payee
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
+PayeeFSP <- Payee: I would like to receive\n funds from +123456789
+activate PayeeFSP
+PayeeFSP <- PayeeFSP: Lookup +123456789\n (process not shown here)
+Switch <<- PayeeFSP: **POST /transactionRequests**\n (Payee information,\n transaction details)
 activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
+Switch -->> PayeeFSP: **HTTP 202** (Accepted)
+PayerFSP <<- Switch: **POST /transactionRequests**\n (Payee information,\n transaction details)
+activate PayerFSP
+PayerFSP ->> Switch: **HTTP 202** (Accepted)
+PayerFSP -> PayerFSP: Perform optional validation
+PayerFSP ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n (Received status)
+PayerFSP <<- Switch: **HTTP 200** (OK)
+deactivate PayerFSP
+Switch ->> PayeeFSP: **PUT /transactionRequests/**<i><ID></i>\n (Received status)
+Switch <<-- PayeeFSP: **HTTP 200** (OK)
 deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+deactivate PayeeFSP
+activate PayerFSP
+PayerFSP -> PayerFSP: Do quote, generate OTP,\n notify user (process\n not shown here)
+PayerFSP ->> Switch: **GET /authorizations/**\n <i><TransactionRequestID></i>\n (Amount include fees)
+activate Switch
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch ->> PayeeFSP: PayerFSP -> Switch: **GET /authorizations/**\n <i><TransactionRequestID></i>\n (Amount include fees)
+activate PayeeFSP
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> Payee: Show fees on POS
+Payee -> Payee: Payer approves/rejects\n transaction using OTP
+PayeeFSP <<-- Payee:
+Switch <<- PayeeFSP: **PUT /authorizations/**\n <i><TransactionRequestID></i>\n (OTP)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
+deactivate PayeeFSP
+PayerFSP <<- Switch: **PUT /authorizations/**\n <i><TransactionRequestID></i>\n (OTP)
+PayerFSP -->> Switch: **HTTP 200** (OK)
+deactivate Switch
+PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP
+'deactivate PayerFSP
 @enduml

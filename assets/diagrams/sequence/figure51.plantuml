@@ -101,36 +101,44 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title How to use the POST /transfers service
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payee/Payer
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
+participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
+Payer ->> PayerFSP: I would like to pay 100 USD\n to +123456789
+activate PayerFSP
+PayerFSP -> PayerFSP: Lookup +123456789 \n(process not shown here)
+' ...
+PayerFSP -> PayerFSP: Quote \n(process not shown here)
+' ...
+PayerFSP -> PayerFSP: Reserve transfer from Payer \naccount to Switch account
+PayerFSP ->> Switch: **POST /transfer** \n(Transfer ID, conditions, ILP Packet \nincluding transaction details, \nexpiry = 30 seconds)
 activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch -> Switch: Reserve transfer from \nPayer FSP to Payee FSP
+Switch ->> PayeeFSP: **POST /transfers** \n(Transfer ID, conditions, ILP Packet \nincluding transaction details, \nexpiry = 30 seconds)
+activate PayeeFSP
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: Perform transfer from Switch \naccount to Payee account, \ngenerate fulfilment
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
+PayeeFSP -> Payee: Transaction notification
+Switch -->> PayeeFSP: *HTTP 200** (OK)
+deactivate PayeeFSP
+Switch -> Switch: Commit transfer from \nPayer FSP to Payee FSP
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
+PayerFSP -->> Switch: *HTTP 200** (OK)
 deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+PayerFSP -> PayerFSP: Commit transfer from Payer \naccount to Payee FSP account
+Payer <- PayerFSP: Transaction notification
+deactivate PayerFSP
 @enduml

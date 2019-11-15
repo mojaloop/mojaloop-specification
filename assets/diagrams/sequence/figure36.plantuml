@@ -149,9 +149,9 @@ SWITCH ->> PayerFSP: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n p
 SWITCH <<-- PayerFSP: **HTTP 200** (OK)
 deactivate SWITCH
 PayerFSP -> PayerFSP: Payer FSP uses the\n FSP commision as\n a transaction fee
-deactivate PayerFSP
+' deactivate PayerFSP
 PayerFSP -> PayerFSP: Generated OTP, "12345"
-activate PayerFSP
+' activate PayerFSP
 Payer <<- PayerFSP: Use OTP "12345" to accept\n transaction to Merchant of 100 USD,\n 0 USD in fees.
 PayerFSP ->> SWITCH: **GET /authorizations/**\n <i>{TransactionRequestID}</i>/\n (amount = 100 USD, fees = 0 USD,\n retriesLeft = 2, type = OTP)
 PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
@@ -166,9 +166,9 @@ SWITCH -->> PayeeFSP: **HTTP 200** (OK)
 PayerFSP <<- SWITCH: **PUT /authorizations/***\n <i>{transactionRequestID}</i>\n (otp = "12345")
 PayerFSP -->> SWITCH: **HTTP 200** (OK)
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\n OTP OK
-deactivate PayerFSP
+' deactivate PayerFSP
 PayerFSP -> PayerFSP: Reserve 100 USD from Payer\n account, 99 USD to Switch\n account, 1 USD to fee account
-activate PayerFSP
+' activate PayerFSP
 PayerFSP ->> SWITCH: **POST /transfers**\n (amount = 99 USD)
 activate SWITCH
 PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)

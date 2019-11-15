@@ -49,8 +49,8 @@ participant "Peer\nFSP" as PEERFSP
 
 ' start flow
 
-activate FSP
 FSP ->> OPTSWITCH: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP)
+activate FSP
 activate OPTSWITCH
 FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
 OPTSWITCH ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Source=**Account Lookup)

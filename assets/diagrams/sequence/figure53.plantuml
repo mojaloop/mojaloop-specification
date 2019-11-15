@@ -101,36 +101,46 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title Optional additional clearing check
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payee/Payer
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
+participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
+Payer -> PayerFSP: Payer signals to FSP they \nwish to proceed with the \ntransaction
+activate PayerFSP
+PayerFSP -> PayerFSP: Reserve transfer from \nPayer to Suspense, \nExpiry = **T** + <i>x</i>
+PayerFSP ->> Switch: **POST /transfers** \n(From = Payer FSP, To = Payee FSP, \nExpiry = **T** + <i>y</i> (where <i>y</i> < <i>x</i>))
 activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch -> Switch: Reserve transfer from \nPayer to Suspense, \nExpiry = **T** + <i>y</i>
+Switch ->> PayeeFSP: **POST /transfers** \n(From = Payer FSP, To = Payee FSP, \nExpiry = **T** + <i>z</i> (where <i>z</i> < <i>y</i>))
+activate PayeeFSP
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP -> PayeeFSP: Reserve transfer from \n Suspense to Payee, \nExpiry = **T** + <i>z</i>
+PayeeFSP -> PayeeFSP: Validate transaction, \ngenerate fulfilment, \ndo not commit for example \ndue to close to expiry
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
+Switch -> Switch: Validate fulfilment, \ncommit transfer
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
+PayerFSP -->> Switch: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **GET /transfers/**<i><ID></i>
+Switch -->> PayeeFSP: **HTTP 202** (Accepted)
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i> \n(Transfer State)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+PayerFSP -> PayerFSP: Validate fulfilment, \ncommit transfer
+Payer <- PayerFSP: Transaction notification
+deactivate PayerFSP
+PayeeFSP -> PayeeFSP: Commit transfer
+PayeeFSP -> Payee: Transaction notification
+deactivate PayeeFSP
 @enduml

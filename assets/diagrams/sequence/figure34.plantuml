@@ -155,9 +155,9 @@ SWITCH ->> PayerFSP: **PUT /quotes/**<i><ID></i>\n (transferAmount = 101 USD,\n 
 SWITCH <<-- PayerFSP: **HTTP 200** (OK)
 deactivate SWITCH
 PayerFSP -> PayerFSP: Payer fee is 1 USD in Payer FSP\n for ATM Cash-Out, total fee 2 USD
-deactivate PayerFSP
+' deactivate PayerFSP
 PayerFSP -> PayerFSP: OTP is pre-generated
-activate PayerFSP
+' activate PayerFSP
 Payer <<- PayerFSP: Use you pre-generated OTP to accept\n transaction of 100 USD, 2 USD\n in fees.
 PayerFSP ->> SWITCH: **GET /authorizations/**\n <i>{TransactionRequestID}</i>/\n (amount = 100 USD, fees = 2 USD,\n retriesLeft = 2, type = OTP)
 PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
@@ -172,9 +172,9 @@ SWITCH -->> PayeeFSP: **HTTP 200** (OK)
 PayerFSP <<- SWITCH: **PUT /authorizations/***\n <i>{transactionRequestID}</i>\n (otp = "12345")
 PayerFSP -->> SWITCH: **HTTP 200** (OK)
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\n OTP OK
-deactivate PayerFSP
+' deactivate PayerFSP
 PayerFSP -> PayerFSP: Reserve 102 USD from Payer\n account, 101 USD to Switch\n account, 1 USD to fee account
-activate PayerFSP
+' activate PayerFSP
 PayerFSP ->> SWITCH: **POST /transfers**\n (amount = 101 USD)
 activate SWITCH
 PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)

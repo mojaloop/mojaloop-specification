@@ -47,8 +47,8 @@ participant "Account\nLookup" as ALS
 
 ' start flow
 
-activate FSP
 FSP ->> ALS: **DELETE /service/**//<ID>//)
+activate FSP
 activate ALS
 FSP <<-- ALS: **HTTP 202**(Accepted)
 ALS -> ALS: Delete object\naccording to request

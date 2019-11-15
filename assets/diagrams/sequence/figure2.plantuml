@@ -48,8 +48,8 @@ participant "Peer\nFSP" as PEERFSP
 
 ' start flow
 
-activate FSP
 FSP ->> OPTSWITCH: **GET /service/**//<ID>//)
+activate FSP
 activate OPTSWITCH
 FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
 OPTSWITCH ->> PEERFSP: **GET /service/**//<ID>//)

@@ -116,7 +116,6 @@ actor "<$actor>\nPayee" as Payee
 
 ' start flow
 
-'activate Payer
 Payer ->> PayerFSP: I would like to Payee to\nsend 100 USD to Payee
 activate PayerFSP
 PayerFSP -> PayerFSP: Rate fee for Payer for\n handling transaction in\n Payer FSP => fee 1 USD
@@ -128,12 +127,12 @@ activate PayeeFSP
 OPTSWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Rate transaction fee or\n commission for handeling\n transaction in Payee FSP =>\n FSP commission 1 USD
 group Optional
-PayeeFSP ->> Payee: If accepted, you will receive\n 100 USD
-hnote left of PayeeFSP
+  hnote left of PayeeFSP
     Notify/Ask Payee 
     for approval
-end note
-PayeeFSP <<- Payee: OK
+  end note
+  PayeeFSP ->> Payee: If accepted, you will receive\n 100 USD
+  PayeeFSP <<- Payee: OK
 end
 OPTSWITCH <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n PayeeFspCommission = 1 USD,\n payeeReceivedAmount = 100 USD)
 OPTSWITCH -->> PayeeFSP: **HTTP 200** (OK)
@@ -144,5 +143,4 @@ deactivate OPTSWITCH
 PayerFSP -> PayerFSP: Transaction is subsidized with the\n commission as feees are disclosed,\n show total fees to Payer
 PayerFSP ->> Payer: Sending 100 USD to Payee\n will cost 0 USD in fees
 deactivate PayerFSP
-'deactivate Payer
 @enduml

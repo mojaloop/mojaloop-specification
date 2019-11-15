@@ -101,36 +101,38 @@ skinparam participant {
 }
 
 ' declare title
-' title How to use the /transactionRequests service
+' title Example transaction process
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee
+' actor - Payer
 
 ' declare actors
-participant "Payer\nFSP" as payerfsp
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as payeefsp
-actor "<$actor>\nPayee" as Payee
+participant "Payee\nFSP" as PayeeFSP
 
 ' start flow
-payeefsp <- Payee: I would lioke to receive\n funds from +123456789
-activate payeefsp
-payeefsp <- payeefsp: Lookup +123456789\n (process not shown her)
-Switch <<- payeefsp: **POST /transactionRequest/**\n (Payee information,\n transaction details)
+Payer -> PayerFSP: I would like to pay 100 USD \nto +123456789
+activate PayerFSP
+PayerFSP -> PayerFSP: Lookup +123456789 \n(process not shown here)
+PayerFSP -> PayerFSP: Perform quote \n(process not shown here)
+PayerFSP -> PayerFSP: Perform transfer \n(process not shown here)
+PayerFSP ->> Switch: **GET /transactions/**<i><transactionID></i>
 activate Switch
-Switch -->> payeefsp: **HTTP 202** (Accepted)
-payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n transaction details)
-activate payerfsp
-payerfsp -->> Switch: **HTTP 202** (Accepted)
-payeefsp -> payeefsp: Perform optional validation
-
-payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-payerfsp <<-- Switch: **HTTP 200** (OK)
-deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
-Switch <<-- payeefsp: **HTTP 200** (OK)
+PayerFSP <<-- Switch: **HTTP 202**(Accepted)
+Switch ->> PayeeFSP: **GET /transactions/**<i><transactionID></i>
+activate PayeeFSP
+Switch <<-- PayeeFSP: **HTTP 202**(Accepted)
+PayeeFSP -> PayeeFSP: Lookup transaction \ninformation
+Switch <<- PayeeFSP: **PUT /transactions/**<i><ID></i> \n(Transaction detail)
+Switch -->> PayeeFSP: **HTTP 200**(OK)
+deactivate PayeeFSP
+PayerFSP <<- Switch: **PUT /transactions/**<i><ID></i> \n(Transaction detail)
+PayerFSP -->> Switch: **HTTP 200**(OK)
 deactivate Switch
-payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
+'PayerFSP -> PayerFSP:
+Payer <- PayerFSP: Transaction notification \nincluding transaction \ndata(e.g. token ID)
+deactivate PayerFSP
 @enduml
