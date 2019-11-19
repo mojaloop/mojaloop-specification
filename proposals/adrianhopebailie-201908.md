@@ -214,7 +214,7 @@ Since ILPv4 does not use quoting, the destination address of a message is
 provided in the transfer. This is different to the Open FSP API which requires a
 quote cycle preceding a transaction.
 
-When using the API routing of a multi-hop transaction is determine during the
+When using the API routing of a multi-hop transaction is determined during the
 quote cycle and the path of the transaction that follows must be the same as the
 path determined during quoting.
 
