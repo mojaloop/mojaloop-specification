@@ -17,6 +17,7 @@ Approved/Rejected Date: N/A
     - [Cross-Currency and Cross-Border Support](#cross-currency-and-cross-border-support)
       - [A Note on Payee Privacy](#a-note-on-payee-privacy)
     - [Regulatory Data Exchange](#regulatory-data-exchange)
+    - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems)
   - [Proposed Solution](#proposed-solution)
     - [Upgrading to Interledger Protocol version 4](#upgrading-to-interledger-protocol-version-4-1)
     - [Generation of the Condition and Fulfillment](#generation-of-the-condition-and-fulfillment-1)
@@ -32,6 +33,7 @@ Approved/Rejected Date: N/A
       - [Add `RequiredDataList`, `ProvidedDataList` and `ProvidedData`](#add-requireddatalist-provideddatalist-and-provideddata)
       - [Fees and Rates](#fees-and-rates)
       - [Regulatory Data](#regulatory-data)
+    - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems-1)
   - [Data Model Changes](#data-model-changes)
 
 ## Document History
@@ -183,6 +185,16 @@ in the `POST /quotes` request, `PUT /quotes` response callback and
 It provides a mechanism for participants in the transaction to both request and
 provide such data securely and also for the route of the quoting cycle messages
 to be recorded so it can be used to route the subsequent transfer.
+
+### Connecting to non-Mojaloop systems
+
+It is possible (and likely) that there will be a need to initiate and terminate
+transactions in a Mojaloop system when the counter-party is not in a Mojaloop
+system (or even a system that supports real-time clearing).
+
+In this case it is important for the CNP that is bridging the Mojaloop system to
+the other system(s) to be able to express and expected clearing time for
+transactions.
 
 ## Proposed Solution
 
@@ -537,6 +549,20 @@ sending the `POST /transfers` request.
 Participants can reject the quote if they are unable to provide the data
 requested or they can reject the transfer if the data provided is insufficient.
 
+### Connecting to non-Mojaloop systems
+
+To accommodate the variety of clearing timelines in non-Mojaloop systems a
+participant that initiates a transaction from a Mojaloop system that will be
+routed to a non-Mojaloop system can express a maximum value date in the quote
+request.
+
+This is the latest date and time when the payment must clear in the payee's
+account.
+
+In the response the CNP can provide a value date that they commit to, based on
+their knowledge of and SLAs with the external systems that will receive the
+payment.
+
 ## Data Model Changes
 
 `POST /quotes` request:
@@ -557,6 +583,7 @@ requested or they can reject the transfer if the data provided is insufficient.
 | expiration           | 0..1        | `DateTime`        | Expiration is optional.                                                                                 |
 | accountAddress       | 0..1        | `AccountAddress`  | The address of the payee account, used for routing where the quote goes via one or more intermediaries. |
 | participants         | 1           | `ParticipantList` | The participants in the transaction.                                                                    |
+| maxValueDate         | 0..1        | DateTime          | The maximum Value Date for this transaction to clear in the payee’s account                             |
 | extensionList        | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                             |
 
 `PUT /quotes` response callback:
@@ -573,6 +600,7 @@ requested or they can reject the transfer if the data provided is insufficient.
 | echoData           | 0..1        | `EchoData`      | Opaque data provided by the payee that must be echoed back unchanged in the transfer.                       |
 | condition          | 1           | `IlpCondition`  | The condition that must be attached to the transfer by the Payer.                                           |
 | participants       | 0..16       | `Participant`   | The participants in the transaction.                                                                        |
+| valueDate          | 0..1        | DateTime        | The maximum Value Date for this transaction to clear in the payee’s account                                 |
 | extensionList      | 0..1        | `ExtensionList` | Optional extension, specific to deployment.                                                                 |
 
 `POST /transfers` request:
