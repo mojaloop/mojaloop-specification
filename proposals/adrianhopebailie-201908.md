@@ -461,9 +461,9 @@ transfers.
 | fee              | 1           | `Money`            | The fee that will be charged by the participant.                                                            |
 | rate             | 0..1        | `Rate`             | The rate of exchange that will applied by this participant.                                                 |
 | expiration       | 1           | `DateTime`         | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
-| dataRequired     | 0..1        | `RequiredDataList` | List of data required for compliance                                                                        |
+| requiredData     | 0..1        | `RequiredDataList` | List of data required for compliance                                                                        |
 | encryptionKey    | 0..1        | `JsonWebKey`       | The Public Key of the participant used to encrypt data sent to the participant.                             |
-| dataProvided     | 0..32       | `ProvidedDataList` | The data provided by other participants for use by this participant.                                        |
+| providedData     | 0..32       | `ProvidedDataList` | The data provided by other participants for use by this participant.                                        |
 
 `Rate`:
 
