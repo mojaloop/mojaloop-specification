@@ -7,8 +7,8 @@ This folder is to host and publish CCB related information.
 ## Biweekly meetings
 The CCB typically meets on a bi-weekly basis to discuss Open CCB items, especially Change Requests and Solution Proposals, though actual in-depth discussion on each issue may happen separately. These issues correlate to existing GitHub items on this repo and are used to track progress and discussions. The Link to these meetings will be posted here, one week before the meetings.
 
-Zoom Webinar Link to register for the next CCB meeting at 3pm GMT (7am Pacific Time), November 5th 2019 (and bi-weekly thereafter for 2019): 
-[https://modusbox.zoom.us/webinar/register/WN_x1nX6T8mTF2t9tLBJYkd6A](https://modusbox.zoom.us/webinar/register/WN_x1nX6T8mTF2t9tLBJYkd6A)
+Zoom Webinar Link for the next CCB meeting at 3pm GMT (7am Pacific Time), November 19th 2019 (bi-weekly for 2019): 
+[https://modusbox.zoom.us/j/277034055](https://modusbox.zoom.us/j/277034055)
 
 
 ## Issue and Decision Log
