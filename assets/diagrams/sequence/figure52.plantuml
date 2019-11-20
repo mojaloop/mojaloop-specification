@@ -118,9 +118,9 @@ actor "<$actor>\nPayee" as Payee
 Payer ->> PayerFSP: I would like to pay 100 USD\n to +123456789
 activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789 \n(process not shown here)
-' ...
+...
 PayerFSP -> PayerFSP: Quote \n(process not shown here)
-' ...
+...
 PayerFSP -> PayerFSP: Reserve transfer from Payer \naccount to Switch
 PayerFSP ->> Switch: **POST /transfer** \n(Transfer ID, condition, ILP Packet \nincluding transaction details, \nexpiry = 30 seconds)
 activate Switch
@@ -134,8 +134,8 @@ PayeeFSP -> Payee: Transaction notification
 Switch -> Switch: Expiry time reached, \ncancel reservation
 PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>**/error**)
 Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
-PayerFSP -->> Switch: *HTTP 200** (OK)
-Switch -->> PayeeFSP: *HTTP 200** (OK)
+PayerFSP -->> Switch: **HTTP 200** (OK)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 Switch -> Switch: Mark transfer for \nreconciliation as Payee \nFSP has completed and \nPayer FSP has cancelled
 PayerFSP -> PayerFSP: Cancel transfer from Payer \naccount to Switch

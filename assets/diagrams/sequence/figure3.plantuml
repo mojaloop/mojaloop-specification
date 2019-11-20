@@ -46,7 +46,6 @@ participant "FSP" as FSP
 participant "Account\nLookup" as ALS
 
 ' start flow
-
 FSP ->> ALS: **DELETE /service/**//<ID>//)
 activate FSP
 activate ALS
@@ -56,5 +55,4 @@ FSP <<- ALS: **PUT /service/**//<ID>//\n(Delete object information)
 FSP -->> ALS: **HTTP 200**(OK)
 deactivate ALS
 FSP -> FSP: Handle delete object\n information
-' deactivate FSP
 @enduml

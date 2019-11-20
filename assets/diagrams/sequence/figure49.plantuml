@@ -105,7 +105,7 @@ skinparam participant {
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee/Payer(OTC/POS)
+' actor - Payer/Payee(OTC/POS)
 
 ' declare actors
 actor "<$actor>\nPayer" as Payer
@@ -116,7 +116,6 @@ actor "<$actor>\nPayee\n(POS)" as PayeePOS
 actor "<$actor>\nPayer\n(OTC)" as PayerOTC
 
 ' start flow
-
 activate PayerFSP
 PayerFSP -> PayerFSP: Transaction request and\n quoting process (not shown)
 PayerFSP -> PayerFSP: Generate OTP, "12345", Payer FSP\n sets maximum retries to 2
@@ -140,5 +139,4 @@ deactivate Switch
 PayerFSP -> PayerFSP: Resend OTP (optionally\n regenerate) as customer\n did not receive it
 Payer <<- PayerFSP: Use OTP "12345" to accept\n transaction to Merchant\n of 100 USD,\n 0 USD in fees.
 PayerFSP -> PayerFSP: Resend GET /authorizations\n (not shown here)
-' deactivate PayerFSP
 @enduml

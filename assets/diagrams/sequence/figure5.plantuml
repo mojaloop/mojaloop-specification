@@ -43,35 +43,34 @@ skinparam ArrowColor Black
 
 ' declare actors
 participant "FSP" as FSP
-participant "Optional\nSwitch" as OPTSWITCH
+participant "Optional\nSwitch" as Switch
 participant "Account\nLookup" as ALS
 participant "Peer\nFSP" as PEERFSP
 
 ' start flow
-
-FSP ->> OPTSWITCH: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP)
+FSP ->> Switch: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP)
 activate FSP
-activate OPTSWITCH
-FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
-OPTSWITCH ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Source=**Account Lookup)
+activate Switch
+FSP <<-- Switch: **HTTP 202**(Accepted)
+Switch ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Source=**Account Lookup)
 activate ALS
-OPTSWITCH <<-- ALS: **HTTP 202**(Accepted)
+Switch <<-- ALS: **HTTP 202**(Accepted)
 ALS -> ALS: Replace **FSPIOP-Source**\n with **FSPIOP-Source**\n and vice versa for\n routing of callback
-OPTSWITCH <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Source=**Switch)
-OPTSWITCH -->> ALS: **HTTP 200**(OK)
+Switch <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Source=**Switch)
+Switch -->> ALS: **HTTP 200**(OK)
 deactivate ALS
-OPTSWITCH -> OPTSWITCH: Set **FSPIOP-Source**\n in original messages according\n to results of **PUT /participants**
-OPTSWITCH ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP=Source=**Peer FSP, **FSPIOP-Source=**FSP)
+Switch -> Switch: Set **FSPIOP-Source**\n in original messages according\n to results of **PUT /participants**
+Switch ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP=Source=**Peer FSP, **FSPIOP-Source=**FSP)
 activate PEERFSP
-OPTSWITCH <<-- PEERFSP: **HTTP 202**(Accepted)
+Switch <<-- PEERFSP: **HTTP 202**(Accepted)
 PEERFSP -> PEERFSP: Optionally validate message\n signature using stored certificate\n for FSP in **FSPIOP-Source**
 PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\n with **FSPIOP-Source** and\n visa versa for routing of callback
-OPTSWITCH <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP=Source=**FSP)
-OPTSWITCH -->> PEERFSP: **HTTP 200**(OK)
+Switch <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP=Source=**FSP)
+Switch -->> PEERFSP: **HTTP 200**(OK)
 deactivate PEERFSP
-OPTSWITCH -> OPTSWITCH: Route messages according\n to **FSPIOP-Source**
-FSP <<- OPTSWITCH: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Source=**FSP)
-FSP -->> OPTSWITCH: **HTTP 200**(OK)
-deactivate OPTSWITCH
+Switch -> Switch: Route messages according\n to **FSPIOP-Source**
+FSP <<- Switch: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Source=**FSP)
+FSP -->> Switch: **HTTP 200**(OK)
+deactivate Switch
 deactivate FSP
 @enduml

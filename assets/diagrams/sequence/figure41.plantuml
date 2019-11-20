@@ -104,8 +104,8 @@ skinparam participant {
 ' title How to use the services provided by /participants if there is no common Account Lookup System
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
-' actor - Payee/Payer(OTC/Agent)
+' participant - FSP(User's) and Account Lookup Service
+' actor - User
 
 ' declare actors
 actor "<$actor>\nUser" as user

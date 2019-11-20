@@ -43,25 +43,24 @@ skinparam ArrowColor Black
 
 ' declare actors
 participant "FSP" as FSP
-participant "Optional\nSwitch" as OPTSWITCH
+participant "Optional\nSwitch" as Switch
 participant "Peer\nFSP" as PEERFSP
 
 ' start flow
-
-FSP ->> OPTSWITCH: **GET /service/**//<ID>//)
+FSP ->> Switch: **GET /service/**//<ID>//)
 activate FSP
-activate OPTSWITCH
-FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
-OPTSWITCH ->> PEERFSP: **GET /service/**//<ID>//)
+activate Switch
+FSP <<-- Switch: **HTTP 202**(Accepted)
+Switch ->> PEERFSP: **GET /service/**//<ID>//)
 activate PEERFSP
-OPTSWITCH <<-- PEERFSP: **HTTP 202**(Accepted)
+Switch <<-- PEERFSP: **HTTP 202**(Accepted)
 PEERFSP -> PEERFSP: Lookup service\ninformation regarding\nservice with//<ID>//
-OPTSWITCH <<- PEERFSP: **PUT /service/**//<ID>//\n(Service object information)
-OPTSWITCH -->> PEERFSP: **HTTP 200**(OK)
+Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(Service object information)
+Switch -->> PEERFSP: **HTTP 200**(OK)
 deactivate PEERFSP
-FSP <<- OPTSWITCH: **PUT /service/**//<ID>//\n(Service object information)
-FSP -->> OPTSWITCH: **HTTP 200**(OK)
-deactivate OPTSWITCH
+FSP <<- Switch: **PUT /service/**//<ID>//\n(Service object information)
+FSP -->> Switch: **HTTP 200**(OK)
+deactivate Switch
 FSP -> FSP: Handle service object\n information update
 ' deactivate FSP
 @enduml

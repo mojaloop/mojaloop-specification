@@ -141,5 +141,4 @@ Loop #OldLace
     PayerFSP -> PayerFSP: Rate payer FSP bulk quote \n(depending on fee model)
 end Loop
 PayerFSP -> PayerFSP: Handle quote results for \nall Payee FSPs
-' deactivate PayerFSP
 @enduml

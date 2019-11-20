@@ -1,3 +1,6 @@
+---
+showToc: false
+---
 ## 1. Preface
 
 This section contains information about how to use this document.
@@ -3927,9 +3930,6 @@ See [Table 100](#Table-100) for server errors defined in the API.
 
 ###### Table 100
 
-![](media/image191.png){width="6.679861111111111in"
-height="4.379861111111111in"}
-
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **2000** | Generic server error | Generic server error to be used in order not to disclose information that may be considered private. | X | X | X | X | X | X | X | X | X |
@@ -4129,7 +4129,8 @@ The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction 
 
 ###### Figure 63
 
-`Figure 63 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure63.plantuml" %}
+{% enduml %}
 
 **Figure 63 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
 
@@ -4139,7 +4140,8 @@ The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction 
 
 ###### Figure-64
 
-`Figure 64 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure64.plantuml" %}
+{% enduml %}
 
 **Figure 64 -- Payee Initiated Transaction pattern using the asynchronous REST binding**
 

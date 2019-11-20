@@ -104,7 +104,7 @@ skinparam participant {
 ' title Example bulk transfer process
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
+' participant - FSP(Payer/Payee(s)) and Switch
 ' actor - Payer/Payee(s)
 
 ' declare actors

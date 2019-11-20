@@ -110,21 +110,20 @@ skinparam participant {
 ' declare actors
 actor "<$actor>\nPayer" as Payer
 participant "Payer\nFSP" as PayerFSP
-participant "Optional\nSwitch" as OPTSWITCH
+participant "Optional\nSwitch" as Switch
 participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-
 Payer ->> PayerFSP: I would like to Payee to\nsend 100 USD to Payee
 activate PayerFSP
 PayerFSP -> PayerFSP: Rate fee for Payer for\n handling transaction in\n Payer FSP => fee 1 USD
-PayerFSP ->> OPTSWITCH: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD, fees = 1 USD)
-activate OPTSWITCH
-PayerFSP <<-- OPTSWITCH: **HTTP 202** (Accepted)
-OPTSWITCH ->> PayeeFSP: **POST /quotes**\n(amountType = RECEIVE,\namount = 100 USD, fees = 1 USD)
+PayerFSP ->> Switch: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD, fees = 1 USD)
+activate Switch
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch ->> PayeeFSP: **POST /quotes**\n(amountType = RECEIVE,\namount = 100 USD, fees = 1 USD)
 activate PayeeFSP
-OPTSWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Rate transaction fee or\n commission for handeling\n transaction in Payee FSP =>\n FSP commission 1 USD
 group Optional
   hnote left of PayeeFSP
@@ -134,12 +133,12 @@ group Optional
   PayeeFSP ->> Payee: If accepted, you will receive\n 100 USD
   PayeeFSP <<- Payee: OK
 end
-OPTSWITCH <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n PayeeFspCommission = 1 USD,\n payeeReceivedAmount = 100 USD)
-OPTSWITCH -->> PayeeFSP: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n PayeeFspCommission = 1 USD,\n payeeReceivedAmount = 100 USD)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- OPTSWITCH: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n PayeeFspCommission = 1 USD\n payeeReceivedAmouint = 100 USD)
-PayerFSP -->> OPTSWITCH: **HTTP 200** (OK)
-deactivate OPTSWITCH
+PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n PayeeFspCommission = 1 USD\n payeeReceivedAmouint = 100 USD)
+PayerFSP -->> Switch: **HTTP 200** (OK)
+deactivate Switch
 PayerFSP -> PayerFSP: Transaction is subsidized with the\n commission as feees are disclosed,\n show total fees to Payer
 PayerFSP ->> Payer: Sending 100 USD to Payee\n will cost 0 USD in fees
 deactivate PayerFSP

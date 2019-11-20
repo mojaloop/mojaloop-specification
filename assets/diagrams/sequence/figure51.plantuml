@@ -118,9 +118,9 @@ actor "<$actor>\nPayee" as Payee
 Payer ->> PayerFSP: I would like to pay 100 USD\n to +123456789
 activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789 \n(process not shown here)
-' ...
+...
 PayerFSP -> PayerFSP: Quote \n(process not shown here)
-' ...
+...
 PayerFSP -> PayerFSP: Reserve transfer from Payer \naccount to Switch account
 PayerFSP ->> Switch: **POST /transfer** \n(Transfer ID, conditions, ILP Packet \nincluding transaction details, \nexpiry = 30 seconds)
 activate Switch
@@ -132,11 +132,11 @@ Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Perform transfer from Switch \naccount to Payee account, \ngenerate fulfilment
 Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
 PayeeFSP -> Payee: Transaction notification
-Switch -->> PayeeFSP: *HTTP 200** (OK)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 Switch -> Switch: Commit transfer from \nPayer FSP to Payee FSP
 PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
-PayerFSP -->> Switch: *HTTP 200** (OK)
+PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Commit transfer from Payer \naccount to Payee FSP account
 Payer <- PayerFSP: Transaction notification

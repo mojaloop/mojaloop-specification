@@ -43,27 +43,26 @@ skinparam ArrowColor Black
 
 ' declare actors
 participant "FSP" as FSP
-participant "Optional\nSwitch" as OPTSWITCH
+participant "Optional\nSwitch" as Switch
 participant "Peer\nFSP" as PEERFSP
 
 ' start flow
-
-FSP ->> OPTSWITCH: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
+FSP ->> Switch: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
 activate FSP
-activate OPTSWITCH
-FSP <<-- OPTSWITCH: **HTTP 202**(Accepted)
-OPTSWITCH -> OPTSWITCH: Route message according\nto **FSPIOP-Destination**
-OPTSWITCH ->> PEERFSP: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
+activate Switch
+FSP <<-- Switch: **HTTP 202**(Accepted)
+Switch -> Switch: Route message according\nto **FSPIOP-Destination**
+Switch ->> PEERFSP: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
 activate PEERFSP
-OPTSWITCH <<-- PEERFSP: **HTTP 202**(Accepted)
+Switch <<-- PEERFSP: **HTTP 202**(Accepted)
 PEERFSP -> PEERFSP: Optionally validate messages signature\n using stored certificate for\n FSP in **FSPIOP-Source**
 PEERFSP -> PEERFSP: Replace **FSPIOP-Source\n with **FSPIOP-Destination**\n and visa versa for routing of callback
-OPTSWITCH <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP))
-OPTSWITCH -->> PEERFSP: **HTTP 200**(OK)
-OPTSWITCH -> OPTSWITCH: Route message according\n to **FSPIOP-Destination**
+Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP))
+Switch -->> PEERFSP: **HTTP 200**(OK)
+Switch -> Switch: Route message according\n to **FSPIOP-Destination**
 deactivate PEERFSP
-FSP <<- OPTSWITCH: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-FSP -->> OPTSWITCH: **HTTP 200**(OK)
-deactivate OPTSWITCH
+FSP <<- Switch: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
+FSP -->> Switch: **HTTP 200**(OK)
+deactivate Switch
 deactivate FSP
 @enduml

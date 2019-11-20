@@ -141,5 +141,4 @@ PayerFSP -> PayerFSP: Cancel transfer from Payer \naccount to Switch
 Payer <- PayerFSP: Transaction failure notification
 deactivate PayerFSP
 PayeeFSP -> PayeeFSP: Cancel reservation
-'deactivate PayeeFSP
 @enduml

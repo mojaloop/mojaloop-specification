@@ -30,7 +30,7 @@ echo "Staging general changes..."
 git add .
 
 echo "Staging generated UML..."
-git add -f assets/images/sequence/*.*
+git add -f assets/diagrams/*/*.*
 
 # commit
 git commit -a -m "Update gh-pages on github..."

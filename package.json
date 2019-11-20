@@ -1,7 +1,7 @@
 {
     "name": "mojaloop-specification",
-    "version": "1.1.1",
-    "description": "Mojaloop-specification GitBook Project",
+    "version": "8.5.0",
+    "description": "Mojaloop-specification",
     "dependencies": {
         "express": "4.17.1",
         "gitbook-cli": "2.3.2",

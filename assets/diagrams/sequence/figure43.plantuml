@@ -124,7 +124,6 @@ payerfsp <<- Switch: **POST /transactionRequest/**\n (Payee information,\n trans
 activate payerfsp
 payerfsp -->> Switch: **HTTP 202** (Accepted)
 payeefsp -> payeefsp: Perform optional validation
-
 payerfsp ->> Switch: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
 payerfsp <<-- Switch: **HTTP 200** (OK)
 deactivate payerfsp
@@ -132,5 +131,4 @@ Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n (Received status)
 Switch <<-- payeefsp: **HTTP 200** (OK)
 deactivate Switch
 payeefsp -> payeefsp: Wait for either quote and\n transfer, or rejected\n transaction request by Payer
-'deactivate payeefsp
 @enduml

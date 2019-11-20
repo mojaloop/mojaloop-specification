@@ -132,7 +132,6 @@ deactivate PayeeFSP
 PayerFSP <<- Switch: **PUT /transactions/**<i><ID></i> \n(Transaction detail)
 PayerFSP -->> Switch: **HTTP 200**(OK)
 deactivate Switch
-'PayerFSP -> PayerFSP:
 Payer <- PayerFSP: Transaction notification \nincluding transaction \ndata(e.g. token ID)
 deactivate PayerFSP
 @enduml

@@ -104,7 +104,7 @@ skinparam participant {
 ' title Example process for /parties resource
 
 ' Actor Keys:
-' participant - FSP(), Switch and Account Lookup 
+' participant - FSP(User's), Switch, Account Lookup and FSP 
 ' actor - Payee/Payer(User)
 
 ' declare actors

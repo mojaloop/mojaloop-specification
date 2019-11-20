@@ -111,57 +111,54 @@ skinparam participant {
 actor "<$actor>\nPayer\n (OTC)" as PayerOTC
 actor "<$actor>\nPayer" as Payer
 participant "Payer\nFSP" as PayerFSP
-participant "Switch" as SWITCH
+participant "Switch" as Switch
 participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-
-' activate Payer
 PayerOTC ->> Payer: I would like to Cash-in\n so that I receive 100 USD
 PayerOTC <<- Payer: OK, you will receive a\n notification from your FSP\n displaying the fees
 Payer ->> PayerFSP: I would like Agent (Payee) to\n receive 100 USD
 activate PayerFSP
 PayerFSP -> PayerFSP: Fee is 2 USD in Payer\n FSP for Cash-in,\n Payer will receive 1\n USD in internal commission.
-PayerFSP ->> SWITCH: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD, fees = 2 USD)
-activate SWITCH
-PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
-SWITCH ->> PayeeFSP: **POST /quotes**\n (amountType = REVEIVE,\n amount = 100 USD, fees = 2 USD)
+PayerFSP ->> Switch: **POST /quotes**\n (amountType = RECEIVE,\n amount = 100 USD, fees = 2 USD)
+activate Switch
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch ->> PayeeFSP: **POST /quotes**\n (amountType = REVEIVE,\n amount = 100 USD, fees = 2 USD)
 activate PayeeFSP
-SWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: PayeeFSP decides to give\n 1 USD in commision to\n Payer so that\n Cash-in only costs 1 USD
 PayeeFSP ->> Payee: By paying 101 USD in cash\n to Payer, you will receive\n 100 USD to your account
 PayeeFSP <<-- Payee: OK
-SWITCH <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n payeeReceiveAmount = 100 USD,\n payeeFspCommission = 1 USD)
-SWITCH -->> PayeeFSP: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount = 99 USD,\n payeeReceiveAmount = 100 USD,\n payeeFspCommission = 1 USD)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- SWITCH: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n payeeReceiveAmount = 100 USD,\n payeeFspCommission = 1 USD)
-PayerFSP -->> SWITCH: **HTTP 200** (OK)
-deactivate SWITCH
+PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i>\n (transferAmount = 99 USD,\n payeeReceiveAmount = 100 USD,\n payeeFspCommission = 1 USD)
+PayerFSP -->> Switch: **HTTP 200** (OK)
+deactivate Switch
 Payer <<- PayerFSP: Payee will receive 100 USD\n and fee is 1 USD, you will receive\n 1 USD in commission
 deactivate PayerFSP
 PayerOTC <<- Payer: You will receive 100 USD on your\n account. Please give me 101 USD
-' deactivate Payer
 PayerOTC ->> Payer: OK, here is 101 USD
 Payer ->> PayerFSP: Perform transaction
 activate PayerFSP
 PayerFSP -> PayerFSP: Reserve 1 USD from Agent\n commission to Payer account,\n 100 USD from Payer account,\n 99 USD to Switch account and 1\n USD to fee account, 1 USD from\n FSP Commission to fee account
-PayerFSP ->> SWITCH: **POST /transfer**\n (amount = 99 USD)
-activate SWITCH
-PayerFSP <<-- SWITCH: **HTTP 202** (Accepted)
-SWITCH -> SWITCH: Reserve 99 USD from Payer FSP\n account to Payee FSP account
-SWITCH ->> PayeeFSP: **POST /transfer**\n (amount = 99 USD)
+PayerFSP ->> Switch: **POST /transfer**\n (amount = 99 USD)
+activate Switch
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch -> Switch: Reserve 99 USD from Payer FSP\n account to Payee FSP account
+Switch ->> PayeeFSP: **POST /transfer**\n (amount = 99 USD)
 activate PayeeFSP
-SWITCH <<-- PayeeFSP: **HTTP 202** (Accepted)
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Transfer 99 USD from Switch\n account and 1 USD from\n internal commission account\n to Payee account
 PayeeFSP -> Payee: You have Cashed-in 100 USD
-SWITCH <<- PayeeFSP: **PUT /transfer/**<i><ID></i>
-SWITCH -->> PayeeFSP: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **PUT /transfer/**<i><ID></i>
+Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-SWITCH -> SWITCH: Commit reserved transfer
-PayerFSP <<- SWITCH: **PUT /transfer/**<i><ID></i>
-PayerFSP -->> SWITCH: **HTTP 200** (OK)
-deactivate SWITCH
+Switch -> Switch: Commit reserved transfer
+PayerFSP <<- Switch: **PUT /transfer/**<i><ID></i>
+PayerFSP -->> Switch: **HTTP 200** (OK)
+deactivate Switch
 PayerFSP -> PayerFSP: Commit reserved transfer
 Payer <- PayerFSP: Transaction successful, you have\n sent 100 USD and received\n 1 USD in commision
 deactivate PayerFSP

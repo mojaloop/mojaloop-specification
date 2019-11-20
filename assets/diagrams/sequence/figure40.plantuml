@@ -104,8 +104,8 @@ skinparam participant {
 ' title How to use the services provided by /participants if there is no common Account Lookup System
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
-' actor - Payee/Payer(OTC/Agent)
+' participant - FSP(User's) and FSP
+' actor - User
 
 ' declare actors
 actor "<$actor>\nUser" as user
@@ -125,7 +125,6 @@ userfsp <<- fsp1: **PUT /participant/MSISDN/123456789/error**
 userfsp -->> fsp1: **HTTP 200** (OK)
 deactivate fsp1
 userfsp -> userfsp: Not in FSP 1, ask FSP 2
-
 userfsp ->> fsp2: **GET /participant/MSISDN/123456789**
 activate fsp2
 userfsp <<-- fsp2: **HTTP 202** (Accepted)
@@ -134,5 +133,4 @@ userfsp <<- fsp2: **PUT /participant/MSISDN/123456789/error**
 userfsp -->> fsp2: **HTTP 200** (OK)
 deactivate fsp2
 userfsp -> userfsp: +123456789 found\n in FSP 2
-' deactivate userfsp
 @enduml
