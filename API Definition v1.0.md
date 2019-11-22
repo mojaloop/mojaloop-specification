@@ -4151,7 +4151,8 @@ The _Payee Initiated Transaction using OTP_ pattern is introduced in _Generic Tr
 
 ###### Figure 65
 
-`Figure65 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure65.plantuml" %}
+{% enduml %}
 
 **Figure 65 -- Payee Initiated Transaction using OTP pattern using the asynchronous REST binding**
 
@@ -4161,7 +4162,8 @@ The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. 
 
 ###### Figure 66
 
-`Figure 66 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure66.plantuml" %}
+{% enduml %}
 
 **Figure 66 -- Bulk Transactions pattern using the asynchronous REST binding**
 
@@ -4179,7 +4181,8 @@ If a server receives an erroneous service request that can be handled immediatel
 
 ###### Figure 67
 
-`Figure 67 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure67.plantuml" %}
+{% enduml %}
 
 **Figure 67 -- Error on server during processing of request**
 
@@ -4225,7 +4228,8 @@ The typical error from the **/transfers** service is that either the hop-to-hop 
 
 ###### Figure 68
 
-`Figure 68 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure68.plantuml" %}
+{% enduml %}
 
 **Figure 68 -- Handling of error callback from POST /transfers**
 
@@ -4257,7 +4261,8 @@ The typical error case from the **/bulkTransfers** service is that the bulk tran
 
 ###### Figure 69
 
-`Figure-69 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure69.plantuml" %}
+{% enduml %}
 
 **Figure 69 -- Handling of error callback from API Service /bulkTransfers**
 
@@ -4281,7 +4286,8 @@ The following list describes the steps in the sequence (see [Figure 69)](#figure
 
 ###### Figure 70
 
-`Figure 70 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure70.plantuml" %}
+{% enduml %}
 
 **Figure 70 -- Error handling from client using resend of request**
 
@@ -4313,7 +4319,8 @@ A server using the API is not responsible for making sure that a callback is pro
 
 ###### Figure 71
 
-`Figure 71 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure71.plantuml" %}
+{% enduml %}
 
 **Figure 71 -- Error handling from client using GET request**
 
@@ -4377,7 +4384,8 @@ Both FSPs are assumed to have a pre-funded Switch account in their respective FS
 
 ###### Figure 73
 
-`Figure 73 - Place Holder`
+{% uml src="assets/diagrams/sequence/figure73.plantuml" %}
+{% enduml %}
 
 **Figure 73 -- End-to-end flow, from provision of account holder FSP information to a successful transaction**
 
@@ -5017,5 +5025,3 @@ After the reserved transfer has been performed, the Payer Mats Hagman should be 
 #### 10.4.18 Payer Receives Transaction Notification -- Step 21 in End-to-End Flow
 
 The Payer Mats Hagman receives the transaction notification and is thereby informed of the successful transaction.
-
-+++++  ***END OF POC***  +++++  ***END OF POC***  +++++  ***END OF POC***  +++++

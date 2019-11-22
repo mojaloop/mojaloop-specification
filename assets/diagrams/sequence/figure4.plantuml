@@ -57,7 +57,7 @@ activate PEERFSP
 Switch <<-- PEERFSP: **HTTP 202**(Accepted)
 PEERFSP -> PEERFSP: Optionally validate messages signature\n using stored certificate for\n FSP in **FSPIOP-Source**
 PEERFSP -> PEERFSP: Replace **FSPIOP-Source\n with **FSPIOP-Destination**\n and visa versa for routing of callback
-Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP))
+Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
 Switch -->> PEERFSP: **HTTP 200**(OK)
 Switch -> Switch: Route message according\n to **FSPIOP-Destination**
 deactivate PEERFSP

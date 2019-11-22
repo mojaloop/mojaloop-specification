@@ -101,157 +101,122 @@ skinparam participant {
 }
 
 ' declare title
-' title Payer Initiated Transaction pattern using the asynchronous REST binding
+' title End-to-end flow, from provision of account holder FSP information to a successful transaction
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
 ' actor - Payer/Payee(s)
 
 ' declare actors
-actor "<$actor>\nPayer" as Payer
-participant "Payer\nFSP" as PayerFSP
-participant "Optional\nSwitch" as Switch
-participant "Account\nLookup" as ALS
-participant "Payee\nFSP" as PayeeFSP
-actor "<$actor>\nPayee" as Payee
+actor "<$actor>\nMats\nHagman" as Payer
+participant "Bank\nNrOne" as PayerFSP
+participant "Switch" as Switch
+participant "Mobile\nMoney" as MM
+actor "<$actor>\nHenrik\nKarlsson" as Payee
 
 ' start flow
 autonumber 1 1 "<b>[0]"
-Payer -> PayerFSP: I would like to pay 100 USD \nto +123456789
+Switch <<- MM: **POST /participants/MSISDN/123456789** \n(fspid = MobileMoney)
+activate Switch
+activate MM
+autonumber stop
+Switch -->> MM: **HTTP 202** (Accepted)
+autonumber resume
+Switch <<-- Switch: Save FSP information for \nMSISDN 123456789
+Switch ->> MM: **PUT /parisipants/MSISDN/123456789** \n(fspid = MoblieMoney)
+autonumber stop
+Switch <<-- MM: **HTTP 200** (OK)
+deactivate MM
+deactivate Switch
+autonumber resume
+Payer -> PayerFSP: I would like MSISDN +123456789 \nto receive 100 USD
 activate PayerFSP
 autonumber stop
-PayerFSP -> PayerFSP: Payee not within \nPayer FSP system
+PayerFSP -> PayerFSP: MSISDN +123456789 \nnot within BankNrOne
 autonumber resume
 PayerFSP ->> Switch: **GET /parties/MSISDN/123456789**
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch -> Switch: Lookup whioch FSP MSISDN \n+123456789 belongs to
 autonumber resume
-Switch ->> ALS: **GET /parties/MSISDN/123456789**
-activate ALS
+Switch ->> MM: **GET /parties/MSISDN/123456789**
+activate MM
 autonumber stop
-Switch <<-- ALS: **HTTP 202** (Accepted)
-ALS -> ALS: Lookup which FSP MSISDN \n+123456789 belongs to
+Switch <<-- MM: **HTTP 202** (Accepted)
+MM -> MM: Lookup party information \nregarding MSISDN +123456789
 autonumber resume
-Switch <<- ALS: **PUT /participants/MSISDN/123456789** \n(FSP ID)
+Switch <<- MM: **POST /quote** \n(amountTypeRECEIVE, amount = 100)
 autonumber stop
-Switch -->> ALS: **HTTP 200** (OK)
-deactivate ALS
+Switch -->> MM: **HTTP 200** (OK)
+deactivate MM
 autonumber resume
-Switch ->> PayeeFSP: **GET /parties/MSISDN/123456789**
-activate PayeeFSP
-autonumber stop
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Lookup party information \nRegarding MSISDN +123456789
-autonumber resume
-Switch <<- PayeeFSP: **Put /parties/MSISDN/123456789**
-autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate PayeeFSP
-autonumber resume
-PayerFSP <<- Switch: **PUT /parties/MSISDN/123456789** \n(Party information)
+PayerFSP <<- Switch: **POST /quote** \n(amountTypeRECEIVE, amount = 100)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 deactivate PayerFSP
+
 autonumber resume
-PayerFSP -> PayerFSP: Rate Payer FSP quote \n(depending on fee model)
+PayerFSP ->> Switch: **POST /quotes** \n(amountType = RECEIVE, amount = 100)
 activate PayerFSP
-PayerFSP ->> Switch: **POST /quotes** \n(Transaction details)
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 autonumber resume
-Switch ->> PayeeFSP: **POST /quote** \n(Transaction details)
-activate PayeeFSP
+Switch ->> MM: **POST /quotes** \n(amountType = RECEIVE, amount = 100)
+activate MM
 autonumber stop
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+Switch <<-- MM: **HTTP 202** (Accepted)
+MM -> MM: Internal rating for fees/commision, \n1 USD in FSP commision, generate \nand store fulfilment, generate \ncondition out of fulfilment
 autonumber resume
-PayeeFSP -> PayeeFSP: Rate Payee FSP \nfee/commision, \ngenerate condition
-group #OldLace Optional
-    hnote left of PayeeFSP #OldLace
-        Confirm quote
-    end hnote
-    ' autonumber resume
-    PayeeFSP -> Payee: Here is the quote and Payer name
-    autonumber stop
-    PayeeFSP <- Payee: I confirm
-end
-autonumber resume
-Switch <<- PayeeFSP: **PUT /quote/**<i><ID></i> \n(Payee FSP fee/commision, condition)
+Switch <<- MM: **PUT /quotes/**<i><ID></i> \n(transAmount = 99 USD \npayeeFspCommision = 1 USD)
 autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate PayeeFSP
+Switch -->> MM: **HTTP 200** (OK)
+deactivate MM
 autonumber resume
-PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i> \n(Payee FSP fee/commision, \ncondition)
+PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i> \n(transAmount = 99 USD \npayeeFspCommision = 1 USD)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
+PayerFSP -> PayerFSP: BankNrOne keeps commission as \nfee, transaction is free fro Mats
 autonumber resume
-PayerFSP -> PayerFSP: Rate Payer FSP quote \n(depending on fee model)
-autonumber stop
-Payer <- PayerFSP: Present fees and otionally \n payee name
+Payer <- PayerFSP: Transferring 100 USD to Henrik \nKarlsson will cost 0 USD in fees
 deactivate PayerFSP
-autonumber resume
+
 Payer -> PayerFSP: I approve the transaction
 activate PayerFSP
 autonumber stop
-PayerFSP -> PayerFSP: Reserve transfer from Payer \n account to Switch account
+PayerFSP -> PayerFSP: Reserve 100 USD from Mats \nHagman's account \n99 USD to Switch and \n1 USD to FSP commision
 autonumber resume
-PayerFSP -> Switch: **POST /transfers** \n(Transfer ID, condition, ILP packet \nincluding transaction ID)
-autonumber stop
+PayerFSP ->> Switch: **POST /transfers** \n(amount = 99 USD, PayerFsp = BankNrOne \npayeeFsp = MobileMoney)
 activate Switch
-PayerFSP <-- Switch: **HTTL 202** (Accepted)
-autonumber resume
-Switch -> Switch: Reserve transfer from \nPayer FSP to Payee FSP
 autonumber stop
-Switch ->> PayeeFSP: **POST /transfes** \n(Transfer ID, condition, ILP packet \nInclude transaction ID)
-activate PayeeFSP
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch -> Switch: Reserve 100 USD from Mats \nHagman's account \n99 USD to Switch and \n1 USD to FSP commision
 autonumber resume
-PayeeFSP -> PayeeFSP: Perform transfer from Switch \naccount to Payee account, \ngenerate fulfilment
+Switch ->> MM: **POST /transfers** \n(amount = 99 USD, PayerFsp = BankNrOne \npayeeFsp = MobileMoney)
+
+activate MM
 autonumber stop
-PayeeFSP -> Payee: Transaction notification
+Switch <<-- MM: **HTTP 202** (Accepted)
+MM -> MM: Perform transfer of 100 USD to \nHenrik Karlsson's account \n99 USD from Switch /naccount, and 1 USD from FSP \ncommision account
 autonumber resume
-Switch <<- PayeeFSP: **PUT \transfers/**<i><ID></i> \n(Fulfilment)
+MM -> MM: Retrieve fulfilment
+MM -> Payee: You have received 100 USD \nfrom Mats nHagman
+Switch <<- MM: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
 autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate PayeeFSP
+Switch -->> MM: **HTTP 200** (OK)
+deactivate MM
+Switch -> Switch: Commit transfer from \nBankNrOne to MobileMoney
 autonumber resume
-Switch -> Switch: Commit transfer grom \nPayer FSP to Payee FSP
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
 autonumber stop
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i> \n(fulfilment)
-PayerFSP -->> Switch: **HTTP 200** (OK) 
+PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
+PayerFSP -> PayerFSP: Commit transfer from Mats Hagman's account to \nSwitch account
 autonumber resume
-PayerFSP -> PayerFSP: Commit trasfer from Payer \naccount to Switch account
-group #OldLace Optional
-    hnote left of PayerFSP #OldLace
-        Get transaction data
-    end hnote
-    PayerFSP ->> Switch: **GET /transactions/** <i><TransactionID></i>
-    activate Switch
-    autonumber stop
-    PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-    autonumber resume
-    Switch <<- PayeeFSP: **GET /transactions/** <i><TransactionID></i>
-    activate PayeeFSP
-    autonumber stop
-    Switch -->> PayeeFSP: **HTTP 202** (Accepted)
-    autonumber resume
-    PayeeFSP -> PayeeFSP: Lookup transaction \ninformation
-    Switch <<- PayeeFSP: **PUT /transactions/** <i><TransactionID></i> \n(Transaction details)
-    autonumber stop
-    Switch -->> PayeeFSP: **HTTP 200** (OK)
-    deactivate PayeeFSP
-    autonumber resume
-    PayerFSP <<- Switch: **PUT /transactions/** <i><TransactionID></i> \n(Transaction details)
-    autonumber stop
-    PayerFSP -->> Switch: **HTTP 200** (OK)
-    deactivate Switch
-end
-autonumber resume
-Payer <- PayerFSP: Transaction notification \ninculdeing optional transaction \ndata (e.g. token ID)
-deactivate PayerFSP
+Payer <- PayerFSP: You have transferred 100 USD \nto Henrik Karlsson
 autonumber stop
+deactivate PayerFSP
 @enduml
