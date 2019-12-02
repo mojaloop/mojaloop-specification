@@ -1,6 +1,6 @@
-[![Git Commit](https://img.shields.io/github/last-commit/mojaloop/mojaloop-specifications.svg?style=flat)](https://github.com/mojaloop/mojaloop-specifications/commits/master)
-[![Git Releases](https://img.shields.io/github/release/mojaloop/mojaloop-specifications.svg?style=flat)](https://github.com/mojaloop/mojaloop-specifications/releases)
-[![CircleCI](https://circleci.com/gh/mojaloop/mojaloop-specifications.svg?style=svg)](https://circleci.com/gh/mojaloop/mojaloop-specifications)
+[![Git Commit](https://img.shields.io/github/last-commit/mojaloop/mojaloop-specification.svg?style=flat)](https://github.com/mojaloop/mojaloop-specification/commits/master)
+[![Git Releases](https://img.shields.io/github/release/mojaloop/mojaloop-specification.svg?style=flat)](https://github.com/mojaloop/mojaloop-specification/releases)
+[![CircleCI](https://circleci.com/gh/mojaloop/mojaloop-specification.svg?style=svg)](https://circleci.com/gh/mojaloop/mojaloop-specification)
 # Open API for FSP Interoperability Specification
 The Open API for FSP Interoperability Specification includes the following documents.
 
