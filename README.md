@@ -20,7 +20,7 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Encryption](#encryption)  
 
 ## Glossary
-This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Glossary.pdf) provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
 - ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
 - Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
 - Feedback from the L1P IST Reference Implementation team (RI).
@@ -28,7 +28,7 @@ This document provides the glossary for the Open API (Application Programming In
 Information is shared in accordance with **Creative Commons Licensing**.
 
 ## Logical Data Model
-This document introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Logical%20Data%20Model.pdf) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
 
 ## Generic Transaction Patterns
 [This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Generic%20Transaction%20Patterns.pdf) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
@@ -76,7 +76,7 @@ The types used in the PDP API fall primarily into three categories:
 The various types used in API Definition, Data Model and the Open API Specification, as well as the JSON transformation rules to which their instances must adhere, are identified in the following sections.
 
 ## Scheme Rules
-This document defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Scheme%20Rules.pdf) defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
 1.	**Business** Scheme Rules:   
 a.	These business rules should be governed by FSPs and an optional regulatory authority implementing the API within a scheme.   
 b.	The regulatory authority or implementing authority should identify valid values for these business scheme rules in their API policy document.   
@@ -95,7 +95,7 @@ The API should be implemented in an environment that consists of either:
 For more information about the environment, see Chapter 3, Network Topology. Chapters 4 and 5 identify management strategies for the CA and for the platform. Communication between platforms is performed using a REST (REpresentational State Transfer)-based HTTP protocol (for more information, see API Definition). Because this protocol does not provide a means for ensuring either integrity or confidentiality between platforms, extra security layers must be added to protect sensitive information from alteration or exposure to unauthorized parties.
 
 ## Signature
-This document details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Signature.pdf) details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
 
 In information security, confidentiality means that information is not made available or disclosed to unauthorized individuals, entities, or processes (Excerpt [ISO27000](http://www.27000.org/ ) ). For the API, confidentiality means that some sensitive fields in the payload of an API message cannot be accessed or identified in an unauthorized or undetected manner by the intermediaries involved in the API communication. That is, if some fields of an API message are encrypted by the API client, then only the expected API recipient can decrypt those fields.
 
@@ -104,7 +104,7 @@ JSON Web Encryption (JWE [RFC7516](https://tools.ietf.org/html/rfc7516) )must be
 To support encryption for multiple fields of an API message, JWE is extended in this document to adapt to the requirements of the API.
 
 ## Encryption
-This document details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Encryption.pdf) details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
 
 In information security, data integrity means maintaining and assuring the accuracy and completeness of data over its entire life-cycle. For the API, data integrity means that an API message cannot be modified in an unauthorized or undetected manner by parties involved in the API communication.
 
