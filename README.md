@@ -20,7 +20,7 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Encryption](#encryption)  
 
 ## Glossary
-This document provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Glossary.pdf) provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
 - ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
 - Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
 - Feedback from the L1P IST Reference Implementation team (RI).
@@ -28,13 +28,13 @@ This document provides the glossary for the Open API (Application Programming In
 Information is shared in accordance with **Creative Commons Licensing**.
 
 ## Logical Data Model
-This document introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Logical%20Data%20Model.pdf) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
 
 ## Generic Transaction Patterns
-[This document](https://github.com/mojaloop/mojaloop-specification/documents/supporting-documentation/blob/master/Generic%20Transaction%20Patterns.pdf) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Generic%20Transaction%20Patterns.pdf) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
 
 ## Use Cases
-The purpose of [this document](https://github.com/mojaloop/mojaloop-specification/documents/supporting-documentation/blob/master/Use%20Cases.pdf) is to define a set of use cases that can be implemented using the API. The use cases referenced within this document provide an overview of transaction processing flows and business rules of each transaction step as well as relevant error conditions. The primary purpose of the API is to support the movement of financial transactions between one Financial Services Provider (FSP) and another.
+The purpose of [this document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Use%20Cases.pdf) is to define a set of use cases that can be implemented using the API. The use cases referenced within this document provide an overview of transaction processing flows and business rules of each transaction step as well as relevant error conditions. The primary purpose of the API is to support the movement of financial transactions between one Financial Services Provider (FSP) and another.
 
 It should be noted that the API is only responsible for message exchange between FSPs and a Switch when a cross-FSP transaction is initiated by an End User in one of the FSPs. This can occur in either of two scenarios: 
 - A bilateral scenario in which FSPs communicate with each other
@@ -43,7 +43,7 @@ It should be noted that the API is only responsible for message exchange between
 Reconciliation, clearing and settlement after real time transactions is out of scope for the API. Additionally, account lookup is supported by the API, but it relies on the implementation in a local market in which a third party or Switch would provide such services. Therefore, the need for effective on-boarding processes and appropriate scheme rules must be considered when implementing use cases.
 
 ## API Definition
-The [**API Definition** document](https://github.com/mojaloop/mojaloop-specification/documents/supporting-documentation/blob/master/API%20Definition%20v1.0.md) introduces and describes **the API**. The purpose of the API is to enable interoperable financial transactions between a Payer (a payer of electronic funds in a payment transaction) located in one FSP (an entity that provides a digital financial service to an end user) and a Payee (a recipient of electronic funds in a payment transaction) located in another FSP. The API does not specify any front-end services between a Payer or Payee and its own FSP; all services defined in the API are between FSPs. FSPs are connected either (a) directly to each other or (b) by a Switch placed between the FSPs to route financial transactions to the correct FSP. 
+The [**API Definition** document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/API%20Definition%20v1.0.md) introduces and describes **the API**. The purpose of the API is to enable interoperable financial transactions between a Payer (a payer of electronic funds in a payment transaction) located in one FSP (an entity that provides a digital financial service to an end user) and a Payee (a recipient of electronic funds in a payment transaction) located in another FSP. The API does not specify any front-end services between a Payer or Payee and its own FSP; all services defined in the API are between FSPs. FSPs are connected either (a) directly to each other or (b) by a Switch placed between the FSPs to route financial transactions to the correct FSP. 
 The transfer of funds from a Payer to a Payee should be performed in near real-time. As soon as a financial transaction has been agreed to by both parties, it is deemed irrevocable. This means that a completed transaction cannot be reversed in the API. To reverse a transaction, a new negated refund transaction should be created from the Payee of the original transaction.  
 
 The API is designed to be sufficiently generic to support both a wide number of use cases and extensibility of those use cases, However, it should contain sufficient detail to enable implementation in an unambiguous fashion.  
@@ -54,7 +54,7 @@ This document:
 - Adds to and builds on the information provided in Open API for FSP Interoperability Specification. The contents of the Specification are listed in Section **Open API for FSP Interoperability Specification**.
 
 ## Scheme Rules
-[This document](https://github.com/mojaloop/mojaloop-specification/documents/supporting-documentation/blob/master/Scheme%20Rules.pdf) defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Scheme%20Rules.pdf) defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
 1.	Business Scheme Rules:   
 a.	These business rules should be governed by FSPs and an optional regulatory authority implementing the API within a scheme.   
 b.	The regulatory authority or implementing authority should identify valid values for these business scheme rules in their API policy document.   
@@ -65,7 +65,7 @@ b.	All participants should configure these API parameters as indicated by the AP
 a.	Security and non-functional scheme rules should be determined and identified in the implementation policy of a scheme.   
 
 ## JSON Binding Rules
-The purpose of [this document](https://github.com/mojaloop/mojaloop-specification/documents/supporting-documentation/blob/master/JSON%20Binding%20Rules.pdf) is to express the data model used by **the API** in the form of JSON Schema binding rules, along with validation rules for the corresponding instances.
+The purpose of [this document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/JSON%20Binding%20Rules.pdf) is to express the data model used by **the API** in the form of JSON Schema binding rules, along with validation rules for the corresponding instances.
 
 This document adds to and builds on the information provided in Open API for FSP Interoperability Specification. The contents of the Specification are listed in Section 1.1.
 The types used in the PDP API fall primarily into three categories:
@@ -76,7 +76,7 @@ The types used in the PDP API fall primarily into three categories:
 The various types used in API Definition, Data Model and the Open API Specification, as well as the JSON transformation rules to which their instances must adhere, are identified in the following sections.
 
 ## Scheme Rules
-This document defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Scheme%20Rules.pdf) defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
 1.	**Business** Scheme Rules:   
 a.	These business rules should be governed by FSPs and an optional regulatory authority implementing the API within a scheme.   
 b.	The regulatory authority or implementing authority should identify valid values for these business scheme rules in their API policy document.   
@@ -87,7 +87,7 @@ b.	All participants should configure these API parameters as indicated by the AP
 a.	Security and non-functional scheme rules should be determined and identified in the implementation policy of a scheme.   
 
 ## PKI Best Practices
-[This document](https://github.com/mojaloop/mojaloop-specification/documents/supporting-documentation/blob/master/PKI%20Best%20Practices.pdf) explains Public Key Infrastructure (PKI)  best practices to apply in **the API** deployment. See Chapter 2, PKI Background, for more information about PKI. 
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/PKI%20Best%20Practices.pdf) explains Public Key Infrastructure (PKI)  best practices to apply in **the API** deployment. See Chapter 2, PKI Background, for more information about PKI. 
 The API should be implemented in an environment that consists of either:
 - Financial Service Providers (FSPs) that communicate with other FSPs (in a bilateral setup) or 
 - A Switch that acts as an intermediary platform between FSP platforms. There is also an Account Lookup System (ALS) available to identify in which FSP an account holder is located.
@@ -95,7 +95,7 @@ The API should be implemented in an environment that consists of either:
 For more information about the environment, see Chapter 3, Network Topology. Chapters 4 and 5 identify management strategies for the CA and for the platform. Communication between platforms is performed using a REST (REpresentational State Transfer)-based HTTP protocol (for more information, see API Definition). Because this protocol does not provide a means for ensuring either integrity or confidentiality between platforms, extra security layers must be added to protect sensitive information from alteration or exposure to unauthorized parties.
 
 ## Signature
-This document details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Signature.pdf) details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
 
 In information security, confidentiality means that information is not made available or disclosed to unauthorized individuals, entities, or processes (Excerpt [ISO27000](http://www.27000.org/ ) ). For the API, confidentiality means that some sensitive fields in the payload of an API message cannot be accessed or identified in an unauthorized or undetected manner by the intermediaries involved in the API communication. That is, if some fields of an API message are encrypted by the API client, then only the expected API recipient can decrypt those fields.
 
@@ -104,7 +104,7 @@ JSON Web Encryption (JWE [RFC7516](https://tools.ietf.org/html/rfc7516) )must be
 To support encryption for multiple fields of an API message, JWE is extended in this document to adapt to the requirements of the API.
 
 ## Encryption
-This document details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Encryption.pdf) details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
 
 In information security, data integrity means maintaining and assuring the accuracy and completeness of data over its entire life-cycle. For the API, data integrity means that an API message cannot be modified in an unauthorized or undetected manner by parties involved in the API communication.
 
