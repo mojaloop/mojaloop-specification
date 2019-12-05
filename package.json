@@ -1,6 +1,6 @@
 {
     "name": "mojaloop-specification",
-    "version": "8.6.3",
+    "version": "8.6.4",
     "description": "Mojaloop-specification",
     "dependencies": {
         "express": "4.17.1",

@@ -4,18 +4,29 @@
 
 **Table of Contents**
 
-- [1. Preface](#1-preface)
-  - [1.1 Conventions Used in This Document](#11-conventions-used-in-this-document)
-  - [1.2 Document Version Information](#21-document-version-information)
-- [2. Introduction](#2-introduction)
-  - [1.2 Open API for FSP Interoperability Specification](#21-open-api-for-fsp-interoperability-specification)
-- [3. API Encryption Definition](#3-api-encryption-definition)
-  - [3.1 Encrypt Data Model](#31-encryption-data-model)
-  - [3.2 Encrypt Fields of API Message](#32-encrypt-fields-of-api-message)
-  - [3.3 Decrypt Fields of API Message](#33-decrypt-fields-of-api-message)
-- [4. API Encryption/Decryption Examples](#4-api-encryptiondecryption-examples)
-  - [4.1 Encryption Example](#41-encryption-example)
-  - [4.2 Decryption Exsample](#42-decryption-example)
+1. [Preface](#1-preface)
+
+   1.1 [Conventions Used in This Document](#11-conventions-used-in-this-document)
+
+   1.2 [Document Version Information](#21-document-version-information)
+
+2. [Introduction](#2-introduction)
+
+   1.2 [Open API for FSP Interoperability Specification](#21-open-api-for-fsp-interoperability-specification)
+
+3. [API Encryption Definition](#3-api-encryption-definition)
+
+   3.1 [Encrypt Data Model](#31-encryption-data-model)
+
+   3.2 [Encrypt Fields of API Message](#32-encrypt-fields-of-api-message)
+
+   3.3 [Decrypt Fields of API Message](#33-decrypt-fields-of-api-message)
+
+4. [API Encryption/Decryption Examples](#4-api-encryptiondecryption-examples)
+
+   4.1 [Encryption Example](#41-encryption-example)
+
+   4.2 [Decryption Exsample](#42-decryption-example)
 
 **Table of Tables**
 

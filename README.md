@@ -20,7 +20,7 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Encryption](#encryption)  
 
 ## Glossary
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Glossary.pdf) provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/Glossary.md) provides the glossary for the Open API (Application Programming Interface) for FSP (Financial Service Provider) Interoperability (hereafter cited as **"the API"**). Terms have been compiled from three sources:
 - ITU-T Digital Financial Services Focus Group Glossary (ITU-T),
 - Feedback from Technology Service Providers (TSPs) in the PDP work groups (PDP) and
 - Feedback from the L1P IST Reference Implementation team (RI).
@@ -104,7 +104,7 @@ JSON Web Encryption (JWE [RFC7516](https://tools.ietf.org/html/rfc7516) )must be
 To support encryption for multiple fields of an API message, JWE is extended in this document to adapt to the requirements of the API.
 
 ## Encryption
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Encryption.pdf) details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/Encryption.md) details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
 
 In information security, data integrity means maintaining and assuring the accuracy and completeness of data over its entire life-cycle. For the API, data integrity means that an API message cannot be modified in an unauthorized or undetected manner by parties involved in the API communication.
 

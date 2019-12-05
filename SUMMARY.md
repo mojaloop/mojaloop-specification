@@ -2,6 +2,7 @@
 
 ### Documents
 * [Mojaloop Specifications Overview](README.md)
+  * [Glossary](documents/Glossary.md)
   * [API Definition v1.0](documents/API Definition v1.0.md)
   * [Encryption](documents/Encryption.md)
 ### Change Control Board
