@@ -27,16 +27,16 @@ optionally within square brackets <email>.
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
-skinparam ActorFontStyle Bold
-skinparam ActorFontSize 15
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title Error handling from client using resend of request
@@ -53,15 +53,14 @@ participant "Server" as server
 autonumber 1 1 "<b>[0]"
 client ->> server: **POST /service**
 activate client
-client -> client: Timeout, resend \nservice request
+client -> client: Timeout, resend\nservice request
 client ->> server: **POST /service**
 activate server
 client <<-- server: **HTTP 202** (Accepted)
 autonumber stop
-client -> client: Timeout, resend \nservice request
+client -> client: Timeout, resend\nservice request
 autonumber resume
 client ->> server: **POST /service**
-activate server
 autonumber stop
 client <<-- server: **HTTP 202** (Accepted)
 autonumber resume

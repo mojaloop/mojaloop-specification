@@ -26,79 +26,81 @@ optionally within square brackets <email>.
 
 ' define actor image
 sprite $actor [25x48/16] {
-    0000000000010000000000000
-    0000000006CAC910000000000
-    0000000095101292000000000
-    0000000651000119000000000
-    0000000B10000018400000000
-    0000001A10000016600000000
-    0000000B10000017510000000
-    000000083100001A210000000
-    0000000191000176110000000
-    000000003A866A61100000000
-    0000000000466211100000000
-    0003333333334443333310000
-    0088888888888888888892000
-    0821111111111111111118200
-    8311111111111111111111A00
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111551111111111138111A20
-    A111661111111111139111A20
-    A211661111111111139111A20
-    A211661111111111139111A20
-    A211661111161111139111A20
-    A2116611111A2111139111A20
-    A2116611111A2111139111A20
-    A2116611111A2111139111A20
-    A7669611111A211113A666B20
-    36669611111A211113A666610
-    00016611111A2111139111110
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006966666B7666679100000
-    0000266666666666664100000
-    0000000111111111111100000
-    0000000000000000000000000
+  0000000000010000000000000
+  0000000006CAC910000000000
+  0000000095101292000000000
+  0000000651000119000000000
+  0000000B10000018400000000
+  0000001A10000016600000000
+  0000000B10000017510000000
+  000000083100001A210000000
+  0000000191000176110000000
+  000000003A866A61100000000
+  0000000000466211100000000
+  0003333333334443333310000
+  0088888888888888888892000
+  0821111111111111111118200
+  8311111111111111111111A00
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111551111111111138111A20
+  A111661111111111139111A20
+  A211661111111111139111A20
+  A211661111111111139111A20
+  A211661111161111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A7669611111A211113A666B20
+  36669611111A211113A666610
+  00016611111A2111139111110
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006966666B7666679100000
+  0000266666666666664100000
+  0000000111111111111100000
+  0000000000000000000000000
 }
 
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
 skinparam ActorFontStyle Bold
-skinparam ActorFontSize 15
+skinparam ActorFontSize 20
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
 
 skinparam actor {
-    Bordercolor none
-    Backgroundcolor none
-    shadowing false
+  Bordercolor none
+  Backgroundcolor none
+  shadowing false
 }
 
 skinparam participant {
-    shadowing true
+  shadowing true
 }
+
+hide footbox
 
 ' declare title
 ' title End-to-end flow, from provision of account holder FSP information to a successful transaction
@@ -109,114 +111,111 @@ skinparam participant {
 
 ' declare actors
 actor "<$actor>\nMats\nHagman" as Payer
-participant "Bank\nNrOne" as PayerFSP
-participant "Switch" as Switch
-participant "Mobile\nMoney" as MM
+participant "\nBank\nNrOne" as PayerFSP
+participant "\n\nSwitch" as Switch
+participant "\nMobile\nMoney" as MM
 actor "<$actor>\nHenrik\nKarlsson" as Payee
 
 ' start flow
 autonumber 1 1 "<b>[0]"
-Switch <<- MM: **POST /participants/MSISDN/123456789** \n(fspid = MobileMoney)
+Switch <<- MM: **POST /participants/MSISDN/123456789**\n(fspid=MobileMoney)
 activate Switch
 activate MM
 autonumber stop
 Switch -->> MM: **HTTP 202** (Accepted)
 autonumber resume
-Switch <<-- Switch: Save FSP information for \nMSISDN 123456789
-Switch ->> MM: **PUT /parisipants/MSISDN/123456789** \n(fspid = MoblieMoney)
+Switch <<-- Switch: Save FSP information for\nMSISDN 123456789
+Switch ->> MM: **PUT /participants/MSISDN/123456789**\n(fspid=MobileMoney)
 autonumber stop
 Switch <<-- MM: **HTTP 200** (OK)
 deactivate MM
 deactivate Switch
 autonumber resume
-Payer -> PayerFSP: I would like MSISDN +123456789 \nto receive 100 USD
+Payer -> PayerFSP: I would like MSISDN +123456789\nto receive 100 USD
 activate PayerFSP
 autonumber stop
-PayerFSP -> PayerFSP: MSISDN +123456789 \nnot within BankNrOne
+PayerFSP -> PayerFSP: MSISDN +123456789\nnot within BankNrOne
 autonumber resume
 PayerFSP ->> Switch: **GET /parties/MSISDN/123456789**
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Lookup whioch FSP MSISDN \n+123456789 belongs to
+Switch -> Switch: Lookup which FSP MSISDN\n+123456789 belongs to
 autonumber resume
 Switch ->> MM: **GET /parties/MSISDN/123456789**
 activate MM
 autonumber stop
 Switch <<-- MM: **HTTP 202** (Accepted)
-MM -> MM: Lookup party information \nregarding MSISDN +123456789
+MM -> MM: Lookup party information\nregarding MSISDN +123456789
 autonumber resume
-Switch <<- MM: **POST /quote** \n(amountTypeRECEIVE, amount = 100)
+Switch <<- MM: **PUT /Parties/MSISDN/123456789**\n(Party Information)
 autonumber stop
 Switch -->> MM: **HTTP 200** (OK)
 deactivate MM
 autonumber resume
-PayerFSP <<- Switch: **POST /quote** \n(amountTypeRECEIVE, amount = 100)
+PayerFSP <<- Switch: **PUT /Parties/MSISDN/123456789**\n(Party Information)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 deactivate PayerFSP
-
 autonumber resume
-PayerFSP ->> Switch: **POST /quotes** \n(amountType = RECEIVE, amount = 100)
+PayerFSP ->> Switch: **POST /quotes**\n(amountType=RECEIVE, amount=100)
 activate PayerFSP
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 autonumber resume
-Switch ->> MM: **POST /quotes** \n(amountType = RECEIVE, amount = 100)
+Switch ->> MM: **POST /quotes**\n(amountType=RECEIVE, amount=100)
 activate MM
 autonumber stop
 Switch <<-- MM: **HTTP 202** (Accepted)
-MM -> MM: Internal rating for fees/commision, \n1 USD in FSP commision, generate \nand store fulfilment, generate \ncondition out of fulfilment
+MM -> MM: Internal rating for fees/commission,\n1 USD in FSP commission, generate\nand store fulfilment, generate\ncondition out of fulfilment
 autonumber resume
-Switch <<- MM: **PUT /quotes/**<i><ID></i> \n(transAmount = 99 USD \npayeeFspCommision = 1 USD)
+Switch <<- MM: **PUT /quotes/**<i><ID></i>\n(transferAmount=99 USD\npayeeFspCommission=1 USD)
 autonumber stop
 Switch -->> MM: **HTTP 200** (OK)
 deactivate MM
 autonumber resume
-PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i> \n(transAmount = 99 USD \npayeeFspCommision = 1 USD)
+PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i>\n(transferAmount=99 USD\npayeeFspCommission=1 USD)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: BankNrOne keeps commission as \nfee, transaction is free fro Mats
+PayerFSP -> PayerFSP: BankNrOne keeps commission as\nfee, transaction is free for Mats
 autonumber resume
-Payer <- PayerFSP: Transferring 100 USD to Henrik \nKarlsson will cost 0 USD in fees
+Payer <- PayerFSP: Transferring 100 USD to Henrik\nKarlsson will cost 0 USD in fees
 deactivate PayerFSP
-
 Payer -> PayerFSP: I approve the transaction
 activate PayerFSP
 autonumber stop
-PayerFSP -> PayerFSP: Reserve 100 USD from Mats \nHagman's account \n99 USD to Switch and \n1 USD to FSP commision
+PayerFSP -> PayerFSP: Reserve 100 USD from Mats\nHagman's account,\n99 USD to Switch and\n1 USD to FSP commission
 autonumber resume
-PayerFSP ->> Switch: **POST /transfers** \n(amount = 99 USD, PayerFsp = BankNrOne \npayeeFsp = MobileMoney)
+PayerFSP ->> Switch: **POST /transfers**\n(amount=99 USD, PayerFsp=BankNrOne\npayeeFsp=MobileMoney)
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve 100 USD from Mats \nHagman's account \n99 USD to Switch and \n1 USD to FSP commision
+Switch -> Switch: Reserve 99 USD from\nBankNrOne to MobileMoney
 autonumber resume
-Switch ->> MM: **POST /transfers** \n(amount = 99 USD, PayerFsp = BankNrOne \npayeeFsp = MobileMoney)
-
+Switch ->> MM: **POST /transfers**\n(amount=99 USD, PayerFsp=BankNrOne\npayeeFsp=MobileMoney)
 activate MM
 autonumber stop
 Switch <<-- MM: **HTTP 202** (Accepted)
-MM -> MM: Perform transfer of 100 USD to \nHenrik Karlsson's account \n99 USD from Switch /naccount, and 1 USD from FSP \ncommision account
+MM -> MM: Perform transfer of 100 USD to\nHenrik Karlsson's account,\n99 USD from Switch\naccount, and 1 USD from FSP\ncommission account
 autonumber resume
 MM -> MM: Retrieve fulfilment
-MM -> Payee: You have received 100 USD \nfrom Mats nHagman
-Switch <<- MM: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
+MM -> Payee: You have received 100 USD\nfrom Mats Hagman
+Switch <<- MM: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
 autonumber stop
 Switch -->> MM: **HTTP 200** (OK)
 deactivate MM
-Switch -> Switch: Commit transfer from \nBankNrOne to MobileMoney
+Switch -> Switch: Commit transfer from\nBankNrOne to MobileMoney
 autonumber resume
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i> \n(Fulfilment)
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Commit transfer from Mats Hagman's account to \nSwitch account
+PayerFSP -> PayerFSP: Commit transfer from Mats\nHagman's account to\nSwitch account
 autonumber resume
-Payer <- PayerFSP: You have transferred 100 USD \nto Henrik Karlsson
+Payer <- PayerFSP: You have transferred 100 USD\nto Henrik Karlsson
 autonumber stop
 deactivate PayerFSP
 @enduml

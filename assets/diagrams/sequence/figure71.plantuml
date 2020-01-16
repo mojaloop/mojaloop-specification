@@ -27,16 +27,15 @@ optionally within square brackets <email>.
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
-skinparam ActorFontStyle Bold
-skinparam ActorFontSize 15
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
-skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title Error handling from client using GET request
@@ -56,10 +55,9 @@ activate client
 activate server
 client <<-- server: **HTTP 202** (Accepted)
 'autonumber stop
-client -> client: No update received within \nreasonable time period, \ncheck status
+client -> client: No update received within\nreasonable time period,\ncheck status
 'autonumber resume
 client ->> server: **GET /service**<i><ID></i>
-activate server
 autonumber stop
 client <<-- server: **HTTP 202** (Accepted)
 autonumber resume
