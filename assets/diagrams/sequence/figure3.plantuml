@@ -26,14 +26,16 @@
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title HTTP DELETE call flow
@@ -42,17 +44,17 @@ skinparam ArrowColor Black
 ' participant - FSP and Account Lookup
 
 ' declare actors
-participant "FSP" as FSP
+participant "\nFSP" as FSP
 participant "Account\nLookup" as ALS
 
 ' start flow
-FSP ->> ALS: **DELETE /service/**//<ID>//)
+FSP ->> ALS: **DELETE /service/**//<ID>//
 activate FSP
 activate ALS
-FSP <<-- ALS: **HTTP 202**(Accepted)
+FSP <<-- ALS: **HTTP 202** (Accepted)
 ALS -> ALS: Delete object\naccording to request
 FSP <<- ALS: **PUT /service/**//<ID>//\n(Delete object information)
-FSP -->> ALS: **HTTP 200**(OK)
+FSP -->> ALS: **HTTP 200** (OK)
 deactivate ALS
-FSP -> FSP: Handle delete object\n information
+FSP -> FSP: Handle delete object\ninformation
 @enduml

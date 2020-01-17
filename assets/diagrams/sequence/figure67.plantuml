@@ -27,16 +27,16 @@ optionally within square brackets <email>.
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
-skinparam ActorFontStyle Bold
-skinparam ActorFontSize 15
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title Error on server during processing of request
@@ -56,7 +56,7 @@ activate client
 activate server
 client <<-- server: **HTTP 202** (Accepted)
 autonumber stop
-server -> server: Some processing error \noccurs, i.e. the request \ncan not be handled as \nrequested.
+server -> server: Some processing error\noccurs, i.e. the request\ncan not be handled as\nrequested.
 autonumber resume
 client <<- server: **PUT /service/**<i><ID></i>**/error**
 client -->> server: **HTTP 200** (OK)
