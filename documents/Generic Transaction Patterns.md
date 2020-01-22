@@ -566,77 +566,77 @@ This section provides descriptions of and assumptions made for all steps in the 
 
 1. **Description**
 
-   The Payer initiates the transaction by requesting to send funds to a Payee, using the Payer FSP's front-end API (outside the scope of this API).
+    The Payer initiates the transaction by requesting to send funds to a Payee, using the Payer FSP's front-end API (outside the scope of this API).
 
-   **Assumptions**
+    **Assumptions**
 
-   None.
+    None.
 
 2. **Description**
 
-   The Payer FSP tries to find the Payee within the FSP system. Because the Payee cannot be found in the Payer FSP system, the request **Lookup Party Information** is sent by the Payer FSP to the optional Switch to get information regarding the Payee, including in which FSP the Payee is located.
+    The Payer FSP tries to find the Payee within the FSP system. Because the Payee cannot be found in the Payer FSP system, the request **Lookup Party Information** is sent by the Payer FSP to the optional Switch to get information regarding the Payee, including in which FSP the Payee is located.
 
-   **Assumptions**
+    **Assumptions**
 
-   The Payee is assumed to be in a different FSP than the Payer. Also, a Switch is assumed to be placed between the Payer FSP and the Payee FSP to route the messages between FSPs. The Switch is optional in the process, as the request **Lookup Party Information** could also be sent directly to the Payee FSP if there is no Switch in-between. As the Payer FSP should not know in which FSP the Payee is located if there is no Switch present, the request might need to be sent to more than one FSP.
+    The Payee is assumed to be in a different FSP than the Payer. Also, a Switch is assumed to be placed between the Payer FSP and the Payee FSP to route the messages between FSPs. The Switch is optional in the process, as the request **Lookup Party Information** could also be sent directly to the Payee FSP if there is no Switch in-between. As the Payer FSP should not know in which FSP the Payee is located if there is no Switch present, the request might need to be sent to more than one FSP.
 
 3. **Description**
 
-   The Switch receives the request **Lookup Party Information**. The Switch then tries to find in which FSP the Payee is located by sending the request **Lookup Participant Information** to the Account Lookup System.
+    The Switch receives the request **Lookup Party Information**. The Switch then tries to find in which FSP the Payee is located by sending the request **Lookup Participant Information** to the Account Lookup System.
 
-   **Assumptions**
+    **Assumptions**
 
-   An Account Lookup System is assumed to exist in a different server than the Switch. It is possible that the Account Lookup System is in the same system as the Switch.
+    An Account Lookup System is assumed to exist in a different server than the Switch. It is possible that the Account Lookup System is in the same system as the Switch.
 
 4. **Description**
 
-   The Account Lookup System receives the request **Lookup Participant Information***.* It then performs an internal lookup to find in which FSP the Payee is located. When the lookup is completed, the response **Return Participant Information** is sent to inform the Switch about which FSP the Payee is located in.
+    The Account Lookup System receives the request **Lookup Participant Information***.* It then performs an internal lookup to find in which FSP the Payee is located. When the lookup is completed, the response **Return Participant Information** is sent to inform the Switch about which FSP the Payee is located in.
 
    **Assumptions**
 
-   The Payee can be found by the Account Lookup System.
+    The Payee can be found by the Account Lookup System.
 
 5. **Description**
 
-   The Switch receives the response **Return Participant Information**. As the Switch now knows in which FSP the Payee is located, the Switch sends the request **Lookup Party Information** to the Payee FSP to get more information about the Payee.
+    The Switch receives the response **Return Participant Information**. As the Switch now knows in which FSP the Payee is located, the Switch sends the request **Lookup Party Information** to the Payee FSP to get more information about the Payee.
 
-   **Assumptions**
+    **Assumptions**
 
-   None.
+    None.
 
 6. **Description**
 
-   The Payee FSP receives the request **Lookup Party Information**. The Payee FSP then does an internal lookup to find more information regarding the Payee and sends the response **Return Party Information** to the Switch. 
+    The Payee FSP receives the request **Lookup Party Information**. The Payee FSP then does an internal lookup to find more information regarding the Payee and sends the response **Return Party Information** to the Switch. 
 
-   **Assumptions**
+    **Assumptions**
 
-   None.
+    None.
 
 7. **Description**
 
-   The Switch receives the response **Return Party Information**. The Switch then routes the **Return Party Information** response to the Payer FSP to send the information about the Payee.
+    The Switch receives the response **Return Party Information**. The Switch then routes the **Return Party Information** response to the Payer FSP to send the information about the Payee.
 
-   **Assumptions**
+    **Assumptions**
 
-   None.
+    None.
 
 8. **Description**
 
-   The Payer FSP receives the response **Return Party Information** containing information about the Payee. 
+    The Payer FSP receives the response **Return Party Information** containing information about the Payee. 
 
-   **Assumptions**
+    **Assumptions**
 
-   None.
+    None.
 
-**Calculate Quote**
+    **Calculate Quote**
 
 9. **Description**
 
-   Depending on the fee model used, the Payer FSP rates the transaction internally and includes the quote information in the request **Calculate Quote** to a Switch to retrieve the full quote for performing the interoperable financial transaction from the Payer FSP to the Payee FSP. The transaction details are sent in the parameters of the request to allow for the Payee FSP to correctly calculate the quote.
+    Depending on the fee model used, the Payer FSP rates the transaction internally and includes the quote information in the request **Calculate Quote** to a Switch to retrieve the full quote for performing the interoperable financial transaction from the Payer FSP to the Payee FSP. The transaction details are sent in the parameters of the request to allow for the Payee FSP to correctly calculate the quote.
 
-   **Assumptions**
+    **Assumptions**
 
-   In this sequence, a Switch is placed between the Payer FSP and the Payee FSP to route the messages. The Switch is optional in the process, as the request **Calculate Quote** could also be sent directly to the Payee FSP if there is no Switch in-between.
+    In this sequence, a Switch is placed between the Payer FSP and the Payee FSP to route the messages. The Switch is optional in the process, as the request **Calculate Quote** could also be sent directly to the Payee FSP if there is no Switch in-between.
 
 10. **Description**
 
@@ -654,17 +654,17 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Optional procedure: Quote Confirmation by Payee**
+    **Optional procedure: Quote Confirmation by Payee**
     
-   a. **Description**
+    a. **Description**
 
-   Depending on the use case and the fee model used, the Payee might be informed of the quote in order to confirm the proposed financial transaction. The quote is in that case sent to the Payee using a front-end API (outside the scope of this API). The Payee receives the quote including information regarding the transaction including fees and optionally Payer name. The Payee then confirms the quote using a front-end API (outside the scope of this API), and the Payee FSP receives the confirmation from the Payee. 
+    Depending on the use case and the fee model used, the Payee might be informed of the quote in order to confirm the proposed financial transaction. The quote is in that case sent to the Payee using a front-end API (outside the scope of this API). The Payee receives the quote including information regarding the transaction including fees and optionally Payer name. The Payee then confirms the quote using a front-end API (outside the scope of this API), and the Payee FSP receives the confirmation from the Payee. 
    
-   **Assumptions** 
+    **Assumptions** 
    
-   The Payee is assumed to accept and confirm the quote. If the Payee would reject the quote, an error response would be sent from the Payee FSP to the Payer FSP via the Switch to inform about the rejected quote.
+    The Payee is assumed to accept and confirm the quote. If the Payee would reject the quote, an error response would be sent from the Payee FSP to the Payer FSP via the Switch to inform about the rejected quote.
 
-**End of Optional procedure**
+    **End of Optional procedure**
 
 12. **Description**
 
@@ -698,7 +698,7 @@ This section provides descriptions of and assumptions made for all steps in the 
    
     The Payer is assumed to approve the transaction in this sequence. If the Payer would reject the transaction at this stage, no response regarding the rejection is sent to the Payee FSP. The created quote at the Payee FSP should have an expiry time, at which time it is automatically deleted.
 
-**Perform Transfer**
+    **Perform Transfer**
 
 16. **Description**
 
@@ -748,7 +748,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The fulfilment is assumed to be correctly validated.
 
-**Optional fragment: Get Transaction Details**
+    **Optional fragment: Get Transaction Details**
 
 22. **Description**
 
@@ -790,7 +790,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
 28. **Description**
 
@@ -889,7 +889,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Transaction Request**
+    **Transaction Request**
 
 5. **Description**
 
@@ -931,7 +931,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Calculate Quote**
+    **Calculate Quote**
 
 10. **Description**
 
@@ -965,7 +965,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The quote is assumed to be sent to the Payer for confirmation, and the Payee is assumed to accept and confirm the quote. If the Payee would reject the quote, an error response would be sent from the Payee FSP to the Payer FSP via the Switch to inform about the rejected quote.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
 14. **Description**
 
@@ -1033,7 +1033,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Alternative: Perform Transfer**
+    **Alternative: Perform Transfer**
 
 22. **Description**
 
@@ -1083,7 +1083,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The fulfilment is assumed to be correctly validated.
 
-**Optional fragment: Get Transaction Details**
+    **Optional fragment: Get Transaction Details**
 
 28. **Description**
 
@@ -1125,7 +1125,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
 33. **Description**
 
@@ -1210,9 +1210,9 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
-**Lookup Counterparty**
+    **Lookup Counterparty**
 
 4. **Description**
 
@@ -1246,7 +1246,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Transaction Request**
+    **Transaction Request**
 
 8. **Description**
 
@@ -1288,7 +1288,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Calculate Quote**
+    **Calculate Quote**
 
 13. **Description**
 
@@ -1314,7 +1314,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Optional fragment: Quote Confirmation by Payee**
+    **Optional fragment: Quote Confirmation by Payee**
 
 16. **Description**
 
@@ -1324,7 +1324,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The quote is assumed to be sent to the Payer for confirmation, and the Payee is assumed to accept and confirm the quote. If the Payee would reject the quote, an error response would be sent from the Payee FSP to the Payer FSP via the Switch to inform about the rejected quote.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
 17. **Description**
 
@@ -1350,7 +1350,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The total quote can be calculated by the Payer FSP.
 
-**Optional fragment: Automatic OTP generation**
+    **Optional fragment: Automatic OTP generation**
 
 20. **Description**
 
@@ -1368,7 +1368,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
 22. **Description**
 
@@ -1426,13 +1426,13 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Alternative: OTP validation failed**
+    **Alternative: OTP validation failed**
 
 29. **Description**
 
     The validation in Step 28 fails and this was the final retry for the Payer. The Payer FSP then uses the response **Return Transaction Request Information** with a rejected state to inform the Switch that the transaction was rejected. 
 
-**Assumptions** 
+    **Assumptions** 
 
     The OTP validation in Step 28 is assumed to fail and no more retries remains for the Payer.
 
@@ -1460,7 +1460,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Alternative: OTP validation succeed**
+    **Alternative: OTP validation succeed**
 
 33. **Description**
 
@@ -1510,7 +1510,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The fulfilment is assumed to be correctly validated.
 
-**Optional fragment: Get Transaction Details**
+    **Optional fragment: Get Transaction Details**
 
 39. **Description**
 
@@ -1552,7 +1552,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of Optional fragment**
+    **End of Optional fragment**
 
 44. **Description**
 
@@ -1619,7 +1619,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Loop for each Transaction in bulk file**
+    **Loop for each Transaction in bulk file**
 
 2. **Description**
 
@@ -1653,11 +1653,11 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of loop for each Transaction**
+    **End of loop for each Transaction**
 
-**Calculate Bulk Quote**
+    **Calculate Bulk Quote**
 
-**Loop for each Payee FSP to Calculate Bulk Quote**
+    **Loop for each Payee FSP to Calculate Bulk Quote**
 
 6. **Description**
 
@@ -1699,7 +1699,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**End of loop for each Payee FSP**
+    **End of loop for each Payee FSP**
 
 11. **Description**
 
@@ -1717,7 +1717,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     The Payer is assumed to execute the bulk transaction. If the Payer would reject the bulk transaction at this stage, no response is sent to the Payee FSP. The created bulk quote at the Payee FSPs should have an expiry date; that is, at which time it's automatically deleted.
 
-**Perform Bulk Transfer**
+    **Perform Bulk Transfer**
 
 13. **Description**
 
@@ -1727,7 +1727,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     None.
 
-**Loop for each Payee FSP to perform Bulk Transfer**
+    **Loop for each Payee FSP to perform Bulk Transfer**
 
 14. **Description**
 
@@ -1777,7 +1777,7 @@ This section provides descriptions of and assumptions made for all steps in the 
 
     Each individual transaction in the bulk transaction is assumed to be successful in the Payee FSP, and the validation of the fulfilments is also assumed to be correct. If one or more of the transactions in the bulk transaction were unsuccessful, the earlier reserved transfer in the Payer FSP would need to be updated with the total amount of all successful transactions before being committed.
 
-**End of loop for each Payee FSP**
+    **End of loop for each Payee FSP**
 
 20. **Description**
 

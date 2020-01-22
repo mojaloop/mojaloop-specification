@@ -217,11 +217,11 @@ This section<sup>[3](http://json-schema.org/latest/json-schema-validation.html)<
 
 #### 3.1.1 maxLength
 
-The value of this keyword MUST be a non-negative integer. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword. The length of a string instance is defined as the number of its characters as defined by RFC 7159[RFC7159\].
+The value of this keyword MUST be a non-negative integer. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword. The length of a string instance is defined as the number of its characters as defined by RFC 7159[RFC7159].
 
 #### 3.1.2 minLength
 
-The value of this keyword MUST be a non-negative integer. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword. The length of a string instance is defined as the number of its characters as defined by RFC 7159\[RFC7159\]. Omitting this keyword has the same behaviour as assigning it a value of **0**.
+The value of this keyword MUST be a non-negative integer. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword. The length of a string instance is defined as the number of its characters as defined by RFC 7159[RFC7159]. Omitting this keyword has the same behaviour as assigning it a value of **0**.
 
 #### 3.1.3 pattern
 
@@ -233,11 +233,11 @@ The value of _items_ MUST be either a valid JSON Schema or an array of valid JSO
 
 #### 3.1.5 maxItems
 
-The value of this keyword MUST be a non-negative integer. An array instance is valid against *maxItems* if its size is less than, or equal to, the value of this keyword.
+The value of this keyword MUST be a non-negative integer. An array instance is valid against _maxItems_ if its size is less than, or equal to, the value of this keyword.
 
 #### 3.1.6 minItems
 
-The value of this keyword MUST be a non-negative integer. An array instance is valid against *minItems* if its size is greater than, or equal to, the value of this keyword. Omitting this keyword has the same behaviour as a value of **0**.
+The value of this keyword MUST be a non-negative integer. An array instance is valid against _minItems_ if its size is greater than, or equal to, the value of this keyword. Omitting this keyword has the same behaviour as a value of **0**.
 
 #### 3.1.7 required
 
@@ -245,17 +245,17 @@ The value of this keyword MUST be an array. Elements of this array (if there are
 
 #### 3.1.8 properties
 
-The value of _properties_ MUST be an object. Each value of this object MUST be a valid JSON Schema. This keyword determines how child instances validate for objects; it does not directly validate the immediate instance itself. Validation succeeds if, for each name that appears in both the instance and as a name within this keyword\'s value, the child instance for that name successfully validates against the corresponding schema. Omitting this keyword results in the same behaviour as does having an empty object.
+The value of _properties_ MUST be an object. Each value of this object MUST be a valid JSON Schema. This keyword determines how child instances validate for objects; it does not directly validate the immediate instance itself. Validation succeeds if, for each name that appears in both the instance and as a name within this keyword's value, the child instance for that name successfully validates against the corresponding schema. Omitting this keyword results in the same behaviour as does having an empty object.
 
 #### 3.1.9 enum
 
-The value of this keyword MUST be an array. This array SHOULD have at least one element. Elements in the array SHOULD be unique. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword\'s array value. Elements in the array might be of any value, including null.
+The value of this keyword MUST be an array. This array SHOULD have at least one element. Elements in the array SHOULD be unique. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword's array value. Elements in the array might be of any value, including null.
 
 #### 3.1.10 type
 
 The value of this keyword MUST be either a string or an array. If it is an array, elements of the array MUST be strings and MUST be unique. String values MUST be one of the six primitive types (null, boolean, object, array, number, or string), or integer which matches any number with a zero-fractional part. An instance validates if and only if the instance is in any of the sets listed for this keyword.
 
-This specification uses string type for all basic types and element types, but enforces restrictions using regular expressions as *patterns*. Complex types are of object type and contain properties that are either element or object types in turn. Array types are used to specify lists, which are currently only used as part of complex types.
+This specification uses string type for all basic types and element types, but enforces restrictions using regular expressions as _patterns_. Complex types are of object type and contain properties that are either element or object types in turn. Array types are used to specify lists, which are currently only used as part of complex types.
 
 ### 3.2 Metadata Keywords
 
@@ -263,41 +263,41 @@ This section provides descriptions of the fields used in the JSON definitions of
 
 #### 3.2.1 definitions
 
-This keyword\'s value MUST be an object. Each member value of this object MUST be a valid JSON Schema. This keyword plays no role in validation. Its role is to provide a standardized location for schema authors to incorporate JSON Schemas into a more general schema.
+This keyword's value MUST be an object. Each member value of this object MUST be a valid JSON Schema. This keyword plays no role in validation. Its role is to provide a standardized location for schema authors to incorporate JSON Schemas into a more general schema.
 
 #### 3.2.2 "title" and "description"
 
 The value of both keywords MUST be a string. Both keywords can be used to provide a user interface with information about the data produced by this user interface. A title will preferably be short, whereas a description will provide explanation about the purpose of the instance described in this schema.
 
-### 3.3 Instance and \$ref
+### 3.3 Instance and $ref
 
-Two keywords, **Instance** and **\$ref** are used in either the JSON Schema definitions or the transformation rules in this document, which are described in [Sections 3.3.1](#331-instance) and [3.3.2](#332-schema-references-with-$ref-keyword). **Instance** is not used in the Open API Specification; this term is used in this document to describe validation and transformation rules. **\$ref** contains a URI value as a reference to other types; it is used in the Specification.
+Two keywords, **Instance** and **$ref** are used in either the JSON Schema definitions or the transformation rules in this document, which are described in [Sections 3.3.1](#331-instance) and [3.3.2](#332-schema-references-with-$ref-keyword). **Instance** is not used in the Open API Specification; this term is used in this document to describe validation and transformation rules. **$ref** contains a URI value as a reference to other types; it is used in the Specification.
 
 #### 3.3.1 Instance
 
 JSON Schema interprets documents according to a data model. A JSON value interpreted according to this data model is called an _instance_<sup>[4](http://json-schema.org/latest/json-schema-core.html\#rfc.section.4.2)</sup>. An instance has one of six primitive types, and a range of possible values depending on the type:
 
-    null: A JSON **null** production
+null: A JSON **null** production
 
-    boolean: A **true** or **false** value, from the JSON **true** or **false** productions
+boolean: A **true** or **false** value, from the JSON **true** or **false** productions
 
-    object: An unordered set of properties mapping a string to an instance, from the JSON **object** production
+object: An unordered set of properties mapping a string to an instance, from the JSON **object** production
 
-    array: An ordered list of instances, from the JSON **array** production
+array: An ordered list of instances, from the JSON **array** production
 
-    number: An arbitrary-precision, base-10 decimal number value, from the JSON **number** production
+number: An arbitrary-precision, base-10 decimal number value, from the JSON **number** production
 
-    string: A string of Unicode code points, from the JSON **string** production
+string: A string of Unicode code points, from the JSON **string** production
 
 Whitespace and formatting concerns are outside the scope of the JSON Schema. Since an object cannot have two properties with the same key, behaviour for a JSON document that tries to define two properties (the **member** production) with the same key (the **string** production) in a single object is undefined.
 
-#### 3.3.2 Schema references with \$ref keyword
+#### 3.3.2 Schema references with $ref keyword
 
-The **\$ref**<sup>[5](http://json-schema.org/latest/json-schema-core.html\#rfc.section.8)</sup> keyword is used to reference a schema and provides the ability to validate recursive structures through self- reference. An object schema with a **\$ref** property MUST be interpreted as a **"\$ref"** reference. The value of the **\$ref** property MUST be a URI Reference. Resolved against the current URI base, it identifies the URI of a schema to use. All other properties in a **"\$ref"** object MUST be ignored.
+The **$ref**<sup>[5](http://json-schema.org/latest/json-schema-core.html\#rfc.section.8)</sup> keyword is used to reference a schema and provides the ability to validate recursive structures through self- reference. An object schema with a **$ref** property MUST be interpreted as a **"$ref"** reference. The value of the **$ref** property MUST be a URI Reference. Resolved against the current URI base, it identifies the URI of a schema to use. All other properties in a **"$ref"** object MUST be ignored.
 
-The URI is not a network locator, only an identifier. A schema need not be downloadable from the address if it is a network- addressable URL, and implementations SHOULD NOT assume they should perform a network operation when they encounter a network-addressable URI. A schema MUST NOT be run into an infinite loop against a schema. For example, if two schemas \"\#alice\" and \"\#bob\" both have an \"allOf\" property that refers to the other, a naive validator might get stuck in an infinite recursive loop trying to validate the instance. Schemas SHOULD NOT make use of infinite recursive nesting like this; the behavior is undefined.
+The URI is not a network locator, only an identifier. A schema need not be downloadable from the address if it is a network- addressable URL, and implementations SHOULD NOT assume they should perform a network operation when they encounter a network-addressable URI. A schema MUST NOT be run into an infinite loop against a schema. For example, if two schemas "#alice" and "#bob" both have an "allOf" property that refers to the other, a naive validator might get stuck in an infinite recursive loop trying to validate the instance. Schemas SHOULD NOT make use of infinite recursive nesting like this; the behavior is undefined.
 
-It is used with the syntax **"\$ref"** and is mapped to an existing definition. From the syntax, the value part of _\$ref_, **\#/definitions/**, indicates that the type being referenced is from the Definitions section of the Open API Specification (Typically, an Open API Specification has sections named Paths, Definitions, Responses and Parameters.). An example for this can be found in [Listing 26](#listing-26), where the types for properties **authentication** and **authenticationValue** are provided by using references to Authenticationtype and AuthenticationValue types, respectively.
+It is used with the syntax **"$ref"** and is mapped to an existing definition. From the syntax, the value part of _$ref_, **#/definitions/**, indicates that the type being referenced is from the Definitions section of the Open API Specification (Typically, an Open API Specification has sections named Paths, Definitions, Responses and Parameters.). An example for this can be found in [Listing 26](#listing-26), where the types for properties **authentication** and **authenticationValue** are provided by using references to Authenticationtype and AuthenticationValue types, respectively.
 
 ### 3.4 JSON Definitions and Examples
 
@@ -317,7 +317,7 @@ This section provides the JSON Schema definition for the data type Amount. [List
 
 - JSON value pair with Name "**type**" and Value "**string**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^(\[0\]\|(\[1-9\]\[0-9\]{0,17}))(\[.\]\[0-9\]{0,3}\[1-9\])?\$**"
+- JSON value pair with Name "**pattern**" and Value "**^(\[0\]\|(\[1-9\]\[0-9\]{0,17}))(\[.\]\[0-9\]{0,3}\[1-9\])?\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type Amount is a JSON String in a canonical format that is restricted by a regular expression for interoperability reasons. This pattern does not allow any trailing zeroes at all, but allows an amount without a minor currency unit. It also only allows four digits in the minor currency unit; a negative value is not allowed. Using more than 18 digits in the major currency unit is not allowed.**"
 
@@ -340,7 +340,7 @@ The transformation rules for an instance of Amount data type are as follows:
 
 - A given Instance of Amount type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^(\[0\]\|(\[1-9\]\[0-9\]{0,17}))(\[.\]\[0-9\]{0,3}\[1-9\])?\$**
+- The instance MUST be a match for the regular expression **^(\[0\]\|(\[1-9\]\[0-9\]{0,17}))(\[.\]\[0-9\]{0,3}\[1-9\])?\$**
 
 - The length of this instance is restricted by the regular expression above as 23, with 18 digits in the major currency unit and four digits in the minor currency unit. Valid example values for Amount type: **124.45**, **5, 5.5, 4.4444, 0.5, 0, 181818181818181818**
 
@@ -352,7 +352,7 @@ This section provides the JSON Schema definition for the data type BinaryString.
 
 - JSON value pair with Name "**title**" and Value "**BinaryString**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[A-Za-z0-9-\_\]+\[=\]{0,2}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[A-Za-z0-9-\_\]+\[=\]{0,2}\$**"
 
 - JSON value pair with Name "**description**" and Value the content of Property **description**
 
@@ -374,7 +374,7 @@ The transformation rules for an instance of BinaryString data type are as follow
 
 - A given Instance of BinaryString type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[A-Za-z0-9-\_\]+\[=\]{0,2}\$**
+- The instance MUST be a match for the regular expression **^\[A-Za-z0-9-\_\]+\[=\]{0,2}\$**
 
 An example value for BinaryString type is
 
@@ -388,7 +388,7 @@ This section provides the JSON Schema definition for the BinaryString type IlpPa
 
   - JSON value pair with Name "**title**" and Value "**IlpPacket**"
   - JSON value pair with Name "**type**" and Value "**string**"
-  - JSON value pair with Name "**pattern**" and Value "**\^\[A-Za-z0-9-\_\]+\[=\]{0,2}\$**"
+  - JSON value pair with Name "**pattern**" and Value "**^\[A-Za-z0-9-\_\]+\[=\]{0,2}\$**"
   - JSON value pair with Name "**minLength**" and Value **1**
   - JSON value pair with Name "**pattern**" and Value **32768**
   - JSON value pair with Name "**description**" and Value "**Information for recipient (transport layer information).**"
@@ -416,7 +416,7 @@ This section provides the JSON Schema definition for the data type BinaryString3
 
 - JSON value pair with Name "**title**" and Value "**BinaryString32**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[A-Za-z0-9-\_\]{43}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[A-Za-z0-9-\_\]{43}\$**"
 
 - JSON value pair with Name "**description**" and Value the content of Property **description**
 
@@ -437,7 +437,7 @@ This section provides the JSON Schema definition for the data type BinaryString3
 
 - A given Instance of BinaryString type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression "**\^\[A-Za-z0-9-\_\]{43}\$**".
+- The instance MUST be a match for the regular expression "**^\[A-Za-z0-9-\_\]{43}\$**".
 
 An example value for BinaryString32 type is:
 
@@ -453,7 +453,7 @@ This section provides the JSON Schema definition for the BinaryString32 type Ilp
 
 - JSON value pair with Name "**type**" and Value "**string**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[A-Za-z0-9-\_\]{43}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[A-Za-z0-9-\_\]{43}\$**"
 
 - JSON value pair with Name "**maxLength**" and Value **48**
 
@@ -481,7 +481,7 @@ This section provides the JSON Schema definition for the data type BopCode. [Lis
 
 - JSON value pair with Name "**title**" and Value "**BalanceOfPayments**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[1-9\]\\d{2}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[1-9\]\\d{2}\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type BopCode is a JSON String of 3 characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. [https://www.imf.org/external/np/sta/bopcode/](https://www.imf.org/external/np/sta/bopcode/).**"
 
@@ -491,7 +491,7 @@ This section provides the JSON Schema definition for the data type BopCode. [Lis
 "BalanceOfPayments":{
     "title":"BalanceOfPayments",
     "type":"string",
-    "pattern":"^[1-9]\\d{2}$",
+    "pattern":"^[1-9]\d{2}$",
     "description":"(BopCode) The API data type BopCode is a JSON String of 3 characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. https://www.imf.org/external/np/sta/bopcode/" 
 }
 ```
@@ -502,7 +502,7 @@ The transformation rules for an instance of BopCode data type are as follows:
 
 - A given Instance of BopCode type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[1-9\]\\d{2}\$**.
+- The instance MUST be a match for the regular expression **^\[1-9\]\\d{2}\$**.
 
 An example value for BopCode type is **124**.
 
@@ -587,7 +587,7 @@ This section provides the JSON Schema definition for the data type Date. [Listin
 
 - JSON value pair with Name "**title**" and Value "**Date**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)\$**"
+- JSON value pair with Name "**pattern**" and Value "**^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type Date is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. This format is according to ISO 8601 containing a date only. A more readable version of the format is "yyyy-MM-dd", e.g. "1982-05-23" or "1987-08- 05"**."
 
@@ -597,8 +597,8 @@ This section provides the JSON Schema definition for the data type Date. [Listin
 "Date":	{
     "title":	"Date",	
     "type":	"string",	
-    "pattern":	"^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$",	
-    "description": "The API data type Date is a JSON String in a lexical format that is restricted by a regular	 expression for interoperability reasons. This format is according to ISO 8601 containing a date only. A more readable version of the format is “yyyy-MM-dd”, e.g. "\1982-05-23\" or \"1987-08-05”."	
+    "pattern":	"^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$",	
+    "description": "The API data type Date is a JSON String in a lexical format that is restricted by a regular	 expression for interoperability reasons. This format is according to ISO 8601 containing a date only. A more readable version of the format is “yyyy-MM-dd”, e.g. "1982-05-23" or "1987-08-05”."	
 }	
 ```
 
@@ -608,7 +608,7 @@ The transformation rules for an instance of Date data type are as follows:
 
 - A given Instance of AmountType type MUST be of string type.
 
-- The instance MUST be a match for the regular expression **\^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)\$**.
+- The instance MUST be a match for the regular expression **^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)\$**.
 
 An example value for AmountType type is **1971-12-25**.
 
@@ -622,7 +622,7 @@ This section provides the JSON Schema definition for the Date type DateOfBirth. 
 
 - JSON value pair with Name "**description**" and Value "**Date of Birth for the Party**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)\$**"
+- JSON value pair with Name "**pattern**" and Value "**^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)\$**"
 
 ###### Listing 10
 
@@ -630,7 +630,7 @@ This section provides the JSON Schema definition for the Date type DateOfBirth. 
 "DateOfBirth": {
     "title": "DateOfBirth (type Date)",
     "type": "string",
-    "pattern": "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$",
+    "pattern": "^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$",
     "description": "Date of Birth for the Party."
 }
 ```
@@ -645,7 +645,7 @@ The JSON Schema definition for this section provides the JSON Schema definition 
 
 - JSON value pair with Name "**title**" and Value "**DateTime**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)T(?:\[01\]\\d\|2\[0-3\]):\[0-5\]\\d:\[0-5\]\\d(?:(\\.\\d{3}))(?:Z\|\[+-\]\[01\]\\d:\[0-5\]\\d)\$**"
+- JSON value pair with Name "**pattern**" and Value "**^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0- 8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1- 9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)T(?:\[01\]\\d\|2\[0-3\]):\[0-5\]\\d:\[0-5\]\\d(?:(\\.\\d{3}))(?:Z\|\[+-\]\[01\]\\d:\[0-5\]\\d)\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. This format is according to ISO 8601, expressed in a combined date, time and time zone format. A more readable version of the format is "yyyy-MM-ddTHH:mm:ss.SSS\[-HH:MM\]", e.g. \"2016-05-24T08:38:08.699-04:00\" or \"2016-05-24T08:38:08.699Z\" (where Z indicates Zulu time zone, same as UTC)**."
 
@@ -655,8 +655,8 @@ The JSON Schema definition for this section provides the JSON Schema definition 
 "DateTime": {
     "title":"DateTime",
     "type": "string",
-    "pattern":	"^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:(\\.\\d{3}))(?:Z|[+-][01]\\d:[0-5]\\d)$",
-    "description": "The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. This format is according to ISO	8601, expressed in a combined date, time and time zone format. A more readable version of the format is	“yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]”, e.g. \"2016-05-24T08:38:08.699-04:00\" or \"2016-05-24T08:38:08.699Z\" (where Z indicates Zulu time zone, same as UTC)."
+    "pattern":	"^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01\d|2[0-3]):[0-5]\d:[0-5]\d(?:(\.\d{3}))(?:Z|[+-][01]\d:[0-5]\\d)$",
+    "description": "The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. This format is according to ISO	8601, expressed in a combined date, time and time zone format. A more readable version of the format is	“yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]”, e.g. "2016-05-24T08:38:08.699-04:00" or "2016-05-24T08:38:08.699Z" (where Z indicates Zulu time zone, same as UTC)."
 }
 ```
 
@@ -666,7 +666,7 @@ The transformation rules for an instance of DateTime data type are as follows:
 
 - A given Instance of type AmountType MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0-8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1-9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)T(?:\[01\]\\d\|2\[0-3\]):\[0-5\]\\d:\[0-5\]\\d(?:(\\.\\d{3}))(?:Z\|\[+-\]\[01\]\\d:\[0-5\]\\d)\$**.
+- The instance MUST be a match for the regular expression **^(?:\[1-9\]\\d{3}-(?:(?:0\[1-9\]\|1\[0-2\])-(?:0\[1-9\]\|1\\d\|2\[0-8\])\|(?:0\[13-9\]\|1\[0-2\])-(?:29\|30)\|(?:0\[13578\]\|1\[02\])-31)\|(?:\[1-9\]\\d(?:0\[48\]\|\[2468\]\[048\]\|\[13579\]\[26\])\|(?:\[2468\]\[048\]\|\[13579\]\[26\])00)-02-29)T(?:\[01\]\\d\|2\[0-3\]):\[0-5\]\\d:\[0-5\]\\d(?:(\\.\\d{3}))(?:Z\|\[+-\]\[01\]\\d:\[0-5\]\\d)\$**.
 
 An example value for DateTime type is **2016-05-24T08:38:08.699-04:00**.
 
@@ -678,7 +678,7 @@ This section provides the JSON Schema definition for the data type ErrorCode. [L
 
 - JSON value pair with Name "**title**" and Value "**ErrorCode**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[1-9\]\\d{3}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[1-9\]\\d{3}\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type ErrorCode is a JSON String of 4 characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. Specific error number in the form _{C}{E}{SS}_ where _{C}_ is a one-digit category _{E}_ is a one-digit error within the category _{SS}_ is a scheme defined two-digit sub-error within the error. Please refer to x.x for the list of the possible category/error codes**".
 
@@ -688,7 +688,7 @@ This section provides the JSON Schema definition for the data type ErrorCode. [L
 "ErrorCode": {
     "title": "ErrorCode", 
     "type": "string", 
-    "pattern": "^[1-9]\\d{3}$", 
+    "pattern": "^[1-9]\d{3}$", 
     "description": "The API data type ErrorCode is a JSON String of 4 characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. Specific error number in the form {C}{E}{SS} where {C} is a one-digit category {E} is a one-digit error within the category {SS} is a scheme defined two-digit sub-error within the error. Please refer to x.x for the list of the possible category/error codes"
 }
 ```
@@ -699,7 +699,7 @@ The transformation rules for an instance of ErrorCode data type are as follows:
 
 - A given Instance of ErrorCode type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[1-9\]\\d{3}\$**.
+- The instance MUST be a match for the regular expression **^\[1-9\]\d{3}\$**.
 
 An example value for ErrorCode type is **5100**.
 
@@ -711,7 +711,7 @@ This section provides the JSON Schema definition for the data type Integer. [Lis
 
 - JSON value pair with Name "**title**" and Value "**Integer**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[1-9\]\\d\*\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[1-9\]\d\*\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type Integer is a JSON String consisting of digits only. Negative numbers and leading zeroes are not allowed. The data type is always limited by a number of digits.**"
 
@@ -721,7 +721,7 @@ This section provides the JSON Schema definition for the data type Integer. [Lis
 "Integer": {
     "title": "Integer", 
     "type": "string", 
-    "pattern": "^[1-9]\\d*$", 
+    "pattern": "^[1-9]\d*$", 
     "description": "The API data type Integer is a JSON String consisting of digits only. Negative numbers and leading zeroes are not allowed. The data type is always limited by a number of digits." 
 }
 ```
@@ -732,7 +732,7 @@ The transformation rules for an instance of Integer data type are as follows:
 
 - A given Instance of Integer type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[1-9\]\\d\*\$**.
+- The instance MUST be a match for the regular expression **^\[1-9\]\d\*\$**.
 
 An example value for Integer type is **12345**.
 
@@ -744,7 +744,7 @@ This section provides the JSON Schema definition for the data type Latitude. [Li
 
 - JSON value pair with Name "**title**" and Value "**Latitude**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^(\\+\|-)?(?:90(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-8\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**"
+- JSON value pair with Name "**pattern**" and Value "**^(\\+\|-)?(?:90(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-8\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type Latitude is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons**".
 
@@ -754,7 +754,7 @@ This section provides the JSON Schema definition for the data type Latitude. [Li
 "Latitude": {
     "title": "Latitude", 
     "type": "string", 
-    "pattern": "^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$", 
+    "pattern": "^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$", 
     "description": "The API data type Latitude is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons." 
 }
 ```
@@ -765,7 +765,7 @@ The transformation rules for an instance of Latitude data type are as follows:
 
 - A given Instance of Latitude type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^(\\+\|-)?(?:90(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-8\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**.
+- The instance MUST be a match for the regular expression **^(\\+\|-)?(?:90(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-8\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**.
 
 An example value for Latitude type is **+45.4215**.
 
@@ -777,7 +777,7 @@ This section provides the JSON Schema definition for the data type Longitude. [L
 
 - JSON value pair with Name "**title**" and Value "**Longitude**"
 
-- If Property pattern is not empty, JSON value pair with Name "**pattern**" and Value "**\^(\\+\|-)?(?:180(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-9\]\[0-9\]\|1\[0-7\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**".
+- If Property pattern is not empty, JSON value pair with Name "**pattern**" and Value "**^(\\+\|-)?(?:180(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-9\]\[0-9\]\|1\[0-7\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**".
 
 - JSON value pair with Name "**description**" and Value "**The API data type Longitude is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.**"
 
@@ -787,7 +787,7 @@ This section provides the JSON Schema definition for the data type Longitude. [L
 "Longitude": {
     "title": "Longitude", 
     "type": "string", 
-    "pattern": "^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$", 
+    "pattern": "^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$", 
     "description": "The API data type Longitude is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons." 
 }
 ``` 
@@ -798,7 +798,7 @@ The transformation rules for an instance of Longitude data type are as follows:
 
 - A given Instance of Longitude type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^(\\+\|-)?(?:180(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-9\]\[0-9\]\|1\[0-7\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**.
+- The instance MUST be a match for the regular expression **^(\\+\|-)?(?:180(?:(?:\\.0{1,6})?)\|(?:\[0-9\]\|\[1-9\]\[0-9\]\|1\[0-7\]\[0-9\])(?:(?:\\.\[0-9\]{1,6})?))\$**.
 
 An example value for Longitude type is **+75.6972**.
 
@@ -810,7 +810,7 @@ This section provides the JSON Schema definition for the data type MerchantClass
 
 - JSON value pair with Name "**title**" and Value "**MerchantClassificationCode**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[\\d\]{1,4}\$**".
+- JSON value pair with Name "**pattern**" and Value "**^\[\\d\]{1,4}\$**".
 
 - JSON value pair with Name "**description**" and Value "**A limited set of pre-defined numbers. This list would be a limited set of numbers identifying a set of popular merchant types like School Fees, Pubs and Restaurants, Groceries, etc.**"
 
@@ -820,7 +820,7 @@ This section provides the JSON Schema definition for the data type MerchantClass
 "MerchantClassificationCode": {
     "title": "MerchantClassificationCode", 
     "type": "string", 
-    "pattern": "^[\\d]{1,4}$", 
+    "pattern": "^[\d]{1,4}$", 
     "description": "A limited set of pre-defined numbers. This list would be a limited set of numbers identifying a set of popular merchant types like School Fees, Pubs and Restaurants, Groceries, etc." 
 } 
 ``` 
@@ -831,7 +831,7 @@ The transformation rules for an instance of MerchantClassificationCode data type
 
 - A given Instance of MerchantClassificationCode type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[\\d\]{1,4}\$**.
+- The instance MUST be a match for the regular expression **^\[\\d\]{1,4}\$**.
 
 An example value for MerchantClassificationCode type is **99**.
 
@@ -847,7 +847,7 @@ This section provides the JSON Schema definition for the data type Name. [Listin
 
 - JSON value pair with Name "**maxLength**" and Value the content of Property **maxLength**
 
-- JSON value pair with Name "**pattern**" and Value "**\^(?!\\\\s\*\$)\[\\\\w .,'-\]+\$**".
+- JSON value pair with Name "**pattern**" and Value "**^(?!\\\\s\*\$)\[\\\\w .,'-\]+\$**".
 
 - JSON value pair with Name "**description**" and Value "**The API data type Name is a JSON String, restricted by a regular expression to avoid characters which are generally not used in a name. The restriction will not allow a string consisting of whitespace only, all Unicode characters should be allowed, as well as the characters ".", "'" (apostrophe), "-", "," and " " (space). Note - In some programming languages, Unicode support needs to be specifically enabled. As an example, if Java is used the flag UNICODE\_CHARACTER\_CLASS needs to be enabled to allow Unicode characters.**"
 
@@ -868,7 +868,7 @@ The transformation rules for an instance of Name data type are as follows:
 
 - A given Instance of Name type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^(?!\\\\s\*\$)\[\\\\w .,'-\]+\$**.
+- The instance MUST be a match for the regular expression **^(?!\\\\s\*\$)\[\\\\w .,'-\]+\$**.
 
 An example value for Name type is **Bob**.
 
@@ -880,7 +880,7 @@ This section provides the JSON Schema definition for the Name type FirstName. [L
 
 - JSON value pair with Name "**type**" and Value "**string**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^(?!\\s\*\$)\[\\w .,\'-\]+\$**"
+- JSON value pair with Name "**pattern**" and Value "**^(?!\\s\*\$)\[\\w .,\'-\]+\$**"
 
 - JSON value pair with Name "**maxLength**" and Value **128**
 
@@ -896,7 +896,7 @@ This section provides the JSON Schema definition for the Name type FirstName. [L
     "type": "string", 
     "minLength": 1, 
     "maxLength": 128, 
-    "pattern": "^(?!\\s*$)[\\w .,'-]+$", 
+    "pattern": "^(?!\s*$)[\w .,'-]+$", 
     "description": "First name of the Party (Name Type)." 
 }
 ``` 
@@ -911,7 +911,7 @@ This section provides the JSON Schema definition for the data type OtpValue. [Li
 
 - JSON value pair with Name "**title**" and Value "**OtpValue**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\\d{3,10}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\\d{3,10}\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type OtpValue is a JSON String of 3 to 10 characters, consisting of digits only. Negative numbers are not allowed. One or more leading zeros are allowed.**"
 
@@ -921,7 +921,7 @@ This section provides the JSON Schema definition for the data type OtpValue. [Li
 "OtpValue": {
     "title": "OtpValue", 
     "type": "string", 
-    "pattern": "^\\d{3,10}$", 
+    "pattern": "^\d{3,10}$", 
     "description": "The API data type OtpValue is a JSON String of 3 to 10 characters, consisting of digits only. Negative numbers are not allowed. One or more leading zeros are allowed." 
 }
 ```
@@ -932,7 +932,7 @@ The transformation rules for an instance of OtpValue data type are as follows:
 
 - A given Instance of OtpValue type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\\d{3,10}\$**.
+- The instance MUST be a match for the regular expression **^\\d{3,10}\$**.
 
 An example value for OtpValue type is **987345**.
 
@@ -1020,7 +1020,7 @@ This section provides the JSON Schema definition for the data type TokenCode. [L
 
 - JSON value pair with Name "**title**" and Value "**TokenCode**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[0-9a-zA-Z\]{4,32}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[0-9a-zA-Z\]{4,32}\$**"
 
 - JSON value pair with Name "**description**" and Value "**The API data type TokenCode is a JSON String between 4 and 32 characters, consisting of digits or characters from a to z (case insensitive).**"
 
@@ -1041,7 +1041,7 @@ The transformation rules for an instance of TokenCode data type are as follows:
 
 - A given Instance of TokenCode type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[0-9a-zA-Z\]{4,32}\$**.
+- The instance MUST be a match for the regular expression **^\[0-9a-zA-Z\]{4,32}\$**.
 
 An example value for TokenCode type is **Test-Code**.
 
@@ -1053,7 +1053,7 @@ This section provides the JSON Schema definition for the TokenCode type Code. [L
 
 - JSON value pair with Name "**type**" and Value "**String**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[0-9a-zA-Z\]{4,32}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[0-9a-zA-Z\]{4,32}\$**"
 
 - JSON value pair with Name "**description**" and Value "**Any code/token returned by the Payee FSP (TokenCode type).**"
 
@@ -1078,7 +1078,7 @@ This section provides the JSON Schema definition for the data type UndefinedEnum
 
 - JSON value pair with Name "**type**" and Value "**string**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[A-Z\_\]{1,32}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[A-Z\_\]{1,32}\$**"
 
 - If Property description is not empty, JSON value pair with Name "**description**" and Value "**The API data type UndefinedEnum is a JSON String consisting of 1 to 32 uppercase characters including "\_" (underscore).**"
 
@@ -1099,7 +1099,7 @@ The transformation rules for an instance of UndefinedEnum data type are as follo
 
 - A given Instance of UndefinedEnum type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[A-Z\_\]{1,32}\$**.
+- The instance MUST be a match for the regular expression **^\[A-Z\_\]{1,32}\$**.
 
 An example value for UndefinedEnum type depends on the list of values specified.
 
@@ -1111,7 +1111,7 @@ This section provides the JSON Schema definition for the data type UUID. [Listin
 
 - JSON value pair with Name "**title**" and "**Value CorrelationId**"
 
-- JSON value pair with Name "**pattern**" and Value "**\^\[0-9a-f\]{8}-\[0-9a-f\]{4}-\[1-5\]\[0-9a-f\]{3}-\[89ab\]\[0-9a-f\]{3}-\[0-9a- f\]{12}\$**"
+- JSON value pair with Name "**pattern**" and Value "**^\[0-9a-f\]{8}-\[0-9a-f\]{4}-\[1-5\]\[0-9a-f\]{3}-\[89ab\]\[0-9a-f\]{3}-\[0-9a- f\]{12}\$**"
 
 - JSON value pair with Name "**description**" and Value "**Identifier that correlates all messages of the same sequence. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An example of a UUID is "b51ec534-ee48-4575-b6a9-ead2955b8069". An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes ("-").**"
 
@@ -1121,7 +1121,7 @@ This section provides the JSON Schema definition for the data type UUID. [Listin
 "CorrelationId": {
     "title": "CorrelationId", 
     "type": "string", 
-    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", 
+    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a- f]{12}$", 
     "description": "Identifier that correlates all messages of the same sequence. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An example of a UUID is "b51ec534-ee48-4575-b6a9- ead2955b8069". An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes ("-")." 
 }
 ```
@@ -1132,7 +1132,7 @@ The transformation rules for an instance of UUID data type are as follows:
 
 - A given Instance of UUID type MUST be of String Type.
 
-- The instance MUST be a match for the regular expression **\^\[0-9a-f\]{8}-\[0-9a-f\]{4}-\[1-5\]\[0-9a-f\]{3}-\[89ab\]\[0-9a- f\]{3}-\[0-9a-f\]{12}\$**.
+- The instance MUST be a match for the regular expression **^\[0-9a-f\]{8}-\[0-9a-f\]{4}-\[1-5\]\[0-9a-f\]{3}-\[89ab\]\[0-9a- f\]{3}-\[0-9a-f\]{12}\$**.
 
 An example value for UUID type is **b51ec534-ee48-4575-b6a9-ead2955b8069**.
 
@@ -1156,7 +1156,7 @@ This section provides the JSON Schema definition for a complex type. [Listing 26
 
   - A list of key, value pairs with Name **key.Name** and Value of element, complex or Array type
 
-  - JSON value pair with Name **\$ref** and as Value the concatenation of **\#/definitions/** with **key.Type** type. An example for a complex type is provided under [Section 5.1.1](#511-complex-type-authenticationinfo).
+  - JSON value pair with Name **$ref** and as Value the concatenation of **#/definitions/** with **key.Type** type. An example for a complex type is provided under [Section 5.1.1](#511-complex-type-authenticationinfo).
 
 #### 5.1.1 Complex Type AuthenticationInfo
 
@@ -1174,11 +1174,11 @@ This section provides the JSON Schema definition for the complex type Authentica
 
   - A JSON object **authentication** with the following content:
 
-  - JSON value pair with Name "**\$ref**" and as Value the concatenation of **\#/definitions/** with Authenticationtype type.
+  - JSON value pair with Name "**$ref**" and as Value the concatenation of **#/definitions/** with Authenticationtype type.
 
   - A JSON object **authenticationValue** with the following content:
 
-  - JSON value pair with Name "**\$ref**" and as Value the concatenation of **\#/definitions/** with AuthenticationValue type.
+  - JSON value pair with Name "**$ref**" and as Value the concatenation of **#/definitions/** with AuthenticationValue type.
 
 ###### Listing 26
 
@@ -1259,11 +1259,11 @@ This section provides the JSON Schema definition for the complex type Authorizat
 
   - If Property "**authenticationInfo**" is present, a JSON object "**authenticationInfo**" with the following content:
 
-  - JSON value pair with Name "**\$ref**" and as Value the definition of AuthenticationInfo type, located under **definitions** as indicated by **\#/definitions/**
+  - JSON value pair with Name "**$ref**" and as Value the definition of AuthenticationInfo type, located under **definitions** as indicated by **#/definitions/**
 
   - A JSON object **responseType** with the following content:
 
-  - JSON value pair with Name "**\$ref**" and as Value the definition of AuthorizationResponse type, located under **definitions** as indicated by "**\#/definitions/**".
+  - JSON value pair with Name "**$ref**" and as Value the definition of AuthorizationResponse type, located under **definitions** as indicated by "**#/definitions/**".
 
 - An array **required** and as Value a list with single element "**responseType**"
 
