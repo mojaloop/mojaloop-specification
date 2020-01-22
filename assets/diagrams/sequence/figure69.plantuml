@@ -27,16 +27,16 @@ optionally within square brackets <email>.
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
-skinparam ActorFontStyle Bold
-skinparam ActorFontSize 15
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title Handling of error callback from API Service /bulkTransfers
@@ -53,31 +53,29 @@ participant "Payee\nFSP(s)" as PayeeFSP
 ' start flow
 autonumber 1 1 "<b>[0]"
 activate PayerFSP
-PayerFSP -> PayerFSP: Reserve each individual \ntransfer from Payer \n account to Payee FSP account
-PayerFSP ->> Switch: **POST /bulkTransfers** \n(List of individual transfers \nincluding ILP packet and condition)
+PayerFSP -> PayerFSP: Reserve each individual\ntransfer from Payer\naccount to Payee FSP account
+PayerFSP ->> Switch: **POST /bulkTransfers**\n(List of individual transfers\nincluding ILP packet and condition)
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve each individual \ntransfer from Payer FSP \nto Payee FSP
+Switch -> Switch: Reserve each individual\ntransfer from Payer FSP\nto Payee FSP
 autonumber resume
-Switch ->> PayeeFSP: **POST /bulktransfers** \n(List of individual transfers \nincluding ILP packet and condition)
+Switch ->> PayeeFSP: **POST /bulktransfers**\n(List of individual transfers\nincluding ILP packet and condition)
 activate PayeeFSP
 autonumber stop
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Some processing error occurs, \ne.g. a validation failure that prevents \nthe bulk transfer to be performed
+PayeeFSP -> PayeeFSP: Some processing error occurs,\ne.g. a validation failure that prevents\nthe bulk transfer to be performed
 autonumber resume
-Switch <<- PayeeFSP: **PUT /bulkTransfers/**<i><ID></i>**/error** \n(Error information)
+Switch <<- PayeeFSP: **PUT /bulkTransfers/**<i><ID></i>**/error**\n(Error information)
 autonumber stop
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-Switch -> Switch: Cancel each reserved \ntransfer from Payer \nFSP to Payee FSP
+Switch -> Switch: Cancel each reserved\ntransfer from Payer\nFSP to Payee FSP
 autonumber resume
-PayerFSP <<- Switch: **PUT /bulkTransfers/**<i><ID></i>**/error** \n(Error information)
+PayerFSP <<- Switch: **PUT /bulkTransfers/**<i><ID></i>**/error**\n(Error information)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Cancel each transfer \nfrom Payer account \nto Payee FSP account
-...
+PayerFSP -> PayerFSP: Cancel each transfer\nfrom Payer account\nto Payee FSP account
 'deactivate PayerFSP
-
 @enduml

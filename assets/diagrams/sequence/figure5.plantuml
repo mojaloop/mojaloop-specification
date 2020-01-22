@@ -26,14 +26,16 @@
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title Example scenario where FSPIOP-Destination is unknown by FSP
@@ -42,7 +44,7 @@ skinparam ArrowColor Black
 ' participant - FSP, Peer FSP, Optional Switch and Account Lookup
 
 ' declare actors
-participant "FSP" as FSP
+participant "\nFSP" as FSP
 participant "Optional\nSwitch" as Switch
 participant "Account\nLookup" as ALS
 participant "Peer\nFSP" as PEERFSP
@@ -51,26 +53,26 @@ participant "Peer\nFSP" as PEERFSP
 FSP ->> Switch: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP)
 activate FSP
 activate Switch
-FSP <<-- Switch: **HTTP 202**(Accepted)
+FSP <<-- Switch: **HTTP 202** (Accepted)
 Switch ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Source=**Account Lookup)
 activate ALS
-Switch <<-- ALS: **HTTP 202**(Accepted)
-ALS -> ALS: Replace **FSPIOP-Source**\n with **FSPIOP-Source**\n and vice versa for\n routing of callback
+Switch <<-- ALS: **HTTP 202** (Accepted)
+ALS -> ALS: Replace **FSPIOP-Source**\nwith **FSPIOP-Source**\nand vice versa for\nrouting of callback
 Switch <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Source=**Switch)
-Switch -->> ALS: **HTTP 200**(OK)
+Switch -->> ALS: **HTTP 200** (OK)
 deactivate ALS
-Switch -> Switch: Set **FSPIOP-Source**\n in original messages according\n to results of **PUT /participants**
-Switch ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP=Source=**Peer FSP, **FSPIOP-Source=**FSP)
+Switch -> Switch: Set **FSPIOP-Source**\nin original messages according\nto results of **PUT /participants**
+Switch ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP-Source=**FSP)
 activate PEERFSP
-Switch <<-- PEERFSP: **HTTP 202**(Accepted)
-PEERFSP -> PEERFSP: Optionally validate message\n signature using stored certificate\n for FSP in **FSPIOP-Source**
-PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\n with **FSPIOP-Source** and\n visa versa for routing of callback
-Switch <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP=Source=**FSP)
-Switch -->> PEERFSP: **HTTP 200**(OK)
+Switch <<-- PEERFSP: **HTTP 202** (Accepted)
+PEERFSP -> PEERFSP: Optionally validate message\nsignature using stored certificate\nfor FSP in **FSPIOP-Source**
+PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Source** and\nvisa versa for routing of callback
+Switch <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP-Source=**FSP)
+Switch -->> PEERFSP: **HTTP 200** (OK)
 deactivate PEERFSP
-Switch -> Switch: Route messages according\n to **FSPIOP-Source**
+Switch -> Switch: Route messages according\nto **FSPIOP-Source**
 FSP <<- Switch: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Source=**FSP)
-FSP -->> Switch: **HTTP 200**(OK)
+FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 deactivate FSP
 @enduml

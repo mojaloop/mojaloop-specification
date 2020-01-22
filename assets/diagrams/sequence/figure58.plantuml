@@ -26,79 +26,81 @@ optionally within square brackets <email>.
 
 ' define actor image
 sprite $actor [25x48/16] {
-    0000000000010000000000000
-    0000000006CAC910000000000
-    0000000095101292000000000
-    0000000651000119000000000
-    0000000B10000018400000000
-    0000001A10000016600000000
-    0000000B10000017510000000
-    000000083100001A210000000
-    0000000191000176110000000
-    000000003A866A61100000000
-    0000000000466211100000000
-    0003333333334443333310000
-    0088888888888888888892000
-    0821111111111111111118200
-    8311111111111111111111A00
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111111111111111111111A20
-    A111551111111111138111A20
-    A111661111111111139111A20
-    A211661111111111139111A20
-    A211661111111111139111A20
-    A211661111161111139111A20
-    A2116611111A2111139111A20
-    A2116611111A2111139111A20
-    A2116611111A2111139111A20
-    A7669611111A211113A666B20
-    36669611111A211113A666610
-    00016611111A2111139111110
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006611111A2111139100000
-    00006966666B7666679100000
-    0000266666666666664100000
-    0000000111111111111100000
-    0000000000000000000000000
+  0000000000010000000000000
+  0000000006CAC910000000000
+  0000000095101292000000000
+  0000000651000119000000000
+  0000000B10000018400000000
+  0000001A10000016600000000
+  0000000B10000017510000000
+  000000083100001A210000000
+  0000000191000176110000000
+  000000003A866A61100000000
+  0000000000466211100000000
+  0003333333334443333310000
+  0088888888888888888892000
+  0821111111111111111118200
+  8311111111111111111111A00
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111551111111111138111A20
+  A111661111111111139111A20
+  A211661111111111139111A20
+  A211661111111111139111A20
+  A211661111161111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A7669611111A211113A666B20
+  36669611111A211113A666610
+  00016611111A2111139111110
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006966666B7666679100000
+  0000266666666666664100000
+  0000000111111111111100000
+  0000000000000000000000000
 }
 
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
 skinparam ActorFontStyle Bold
-skinparam ActorFontSize 15
+skinparam ActorFontSize 20
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
 
 skinparam actor {
-    Bordercolor none
-    Backgroundcolor none
-    shadowing false
+  Bordercolor none
+  Backgroundcolor none
+  shadowing false
 }
 
 skinparam participant {
-    shadowing true
+  shadowing true
 }
+
+hide footbox
 
 ' declare title
 ' title Example bulk quote process
@@ -114,31 +116,31 @@ participant "Optional\nSwitch" as Switch
 participant "Payee\nFSP(s)" as PayeeFSP
 
 ' start flow
-Payer -> PayerFSP: I would like to upload \na file of bulk transactions
+Payer -> PayerFSP: I would like to upload\na file of bulk transactions
 activate PayerFSP
-PayerFSP -> PayerFSP: Lookup in which FSP each \nPayee is located in, divide \nPayees into FSP separate files \n(process not shown here)
+PayerFSP -> PayerFSP: Lookup in which FSP each\nPayee is located in, divide\nPayees into FSP separate files\n(process not shown here)
 Loop #OldLace
-    hnote left of PayerFSP #OldLace
-        For each 
-        created bulk 
-        file per 
-        Payee FSP
-    end hnote
-    PayerFSP -> PayerFSP: Rate Payer FSP bulk quote \n(process not shown here)
-    PayerFSP ->> Switch: **POST /bulkQuotes/** \n(Bulk info and list of individual quotes)
-    activate Switch
-    PayerFSP <<-- Switch: **HTTP 202**(Accepted)
-    Switch ->> PayeeFSP: **POST /bulkQuotes/** \n(Bulk info and list of individual quotes)
-    activate PayeeFSP
-    Switch <<-- PayeeFSP: **HTTP 202**(Accepted)
-    PayeeFSP -> PayeeFSP: Rate Payee FSP \nfee/commission and \ngenerate condition per \nindividual transfer
-    Switch <<- PayeeFSP: **PUT /bulkQuotes/**<i><ID></i> \n(List of individual quote results \nand condition per transfer)
-    Switch -->> PayeeFSP: **HTTP 200**(OK)
-    deactivate PayeeFSP
-    PayerFSP <<- Switch: **PUT /bulkQuotes/**<i><ID></i> \n(List of individual quote results \nand condition per transfer)
-    PayerFSP -->> Switch: **HTTP 200**(OK)
-    deactivate Switch
-    PayerFSP -> PayerFSP: Rate payer FSP bulk quote \n(depending on fee model)
+  hnote left of PayerFSP #OldLace
+    For each 
+    created bulk 
+    file per 
+    Payee FSP
+  end hnote
+  PayerFSP -> PayerFSP: Rate Payer FSP bulk quote\n(process not shown here)
+  PayerFSP ->> Switch: **POST /bulkQuotes/**\n(Bulk info and list of individual quotes)
+  activate Switch
+  PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+  Switch ->> PayeeFSP: **POST /bulkQuotes/**\n(Bulk info and list of individual quotes)
+  activate PayeeFSP
+  Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+  PayeeFSP -> PayeeFSP: Rate Payee FSP\nfee/commission and\ngenerate condition per\nindividual transfer
+  Switch <<- PayeeFSP: **PUT /bulkQuotes/**<i><ID></i>\n(List of individual quote results\nand condition per transfer)
+  Switch -->> PayeeFSP: **HTTP 200** (OK)
+  deactivate PayeeFSP
+  PayerFSP <<- Switch: **PUT /bulkQuotes/**<i><ID></i>\n(List of individual quote results\nand condition per transfer)
+  PayerFSP -->> Switch: **HTTP 200** (OK)
+  deactivate Switch
+  PayerFSP -> PayerFSP: Rate payer FSP bulk quote\n(depending on fee model)
 end Loop
-PayerFSP -> PayerFSP: Handle quote results for \nall Payee FSPs
+PayerFSP -> PayerFSP: Handle quote results for\nall Payee FSPs
 @enduml

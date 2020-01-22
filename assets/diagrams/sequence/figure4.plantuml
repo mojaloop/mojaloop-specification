@@ -26,14 +26,16 @@
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source
@@ -42,7 +44,7 @@ skinparam ArrowColor Black
 ' participant - FSP, Peer FSP and Optional Switch
 
 ' declare actors
-participant "FSP" as FSP
+participant "\nFSP" as FSP
 participant "Optional\nSwitch" as Switch
 participant "Peer\nFSP" as PEERFSP
 
@@ -50,19 +52,19 @@ participant "Peer\nFSP" as PEERFSP
 FSP ->> Switch: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
 activate FSP
 activate Switch
-FSP <<-- Switch: **HTTP 202**(Accepted)
+FSP <<-- Switch: **HTTP 202** (Accepted)
 Switch -> Switch: Route message according\nto **FSPIOP-Destination**
 Switch ->> PEERFSP: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
 activate PEERFSP
-Switch <<-- PEERFSP: **HTTP 202**(Accepted)
-PEERFSP -> PEERFSP: Optionally validate messages signature\n using stored certificate for\n FSP in **FSPIOP-Source**
-PEERFSP -> PEERFSP: Replace **FSPIOP-Source\n with **FSPIOP-Destination**\n and visa versa for routing of callback
+Switch <<-- PEERFSP: **HTTP 202** (Accepted)
+PEERFSP -> PEERFSP: Optionally validate messages signature\nusing stored certificate for\nFSP in **FSPIOP-Source**
+PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination**\nand visa versa for routing of callback
 Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-Switch -->> PEERFSP: **HTTP 200**(OK)
-Switch -> Switch: Route message according\n to **FSPIOP-Destination**
+Switch -->> PEERFSP: **HTTP 200** (OK)
+Switch -> Switch: Route message according\nto **FSPIOP-Destination**
 deactivate PEERFSP
 FSP <<- Switch: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-FSP -->> Switch: **HTTP 200**(OK)
+FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 deactivate FSP
 @enduml

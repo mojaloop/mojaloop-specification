@@ -26,14 +26,16 @@
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName Verdana
 skinparam monochrome true
 skinparam SequenceLifeLineBackgroundColor WhiteSmoke
 skinparam SequenceLifeLineBorderColor Black
 skinparam ParticipantFontStyle Bold
-skinparam ParticipantFontSize 15
+skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
 skinparam ArrowColor Black
+
+hide footbox
 
 ' declare title
 ' title HTTP POST call flow
@@ -42,24 +44,24 @@ skinparam ArrowColor Black
 ' participant - FSP, Peer FSP and Optional Switch
 
 ' declare actors
-participant "FSP" as FSP
-participant "Optional\n Switch" as Switch
-participant "Peer FSP" as PEERFSP
+participant "\nFSP" as FSP
+participant "Optional\nSwitch" as Switch
+participant "Peer\nFSP" as PEERFSP
 
 ' start flow
 FSP ->> Switch: **POST /service**\n(Service information, ID)
 activate FSP
 activate Switch
-FSP <<-- Switch: **HTTP 202**(Accepted)
+FSP <<-- Switch: **HTTP 202** (Accepted)
 Switch ->> PEERFSP: **POST /service**\n(Service information, ID)
 activate PEERFSP
-Switch <<-- PEERFSP: **HTTP 202**(Accepted)
+Switch <<-- PEERFSP: **HTTP 202** (Accepted)
 PEERFSP -> PEERFSP: Create service object\naccording to request
 Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(Service object information)
-Switch -->> PEERFSP: **HTTP 200**(OK)
+Switch -->> PEERFSP: **HTTP 200** (OK)
 deactivate PEERFSP
 FSP <<- Switch: **PUT /service/**//<ID>//\n(Service object information)
-FSP -->> Switch: **HTTP 200**(OK)
+FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 FSP -> FSP: Handle service object information
 ' deactivate FSP
