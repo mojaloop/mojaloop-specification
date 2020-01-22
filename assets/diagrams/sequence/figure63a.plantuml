@@ -103,10 +103,10 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Payer Initiated Transaction pattern using the asynchronous REST binding
+' title Payer-Initiated Transaction
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
+' participant - FSP(Payer/Payee), Switch and Account Lookup
 ' actor - Payer/Payee(s)
 
 ' declare actors
@@ -121,54 +121,34 @@ actor "<$actor>\nPayee" as Payee
 autonumber 1 1 "<b>[0]"
 Payer -> PayerFSP: I would like to\npay 100 USD\nto +123456789
 activate PayerFSP
-autonumber stop
 PayerFSP -> PayerFSP: Payee not within\nPayer FSP system
-autonumber resume
-PayerFSP ->> Switch: **GET /parties/MSISDN/123456789**
+autonumber stop
+PayerFSP ->> Switch: **Lookup Party Information**\n(MSISDN 123456789)
 activate Switch
-autonumber stop
-PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 autonumber resume
-Switch ->> ALS: **GET /participants/MSISDN/123456789**
+Switch ->> ALS: **Lookup Participant Information**\n(MSISDN 123456789)
 activate ALS
-autonumber stop
-Switch <<-- ALS: **HTTP 202** (Accepted)
 ALS -> ALS: Lookup which\nFSP MSISDN\n+123456789\nbelongs to
-autonumber resume
-Switch <<- ALS: **PUT /participants/MSISDN/123456789**\n(FSP ID)
 autonumber stop
-Switch -->> ALS: **HTTP 200** (OK)
+Switch <<- ALS: **Return Participant Information**\n(FSP ID)
 deactivate ALS
 autonumber resume
-Switch ->> PayeeFSP: **GET /parties/MSISDN/123456789**
+Switch ->> PayeeFSP: **Lookup Party Information**\n(MSISDN 123456789)
 activate PayeeFSP
+PayeeFSP -> PayeeFSP: Lookup party\ninformation\nregarding\nMSISDN\n+123456789
 autonumber stop
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Lookup party\ninformation\nRegarding\nMSISDN\n+123456789
-autonumber resume
-Switch <<- PayeeFSP: **Put /parties/MSISDN/123456789**
-autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **Return Party Information**\n(Party Information)
 deactivate PayeeFSP
 autonumber resume
-PayerFSP <<- Switch: **PUT /parties/MSISDN/123456789**\n(Party information)
-autonumber stop
-PayerFSP -->> Switch: **HTTP 200** (OK)
+PayerFSP <<- Switch: **Return Party Information**\n(Party Information)
 deactivate Switch
 deactivate PayerFSP
-autonumber resume
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
 activate PayerFSP
-PayerFSP ->> Switch: **POST /quotes**\n(Transaction details)
+PayerFSP ->> Switch: **Calculate Quote**\n(Transaction details)
 activate Switch
-autonumber stop
-PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-autonumber resume
-Switch ->> PayeeFSP: **POST /quote**\n(Transaction details)
+Switch ->> PayeeFSP: **Calculate Quote**\n(Transaction details)
 activate PayeeFSP
-autonumber stop
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-autonumber resume
 PayeeFSP -> PayeeFSP: Rate Payee FSP\nfee/commission,\ngenerate condition
 group #OldLace Optional
   hnote left of PayeeFSP #OldLace
@@ -179,16 +159,10 @@ group #OldLace Optional
   PayeeFSP <- Payee: I confirm
 end
 autonumber resume
-Switch <<- PayeeFSP: **PUT /quote/**<i><ID></i>\n(Payee FSP fee/commission,\ncondition)
-autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **Return Quote Information**\n(Payee FSP fee/commission,\ncondition)
 deactivate PayeeFSP
-autonumber resume
-PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i>\n(Payee FSP fee/commission,\ncondition)
-autonumber stop
-PayerFSP -->> Switch: **HTTP 200** (OK)
+PayerFSP <<- Switch: **Return Quote Information**\n(Payee FSP fee/commission,\ncondition)
 deactivate Switch
-autonumber resume
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
 autonumber stop
 Payer <- PayerFSP: Present fees and\noptionally payee name
@@ -199,30 +173,22 @@ activate PayerFSP
 autonumber stop
 PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
 autonumber resume
-PayerFSP -> Switch: **POST /transfers**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
-autonumber stop
+PayerFSP -> Switch: **Preform Transfers**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
 activate Switch
-PayerFSP <-- Switch: **HTTL 202** (Accepted)
-autonumber resume
 Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
 autonumber stop
-Switch ->> PayeeFSP: **POST /transfes**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
+Switch ->> PayeeFSP: **Perform Transfer**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
 activate PayeeFSP
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 autonumber resume
 PayeeFSP -> PayeeFSP: Perform transfer\nfrom Switch\naccount to Payee\naccount, generate\nfulfilment
-autonumber stop
 PayeeFSP -> Payee: Transaction notification
-autonumber resume
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
 autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
+Switch <<- PayeeFSP: **Return Transfer Information**\n(Fulfilment)
 deactivate PayeeFSP
 autonumber resume
 Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP
 autonumber stop
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayerFSP -->> Switch: **HTTP 200** (OK) 
+PayerFSP <<- Switch: **Return Transfer Information**\n(Fulfilment)
 deactivate Switch
 autonumber resume
 PayerFSP -> PayerFSP: Commit transfer from Payer\naccount to Switch account
@@ -230,28 +196,16 @@ group #OldLace Optional
   hnote left of PayerFSP #OldLace
     Get transaction data
   end hnote
-  PayerFSP ->> Switch: **GET /transactions/** <i><TransactionID></i>
+  PayerFSP ->> Switch: **Retrieve Transaction Information**\n(Transaction ID)
   activate Switch
-  autonumber stop
-  PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-  autonumber resume
-  Switch <<- PayeeFSP: **GET /transactions/** <i><TransactionID></i>
+  Switch <<- PayeeFSP: **Retrieve Transaction Information**\n(Transaction ID)
   activate PayeeFSP
-  autonumber stop
-  Switch -->> PayeeFSP: **HTTP 202** (Accepted)
-  autonumber resume
   PayeeFSP -> PayeeFSP: Lookup\ntransaction\ninformation
-  Switch <<- PayeeFSP: **PUT /transactions/** <i><TransactionID></i>\n(Transaction details)
-  autonumber stop
-  Switch -->> PayeeFSP: **HTTP 200** (OK)
+  Switch <<- PayeeFSP: **Return Transaction Information**\n(Transaction details)
   deactivate PayeeFSP
-  autonumber resume
-  PayerFSP <<- Switch: **PUT /transactions/** <i><TransactionID></i>\n(Transaction details)
-  autonumber stop
-  PayerFSP -->> Switch: **HTTP 200** (OK)
+  PayerFSP <<- Switch: **Return Transaction Information**\n(Transaction details)
   deactivate Switch
 end
-autonumber resume
 Payer <- PayerFSP: Transaction notification\nincluding optional\ntransaction data\n(e.g. token ID)
 deactivate PayerFSP
 autonumber stop
