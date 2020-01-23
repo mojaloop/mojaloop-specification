@@ -103,44 +103,110 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title How to use the POST /transfers service
+' title Payer-Initiated Transaction
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
-' actor - Payee/Payer
+' participant - FSP(Payer/Payee), Switch and Account Lookup
+' actor - Payer/Payee(s)
 
 ' declare actors
 actor "<$actor>\nPayer" as Payer
 participant "Payer\nFSP" as PayerFSP
 participant "Optional\nSwitch" as Switch
+participant "Account\nLookup" as ALS
 participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
+autonumber 1 1 "<b>[0]"
+Payer -> PayerFSP: I would like to\npay 100 USD\nto +123456789
 activate PayerFSP
-PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
-...
-PayerFSP -> PayerFSP: Quote\n(process not shown here)
-...
-PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
-PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
+PayerFSP -> PayerFSP: Payee not within\nPayer FSP system
+autonumber stop
+PayerFSP ->> Switch: **Lookup Party Information**\n(MSISDN 123456789)
 activate Switch
-PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
-Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
+autonumber resume
+Switch ->> ALS: **Lookup Participant Information**\n(MSISDN 123456789)
+activate ALS
+ALS -> ALS: Lookup which\nFSP MSISDN\n+123456789\nbelongs to
+autonumber stop
+Switch <<- ALS: **Return Participant Information**\n(FSP ID)
+deactivate ALS
+autonumber resume
+Switch ->> PayeeFSP: **Lookup Party Information**\n(MSISDN 123456789)
 activate PayeeFSP
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Perform transfer from Switch\naccount to Payee account,\ngenerate fulfilment
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayeeFSP -> Payee: Transaction notification
-Switch -->> PayeeFSP: **HTTP 200** (OK)
+PayeeFSP -> PayeeFSP: Lookup party\ninformation\nregarding\nMSISDN\n+123456789
+autonumber stop
+Switch <<- PayeeFSP: **Return Party Information**\n(Party Information)
 deactivate PayeeFSP
-Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayerFSP -->> Switch: **HTTP 200** (OK)
+autonumber resume
+PayerFSP <<- Switch: **Return Party Information**\n(Party Information)
 deactivate Switch
-PayerFSP -> PayerFSP: Commit transfer from Payer\naccount to Payee FSP account
-Payer <- PayerFSP: Transaction notification
 deactivate PayerFSP
+PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
+activate PayerFSP
+PayerFSP ->> Switch: **Calculate Quote**\n(Transaction details)
+activate Switch
+Switch ->> PayeeFSP: **Calculate Quote**\n(Transaction details)
+activate PayeeFSP
+PayeeFSP -> PayeeFSP: Rate Payee FSP\nfee/commission,\ngenerate condition
+group #OldLace Optional
+  hnote left of PayeeFSP #OldLace
+    Confirm quote
+  end hnote
+  PayeeFSP -> Payee: Here is the\nquote and\nPayer name
+  autonumber stop
+  PayeeFSP <- Payee: I confirm
+end
+autonumber resume
+Switch <<- PayeeFSP: **Return Quote Information**\n(Payee FSP fee/commission,\ncondition)
+deactivate PayeeFSP
+PayerFSP <<- Switch: **Return Quote Information**\n(Payee FSP fee/commission,\ncondition)
+deactivate Switch
+PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
+autonumber stop
+Payer <- PayerFSP: Present fees and\noptionally payee name
+deactivate PayerFSP
+autonumber resume
+Payer -> PayerFSP: I approve the\ntransaction
+activate PayerFSP
+autonumber stop
+PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
+autonumber resume
+PayerFSP -> Switch: **Preform Transfers**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
+activate Switch
+Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
+autonumber stop
+Switch ->> PayeeFSP: **Perform Transfer**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
+activate PayeeFSP
+autonumber resume
+PayeeFSP -> PayeeFSP: Perform transfer\nfrom Switch\naccount to Payee\naccount, generate\nfulfilment
+PayeeFSP -> Payee: Transaction notification
+autonumber stop
+Switch <<- PayeeFSP: **Return Transfer Information**\n(Fulfilment)
+deactivate PayeeFSP
+autonumber resume
+Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP
+autonumber stop
+PayerFSP <<- Switch: **Return Transfer Information**\n(Fulfilment)
+deactivate Switch
+autonumber resume
+PayerFSP -> PayerFSP: Commit transfer from Payer\naccount to Switch account
+group #OldLace Optional
+  hnote left of PayerFSP #OldLace
+    Get transaction data
+  end hnote
+  PayerFSP ->> Switch: **Retrieve Transaction Information**\n(Transaction ID)
+  activate Switch
+  Switch <<- PayeeFSP: **Retrieve Transaction Information**\n(Transaction ID)
+  activate PayeeFSP
+  PayeeFSP -> PayeeFSP: Lookup\ntransaction\ninformation
+  Switch <<- PayeeFSP: **Return Transaction Information**\n(Transaction details)
+  deactivate PayeeFSP
+  PayerFSP <<- Switch: **Return Transaction Information**\n(Transaction details)
+  deactivate Switch
+end
+Payer <- PayerFSP: Transaction notification\nincluding optional\ntransaction data\n(e.g. token ID)
+deactivate PayerFSP
+autonumber stop
 @enduml

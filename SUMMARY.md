@@ -3,7 +3,9 @@
 ### Documents
 * [Mojaloop Specifications Overview](README.md)
   * [Glossary](documents/Glossary.md)
+  * [Generic Transaction Patterns](documents/Generic Transaction Patterns.md)
   * [API Definition v1.0](documents/API Definition v1.0.md)
+  * [JSON Binding Rules](documents/JSON Binding Rules.md)
   * [Encryption](documents/Encryption.md)
 ### Change Control Board
 * [Change Control Board Overview](ccb-meetings/README.md)

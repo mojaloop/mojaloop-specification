@@ -103,44 +103,96 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title How to use the POST /transfers service
+' title Bulk Transaction
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
-' actor - Payee/Payer
+' participant - FSP(Payer/Payee(s)), Switch and Account Lookup Services (ALS)
+' actor - Payer/Payee(s)
 
 ' declare actors
-actor "<$actor>\nPayer" as Payer
-participant "Payer\nFSP" as PayerFSP
-participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as PayeeFSP
-actor "<$actor>\nPayee" as Payee
+actor "<$actor>\nPayer\n" as Payer
+participant "\nPayer\nFSP" as PayerFSP
+participant "\nOptional\nSwitch" as Switch
+participant "\nAccount\nLookup" as ALS
+participant "\nPayee\nFSP(s)" as PayeeFSP
+actor "<$actor>\nPayees\n(multiple)" as Payee
 
 ' start flow
-Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
+autonumber 1 1 "<b>[0]"
+Payer -> PayerFSP: I would like to upload\na file of bulk transactions
 activate PayerFSP
-PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
+Loop #Oldlace
+  hnote left of PayerFSP #Oldlace
+    For each 
+    transaction 
+    in bulk file
+  end hnote
+  PayerFSP -> PayerFSP: Locate Payee, if not\nwithin Payer FSP\nuse Account Lookup
+  PayerFSP ->> ALS: **Lookup Participant Information**\n(Payee Party ID Type and Party ID)
+  activate ALS
+  ALS -> ALS: Lookup FSP for\nrequested Type/ID
+  PayerFSP ->> ALS: **Return Participant Information**\n(FSP ID)
+  autonumber stop
+  deactivate ALS
+  PayerFSP -> PayerFSP: Place transaction\nin bulk file\nper Payee FSP
+end Loop
 ...
-PayerFSP -> PayerFSP: Quote\n(process not shown here)
-...
-PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
-PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
-activate Switch
-PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
-Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
-activate PayeeFSP
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Perform transfer from Switch\naccount to Payee account,\ngenerate fulfilment
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayeeFSP -> Payee: Transaction notification
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate PayeeFSP
-Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayerFSP -->> Switch: **HTTP 200** (OK)
-deactivate Switch
-PayerFSP -> PayerFSP: Commit transfer from Payer\naccount to Payee FSP account
-Payer <- PayerFSP: Transaction notification
+Loop #Oldlace
+  hnote left of PayerFSP #Oldlace
+    For each
+    created bulk 
+    file per 
+    Payee FSP
+  end hnote
+  PayerFSP -> PayerFSP: Rate Payer FSP bulk quote\n(depending on fee model)
+  autonumber resume
+  PayerFSP ->> Switch: **Calculate Bulk Quote**\n(Bulk info and list\nof individual quotes)
+  Switch ->> PayeeFSP: **Calculate Bulk Quote**\n(Bulk info and list of individual quotes)
+  activate PayeeFSP
+  activate Switch
+  PayeeFSP -> PayeeFSP: Rate Payee FSP\nfee/commission and\ngenerate condition per\nindividual transfer
+  autonumber stop
+  Switch <<- PayeeFSP: **Return Bulk Quote Information**\n(List of individual quote results\nand condition per transfer)
+  deactivate PayeeFSP
+  autonumber resume
+  PayerFSP <<- Switch: **Return Bulk Quote Information**\n(List of individual quote results\nand condition per transfer)
+  deactivate Switch
+  PayerFSP -> PayerFSP: Rate Payer FSP bulk quote\n(depending on fee model)
+end Loop
+autonumber resume
+PayerFSP -> PayerFSP: Calculate total fee for Payer
+Payer <- PayerFSP: Bulk has finished processing,\npresent fees
+deactivate PayerFSP
+Payer -> PayerFSP: Execute my bulk
+activate PayerFSP
+Loop #Oldlace
+  hnote left of PayerFSP #Oldlace
+    For each 
+    created bulk 
+    file per 
+    Payee FSP
+  end hnote
+  PayerFSP -> PayerFSP: Reserve each individual\ntransfer from Payer\naccount to Payee FSP account
+autonumber stop
+  PayerFSP ->> Switch: **Perform Bulk Transfer**\n(List of individual transfers\nincluding ILP packet and condition)
+  activate Switch
+autonumber resume
+  Switch -> Switch: Reserve each individual\ntransfer from Payer FSP\nto Payee FSP
+  autonumber stop
+  Switch ->> PayeeFSP: **Perform Bulk Transfer**\n(List of individual transfers\nincluding ILP packet and condition)
+  activate PayeeFSP
+autonumber resume
+  PayeeFSP -> PayeeFSP: Perform each transaction from\nPayer FSP account to Payee\naccount, generate fulfilments
+  PayeeFSP -> Payee: Transaction notification\nfor each Payee
+  Switch <<- PayeeFSP: **Return Bulk Transfer Information**\n(List of fulfilments)
+  autonumber stop
+  deactivate PayeeFSP
+  Switch -> Switch: Commit each successful\ntransfer from Payer\nFSP to Payee FSP
+  autonumber resume
+  PayerFSP <<- Switch: **Return Bulk Transfer Information**\n(List of fulfilments)
+  deactivate Switch
+  PayerFSP -> PayerFSP: Commit each successful\ntransfer from Payer account\nto Payee FSP account
+end Loop
+Payer <- PayerFSP: Your bulk has been executed
 deactivate PayerFSP
 @enduml
