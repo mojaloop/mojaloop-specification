@@ -152,7 +152,7 @@ deactivate Switch
 PayerFSP -> PayerFSP: Payer FSP uses the\nFSP commission as\na transaction fee
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> Switch
+PayerFSP -[hidden]> PayerFSP
 activate PayerFSP
 PayerFSP -> PayerFSP: Generate OTP, "12345"
 Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant of 100 USD,\n0 USD in fees.
@@ -171,7 +171,7 @@ PayerFSP -->> Switch: **HTTP 200** (OK)
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\nOTP OK
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> Switch
+PayerFSP -[hidden]> PayerFSP
 activate PayerFSP
 PayerFSP -> PayerFSP: Reserve 100 USD from Payer\naccount, 99 USD to Switch\naccount, 1 USD to fee account
 PayerFSP ->> Switch: **POST /transfers**\n(amount=99 USD)

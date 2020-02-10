@@ -122,7 +122,7 @@ activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> Switch
+PayerFSP -[hidden]> PayerFSP
 activate PayerFSP
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
 PayerFSP ->> Switch: **POST /quotes/**\n(Transaction details)
