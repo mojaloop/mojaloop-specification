@@ -77,5 +77,6 @@ autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Cancel each transfer\nfrom Payer account\nto Payee FSP account
-'deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
 @enduml

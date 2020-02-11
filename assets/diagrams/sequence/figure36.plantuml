@@ -150,8 +150,11 @@ Switch ->> PayerFSP: **PUT /quotes/**<i><ID></i>\n(transferAmount=99 USD,\npayee
 Switch <<-- PayerFSP: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Payer FSP uses the\nFSP commission as\na transaction fee
-...
-PayerFSP -> PayerFSP: Generated OTP, "12345"
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP -> PayerFSP: Generate OTP, "12345"
 Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant of 100 USD,\n0 USD in fees.
 PayerFSP ->> Switch: **GET /authorizations/**\n<i>{TransactionRequestID}</i>/\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
@@ -166,7 +169,10 @@ Switch -->> PayeeFSP: **HTTP 200** (OK)
 PayerFSP <<- Switch: **PUT /authorizations/***\n<i>{transactionRequestID}</i>\n(otp="12345")
 PayerFSP -->> Switch: **HTTP 200** (OK)
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\nOTP OK
-...
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
 PayerFSP -> PayerFSP: Reserve 100 USD from Payer\naccount, 99 USD to Switch\naccount, 1 USD to fee account
 PayerFSP ->> Switch: **POST /transfers**\n(amount=99 USD)
 activate Switch
@@ -178,11 +184,11 @@ Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Transfer 99 USD from Switch\naccount, 1 USD from\ncommission account\nto Payee account
 PayeeFSP ->> PayeePOS: You have received 100 USD\nfrom Payer. Please give goods\nor service to Payer.
 PayeePOS ->> PayerOTC: Here is your goods or service
-Switch <<- PayeeFSP: **PUT /transfers/** <i><ID></i>
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 Switch <- Switch: Commit reserved transfer
-Switch ->> PayerFSP: **PUT /transfers/** <i><ID></i>
+Switch ->> PayerFSP: **PUT /transfers/**<i><ID></i>
 Switch <<-- PayerFSP: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP <- PayerFSP: Commit reserved transfer

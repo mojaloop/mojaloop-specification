@@ -120,10 +120,20 @@ actor "<$actor>\nPayee" as Payee
 Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
 activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
-...
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
 PayerFSP -> PayerFSP: Quote\n(process not shown here)
-...
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
 PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
 PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)

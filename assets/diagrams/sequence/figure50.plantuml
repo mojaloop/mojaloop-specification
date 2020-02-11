@@ -156,4 +156,6 @@ PayerFSP <<- Switch: **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(ot
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Validates OTP sent by\nPayee FSP, OTP OK, perform\ntransfer (not shown here)
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
 @enduml

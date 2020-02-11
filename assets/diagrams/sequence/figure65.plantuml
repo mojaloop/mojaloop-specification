@@ -170,9 +170,12 @@ autonumber stop
 Switch <<-- PayeeFSP: **HTTP 200** (OK)
 deactivate Switch
 deactivate PayeeFSP
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
 autonumber resume
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
-activate PayerFSP
 PayerFSP ->> Switch: **POST /qoutes**\n(Transaction details)
 activate Switch
 autonumber stop
@@ -205,6 +208,8 @@ PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 autonumber resume
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
+autonumber stop
+PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 Group #Oldlace Option #2
   hnote left of Payer #Oldlace
@@ -212,9 +217,10 @@ Group #Oldlace Option #2
     generated
     OTP
   end hnote
+  PayerFSP -[hidden]> Switch
+  activate PayerFSP
   autonumber resume
   PayerFSP -> PayerFSP: Generate OTP
-  activate PayerFSP
   Payer <- PayerFSP: Use OTP\nto confirm
 end
 PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount and fees)
@@ -243,19 +249,22 @@ PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 autonumber resume
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP
-...
-'deactivate PayerFSP
+autonumber stop
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
 Group #Oldlace Alternatives
   hnote left of Payer #Oldlace
     OTP
     validation
     failed
   end hnote
+  autonumber resume
   PayerFSP ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Rejected state)
-'  activate PayerFSP
+  activate PayerFSP
   activate Switch
   autonumber stop
   PayerFSP <<-- Switch: **HTTP 200** (OK)
+  deactivate PayerFSP
   autonumber resume
   Switch ->> PayeeFSP: **PUT /transactionRequests/**<i><ID></i>\n(Rejected state)
   activate PayeeFSP
@@ -266,14 +275,15 @@ Group #Oldlace Alternatives
   PayeeFSP -> Payee: Transaction\nfailed due to\nincorrect OTP
   deactivate PayeeFSP
   autonumber stop
-  ...
 else
   hnote left of Payer #Oldlace
       OTP
       validation
       successful
   end hnote
+  PayerFSP -[hidden]> Switch
   autonumber 33 1
+  activate PayerFSP
   PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
   autonumber stop
   PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, condition,\nILP packet including transaction ID)
@@ -300,12 +310,14 @@ else
   deactivate Switch
   autonumber resume
   PayerFSP -> PayerFSP: Commits transfer from Payer\naccount to Payee FSP account
-  ...
+  autonumber stop
+  PayerFSP -[hidden]> Switch
   Group #Lightgrey Optional
     hnote left of PayerFSP #Lightgrey
       Get transaction
       data
     end hnote
+    autonumber resume
     PayerFSP ->> Switch: **GET /transactions/**<i><TransactionID></i>
     activate Switch
     autonumber stop
