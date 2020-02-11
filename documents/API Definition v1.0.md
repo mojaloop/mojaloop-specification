@@ -1043,7 +1043,7 @@ See [Figure 33](#figure-33) for a highly simplified view of the movement of mone
 
 **Figure 33 -- Simplified view of the movement of money for the Merchant-Initiated Merchant Payment example**
 
-#### 5.1.6.9 ATM-Initiated Cash-Out**
+#### 5.1.6.9 ATM-Initiated Cash-Out
 
 An ATM-Initiated Cash-Out is typically a receive amount, in which the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 34](#figure-34) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 1 USD in fees to cover any ATM fees and the Payer FSP would like to have 1 USD in fees. 101 USD is transferred from the Payer FSP to the Payee FSP.
 
@@ -1574,7 +1574,7 @@ This section describes the error callbacks that are used by the server under the
 
 #### 6.3.4.1 PUT /parties/_{Type}_/_{ID}_/error
 
-Alternative URI: **PUT /parties/_{Type}_/_{ID}_/_{SubId}_**/error**
+Alternative URI: **PUT /parties/**_{Type}_/_{ID}_/_{SubId}_**/error**
 
 Logical API service: **Return Party Information Error**
 
@@ -1781,7 +1781,6 @@ The fulfilment and condition are generated in accordance with the algorithm defi
 
 ###### Listing 12
 
-```
 Generation of the fulfilment and condition
 
 **Inputs:**
@@ -1799,7 +1798,6 @@ Generation of the fulfilment and condition
 
 - Fulfilment (32-byte binary string)
 - Condition (32-byte binary string)
-```
 
 **Listing 12 -- Algorithm to generate the fulfilment and the condition**
 
@@ -2659,7 +2657,7 @@ The API data type **Enum** is a restricted list of allowed JSON String (see [Sec
 
 The API data type **UndefinedEnum** is a JSON String consisting of 1 to 32 uppercase characters including an underscore character (**\_**).
 
-##### 7.2.3.1 Regular Expression**
+##### 7.2.3.1 Regular Expression
 
 The regular expression for restricting the **UndefinedEnum** type appears in [Listing 13](#listing-13).
 
@@ -2675,7 +2673,7 @@ The regular expression for restricting the **UndefinedEnum** type appears in [Li
 
 The API data type **Name** is a JSON String, restricted by a regular expression to avoid characters that are generally not used in a name.
 
-##### 7.2.4.1 Regular Expression**
+##### 7.2.4.1 Regular Expression
 
 The regular expression for restricting the **Name** type appears in [Listing 14](#listing-14). The restriction does not allow a string consisting of whitespace only, all Unicode32 characters are allowed, as well as the period (**.**) (apostrophe (**'**), dash (**-**), comma (**,**) and space characters ( ). The maximum number of characters in the **Name** is 128.
 
@@ -2693,7 +2691,7 @@ The regular expression for restricting the **Name** type appears in [Listing 14]
 
 The API data type **Integer** is a JSON String consisting of digits only. Negative numbers and leading zeroes are not allowed. The data type is always limited to a specific number of digits.
 
-##### 7.2.5.1 Regular Expression**
+##### 7.2.5.1 Regular Expression
 
 The regular expression for restricting an Integer appears in [Listing 15](#listing-15).
 

@@ -120,7 +120,10 @@ actor "<$actor>\nPayee" as Payee
 Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
 activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
-...
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
 PayerFSP ->> Switch: **POST /quotes/**\n(Transaction details)
 activate Switch
