@@ -144,7 +144,7 @@ Loop #Oldlace
 end Loop
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 Loop #Oldlace
   hnote left of PayerFSP #Oldlace

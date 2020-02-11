@@ -122,17 +122,17 @@ activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: Quote\n(process not shown here)
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
 activate Switch

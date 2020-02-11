@@ -157,7 +157,7 @@ deactivate Switch
 PayerFSP -> PayerFSP: Payer fee is 1 USD in Payer FSP\nfor ATM Cash-Out, total fee 2 USD
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: OTP is pre-generated
 Payer <<- PayerFSP: Use you pre-generated OTP to accept\ntransaction of 100 USD, 2 USD\nin fees.
@@ -180,7 +180,7 @@ deactivate Switch
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\nOTP OK
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: Reserve 102 USD from Payer\naccount, 101 USD to Switch\naccount, 1 USD to fee account
 PayerFSP ->> Switch: **POST /transfers**\n(amount=101 USD)

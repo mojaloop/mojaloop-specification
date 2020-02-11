@@ -172,7 +172,7 @@ deactivate Switch
 deactivate PayeeFSP
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-PayerFSP -[hidden]> PayerFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
 autonumber resume
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
