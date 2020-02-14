@@ -49,7 +49,7 @@ The following conventions are used in this document to identify the specified ty
 | **Glossary terms** | Italics on first occurrence; defined in _Glossary_ | The purpose of the API is to enable interoperable financial transactions between a _Payer_ (a payer of electronic funds in a payment transaction) located in one _FSP_ (an entity that provides a digital financial service to an end user) and a _Payee_ (a recipient of electronic funds in a payment transaction) located in another FSP. |
 | **Library documents** | Italics | User information should, in general, not be used by API deployments; the security measures detailed in _API Signature_ and _API Encryption_ should be used instead. |
 
-## 2.1 Document Version Information
+## 1.2 Document Version Information
 
 | **Version** | **Date** | **Change Description** |
 | :--- | :--- | :--- |

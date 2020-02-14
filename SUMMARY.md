@@ -7,6 +7,7 @@
   * [API Definition v1.0](documents/API Definition v1.0.md)
   * [JSON Binding Rules](documents/JSON Binding Rules.md)
   * [Encryption](documents/Encryption.md)
+  * [PKI Best Practices](documents/PKI Best Practices.md)
 ### Change Control Board
 * [Change Control Board Overview](ccb-meetings/README.md)
   * [Issue-and-Decision-Log](ccb-meetings/Issue-and-Decision-Log.md)
