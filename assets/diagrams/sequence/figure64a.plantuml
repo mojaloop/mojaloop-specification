@@ -134,8 +134,8 @@ Switch <<- PayeeFSP: **Perform Transaction Request**\n(Payee information, transa
 activate PayeeFSP
 activate Switch
 PayerFSP <<- Switch: **Perform Transaction Request**\n(Payee information,\ntransaction details)
-activate PayerFSP
 deactivate Switch
+activate PayerFSP
 PayerFSP -> PayerFSP: Perform optional validation
 PayerFSP ->> Switch: **Return Transaction**\n**Request Information**\n(Received status)
 activate Switch
@@ -176,11 +176,11 @@ Alt #OldLace Alternatives
   Payer -> PayerFSP: I reject the\ntransaction request
   activate PayerFSP
   PayerFSP ->> Switch: **Return Transaction**\n**Request Information**\n(Rejected state)
-  activate Switch
   deactivate PayerFSP
+  activate Switch
   Switch ->> PayeeFSP: **Return Transaction Request Information**\n(Rejected state)
-  activate PayeeFSP
   deactivate Switch
+  activate PayeeFSP
   PayeeFSP -> Payee: Transaction failed\ndue to user\nrejection
   deactivate PayeeFSP
   autonumber stop

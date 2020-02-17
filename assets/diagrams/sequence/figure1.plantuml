@@ -64,5 +64,6 @@ FSP <<- Switch: **PUT /service/**//<ID>//\n(Service object information)
 FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 FSP -> FSP: Handle service object information
-' deactivate FSP
+FSP -[hidden]> Switch
+deactivate FSP
 @enduml

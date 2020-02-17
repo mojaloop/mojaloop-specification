@@ -156,8 +156,11 @@ autonumber resume
 Switch ->> PayeeFSP: **Return Transaction Request Information**\n(Received status)
 deactivate Switch
 deactivate PayeeFSP
-PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
+autonumber stop
+PayerFSP -[hidden]> Switch
 activate PayerFSP
+autonumber resume
+PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
 autonumber stop
 PayerFSP ->> Switch: **Calculate Quote**\n(Transaction details)
 activate Switch
@@ -181,6 +184,8 @@ deactivate PayeeFSP
 PayerFSP <<- Switch: **Return Quote Information**\n(Payee FSP fee/commission,\ncondition)
 deactivate Switch
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
+autonumber stop
+PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 Group #Oldlace Option #2
   hnote left of Payer #Oldlace
@@ -188,9 +193,10 @@ Group #Oldlace Option #2
     generated
     OTP
   end hnote
+  PayerFSP -[hidden]> Switch
+  activate PayerFSP
   autonumber resume
   PayerFSP -> PayerFSP: Generate OTP
-  activate PayerFSP
   Payer <- PayerFSP: Use OTP\nto confirm
 end
 PayerFSP ->> Switch: **Perform Authorization**\n(Amount and fees)
@@ -210,6 +216,8 @@ PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 autonumber resume
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP
+autonumber stop
+PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 Group #Oldlace Alternatives
   hnote left of Payer #Oldlace
@@ -217,8 +225,10 @@ Group #Oldlace Alternatives
     validation
     failed
   end hnote
-  PayerFSP ->> Switch: **Return Transaction Request Information**\n(Rejected state)
+  PayerFSP -[hidden]> Switch
   activate PayerFSP
+  autonumber resume
+  PayerFSP ->> Switch: **Return Transaction Request Information**\n(Rejected state)
   activate Switch
   deactivate PayerFSP
   Switch ->> PayeeFSP: **Return Transaction Request Information**\n(Rejected state)
@@ -233,9 +243,10 @@ else
       validation
       successful
   end hnote
+  PayerFSP -[hidden]> Switch
   autonumber 33 1
-  PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
   activate PayerFSP
+  PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
   autonumber stop
   PayerFSP ->> Switch: **Perform Transfer**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
   activate Switch

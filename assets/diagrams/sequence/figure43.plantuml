@@ -133,4 +133,6 @@ Switch ->> payeefsp: **PUT /transactionRequest/**<i><ID></i>\n(Received status)
 Switch <<-- payeefsp: **HTTP 200** (OK)
 deactivate Switch
 payeefsp -> payeefsp: Wait for either quote and\ntransfer, or rejected\ntransaction request by Payer
+payeefsp <[hidden]- payeefsp
+deactivate payeefsp
 @enduml

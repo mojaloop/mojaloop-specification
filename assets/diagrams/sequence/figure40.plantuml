@@ -135,4 +135,6 @@ userfsp <<- fsp2: **PUT /participant/MSISDN/123456789/error**
 userfsp -->> fsp2: **HTTP 200** (OK)
 deactivate fsp2
 userfsp -> userfsp: +123456789 found\nin FSP 2
+userfsp -[hidden]>fsp2
+deactivate userfsp
 @enduml

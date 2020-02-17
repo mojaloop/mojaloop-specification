@@ -1,0 +1,1079 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>PKI Best Practices · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-swagger/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-collapsible-chapters/collapsible-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-changelog/changelog.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc/page-toc.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../ccb-meetings/" />
+    
+    
+    <link rel="prev" href="Encryption.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Documents</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Mojaloop Specifications Overview
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="Glossary.html">
+            
+                <a href="Glossary.html">
+            
+                    
+                    Glossary
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="Generic Transaction Patterns.html">
+            
+                <a href="Generic Transaction Patterns.html">
+            
+                    
+                    Generic Transaction Patterns
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="API Definition v1.0.html">
+            
+                <a href="API Definition v1.0.html">
+            
+                    
+                    API Definition v1.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="JSON Binding Rules.html">
+            
+                <a href="JSON Binding Rules.html">
+            
+                    
+                    JSON Binding Rules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="Encryption.html">
+            
+                <a href="Encryption.html">
+            
+                    
+                    Encryption
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="PKI Best Practices.html">
+            
+                <a href="PKI Best Practices.html">
+            
+                    
+                    PKI Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ccb-meetings/">
+            
+                <a href="../ccb-meetings/">
+            
+                    
+                    Change Control Board Overview
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../ccb-meetings/Issue-and-Decision-Log.html">
+            
+                <a href="../ccb-meetings/Issue-and-Decision-Log.html">
+            
+                    
+                    Issue-and-Decision-Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >PKI Best Practices</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="public-key-infrastructure-best-practices">Public Key Infrastructure Best Practices</h1>
+<h2 id="open-api-for-fsp-interoperability-specification"><em>Open API for FSP Interoperability Specification</em></h2>
+<p><strong>Table of Contents</strong></p>
+<ol>
+<li><p><a href="#1-preface">Preface</a></p>
+<p>1.1 <a href="#11-conventions-used-in-this-document">Conventions Used in This Document</a></p>
+<p>1.2 <a href="#12-document-version-information">Document Version Information</a></p>
+</li>
+<li><p><a href="#2-introduction">Introduction</a></p>
+<p>2.1 <a href="#21-open-api-for-fsp-interoperability-specification">Open API for FSP Interoperability Specification</a></p>
+</li>
+<li><p><a href="#3-pki-background">PKI Background</a></p>
+<p>3.1 <a href="#31-layered-protection">Layered Protection</a></p>
+</li>
+<li><p><a href="#4-network-topology">Network Topology</a></p>
+<p>4.1 <a href="#41-platforms-point-to-point-layout">Platforms Point-to-Point Layout</a></p>
+<p>4.2 <a href="#42-platform-roles">Platform Roles</a></p>
+</li>
+<li><p><a href="#5-certificate-authority-pki-management-strategy">Certificate Authority PKI Management Strategy</a></p>
+<p>5.1 <a href="#51-certificate-authority-importance-and-selection-criteria">Certificate Authority Importance and Selection Criteria</a></p>
+<p>5.2 <a href="#52-trusted-certificate-chain">Trusted Certificate Chain</a></p>
+<p>5.3 <a href="#53-ca-root-certificate">CA Root Certificate</a></p>
+<p>5.4 <a href="#54-signing-platforms-csrs">Signing Platforms CSRs</a></p>
+<p>5.5 <a href="#55-revoking-certificates">Revoking Certificates</a></p>
+<p>5.6 <a href="#56-certificate-enrollment-and-renewal">Certificate Enrollment and Renewal</a></p>
+</li>
+<li><p><a href="#6-platform-pki-management-strategy">Platform PKI Management Strategy</a></p>
+<p>6.1 <a href="#61-keys-certificates-and-stores">Keys, Certificates, and Stores</a></p>
+<p>6.2 <a href="#62-creating-a-csr-and-obtaining-ca-signature">Creating a CSR and Obtaining CA Signature</a></p>
+<p>6.3 <a href="#63-importing-a-signed-csr">Importing a Signed CSR</a></p>
+<p>6.4 <a href="#64-trusting-certificates-from-other-platforms">Trusting Certificates from Other Platforms</a></p>
+<p>6.5 <a href="#65-checking-certificate-revocation-status">Checking Certificate Revocation Status</a></p>
+<p>6.6 <a href="#66-renewing-certificates">Renewing Certificates</a></p>
+</li>
+<li><p><a href="#7-transport-layer-protection">Transport Layer Protection</a></p>
+<p>7.1 <a href="#71-tls">TLS</a></p>
+</li>
+<li><p><a href="#8-application-layer-protection">Application Layer Protection</a></p>
+<p>8.1 <a href="#81-json-web-signature">JSON Web Signature</a></p>
+<p>8.2 <a href="#82-json-web-encryption">JSON Web Encryption</a></p>
+</li>
+</ol>
+<p><a href="#appendix-a-key-lengths-and-algorithms">Appendix A Key Lengths and Algorithms</a></p>
+<p><a href="#appendix-b-terminology">Appendix B Terminology</a></p>
+<p><a href="#appendix-c-common-pki-tasks">Appendix C Common PKI Tasks</a></p>
+<p>   <a href="#appendix-c1-how-to-create-a-store,-certificate,-and-csr">Appendix C.1 How to create a store, certificate, and CSR</a></p>
+<p>   <a href="#appendix-c2-how-to-import-a-signed-certificate-into-your-key-store">Appendix C.2 How to import a signed certificate into your key store</a></p>
+<p>   <a href="#appendix-c3-how-to-import-the-ca-certificate-into-your-key-store">Appendix C.3 How to import the CA certificate into your key store</a></p>
+<p>   <a href="#appendix-c4-how-to-import-the-ca-certificate-into-tls-trust-store">Appendix C.4 How to import the CA certificate into TLS trust store</a></p>
+<p>   <a href="#appendix-c5-how-to-view-a-certificate">Appendix C.5 How to view a certificate</a></p>
+<p>   <a href="#appendix-c6-how-to-import-a-trusted-certificate">Appendix C.6 How to import a trusted certificate</a></p>
+<p>   <a href="#appendix-c7-how-to-verify-a-certificate-through-a-crl">Appendix C.7 How to verify a certificate through a CRL</a></p>
+<p>   <a href="#appendix-c8-how-to-verify-a-certificate-through-an-ocsp-request">Appendix C.8 How to verify a certificate through an OCSP request</a></p>
+<p><strong>Table of Figures</strong></p>
+<p><a href="#Figure-1-Platforms-layout">Figure 1 - Platforms layout</a></p>
+<p><strong>Table of Tables</strong></p>
+<p><a href="#Table-1&#x2013;Certificate-type-and-key-usage">Table 1 &#x2013; Certificate type and key usage</a></p>
+<p><a href="#Table-2-Key-lengths-and-algorithms">Table 2 &#x2013; Key lengths and algorithms</a></p>
+<h2 id="1-preface">1. Preface</h2>
+<p>This section contains information about how to use this document.</p>
+<h3 id="11-conventions-used-in-this-document">1.1 Conventions Used in This Document</h3>
+<p>The following conventions are used in this document to identify the specified types of information</p>
+<table>
+<thead>
+<tr>
+<th>Type of Information</th>
+<th>Convention</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elements of the API, such as resources</strong></td>
+<td>Boldface</td>
+<td><strong>/authorization</strong></td>
+</tr>
+<tr>
+<td><strong>Variables</strong></td>
+<td>Italics within curly brackets</td>
+<td><em>{ID}</em></td>
+</tr>
+<tr>
+<td><strong>Glossary terms</strong></td>
+<td>Italics on first occurrence; defined in <em>Glossary</em></td>
+<td>The purpose of the API is to enable interoperable financial transactions between a <em>Payer</em> (a payer of electronic funds in a payment transaction) located in one <em>FSP</em> (an entity that provides a digital financial service to an end user) and a <em>Payee</em> (a recipient of electronic funds in a payment transaction) located in another FSP.</td>
+</tr>
+<tr>
+<td><strong>Library documents</strong></td>
+<td>Italics</td>
+<td>User information should, in general, not be used by API deployments; the security measures detailed in <em>API Signature</em> and <em>API Encryption</em> should be used instead.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-document-version-information">1.2 Document Version Information</h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1.0</strong></td>
+<td>2019-03-12</td>
+<td>Initial version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-introduction">2. Introduction</h2>
+<p>This document explains <em>Public Key Infrastructure</em> (PKI)<sup>1</sup> best practices to apply in an <em>Open API for FSP Interoperability</em> (hereafter cited as &#x201C;the API&#x201D;) deployment. See <a href="#3-pki-background">Section 3</a>, PKI Background, for more information about PKI.</p>
+<p>The API should be implemented in an environment that consists of either:</p>
+<ul>
+<li><p><em>Financial Service Providers</em> (FSPs) that communicate with other FSPs (in a bilateral setup) or</p>
+</li>
+<li><p>A <em>Switch</em> that acts as an intermediary platform between FSP platforms. There is also an <em>Account Lookup System</em> (ALS) available to identify in which FSP an account holder is located.</p>
+</li>
+</ul>
+<p>For more information about the environment, see <a href="#4-network-topology">Section 4</a>, Network Topology. </p>
+<p><a href="#5-certificate-authority-pki-management-strategy">Sections 5</a> and <a href="#6-platform-pki-management-strategy">Section 6</a> identify management strategies for the CA and for the platform. </p>
+<p>Communication between platforms is performed using a REST (REpresentational State Transfer)-based HTTP protocol (for more information, see <em>API Definition</em>). Because this protocol does not provide a means for ensuring either integrity or confidentiality between platforms, extra security layers must be added to protect sensitive information from alteration or exposure to unauthorized parties.</p>
+<h3 id="21-open-api-for-fsp-interoperability-specification">2.1 Open API for FSP Interoperability Specification</h3>
+<p>The Open API for FSP Interoperability Specification includes the following documents.</p>
+<h4 id="211-general-documents">2.1.1 General Documents</h4>
+<ul>
+<li><em>Glossary</em></li>
+</ul>
+<h4 id="212-logical-documents">2.1.2 Logical Documents</h4>
+<ul>
+<li><em>Logical Data Model</em></li>
+<li><em>Generic Transaction Patterns</em></li>
+<li><em>Use Cases</em></li>
+</ul>
+<h4 id="213-asynchronous-rest-binding-documents">2.1.3 Asynchronous REST Binding Documents</h4>
+<ul>
+<li><em>API Definition</em></li>
+<li><em>JSON Binding Rules</em></li>
+<li><em>Scheme Rules</em></li>
+</ul>
+<h4 id="214-data-integrity-confidentiality-and-non-repudiation">2.1.4 Data Integrity, Confidentiality, and Non-Repudiation</h4>
+<ul>
+<li><em>PKI Best Practices</em></li>
+<li><em>Signature</em></li>
+<li><em>Encryption</em></li>
+</ul>
+<h2 id="3-pki-background">3. PKI Background</h2>
+<p>Public Key Infrastructure (PKI) is a set of standards, procedures, and software for implementing authentication using public key cryptography. PKI is used to request, install, configure, manage and revoke digital certificates. PKI offers authentication using digital certificates; these digital certificates are signed and provided by <em>Certificate Authorities</em> (CA).</p>
+<p>PKI uses public key cryptography and works with X.509 standard certificates. It also provides features such as:</p>
+<ul>
+<li><p>User authentication</p>
+</li>
+<li><p>Certificate production and distribution</p>
+</li>
+<li><p>Certificate maintenance, management, and revocation</p>
+</li>
+</ul>
+<p>PKI consists of a number of components that enable the infrastructure to work; it is not a single process or algorithm. In addition to authentication, PKI also enables the provision of integrity, non-repudiation and encryption.</p>
+<p>To obtain a public key, a company must obtain a digital certificate. It should request this certificate from a CA or a <em>Registration Authority</em> (RA) - an organization that processes requests on behalf of a CA. All participants must trust the CA to manage and maintain certificates. The CA requires the company to supply a number of details (<em>Common Name</em> (CN), <em>Organization</em> (O), <em>Country</em> (C) and so on) and validate their request before it provides a certificate. This certificate is proof that the company is who it says it is in the digital world (like a passport in the real world).</p>
+<p>PKI combines well with a <em>Diffie-Hellman solution</em> (a secure mechanism for exchanging a shared symmetric key between two anonymous peers) in providing secure key exchanges. Because Diffie-Hellman does not provide authentication, PKI is used with additional protocols, such as <em>Pretty Good Privacy</em> (PGP) and <em>Transport Layer Security</em> (TLS).</p>
+<h3 id="31-layered-protection">3.1 Layered Protection</h3>
+<p>The API should be used with protection at both the transport- and application-level.</p>
+<h4 id="311-transport-level-protection">3.1.1 Transport-Level Protection</h4>
+<p>To protect the transport level, <em>Transport Layer Security</em><sup>2</sup> (TLS) should be used. TLS is a fundamental technique used for securing point-to-point communication. It has been proven to be stable and secure when using strong algorithms with the most recent versions of TLS, and is widely used around the world. TLS is a secure mechanism for exchanging a shared symmetric key between two anonymous peers, with identity verification (that is, trusted certificates). It provides <em>confidentiality</em> (no one has read the content) and <em>integrity</em> (no one has changed the content). Using TLS efficiently as-is requires certificate management.</p>
+<h4 id="312-application-level-protection">3.1.2 Application-Level Protection</h4>
+<p>This layer provides end-to-end integrity and confidentiality. The API uses the JSON Web Signature<sup>3</sup> (JWS) standard for integrity and <em>non-repudiation</em> (provide proof of the integrity and origin of data), and the JSON Web Encryption (JWE) <sup>4</sup> standard for confidentiality. An extended version of JWE is used to support field level encryption.</p>
+<p>Using these standards requires certificate management; therefore, <em>Certificate Authorities</em> (CA) and related PKI techniques are needed. For more information, see PKI Background.</p>
+<h2 id="4-network-topology">4. Network Topology</h2>
+<p>This section identifies the platforms that constitute the API.</p>
+<h3 id="41-platforms-point-to-point-layout">4.1 Platforms Point-to-Point Layout</h3>
+<p>Figure 1 shows an example platform point-to-point layout.</p>
+<p><img src="../assets/diagrams/images/figure1-platforms-layout.svg" alt="Figure1 Platforms Layout"></p>
+<p><strong>Figure 1 - Platforms layout</strong></p>
+<p>All communication between platforms must be TLS-secured using <em>client authentication</em>, also known as <em>mutual authentication</em>.</p>
+<h3 id="42-platform-roles">4.2 Platform Roles</h3>
+<h4 id="421-certificate-authority-ca">4.2.1 Certificate Authority (CA)</h4>
+<p>The CA performs the following functions:</p>
+<ul>
+<li><p>Sign <em>Certificate Signing Requests</em> (CSRs) - CSRs is a secure mechanism for exchanging a shared symmetric key between two anonymous peers. The CA signs different types of certificates (for example, TLS, Content signature, Content encryption).</p>
+</li>
+<li><p>Revoke certificates &#x2013; Mark one or more certificates as invalid.</p>
+</li>
+<li><p>Support CRLs &#x2013; Maintain and provide certificate revocation lists (CRLs) to be downloaded by clients so that they can see which certificates have been revoked.</p>
+</li>
+<li><p>Support Online Certificate Status Protocol (OCSP) &#x2013; Provide real-time certificate revocation checks. </p>
+</li>
+</ul>
+<h4 id="422-account-lookup-system-als">4.2.2 Account Lookup System (ALS)</h4>
+<ul>
+<li><p>Holds basic information about account holders.</p>
+</li>
+<li><p>Answer questions like &#x201C;Where should I send my financial transaction request for account holder with <strong>MSISDN 0123456</strong>?&#x201D; </p>
+</li>
+</ul>
+<h4 id="423-financial-services-provider-fsp">4.2.3 Financial Services Provider (FSP)</h4>
+<p>Has account holders to which or from which money is transferred.</p>
+<h4 id="424-switch">4.2.4 Switch</h4>
+<ul>
+<li><p>Relays transaction information to other platforms.</p>
+</li>
+<li><p>Can perform financial services, as specified in <em>API Definition</em>.</p>
+</li>
+</ul>
+<h2 id="5-certificate-authority-pki-management-strategy">5. Certificate Authority PKI Management Strategy</h2>
+<p>This section describes the PKI management strategy for Certificate Authorities.</p>
+<h3 id="51-certificate-authority-importance-and-selection-criteria">5.1 Certificate Authority Importance and Selection Criteria</h3>
+<p>The Certificate Authority (CA) role is important because:</p>
+<ul>
+<li><p>The CA provides a single legal entity that is trustworthy for all platforms.</p>
+</li>
+<li><p>The point-to-point TLS protocol depends on certificates.</p>
+</li>
+<li><p>The end-to-end protocols JWS and JWE depend on certificates for proof of non-repudiation and confidentiality.</p>
+</li>
+</ul>
+<h4 id="511-reasons-not-to-use-a-public-ca">5.1.1 Reasons Not to Use a Public CA</h4>
+<ul>
+<li><p>A public CA can revoke the intermediate certificate used for signing our certificates, thus effectively shutting down all communication between platforms.</p>
+</li>
+<li><p>A public CA also signs certificates which are not part of the <em>Open API for FSP Interoperability</em> setup. Because you trust the certificate the CA signed for you, you then trust all certificates signed by that CA.</p>
+</li>
+<li><p>There is no service in the <em>Open API for FSP Interoperability</em> setup that is open to the public, so there is no reason to have a public CA already trusted by public clients (such as web browsers).</p>
+</li>
+</ul>
+<h4 id="512-private-ca-options">5.1.2 Private CA Options</h4>
+<ul>
+<li><p>Build your own CA from scratch</p>
+</li>
+<li><p>Build a CA using existing tools (for example, <em>openssl</em>)</p>
+</li>
+<li><p>Use a full-featured CA (for example, the open source product <em>EJBCA</em>)</p>
+</li>
+</ul>
+<h3 id="52-trusted-certificate-chain">5.2 Trusted Certificate Chain</h3>
+<p>A centralized CA makes certificate management easier for the involved platforms. By trusting the same CA certificate, each platform need only trust one certificate; the CA&#x2019;s self-signed root certificate.</p>
+<p>Thus, the CA should sign all types of certificates (TLS, signature, and encryption), but only for the participants in the <em>Open API for FSP Interoperability</em> setup.</p>
+<p>No intermediate CA certificates are required, because a segmented layout is not used in the <em>Open API for FSP Interoperability</em> setup.</p>
+<h3 id="53-ca-root-certificate">5.3 CA Root Certificate</h3>
+<ul>
+<li><p>The CA must create a self-signed root certificate to be used for signing all supported types of certificates (TLS, signing, and encryption).</p>
+</li>
+<li><p>The minimum key length of the asymmetric RSA key pair is 4096 bits, and the signature algorithm should be sha512WithRSAEncryption.</p>
+</li>
+<li><p>The <em>X.509 Basic Constraints</em> must have the attribute <strong>CA</strong> set to <strong>TRUE</strong>.</p>
+</li>
+<li><p>The time validity of the CA root certificate should be ten years. After eight years, a new self-signed root certificate should be created by the CA; the asymmetric RSA key pair must be recreated, not reused. This certificate becomes the certificate to use for signing the platforms CSRs. However, the old CA root certificate must still be active until it expires. This gives the platforms a window of two years to change the CA root certificate without disturbing their ongoing secured communication.</p>
+</li>
+</ul>
+<h3 id="54-signing-platforms-csrs">5.4 Signing Platforms CSRs</h3>
+<p>The CA must provide a mechanism for the platforms to get their CSRs signed. Common signing methods are by email and by a web page. The chosen solution and policy must be known to the platforms.</p>
+<p>The CA signs three types of platform certificates; TLS (for communication), JWS (for signature) and JWE (for encryption). Common requirements for these certificates are:</p>
+<ul>
+<li><p>The minimum key length of the asymmetric RSA key pair is 2048 bits, and the signature algorithm should be sha256WithRSAEncryption.</p>
+</li>
+<li><p>The <em>X.509 Basic Constraints</em> must have the attribute <strong>CA</strong> set to <strong>FALSE</strong>.</p>
+</li>
+<li><p>The subject distinguished names must contain at least the following attributes:</p>
+<ul>
+<li><p><em>Common Name</em> (CN) &#x2013; This must be the hostname of the platform which has created the certificate. A N can never be the same for two different platforms or organizations.</p>
+</li>
+<li><p><em>Organization</em> (O) &#x2013; The name of the organization.</p>
+</li>
+<li><p><em>Country</em> (C) &#x2013; The country of the organization.</p>
+</li>
+</ul>
+</li>
+<li><p>The URL for platforms to download CRLs must be present.</p>
+</li>
+<li><p>The URL for platforms to send OCSP requests must be present.</p>
+</li>
+<li><p>The time validity should be two years.</p>
+</li>
+</ul>
+<p>Depending on the type of certificate to sign, the <em>X.509 Key Usage</em> and X.509 Extended Key Usage of the platform&#x2019;s certificate will differ; see Table 1 for more information.</p>
+<table>
+<thead>
+<tr>
+<th>Certificate Type</th>
+<th>X.509 Key Usage</th>
+<th>X.509 Extended Key Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TLS Certificates</strong></td>
+<td>Digital Signature, Key Encipherment</td>
+<td>TLS Web Server Authentication, TLS Web Client Authentication</td>
+</tr>
+<tr>
+<td><strong>Signature Certificates</strong></td>
+<td>Digital Signature</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Encryption Certificates</strong></td>
+<td>Key Encipherment</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1 &#x2013; Certificate type and key usage</strong></p>
+<h3 id="55-revoking-certificates">5.5 Revoking Certificates</h3>
+<ul>
+<li><p>The CA must be able to revoke a platform&#x2019;s certificates. Revoking a certificate means that it will no longer be trusted by any party. It will be marked as invalid by the CA and its revocation status published to the platforms, either in a revocation list (CRL) to be downloaded by platforms, or through a real-time HTTP query using <em>Online Certificate Status Protocol</em> (OCSP) requested by platforms.</p>
+</li>
+<li><p>The CA should support both CRL downloads and OCSP queries.</p>
+</li>
+<li><p>The CA should update and sign the CRL daily and should provide (daily) a HTTP URL to the platforms that points to the CRL to be downloaded. The URL should be stored in the <em>CRL Distribution Points</em> for each signed certificate.</p>
+</li>
+<li><p>The OCSP URL should be stored in the <em>Authority Information Access</em> for each signed certificate. An OCSP response must be signed. Nonce values in an OCSP request should be supported to prevent reply attacks.</p>
+</li>
+<li><p>The CA has the right to revoke certificates, but no obligation to inform the platforms about such revocations. The platforms do not have the right to revoke certificates, but they do have an obligation to check regularly for a certificate&#x2019;s revocation status.</p>
+</li>
+</ul>
+<h3 id="56-certificate-enrollment-and-renewal">5.6 Certificate Enrollment and Renewal</h3>
+<p>The CA does not support enrollment or renewal of certificates for which an asymmetric key pair is reused. For increased security, the asymmetric key pairs must be recreated every time a certificate is enrolled or renewed through a new CSR.</p>
+<h2 id="6-platform-pki-management-strategy">6. Platform PKI Management Strategy</h2>
+<p>This section describes the PKI management strategy for platforms.</p>
+<h3 id="61-keys-certificates-and-stores">6.1 Keys, Certificates, and Stores</h3>
+<p>A certificate provides the identity of its owner through a trusted CA that has signed the certificate. This can be validated through its signed certificate chain. It also provides the technical means to ensure integrity (signature) and confidentiality (encryption) of data using its asymmetric key pair (known as a <em>public key and private key</em>). The public key is within the signed certificate, but its corresponding private key must be kept private and protected. A common solution for handling certificates and private keys is to put them into a protected storage area known as a store. A store can be a file, directory, or something else that provides access and confidentiality.</p>
+<p>A single private key and its associated certificate can be used for all cryptographic purposes, but to enhance security, the following set of keys and certificates is required for each platform:</p>
+<ul>
+<li><p>One private key and certificate for TLS communication</p>
+</li>
+<li><p>One private key and certificate for end-to-end integrity using JWS</p>
+</li>
+<li><p>One private key and certificate for end-to-end confidentiality using JWE</p>
+</li>
+</ul>
+<p>Different keys and types of certificates can all be in the same store, but a more common setup is the following:</p>
+<ul>
+<li><p>For TLS communication:</p>
+<ul>
+<li><p>One protected key store to hold the private key, its associated certificate, and certificate chain. These items are used for server- and client authentication in TLS.</p>
+</li>
+<li><p>One protected certificate store to hold all trusted TLS certificates. These certificates will be trusted by your platform during a TLS handshake, meaning that they will allow secure communication with the owners of the certificates. Since all participants trust the same CA, it is sufficient to keep only the CA&#x2019;s root certificate here.</p>
+</li>
+</ul>
+</li>
+<li><p>For signature and encryption:</p>
+<ul>
+<li><p>One protected key store to hold your private keys, their associated certificates, and certificate chains used for signatures and encryption.</p>
+</li>
+<li><p>One private key and certificate chain used for signing using JWS, and one private key and certificate chain used for encryption using JWE.</p>
+</li>
+<li><p>One protected certificate store to hold all trusted signature and encryption certificates from other platforms. Here you must store the certificates (signature and encryption certificates) for each platform that you want to trust for end-to-end integrity and confidentiality.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="62-creating-a-csr-and-obtaining-ca-signature">6.2 Creating a CSR and Obtaining CA Signature</h3>
+<p>To be able to communicate with other platforms, you must create a key store (if one does not already exist), an asymmetric key pair, and an associated certificate that identifies your platform. This unsigned certificate must be signed by the CA before it can be trusted by other platforms. The procedure of getting a certificate signed by a CA begins with a CSR (<em>Certificate Signing Request</em>).</p>
+<p>When you create your keys, certificates, and CSRs, the following requirements apply:</p>
+<ul>
+<li><p>The minimum key length of the asymmetric RSA key pair is 2048 bits, and the signature algorithm is sha256WithRSAEncryption.</p>
+</li>
+<li><p>The following attributes in the subject distinguished names are mandatory:</p>
+<ul>
+<li><p>Common Name (CN) &#x2013; This must be the hostname of the platform who created the certificate. A CN can never be the same for two different platforms or organizations.</p>
+</li>
+<li><p>Organization (O) &#x2013; The name of the organization.</p>
+</li>
+<li><p>Country (C) &#x2013; The country of the organization.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>For examples of how to create a store, certificate, and CSR, see Appendix C &#x2013; Common PKI Tasks</strong></p>
+<p>How to create a store, certificate, and CSR.</p>
+<p>Create your CSR and send it to your CA according to their instructions.</p>
+<p><strong>Note:</strong> The same procedure must be performed for all your different keys and certificates (TLS, signature, and encryption).</p>
+<h3 id="63-importing-a-signed-csr">6.3 Importing a Signed CSR</h3>
+<p>After signing your CSR, you will have two certificates in your response from the CA. The first certificate is your own signed certificate. The second is the CA&#x2019;s own root certificate, which was used for signing your certificate. That certificate must now be trusted by you.</p>
+<p>First you must import your signed certificate into your key store. It must replace your unsigned certificate. For examples, see How to import a signed certificate into your key store.</p>
+<p>Then you must import the CA&#x2019;s root certificate into the same key store to complete the chain between your certificate and the CA. For examples, see How to import the CA certificate into your key store.</p>
+<h4 id="631-tls-certificates">6.3.1 TLS Certificates</h4>
+<p>For TLS certificates, you must also import the CA&#x2019;s root certificate into your TLS trust store to automatically trust the other platforms when establishing new communication channels with them. For examples, see How to import the CA certificate into TLS trust store.</p>
+<p>The above procedure should be performed for each of your signed CSRs. Remember to send your signed certificate and the CA&#x2019;s root certificate to all other platforms with which you need to communicate.</p>
+<p>The CA will create a validity period of two years for your signed certificate. After 18 months, you should create a new CSR to be signed by the same CA. Your newly signed certificate and the CA&#x2019;s root certificate should once again be imported into your stores and sent to the other platforms. This will give you and your peers a window of six months to make sure that your new signed certificate works. After two years, the old expired certificate can be deleted.</p>
+<h3 id="64-trusting-certificates-from-other-platforms">6.4 Trusting Certificates from Other Platforms</h3>
+<p>Just as your peers must have your certificates to be able to trust you, they must send their certificates to you for you to trust them.</p>
+<p>Make sure that you always receive at least two certificates from a trusted peer:</p>
+<ul>
+<li><p>The signed certificate of the peer to trust.</p>
+</li>
+<li><p>The root certificate of the CA that signed the peer&#x2019;s certificate.</p>
+</li>
+</ul>
+<p><strong>Note:</strong> A peer&#x2019;s CA certificate can differ from yours. This can happen if the CA has created a new CA root certificate when the old one is about to expire.</p>
+<p>You should always view a peer&#x2019;s certificates (check CN, validity period, and so on) and validate the certificate chain (that is, that each certificate is correctly signed by the given CA) before you import them into your trust store.</p>
+<p>For examples, see How to view a certificate.</p>
+<p>Next, import the peer&#x2019;s certificate and its CA root certificate into your trust store. For examples, see How to import a trusted certificate.</p>
+<h3 id="65-checking-certificate-revocation-status">6.5 Checking Certificate Revocation Status</h3>
+<p>Certificates can be revoked by the CA. A revoked certificate is considered not trusted and should be removed from the trust store. A certificate can also be <em>on hold</em>, which means that it is in pending state due to investigation and should not be removed.</p>
+<p>All platforms should perform revocation checks on a regular basis. There are two common ways to find out which certificates have been revoked; either through viewing a revocation list (CRL) to be downloaded by platforms, or through a real-time HTTP query (OCSP) requested by platforms.</p>
+<h4 id="651-certificate-revocation-list">6.5.1 Certificate Revocation List</h4>
+<p>This is a file maintained by a CA. It contains a list of certificate serial numbers that have been revoked by the CA. This file can be downloaded by any platform at any time. The URL to the CRL file to be downloaded is included in the certificate itself and can be found in <em>CRL Distribution Points</em>. A CRL is signed by the CA and should be validated.</p>
+<p>A CRL should be downloaded once per day and cached by the platform.</p>
+<p>For examples, see How to verify a certificate through a CRL.</p>
+<h4 id="652-online-certificate-status-protocol">6.5.2 Online Certificate Status Protocol</h4>
+<p>The status of a certificate can be retrieved by sending an OCSP request to an <em>OCSP Responder</em> (which can be the CA). The request contains the serial number of the certificate to be checked. The responder sends back a signed response including the status of the certificate.</p>
+<p>The request should contain a nonce value, which the responder will put in the response, for the platform to validate on receipt. This is to prevent reply attacks.</p>
+<p>An OCSP request/response is considered very fast and can be executed for each received client certificate operation, but depending on the load towards the responder, it might have to be cached by the platform as well.</p>
+<p>The OCSP URL is included in the certificate itself and can be found in <em>Authority Information Access</em>.</p>
+<p>For examples, see How to verify a certificate through an OCSP request.</p>
+<h3 id="66-renewing-certificates">6.6 Renewing Certificates</h3>
+<p>Do not renew certificates for which an asymmetric key pair is reused. For increased security, the asymmetric key pairs must be recreated every time through a new CSR.</p>
+<h2 id="7-transport-layer-protection">7. Transport Layer Protection</h2>
+<p>This section describes transport layer protection.</p>
+<h3 id="71-tls">7.1 TLS</h3>
+<p>TLS provides point-to-point integrity and confidentiality, and is used for all communication between peers.</p>
+<p>The setup requires both <em>server authentication</em> - meaning that the server presents itself through its own TLS certificate - and <em>client authentication</em> (also known as mutual authentication) in which the client presents itself through its own TLS certificate.</p>
+<h4 id="711-tls-protocol-versions">7.1.1 TLS Protocol Versions</h4>
+<p>The TLS protocol version used must be 1.2 or higher.</p>
+<h4 id="712-tls-cipher-suites">7.1.2 TLS Cipher Suites</h4>
+<p>The following cipher suites should be used:</p>
+<ul>
+<li><p>TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</p>
+</li>
+<li><p>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</p>
+</li>
+<li><p>TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384</p>
+</li>
+<li><p>TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256</p>
+</li>
+<li><p>TLS_RSA_WITH_AES_256_GCM_SHA384</p>
+</li>
+<li><p>TLS_RSA_WITH_AES_128_GCM_SHA256</p>
+</li>
+</ul>
+<h2 id="8-application-layer-protection">8. Application Layer Protection</h2>
+<p>This section describes the application layer protection.</p>
+<h3 id="81-json-web-signature">8.1 JSON Web Signature</h3>
+<p>The <em>JSON Web Signature</em> (JWS) standard is used for providing end-to-end integrity and non-repudiation; that is, to guarantee that the sender is who it claims to be, and that the message was not tampered with.</p>
+<p>The use of JWS is mandatory and certificates should be used. For more information, see <em>API Signature</em>.</p>
+<h3 id="82-json-web-encryption">8.2 JSON Web Encryption</h3>
+<p>The <em>JSON Web Encryption</em> (JWE) standard is used for providing end-to-end confidentiality; that is, to protect data from being read by unauthorized parties.</p>
+<p>The use of JWE is optional and is applied to specific fields. This is to fulfill regulatory requirements that might exist for certain type of data in certain countries.</p>
+<p>For more information about how to apply JWE to fields in messages, see the extended JWE standard specification <em>API Encryption</em>.</p>
+<h2 id="appendix-a-key-lengths-and-algorithms">Appendix A Key Lengths and Algorithms</h2>
+<p>Table 2 contains the required key length and algorithm for each entity.</p>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Algorithm</th>
+<th>Key length/hash size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA asymmetric keys</td>
+<td>RSA</td>
+<td>4096 bits</td>
+</tr>
+<tr>
+<td>CA signing algorithm</td>
+<td>RSA with SHA2</td>
+<td>&gt;= 256 bits</td>
+</tr>
+<tr>
+<td>TLS asymmetric keys</td>
+<td>RSA</td>
+<td>2048 bits</td>
+</tr>
+<tr>
+<td>TLS signing algorithm</td>
+<td>RSA with SHA2</td>
+<td>&gt;= 256 bits</td>
+</tr>
+<tr>
+<td>Signature asymmetric keys</td>
+<td>RSA</td>
+<td>2048 bits</td>
+</tr>
+<tr>
+<td>Signature algorithm</td>
+<td>RSA with SHA2</td>
+<td>&gt;= 256 bits</td>
+</tr>
+<tr>
+<td>Encryption asymmetric keys</td>
+<td>RSA</td>
+<td>2048 bits</td>
+</tr>
+<tr>
+<td>HMAC</td>
+<td>SHA2 - AES</td>
+<td>&gt;= 256 bits</td>
+</tr>
+<tr>
+<td>Symmetric keys</td>
+<td>AES</td>
+<td>256 bits</td>
+</tr>
+<tr>
+<td>Hashing</td>
+<td>SHA2</td>
+<td>&gt;= 256 bits</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2 &#x2013; Key lengths and algorithms</strong></p>
+<h2 id="appendix-b-terminology">Appendix B Terminology</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PKI</td>
+<td>Public Key Infrastructure</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Application Program Interface</td>
+</tr>
+<tr>
+<td>TLS</td>
+<td>Transport Layer Security</td>
+</tr>
+<tr>
+<td>JWS</td>
+<td>JSON Web Signature</td>
+</tr>
+<tr>
+<td>JWE</td>
+<td>JSON Web Encryption</td>
+</tr>
+<tr>
+<td>FSP</td>
+<td>Financial Service Provider</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>Account Lookup</td>
+</tr>
+<tr>
+<td>CA</td>
+<td>Certificate Authority</td>
+</tr>
+<tr>
+<td>CSR</td>
+<td>Certificate Signing Request</td>
+</tr>
+<tr>
+<td>CRL</td>
+<td>Certificate Revocation List</td>
+</tr>
+<tr>
+<td>OCSP</td>
+<td>Online Certificate Status Protocol</td>
+</tr>
+<tr>
+<td>PEM</td>
+<td>Privacy Enhanced Mail</td>
+</tr>
+<tr>
+<td>RSA</td>
+<td>Rivest, Shamir, &amp; Adleman</td>
+</tr>
+<tr>
+<td>HMA</td>
+<td>Hashed Message Authentication Code</td>
+</tr>
+<tr>
+<td>AES</td>
+<td>Advanced Encryption Standard</td>
+</tr>
+<tr>
+<td>SHA</td>
+<td>Secure Hash Algorithm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-c-common-pki-tasks">Appendix C Common PKI Tasks</h2>
+<h3 id="appendix-c1-how-to-create-a-store-certificate-and-csr">Appendix C.1 How to create a store, certificate, and CSR</h3>
+<p><strong>Using the Java keytool</strong></p>
+<p>Use the following command to create an asymmetric RSA key pair and associated certificate information to be signed by the
+CA. It will automatically create a JKS key store if the given one does not exist:</p>
+<pre><code>keytool -genkey -dname &quot;CN=&lt;common-name&gt;&quot; -alias &lt;key-alias&gt; -keyalg RSA -
+keystore &lt;ks-path&gt; -keysize 2048
+</code></pre><p><strong>Example</strong></p>
+<pre><code>keytool -genkey -dname &quot;CN=bank-fsp&quot; -alias tlscert -keyalg RSA -keystore
+tlskeystore.jks -keysize 2048
+</code></pre><p><strong>Notes:</strong></p>
+<ol>
+<li>The certificate attribute CN specifies the hostname of the host who identifies itself using this certificate during a TLS session.</li>
+<li>When asked for password, use the same password for the key as the key store.</li>
+</ol>
+<p>Use the following command to create the actual CSR to be signed by the CA:</p>
+<pre><code>keytool -certreq -alias &lt;key-alias&gt; -keystore &lt;ks-path&gt; &#x2013;file &lt;certificationrequest&gt;.csr
+</code></pre><p><strong>Example</strong></p>
+<pre><code>keytool -certreq -alias tlscert -keystore tlskeystore.jks -file tlscert.csr
+</code></pre><p><strong>Using openssl</strong></p>
+<p>Use the following command to create an asymmetric RSA key pair, and CSR to be signed by the CA:</p>
+<pre><code>openssl req -new -newkey rsa:2048 -nodes -subj &quot;/CN=&lt;common-name&gt;&quot; -out
+&lt;certificate&gt;.csr -keyout &lt;private-key&gt;.key
+</code></pre><p><strong>Example</strong></p>
+<pre><code>openssl req -new -newkey rsa:2048 -nodes -subj &quot;/CN=bank-fsp&quot; -out tlscert.csr -
+keyout tlscert.key
+</code></pre><p><strong>Note:</strong> The certificate attribute CN specifies the hostname of the host who identifies itself using this certificate during a TLS session.</p>
+<p>Important to note is that the created private key is stored unencrypted. Use the following command to encrypt it:</p>
+<pre><code>openssl rsa -aes256 -in &lt;unenrypted key file&gt; -out &lt;encrypted key file&gt;
+</code></pre><p><strong>Example</strong></p>
+<pre><code>openssl rsa -aes256 -in tlscert.key -out tlscert_encrypted.key
+</code></pre><h3 id="appendix-c2-how-to-import-a-signed-certificate-into-your-key-store">Appendix C.2 How to import a signed certificate into your key store</h3>
+<p><strong>Using the Java keytool</strong></p>
+<p>Import your signed certificate into your key store. This certificate should replace the old unsigned one, so make sure that you use the correct alias.</p>
+<pre><code>keytool -importcert -alias &lt;key-alias&gt; -file &lt;signed-certificate&gt; -keystore &lt;kspath&gt;
+</code></pre><p><strong>Example</strong></p>
+<pre><code>keytool -importcert -alias tlscert -file bank-fsp.pem -keystore tlskeystore.jks
+</code></pre><p><strong>Using openssl</strong></p>
+<p>Remove your old CSR file and replace it with the new signed certificate.</p>
+<h3 id="appendix-c3-how-to-import-the-ca-certificate-into-your-key-store">Appendix C.3 How to import the CA certificate into your key store</h3>
+<p><strong>Using Java keytool</strong></p>
+<p>Import the CA certificate into your key store:</p>
+<pre><code>keytool -importcert -alias &lt;CA-alias&gt; -file &lt;CA-file&gt; -keystore &lt;ks-path&gt;
+</code></pre><p><strong>Example:</strong></p>
+<pre><code>keytool -importcert -alias rootca -file rootca.pem -keystore tlskeystore.jks
+</code></pre><p>When you are asked to trust the imported certificated, answer <strong>yes</strong>:</p>
+<pre><code>Trust this certificate? [no]: yes
+Certificate was added to keystore
+</code></pre><p><strong>Using openssl</strong></p>
+<p>Put the CA certificate with your other certificate files</p>
+<h3 id="appendix-c4-how-to-import-the-ca-certificate-into-tls-trust-store">Appendix C.4 How to import the CA certificate into TLS trust store</h3>
+<p><strong>Using Java keytool</strong></p>
+<p>Import the CA certificate into your trust store:</p>
+<pre><code>keytool -importcert -alias &lt;CA-alias&gt; -file &lt;CA-file&gt; -keystore &lt;ks-path&gt;
+</code></pre><p><strong>Example:</strong></p>
+<pre><code>keytool -importcert -alias rootca -file rootca.pem -keystore tlstruststore.jks
+</code></pre><p>When you are asked to trust the imported certificated, answer <strong>yes</strong>:</p>
+<pre><code>Trust this certificate? [no]: yes
+Certificate was added to keystore
+</code></pre><p><strong>Using openssl</strong></p>
+<p>Put the CA certificate with your other certificate files.</p>
+<h3 id="appendix-c5-how-to-view-a-certificate">Appendix C.5 How to view a certificate</h3>
+<p><strong>Using Java keytool</strong></p>
+<p>Use this command to list all certificates stored in a key store in readable format:</p>
+<pre><code>keytool -list -keystore &lt;ks-path&gt; -v
+</code></pre><p><strong>Example:</strong></p>
+<pre><code>keytool -list -keystore tlskeystore.jks -v
+</code></pre><p><strong>Using openssl</strong></p>
+<p>Use this command to show the content of a PEM encoded certificate in readable format:</p>
+<pre><code>openssl x509 -in &lt;certificate file&gt; -text -nout
+</code></pre><p><strong>Example:</strong></p>
+<pre><code>openssl x509 -in rootca.pem -text -nout
+</code></pre><h3 id="appendix-c6-how-to-import-a-trusted-certificate">Appendix C.6 How to import a trusted certificate</h3>
+<p><strong>Using Java keytool</strong></p>
+<p>Import the certificate into your trust store:</p>
+<pre><code>keytool -importcert -alias &lt;cert-alias&gt; -file &lt;cert-file&gt; -keystore &lt;ks-path&gt;
+</code></pre><p><strong>Example:</strong></p>
+<pre><code>keytool -importcert -alias trustedcert -file cert.pem -keystore truststore.jks
+</code></pre><p>When you are asked to trust the imported certificated, answer <strong>yes</strong>:</p>
+<pre><code>Trust this certificate? [no]: yes
+Certificate was added to keystore
+</code></pre><p><strong>Using openssl</strong></p>
+<p>Put the trusted certificate with your other certificate files.</p>
+<h3 id="appendix-c7-how-to-verify-a-certificate-through-a-crl">Appendix C.7 How to verify a certificate through a CRL</h3>
+<p><strong>Using Java</strong></p>
+<p>You can use a specific security library for this (for example, Bouncy Castle), or use the in-built support for it, see:
+<a href="#https://stackoverflow.com/questions/10043376/java-x509-certificate-parsing-and-validating/10068006#10068006">https://stackoverflow.com/questions/10043376/java-x509-certificate-parsing-and-validating/10068006#10068006</a></p>
+<p><strong>Using openssl</strong></p>
+<p>A good example is found at the following link:
+<a href="#https://raymii.org/s/articles/OpenSSL_manually_verify_a_certificate_against_a_CRL.html">https://raymii.org/s/articles/OpenSSL_manually_verify_a_certificate_against_a_CRL.html</a></p>
+<h3 id="appendix-c8-how-to-verify-a-certificate-through-an-ocsp-request">Appendix C.8 How to verify a certificate through an OCSP request</h3>
+<p><strong>Using Java</strong></p>
+<p>Some Java examples is found in the following link:
+<a href="#https://stackoverflow.com/questions/5161504/ocsp-revocation-on-client-certificate">https://stackoverflow.com/questions/5161504/ocsp-revocation-on-client-certificate</a></p>
+<p><strong>Using openssl</strong></p>
+<p>A good example is found at the following link:
+<a href="#https://raymii.org/s/articles/OpenSSL_Manually_Verify_a_certificate_against_an_OCSP.html">https://raymii.org/s/articles/OpenSSL_Manually_Verify_a_certificate_against_an_OCSP.html</a></p>
+<p><sup>1</sup> This term, and other italicized terms, are defined in Glossary for Open API for FSP Interoperability Specification.</p>
+<p><sup>2</sup> <a href="#https://tools.ietf.org/html/rfc5246">https://tools.ietf.org/html/rfc5246</a> - The Transport Layer Security (TLS) Protocol - Version 1.2</p>
+<p><sup>3</sup> <a href="#https://tools.ietf.org/html/rfc7515">https://tools.ietf.org/html/rfc7515</a> - JSON Web Signature (JWS)</p>
+<p><sup>4</sup> <a href="#https://tools.ietf.org/html/rfc7516">https://tools.ietf.org/html/rfc7516</a> - JSON Web Encryption (JWE)</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"showToc":true,"title":"PKI Best Practices","level":"1.1.6","depth":2,"next":{"title":"Change Control Board Overview","level":"1.2","depth":1,"path":"ccb-meetings/README.md","ref":"ccb-meetings/README.md","articles":[{"title":"Issue-and-Decision-Log","level":"1.2.1","depth":2,"path":"ccb-meetings/Issue-and-Decision-Log.md","ref":"ccb-meetings/Issue-and-Decision-Log.md","articles":[]}]},"previous":{"title":"Encryption","level":"1.1.5","depth":2,"path":"documents/Encryption.md","ref":"documents/Encryption.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.x.x","theme":"default","variables":{"importedVars":{"mojaloop":{"spec":{"version":"v1.0","uri":{"doc":"https://github.com/mojaloop/mojaloop-specification/blob/master/API%20Definition%20v1.0.md","api":"https://github.com/mojaloop/mojaloop-specification/blob/master/Supporting%20Files/fspiop-rest-v1.0-OpenAPI-implementation.yaml"}}}}},"plugins":["swagger","editlink","include","insert-logo","plantuml-svg","collapsible-chapters","back-to-top-button","theme-api","variables","changelog","page-toc"],"pluginsConfig":{"plantuml-svg":{},"editlink":{"label":"Edit This Page","multilingual":true,"base":"https://github.com/mojaloop/mojaloop-specification/edit/master"},"theme-gestalt":{"logo":"https://mojaloop.io/images/logo.png","favicon":"https://mojaloop.io/images/logo.png","baseUrl":null,"excludeDefaultStyles":false,"doNotHideChildrenChapters":false},"include":{},"search":{},"collapsible-chapters":{},"page-toc":{"selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","position":"before-first","showByDefault":true},"swagger":{"file":""},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"uml":{"format":"png","nailgun":false},"changelog":{},"theme-api":{"languages":[],"split":true,"theme":"dark"},"back-to-top-button":{},"variables":{"files":{"importedVars":"book_variables.yml"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"url":"https://mojaloop.io/images/logo.png","style":"background: none; max-height: 140px; max-width: 140px;"}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"documents/PKI Best Practices.md","mtime":"2020-02-15T15:36:17.928Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-15T15:37:04.584Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-swagger/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-collapsible-chapters/collapsible-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-changelog/changelog.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc/anchor-3.1.1.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc/page-toc.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+

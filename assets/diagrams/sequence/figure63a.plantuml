@@ -143,8 +143,9 @@ autonumber resume
 PayerFSP <<- Switch: **Return Party Information**\n(Party Information)
 deactivate Switch
 deactivate PayerFSP
-PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
+PayerFSP -[hidden]> Switch
 activate PayerFSP
+PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
 PayerFSP ->> Switch: **Calculate Quote**\n(Transaction details)
 activate Switch
 Switch ->> PayeeFSP: **Calculate Quote**\n(Transaction details)

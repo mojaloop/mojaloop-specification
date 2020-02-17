@@ -141,4 +141,6 @@ deactivate Switch
 PayerFSP -> PayerFSP: Resend OTP (optionally\nregenerate) as customer\ndid not receive it
 Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant\nof 100 USD,\n0 USD in fees.
 PayerFSP -> PayerFSP: Resend GET /authorizations\n(not shown here)
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
 @enduml
