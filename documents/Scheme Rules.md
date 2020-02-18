@@ -236,7 +236,7 @@ API version information must be included in all API calls as defined in _API Def
 
 #### 4.2 HTTP or HTTPS
 
-The API supports both HTTP and HTTPS. A scheme should recommend that the communication is secured using TLS (see Section 5.1.6).
+The API supports both HTTP and HTTPS. A scheme should recommend that the communication is secured using TLS (see [Section 5.6](#56communication-security)).
 
 #### 4.3 HTTP Timeout
 
