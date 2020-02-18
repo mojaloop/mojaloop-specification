@@ -15,15 +15,15 @@ ___
 
 ### **Table of Contents**
 
-- [1. Preface](#1-preface)
-  - [1.1 Solution Proposal Information](#11-solution-proposal-information)
-  * [1.2 Document Version Information](#12-document-version-information)
-* [2. Change Request](#2-change-request)
-  * [2.1 Background](#21-background)
-* [3. Proposed Solution](#3-proposed-solution)
-  * [3.1 Specify how IDs can be generated](#31-specify-how-ids-can-be-generated)
-  * [3.2 Add quote ID to POST /transfers data model](#32-add-quote-id-to-post-transfers-data-model)
-* [4. Other Considered Solutions](#4-other-considered-solutions)
+- [1. Preface](#1.-preface)
+  - [1.1 Solution Proposal Information](#1.1-solution-proposal-information)
+  * [1.2 Document Version Information](#1.2-document-version-information)
+* [2. Change Request](#2.-change-request)
+  * [2.1 Background](#2.1-background)
+* [3. Proposed Solution](#3.-proposed-solution)
+  * [3.1 Specify how IDs can be generated](#3.1-specify-how-ids-can-be-generated)
+  * [3.2 Add quote ID to POST /transfers data model](#3.2-add-quote-id-to-post-transfers-data-model)
+* [4. Other Considered Solutions](#4.-other-considered-solutions)
   * [4.1 Add transaction ID to the POST /transfers data model](#4.1-add-transaction-id-to-the-post-transfers-data-model)
   * [4.2 Force the Payer FSP to use the transaction ID as transfer ID](#4.2-force-the-payer-fsp-to-use-the-transaction-id-as-transfer-id)
 
