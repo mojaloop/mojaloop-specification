@@ -32,28 +32,37 @@ skinparam SequenceLifeLineBorderColor Black
 skinparam ParticipantFontStyle Bold
 skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
-skinparam ArrowColor Black
+skinparam sequencearrowcolor Black
 
 hide footbox
 
 ' declare title
-' title HTTP DELETE call flow
+' title HTTP POST call flow
 
 ' Actor Keys:
-' participant - FSP and Account Lookup
+' participant - FSP, Peer FSP and Optional Switch
 
 ' declare actors
 participant "\nFSP" as FSP
-participant "Account\nLookup" as ALS
+participant "Optional\nSwitch" as Switch
+participant "Peer\nFSP" as PEERFSP
 
 ' start flow
-FSP ->> ALS: **DELETE /service/**//<ID>//
+FSP ->> Switch: **POST /service**\n(Service information, ID)
 activate FSP
-activate ALS
-FSP <<-- ALS: **HTTP 202** (Accepted)
-ALS -> ALS: Delete object\naccording to request
-FSP <<- ALS: **PUT /service/**//<ID>//\n(Delete object information)
-FSP -->> ALS: **HTTP 200** (OK)
-deactivate ALS
-FSP -> FSP: Handle delete object\ninformation
+activate Switch
+FSP <<[#Red]-- Switch : **HTTP 202** (Accepted)
+Switch ->> PEERFSP: **POST /service**\n(Service information, ID)
+activate PEERFSP
+Switch <<[#Red]-- PEERFSP: **HTTP 202** (Accepted)
+PEERFSP -> PEERFSP: Create service object\naccording to request
+Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(Service object information)
+Switch --[#Red]>> PEERFSP: **HTTP 200** (OK)
+deactivate PEERFSP
+FSP <<- Switch: **PUT /service/**//<ID>//\n(Service object information)
+FSP --[#Red]>> Switch: **HTTP 200** (OK)
+deactivate Switch
+FSP -> FSP: Handle service object information
+FSP -[hidden]> Switch
+deactivate FSP
 @enduml
