@@ -84,7 +84,7 @@ The API should be implemented in an environment that consists of either:
 For more information about the environment, see Chapter 3, Network Topology. Chapters 4 and 5 identify management strategies for the CA and for the platform. Communication between platforms is performed using a REST (REpresentational State Transfer)-based HTTP protocol (for more information, see API Definition). Because this protocol does not provide a means for ensuring either integrity or confidentiality between platforms, extra security layers must be added to protect sensitive information from alteration or exposure to unauthorized parties.
 
 ## Signature
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Signature.pdf) details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/Signature.md) details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
 
 In information security, confidentiality means that information is not made available or disclosed to unauthorized individuals, entities, or processes (Excerpt [ISO27000](http://www.27000.org/ ) ). For the API, confidentiality means that some sensitive fields in the payload of an API message cannot be accessed or identified in an unauthorized or undetected manner by the intermediaries involved in the API communication. That is, if some fields of an API message are encrypted by the API client, then only the expected API recipient can decrypt those fields.
 

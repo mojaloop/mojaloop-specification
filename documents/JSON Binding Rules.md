@@ -1,78 +1,77 @@
 ---
 showToc: true
 ---
-
 # JSON Binding Rules
 
-## Open API for FSP Interoperability Specification
+## _Open API for FSP Interoperability Specification_
 
 **Table of Contents**
 
-[1. Preface](#1-preface)
+1. [Preface](#1-preface)
 
-[1.1 Conventions Used in This Document](#11-conventions-used-in-this-document)
+   1.1 [Conventions Used in This Document](#11-conventions-used-in-this-document)
 
-[1.2 Document Version Information](#12-document-version-information)
+   1.2 [Document Version Information](#12-document-version-information)
 
-[2. Introduction](#2-introduction)
+2. [Introduction](#2-introduction)
 
-[2.1 Open API for FSP Interoperability Specification](#21-open-api-for-fsp-interoperability-specification)
+   2.1 [Open API for FSP Interoperability Specification](#21-open-api-for-fsp-interoperability-specification)
 
-[3. Keywords and Usage](#3-keywords-and-usage)
+3. [Keywords and Usage](#3-keywords-and-usage)
 
-[3.1 Validation Keywords](#31-validation-keywords)
+   3.1 [Validation Keywords](#31-validation-keywords)
 
-[3.2 Metadata Keywords](#32-metadata-keywords)
+   3.2 [Metadata Keywords](#32-metadata-keywords)
 
-[3.3 Instance and \$ref](#33-instance-and-$ref)
+   3.3 [Instance and \$ref](#33-instance-and-$ref)
 
-[3.4 JSON Definitions and Examples](#34-json-definitions-and-examples)
+   3.4 [JSON Definitions and Examples](#34-json-definitions-and-examples)
 
-[4. Element and Basic Data Types](#4-element-and-basic-data-types)
+4. [Element and Basic Data Types](#4-element-and-basic-data-types)
 
-[4.1 Data Type Amount](#41-data-type-amount)
+   4.1 [Data Type Amount](#41-data-type-amount)
 
-[4.2 Data Type BinaryString](#42-data-type-binaryString)
+   4.2 [Data Type BinaryString](#42-data-type-binaryString)
 
-[4.3 Data Type BinaryString32](#43-data-type-binaryString32)
+   4.3 [Data Type BinaryString32](#43-data-type-binaryString32)
 
-[4.4 Data Type BopCode](#44-data-type-bopcode)
+   4.4 [Data Type BopCode](#44-data-type-bopcode)
 
-[4.5 Data Type Enum](#45-data-type-enum)
+   4.5 [Data Type Enum](#45-data-type-enum)
 
-[4.6 Data Type Date](#46-data-type-date)
+   4.6 [Data Type Date](#46-data-type-date)
 
-[4.7 Data Type DateTime](#47-data-type-datetime)
+   4.7 [Data Type DateTime](#47-data-type-datetime)
 
-[4.8 Data Type ErrorCode](#48-data-type-errorcode)
+   4.8 [Data Type ErrorCode](#48-data-type-errorcode)
 
-[4.9 Data Type Integer](#49-data-type-integer)
+   4.9 [Data Type Integer](#49-data-type-integer)
 
-[4.10 Data Type Latitude](#410-data-type-latitude)
+   4.10 [Data Type Latitude](#410-data-type-latitude)
 
-[4.11 Data Type Longitude](#411-data-type-longitude)
+   4.11 [Data Type Longitude](#411-data-type-longitude)
 
-[4.12 Data Type MerchantClassificationCode](#412-data-type-merchantclassificationcode)
+   4.12 [Data Type MerchantClassificationCode](#412-data-type-merchantclassificationcode)
 
-[4.13 Data Type Name](#413-data-type-name)
+   4.13 [Data Type Name](#413-data-type-name)
 
-[4.14 Data Type OtpValue](#414-data-type-otpvalue)
+   4.14 [Data Type OtpValue](#414-data-type-otpvalue)
 
-[4.15 Data Type String](#415-data-type-string)
+   4.15 [Data Type String](#415-data-type-string)
 
-[4.16 Data Type TokenCode](#416-data-type-tokencode)
+   4.16 [Data Type TokenCode](#416-data-type-tokencode)
 
-[4.17 Data Type UndefinedEnum](#417-data-type-undefinedenum)
+   4.17 [Data Type UndefinedEnum](#417-data-type-undefinedenum)
 
-[4.18 Data Type UUID](#418-data-type-uuid)
+   4.18 [Data Type UUID](#418-data-type-uuid)
 
-[5. Complex Type](#5-complex-type)
+5. [Complex Type](#5-complex-type)
 
-[5.1 Complex Type Definition, Transformation](#51-complex-type-definition,-transformation)
+   5.1 [Complex Type Definition, Transformation](#51-complex-type-definition,-transformation)
 
-[5.2 Types of objects in Requests or Responses](#52-types-of-objects-in-requests-or-responses)
+   5.2 [Types of objects in Requests or Responses](#52-types-of-objects-in-requests-or-responses)
 
-[6. References](#6-references)
+6. [References](#6-references)
 
 **Table of Listings**
 

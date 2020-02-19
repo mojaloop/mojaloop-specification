@@ -1,52 +1,52 @@
 # Generic Transaction Patterns
 
-## Open API for FSP Interoperability Specification
+## _Open API for FSP Interoperability Specification_
 
 **Table of Contents**
 
-[1. Preface](#1-preface)
+1. [Preface](#1-preface)
 
-[1.1 Conventions Used in This Document](#11-conventions-used-in-this-document)
+   1.1 [Conventions Used in This Document](#11-conventions-used-in-this-document)
 
-[1.2 Document Version Information](#12-document-version-information)
+   1.2 [Document Version Information](#12-document-version-information)
 
-[2. Introduction](#2-introduction)
+2. [Introduction](#2-introduction)
 
-[2.1 Open API for FSP Interoperability Specification](#21-open-api-for-fsp-interoperability-specification)
+   2.1 [Open API for FSP Interoperability Specification](#21-open-api-for-fsp-interoperability-specification)
 
-[3. Logical API Services](#3-logical-api-services)
+3. [Logical API Services](#3-logical-api-services)
 
-[3.1 Common Functionality](#31-common-functionality)
+   3.1 [Common Functionality](#31-common-functionality)
 
-[3.2 API Resource Participants](#32-api-resource-participants)
+   3.2 [API Resource Participants](#32-api-resource-participants)
 
-[3.3 API Resource Parties](#33-api-resource-parties)
+   3.3 [API Resource Parties](#33-api-resource-parties)
 
-[3.4 API Resource Transaction Requests](#34-api-resource-transaction-requests)
+   3.4 [API Resource Transaction Requests](#34-api-resource-transaction-requests)
 
-[3.5 API Resource Quotes](#35-api-resource-quotes)
+   3.5 [API Resource Quotes](#35-api-resource-quotes)
 
-[3.6 API Resource Authorizations](#36-api-resource-authorizations)
+   3.6 [API Resource Authorizations](#36-api-resource-authorizations)
 
-[3.7 API Resource Transfers](#37-api-resource-transfers)
+   3.7 [API Resource Transfers](#37-api-resource-transfers)
 
-[3.8 API Resource Transactions](#38-api-resource-transactions)
+   3.8 [API Resource Transactions](#38-api-resource-transactions)
 
-[3.9 API Resource Bulk Quotes](#39-api-resource-bulk-quotes)
+   3.9 [API Resource Bulk Quotes](#39-api-resource-bulk-quotes)
 
-[3.10 API Resource Bulk Transfers](#310-api-resource-bulk-transfers)
+   3.10 [API Resource Bulk Transfers](#310-api-resource-bulk-transfers)
 
-[4. Generic Transaction Patterns](#4-generic-transaction-patterns)
+4. [Generic Transaction Patterns](#4-generic-transaction-patterns)
 
-[4.1 Payer-Initiated Transaction](#41-payer-initiated-transaction)
+   4.1 [Payer-Initiated Transaction](#41-payer-initiated-transaction)
 
-[4.2 Payee-Initiated Transaction](#42-payee-initiated-transaction)
+   4.2 [Payee-Initiated Transaction](#42-payee-initiated-transaction)
 
-[4.3 Payee-Initiated Transaction using OTP](#43-payee-initiated-transaction-using-otp)
+   4.3 [Payee-Initiated Transaction using OTP](#43-payee-initiated-transaction-using-otp)
 
-[4.4 Bulk Transactions](#44-bulk-transactions)
+   4.4 [Bulk Transactions](#44-bulk-transactions)
 
-[5. References](#5-references)
+5. [References](#5-references)
 
 **Table of Figures**
 
