@@ -5,6 +5,7 @@
   * [Glossary](documents/Glossary.md)
   * [Generic Transaction Patterns](documents/Generic Transaction Patterns.md)
   * [API Definition v1.0](documents/API Definition v1.0.md)
+  * [Scheme Rules](documents/Scheme Rules.md)
   * [JSON Binding Rules](documents/JSON Binding Rules.md)
   * [Scheme Rules](documents/Scheme Rules.md)
   * [PKI Best Practices](documents/PKI Best Practices.md)
