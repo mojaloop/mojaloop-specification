@@ -3,7 +3,8 @@ name: Change Request
 about: This template can be used for making Change Requests
 title: 'Change Request: <Change Request Title>'
 labels: Change Proposal
-assignees: ''
+assignees: ehenrka, elnyry, hill-chen-hw, jmssebunnya, matthewbohan, MichaelJBRichards,
+  Mutashobya, ritviksinha, rjpwip
 
 ---
 
@@ -20,27 +21,27 @@ assignees: ''
   * [2.3 Requested Behaviour](#2.3-requested-behaviour)
 * [3 Proposed Solution Options](#3.-proposed-solution-options)
 
-## **1. Preface**
+<h2 id="1.-preface">1. Preface</h2>
 ___
 
 This section contains basic information regarding the change request.
 
-#### 1.1 Change Request Information
+<h4 id="1.1-change-request-information">1.1 Change Request Information</h4>
 
 | Requested By | Henrik Karlsson, Ericsson |
 | Change Request Status | In review ☒  / Approved ☐ / Rejected ☐ |
 | Approved/Rejected Date |   |
 
-#### 1.2 Document Version Information
+<h4 id="1.2-document-version-information">1.2 Document Version Information</h4>
 
 | Version | Date | Author | Change Description |
 | --- | --- | --- | --- |
 | 1.0 | 2019-02-04 | Henrik Karlsson | Initial version of template. Sent out for review. |
 
-## **2. Problem Description**
+<h2 id="2.-problem-description">2. Problem Description</h2>
 ___
 
-#### 2.1 Background
+<h4 id="2.1-background">2.1 Background</h4>
 
 Explain the background of the change request so that others can understand the reason for the change request.
 
@@ -55,7 +56,7 @@ At present, the quote response contains an ILP packet, which contains a data fie
 
 However, this is not an efficient way of proceeding. This connection must be established for every transfer request, since there is no other way of knowing which private key to apply. It therefore makes good sense to provide a quick and simple way of connecting the transfer request with the quote response that was used to authorize it.
 
-#### 2.2 Current Behaviour
+<h4 id="2.2-current-behaviour">2.2 Current Behaviour</h4>
 
 Explain how the API currently behaves.
 
@@ -63,7 +64,7 @@ Explain how the API currently behaves.
 
 It is not possible to easily to link a quote from a transfer, as a decode of the ILP Packet is necessary for each incoming **POST /transfers**.
 
-#### 2.3 Requested Behaviour
+<h4 id="2.3-requested-behaviour">2.3 Requested Behaviour</h4>
 
 Explain how you would like the API to behave.
 
@@ -71,7 +72,7 @@ Explain how you would like the API to behave.
 
 A simple way of linking a quote from transfer.
 
-## **3. Proposed Solution Options**
+<h2 id="3.-proposed-solution-options">3. Proposed Solution Options</h2>
 ___
 
 This section does not need to be filled in. But if you already have one or more simple solution alternatives, then please describe them here. It should not be a complete solution at this stage, unless it is a very limited change request. Feel free to add any pros and cons of each solution propsosal if you have any.
