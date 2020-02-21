@@ -1,9 +1,9 @@
 ---
 showToc: true
 ---
+# Scheme Rules
 
-#Scheme Rules
-##Open API for FSP Interoperability Specification
+## _Open API for FSP Interoperability Specification_
 
 **Table of Contents**
 
@@ -11,7 +11,7 @@ showToc: true
 
     1.1 [Conventions Used in This Document](#11-conventions-used-in-this-document)
 
-    1.2 Document Version Information](#12-document-version-information)
+    1.2 [Document Version Information](#12-document-version-information)
 
 2. [Introduction](#2-introduction)
 
@@ -104,7 +104,7 @@ The following conventions are used in this document to identify the specified ty
 
 |Version|Date|Change Description|
 |---|---|---|
-|**1.0**|2019-03-12|Initial version|
+|**1.0**|2018-03-13|Initial version|
 
 ##2. Introduction
 
