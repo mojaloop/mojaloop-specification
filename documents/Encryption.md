@@ -53,7 +53,7 @@ The following conventions are used in this document to identify the specified ty
 
 | **Version** | **Date** | **Change Description** |
 | :--- | :--- | :--- |
-| **1.0** | 2019-02-22 | Initial version |
+| **1.0** | 2018-03-13 | Initial version |
 
 # 2. Introduction
 

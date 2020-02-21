@@ -12,7 +12,7 @@ showToc: true
 
     1.1 [Conventions Used in This Document](#11-conventions-used-in-this-document)
 
-    1.2 [Document Version](#12-document-version)
+    1.2 [Document Version Information](#12-document-version-information)
 
 2. [Introduction](2-introduction)
 
@@ -55,11 +55,11 @@ The following conventions are used in this document to identify the specified ty
 |**Glossary terms**|Italics on first occurrence; defined in _Glossary_|The purpose of the API is to enable interoperable financial transactions between a _Payer_ (a payer of electronic funds in a payment transaction) located in one _FSP_ (an entity that provides a digital financial service to an end user) and a _Payee_ (a recipient of electronic funds in a payment transaction) located in another FSP.|
 |**Library documents**|Italics|User information should, in general, not be used by API deployments; the security measures detailed in _API Signature_ and _API Encryption_ should be used instead.|
 
-### 1.2 Document Version
+### 1.2 Document Version Information
 
 |Version|Date|Change Description|
 |---|---|---|
-|**1.0**|2019-02-21|Initial version|
+|**1.0**|2018-03-13|Initial version|
 
 ## 2. Introduction
 
