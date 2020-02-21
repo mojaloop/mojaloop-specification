@@ -85,10 +85,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Encryption.html" />
+    <link rel="next" href="Scheme Rules.html" />
     
     
-    <link rel="prev" href="API Definition v1.0.html" />
+    <link rel="prev" href="Scheme Rules.html" />
     
 
     </head>
@@ -159,7 +159,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.1.3" data-path="API Definition v1.0.html">
+        <li class="chapter " data-level="1.1.3" data-path="Use Cases.html">
+            
+                <a href="Use Cases.html">
+            
+                    
+                    Use Cases
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="API Definition v1.0.html">
             
                 <a href="API Definition v1.0.html">
             
@@ -172,7 +185,20 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.1.4" data-path="JSON Binding Rules.html">
+        <li class="chapter " data-level="1.1.5" data-path="Scheme Rules.html">
+            
+                <a href="Scheme Rules.html">
+            
+                    
+                    Scheme Rules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="JSON Binding Rules.html">
             
                 <a href="JSON Binding Rules.html">
             
@@ -185,12 +211,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.1.5" data-path="Encryption.html">
+        <li class="chapter " data-level="1.1.7" data-path="Scheme Rules.html">
             
-                <a href="Encryption.html">
+                <a href="Scheme Rules.html">
             
                     
-                    Encryption
+                    Scheme Rules
             
                 </a>
             
@@ -198,12 +224,38 @@
             
         </li>
     
-        <li class="chapter " data-level="1.1.6" data-path="PKI Best Practices.html">
+        <li class="chapter " data-level="1.1.8" data-path="PKI Best Practices.html">
             
                 <a href="PKI Best Practices.html">
             
                     
                     PKI Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="Signature.html">
+            
+                <a href="Signature.html">
+            
+                    
+                    Signature
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="Encryption.html">
+            
+                <a href="Encryption.html">
+            
+                    
+                    Encryption
             
                 </a>
             
@@ -294,41 +346,49 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="json-binding-rules">JSON Binding Rules</h1>
-<h2 id="open-api-for-fsp-interoperability-specification">Open API for FSP Interoperability Specification</h2>
+<h2 id="open-api-for-fsp-interoperability-specification"><em>Open API for FSP Interoperability Specification</em></h2>
 <p><strong>Table of Contents</strong></p>
-<p><a href="#1-preface">1. Preface</a></p>
-<p><a href="#11-conventions-used-in-this-document">1.1 Conventions Used in This Document</a></p>
-<p><a href="#12-document-version-information">1.2 Document Version Information</a></p>
-<p><a href="#2-introduction">2. Introduction</a></p>
-<p><a href="#21-open-api-for-fsp-interoperability-specification">2.1 Open API for FSP Interoperability Specification</a></p>
-<p><a href="#3-keywords-and-usage">3. Keywords and Usage</a></p>
-<p><a href="#31-validation-keywords">3.1 Validation Keywords</a></p>
-<p><a href="#32-metadata-keywords">3.2 Metadata Keywords</a></p>
-<p><a href="#33-instance-and-$ref">3.3 Instance and $ref</a></p>
-<p><a href="#34-json-definitions-and-examples">3.4 JSON Definitions and Examples</a></p>
-<p><a href="#4-element-and-basic-data-types">4. Element and Basic Data Types</a></p>
-<p><a href="#41-data-type-amount">4.1 Data Type Amount</a></p>
-<p><a href="#42-data-type-binaryString">4.2 Data Type BinaryString</a></p>
-<p><a href="#43-data-type-binaryString32">4.3 Data Type BinaryString32</a></p>
-<p><a href="#44-data-type-bopcode">4.4 Data Type BopCode</a></p>
-<p><a href="#45-data-type-enum">4.5 Data Type Enum</a></p>
-<p><a href="#46-data-type-date">4.6 Data Type Date</a></p>
-<p><a href="#47-data-type-datetime">4.7 Data Type DateTime</a></p>
-<p><a href="#48-data-type-errorcode">4.8 Data Type ErrorCode</a></p>
-<p><a href="#49-data-type-integer">4.9 Data Type Integer</a></p>
-<p><a href="#410-data-type-latitude">4.10 Data Type Latitude</a></p>
-<p><a href="#411-data-type-longitude">4.11 Data Type Longitude</a></p>
-<p><a href="#412-data-type-merchantclassificationcode">4.12 Data Type MerchantClassificationCode</a></p>
-<p><a href="#413-data-type-name">4.13 Data Type Name</a></p>
-<p><a href="#414-data-type-otpvalue">4.14 Data Type OtpValue</a></p>
-<p><a href="#415-data-type-string">4.15 Data Type String</a></p>
-<p><a href="#416-data-type-tokencode">4.16 Data Type TokenCode</a></p>
-<p><a href="#417-data-type-undefinedenum">4.17 Data Type UndefinedEnum</a></p>
-<p><a href="#418-data-type-uuid">4.18 Data Type UUID</a></p>
-<p><a href="#5-complex-type">5. Complex Type</a></p>
-<p><a href="#51-complex-type-definition,-transformation">5.1 Complex Type Definition, Transformation</a></p>
-<p><a href="#52-types-of-objects-in-requests-or-responses">5.2 Types of objects in Requests or Responses</a></p>
-<p><a href="#6-references">6. References</a></p>
+<ol>
+<li><p><a href="#1-preface">Preface</a></p>
+<p>1.1 <a href="#11-conventions-used-in-this-document">Conventions Used in This Document</a></p>
+<p>1.2 <a href="#12-document-version-information">Document Version Information</a></p>
+</li>
+<li><p><a href="#2-introduction">Introduction</a></p>
+<p>2.1 <a href="#21-open-api-for-fsp-interoperability-specification">Open API for FSP Interoperability Specification</a></p>
+</li>
+<li><p><a href="#3-keywords-and-usage">Keywords and Usage</a></p>
+<p>3.1 <a href="#31-validation-keywords">Validation Keywords</a></p>
+<p>3.2 <a href="#32-metadata-keywords">Metadata Keywords</a></p>
+<p>3.3 <a href="#33-instance-and-$ref">Instance and $ref</a></p>
+<p>3.4 <a href="#34-json-definitions-and-examples">JSON Definitions and Examples</a></p>
+</li>
+<li><p><a href="#4-element-and-basic-data-types">Element and Basic Data Types</a></p>
+<p>4.1 <a href="#41-data-type-amount">Data Type Amount</a></p>
+<p>4.2 <a href="#42-data-type-binaryString">Data Type BinaryString</a></p>
+<p>4.3 <a href="#43-data-type-binaryString32">Data Type BinaryString32</a></p>
+<p>4.4 <a href="#44-data-type-bopcode">Data Type BopCode</a></p>
+<p>4.5 <a href="#45-data-type-enum">Data Type Enum</a></p>
+<p>4.6 <a href="#46-data-type-date">Data Type Date</a></p>
+<p>4.7 <a href="#47-data-type-datetime">Data Type DateTime</a></p>
+<p>4.8 <a href="#48-data-type-errorcode">Data Type ErrorCode</a></p>
+<p>4.9 <a href="#49-data-type-integer">Data Type Integer</a></p>
+<p>4.10 <a href="#410-data-type-latitude">Data Type Latitude</a></p>
+<p>4.11 <a href="#411-data-type-longitude">Data Type Longitude</a></p>
+<p>4.12 <a href="#412-data-type-merchantclassificationcode">Data Type MerchantClassificationCode</a></p>
+<p>4.13 <a href="#413-data-type-name">Data Type Name</a></p>
+<p>4.14 <a href="#414-data-type-otpvalue">Data Type OtpValue</a></p>
+<p>4.15 <a href="#415-data-type-string">Data Type String</a></p>
+<p>4.16 <a href="#416-data-type-tokencode">Data Type TokenCode</a></p>
+<p>4.17 <a href="#417-data-type-undefinedenum">Data Type UndefinedEnum</a></p>
+<p>4.18 <a href="#418-data-type-uuid">Data Type UUID</a></p>
+</li>
+<li><p><a href="#5-complex-type">Complex Type</a></p>
+<p>5.1 <a href="#51-complex-type-definition,-transformation">Complex Type Definition, Transformation</a></p>
+<p>5.2 <a href="#52-types-of-objects-in-requests-or-responses">Types of objects in Requests or Responses</a></p>
+</li>
+<li><p><a href="#6-references">References</a></p>
+</li>
+</ol>
 <p><strong>Table of Listings</strong></p>
 <p><a href="#listing-1">Listing 1 -- JSON Schema for Data type Amount</a></p>
 <p><a href="#listing-2">Listing 2 -- JSON Schema for Data type BinaryString</a></p>
@@ -408,7 +468,7 @@
 <tbody>
 <tr>
 <td><strong>1.0</strong></td>
-<td>2019-03-12</td>
+<td>2018-03-13</td>
 <td>Initial version</td>
 </tr>
 </tbody>
@@ -1444,7 +1504,7 @@ follows:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"showToc":true,"title":"JSON Binding Rules","level":"1.1.4","depth":2,"next":{"title":"Encryption","level":"1.1.5","depth":2,"path":"documents/Encryption.md","ref":"documents/Encryption.md","articles":[]},"previous":{"title":"API Definition v1.0","level":"1.1.3","depth":2,"path":"documents/API Definition v1.0.md","ref":"documents/API Definition v1.0.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.x.x","theme":"default","variables":{"importedVars":{"mojaloop":{"spec":{"version":"v1.0","uri":{"doc":"https://github.com/mojaloop/mojaloop-specification/blob/master/API%20Definition%20v1.0.md","api":"https://github.com/mojaloop/mojaloop-specification/blob/master/Supporting%20Files/fspiop-rest-v1.0-OpenAPI-implementation.yaml"}}}}},"plugins":["swagger","editlink","include","insert-logo","plantuml-svg","collapsible-chapters","back-to-top-button","theme-api","variables","changelog","page-toc"],"pluginsConfig":{"plantuml-svg":{},"editlink":{"label":"Edit This Page","multilingual":true,"base":"https://github.com/mojaloop/mojaloop-specification/edit/master"},"theme-gestalt":{"logo":"https://mojaloop.io/images/logo.png","favicon":"https://mojaloop.io/images/logo.png","baseUrl":null,"excludeDefaultStyles":false,"doNotHideChildrenChapters":false},"include":{},"search":{},"collapsible-chapters":{},"page-toc":{"selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","position":"before-first","showByDefault":true},"swagger":{"file":""},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"uml":{"format":"png","nailgun":false},"changelog":{},"theme-api":{"languages":[],"split":true,"theme":"dark"},"back-to-top-button":{},"variables":{"files":{"importedVars":"book_variables.yml"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"url":"https://mojaloop.io/images/logo.png","style":"background: none; max-height: 140px; max-width: 140px;"}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"documents/JSON Binding Rules.md","mtime":"2020-02-15T15:36:17.928Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-15T15:37:04.584Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"showToc":true,"title":"JSON Binding Rules","level":"1.1.6","depth":2,"next":{"title":"Scheme Rules","level":"1.1.7","depth":2,"path":"documents/Scheme Rules.md","ref":"documents/Scheme Rules.md","articles":[]},"previous":{"title":"Scheme Rules","level":"1.1.5","depth":2,"path":"documents/Scheme Rules.md","ref":"documents/Scheme Rules.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.x.x","theme":"default","variables":{"importedVars":{"mojaloop":{"spec":{"version":"v1.0","uri":{"doc":"https://github.com/mojaloop/mojaloop-specification/blob/master/API%20Definition%20v1.0.md","api":"https://github.com/mojaloop/mojaloop-specification/blob/master/Supporting%20Files/fspiop-rest-v1.0-OpenAPI-implementation.yaml"}}}}},"plugins":["swagger","editlink","include","insert-logo","plantuml-svg","collapsible-chapters","back-to-top-button","theme-api","variables","changelog","page-toc"],"pluginsConfig":{"plantuml-svg":{},"editlink":{"label":"Edit This Page","multilingual":true,"base":"https://github.com/mojaloop/mojaloop-specification/edit/master"},"theme-gestalt":{"logo":"https://mojaloop.io/images/logo.png","favicon":"https://mojaloop.io/images/logo.png","baseUrl":null,"excludeDefaultStyles":false,"doNotHideChildrenChapters":false},"include":{},"search":{},"collapsible-chapters":{},"page-toc":{"selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","position":"before-first","showByDefault":true},"swagger":{"file":""},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"uml":{"format":"png","nailgun":false},"changelog":{},"theme-api":{"languages":[],"split":true,"theme":"dark"},"back-to-top-button":{},"variables":{"files":{"importedVars":"book_variables.yml"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"url":"https://mojaloop.io/images/logo.png","style":"background: none; max-height: 140px; max-width: 140px;"}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"documents/JSON Binding Rules.md","mtime":"2020-02-21T10:34:54.228Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-21T10:35:29.585Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
