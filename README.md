@@ -28,7 +28,7 @@ The Open API for FSP Interoperability Specification includes the following docum
 Information is shared in accordance with **Creative Commons Licensing**.
 
 ## Logical Data Model
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/supporting-documentation/Logical%20Data%20Model.pdf) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/Logical%20Data%20Model.md) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented on a high-level.
 
 ## Generic Transaction Patterns
 [This document](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/Generic%20Transaction%20Patterns.md) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
