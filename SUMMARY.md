@@ -3,7 +3,7 @@
 ### Documents
 * [Mojaloop Specifications Overview](README.md)
   * [Glossary](documents/Glossary.md)
-  * [Logical data Module](documents/Logical Data Module.md)
+  * [Logical data Module](documents/Logical Data Model.md)
   * [Generic Transaction Patterns](documents/Generic Transaction Patterns.md)
   * [Use Cases](documents/Use Cases.md)
   * [API Definition v1.0](documents/API Definition v1.0.md)
