@@ -1,10 +1,10 @@
 swagger: "2.0"
 info:
   version: "1.0"
-  title: Open API for FSP Interoperability (FSPIOP) (Implementation Friendly Version)
+  title: Open API for FSP Interoperability (FSPIOP)
   description: Based on API Definition.docx updated on 2018-03-13 Version 1.0. Note - The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header.
   license:
-    name: Open API for FSP Interoperability (FSPIOP) (Implementation Friendly Version)
+    name: Open API for FSP Interoperability (FSPIOP)
     #url: http://example.com/
 #host: localhost:8081
 basePath: /fsp
@@ -15,7 +15,7 @@ schemes:
 paths:
   /participants/{ID}/error:
     put:
-      description: If there is an error during FSP information creation in the server, the error callback PUT /participants/<ID>/error is used. The <ID> in the URI should contain the requestId that was used for the creation of the participant information.
+      description: If there is an error during FSP information creation in the server, the error callback PUT /participants/{ID}/error is used. The <ID> in the URI should contain the requestId that was used for the creation of the participant information.
       summary: ParticipantsByIDAndError
       tags:
       - participants
@@ -43,7 +43,7 @@ paths:
       x-examples:
         "application/json":
           { 
-            “errorInformation”: 
+            "errorInformation":
             {
                 “errorCode”: “5100”, 
                 “errorDescription”: “This is an error description”, 
@@ -117,13 +117,13 @@ paths:
                 { 
                     partyId: {
                       partyIdType: "PERSONAL_ID",
-                      partyIdentifier: "personal_id"
+                      partyIdentifier: "p123456789"
                     }
                 }, 
                 { 
                     partyId: {
                       partyIdType: "PERSONAL_ID",
-                      partyIdentifier: "personal_id"
+                      partyIdentifier: "p987654321"
                     }
                 }
             ],
@@ -1869,7 +1869,7 @@ paths:
           { 
             “fulfilment”: "WLctttbu2HvTsa1XWvUoGRcQozHsqeu9Ahl2JW9Bsu8",
             "completedTimestamp": “2016-05-24T08:38:08.699-04:00”,
-            "transferState": "RESERVED",
+            "transferState": "COMMITTED",
             extensionList:
             {
               extension:
@@ -2350,6 +2350,28 @@ paths:
             “individualQuoteResults”: 
             [ { 
                 quoteId: "b51ec534-ee48-4575-b6a9-ead2955b8069",
+                payee: 
+                { 
+                    partyIdInfo:
+                    {
+                      partyIdType: “PERSONAL_ID”, 
+                      partyIdentifier: “16135551212”,
+                      partySubIdOrType: “DRIVING_LICENSE”,
+                      fspId: “1234”
+                    },
+                    merchantClassificationCode: "4321",
+                    name: “Justin Trudeau”, 
+                    personalInfo: 
+                    { 
+                      complexName: 
+                      { 
+                        firstName: “Justin”, 
+                        middleName: “Pierre”, 
+                        lastName: “Trudeau”
+                      }, 
+                      dateOfBirth: “1971-12-25” 
+                    }
+                 },
                 receiveAmount:
                 { 
                     currency: "USD", 
@@ -2552,6 +2574,10 @@ paths:
                       { 
                           “key”: “errorDescription”, 
                           “value”: “This is a more detailed error description” 
+                      }, 
+                      { 
+                          “key”: “errorDescription”, 
+                          “value”: “This is a more detailed error description” 
                       }
                   ]
                 }
@@ -2731,7 +2757,7 @@ paths:
                     }
                 }
             ],
-            “bulkTransferState”: “RECEIVED”, 
+            “bulkTransferState”: “COMPLETED”, 
             extensionList:
             {
               extension:
@@ -2982,7 +3008,7 @@ definitions:
   AuthenticationValue:
     title: AuthenticationValue
     #enum: [ $ref: '#/definitions/OtpValue', $ref: '#/definitions/QRCODE']
-    #Pattern below just indicates that the value can be an OTP or QRCODE. Effectively it only evaluates to the second part value QRCODE. This can be replaced by 'oneOf' or 'anyOf' construcst once OpenAPI version 3 is released
+    #Pattern below just indicates that the value can be an OTP or QRCODE. Effectively it only evaluates to the second part value QRCODE. This can be replaced by 'oneOf' or 'anyOf' construct once OpenAPI version 3 is released
     type: string
     pattern: ^\d{3,10}$|^\S{1,64}$
     description: Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type.
@@ -3511,9 +3537,11 @@ definitions:
     description: Data model for the complex type AuthenticationInfo
     properties:
       authentication:
-        type: string
+        $ref: '#/definitions/AuthenticationType'
+        description: Type of authentication.
       authenticationValue:
-        type: string
+        $ref: '#/definitions/AuthenticationValue'
+        description: Authentication value.
     required:
     - authentication
     - authenticationValue
@@ -3523,10 +3551,10 @@ definitions:
     description: PUT /authorizations/{ID} object
     properties:
       authenticationInfo:
-        type: string
+        $ref: '#/definitions/AuthenticationInfo'
         description: OTP or QR Code if entered, otherwise empty.
       responseType:
-        type: string
+        $ref: '#/definitions/AuthorizationResponse'
         description: Enum containing response information; if the customer entered the authentication value, rejected the transaction, or requested a resend of the authentication value.
     required:
     - responseType
@@ -3536,7 +3564,7 @@ definitions:
     description: POST /bulkQuotes object
     properties:
       bulkQuoteId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Common ID between the FSPs for the bulk quote object, decided by the Payer FSP. The ID should be reused for resends of the same bulk quote. A new ID should be generated for each new bulk quote.
       payer:
         $ref: '#/definitions/Party'
@@ -3545,7 +3573,7 @@ definitions:
         $ref: '#/definitions/GeoCode'
         description: Longitude and Latitude of the initiating Party. Can be used to detect fraud.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Expiration is optional to let the Payee FSP know when a quote no longer needs to be returned.
       individualQuotes:
         type: array
@@ -3573,7 +3601,7 @@ definitions:
           $ref: '#/definitions/IndividualQuoteResult'
         description: Fees for each individual transaction, if any of them are charged per transaction.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Date and time until when the quotation is valid and can be honored when used in the subsequent transaction request.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -3586,16 +3614,16 @@ definitions:
     description: POST /bulkTransfers object
     properties:
       bulkTransferId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Common ID between the FSPs and the optional Switch for the bulk transfer object, decided by the Payer FSP. The ID should be reused for resends of the same bulk transfer. A new ID should be generated for each new bulk transfer.
       bulkQuoteId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: ID of the related bulk quote.
       payerFsp:
-        type: string
+        $ref: '#/definitions/FspId'
         description: Payer FSP identifier.
       payeeFsp:
-        type: string
+        $ref: '#/definitions/FspId'
         description: Payee FSP identifier.
       individualTransfers:
         type: array
@@ -3605,7 +3633,7 @@ definitions:
           $ref: '#/definitions/IndividualTransfer'
         description: List of IndividualTransfer elements.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Expiration time of the transfers.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -3623,7 +3651,7 @@ definitions:
     description: PUT /bulkTransfers/{ID} object
     properties:
       completedTimestamp:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Time and date when the bulk transaction was completed.
       individualTransferResults:
         type: array
@@ -3632,7 +3660,7 @@ definitions:
           $ref: '#/definitions/IndividualTransferResult'
         description: List of IndividualTransferResult elements.
       bulkTransferState:
-        type: string
+        $ref: '#/definitions/BulkTransferState'
         description: The state of the bulk transfer.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -3645,10 +3673,10 @@ definitions:
     description: Data model for the complex type ErrorInformation.
     properties:
       errorCode:
-        type: string
+        $ref: '#/definitions/ErrorCode'
         description: Specific error number.
       errorDescription:
-        type: string
+        $ref: '#/definitions/ErrorDescription'
         description: Error description string.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -3678,10 +3706,10 @@ definitions:
     description: Data model for the complex type Extension
     properties:
       key:
-        type: string
+        $ref: '#/definitions/ExtensionKey'
         description: Extension key.
       value:
-        type: string
+        $ref: '#/definitions/ExtensionValue'
         description: Extension value.
     required:
     - key
@@ -3706,10 +3734,10 @@ definitions:
     description: Data model for the complex type GeoCode. Indicates the geographic location from where the transaction was initiated.
     properties:
       latitude:
-        type: string
+        $ref: '#/definitions/Latitude'
         description: Latitude of the Party.
       longitude:
-        type: string
+        $ref: '#/definitions/Longitude'
         description: Longitude of the   Party.
     required:
     - latitude
@@ -3720,16 +3748,16 @@ definitions:
     description: Data model for the complex type IndividualQuote.
     properties:
       quoteId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies quote message.
       transactionId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies transaction message.
       payee:
         $ref: '#/definitions/Party'
         description: Information about the Payee in the proposed financial transaction.
       amountType:
-        type: string
+        $ref: '#/definitions/AmountType'
         description: SEND for sendAmount, RECEIVE for receiveAmount.
       amount:
         $ref: '#/definitions/Money'
@@ -3745,7 +3773,7 @@ definitions:
         $ref: '#/definitions/TransactionType'
         description: Type of transaction that the quote is requested for.
       note:
-        type: string
+        $ref: '#/definitions/Note'
         description: Memo that will be attached to the transaction.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -3763,14 +3791,14 @@ definitions:
     description: Data model for the complex type IndividualQuoteResult.
     properties:
       quoteId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies quote message.
       payee:
         $ref: '#/definitions/Party'
         description: Information about the Payee in the proposed financial transaction.
       transferAmount:
         $ref: '#/definitions/Money'
-        description: Amount that the Payee FSP should receive.
+        description: The amount of Money that the Payer FSP should transfer to the Payee FSP.
       payeeReceiveAmount:
         $ref: '#/definitions/Money'
         description: Amount that the Payee should receive in the end-to-end transaction. Optional as the Payee FSP might not want to disclose any optional Payee fees.
@@ -3781,14 +3809,14 @@ definitions:
         $ref: '#/definitions/Money'
         description: Transaction commission from the Payee FSP
       ilpPacket:
-        type: string
+        $ref: '#/definitions/IlpPacket'
         description: The ILP Packet that must be attached to the transfer by the Payer.
       condition:
-        type: string
+        $ref: '#/definitions/IlpCondition'
         description: The condition that must be attached to the transfer by the Payer.
       errorInformation:
         $ref: '#/definitions/ErrorInformation'
-        description: Error code, category description. Note - receiveAmount, payeeFspFee, payeeFspCommission, expiration, ilpPacket, condition should not be set if errorInformation is set.
+        description: Error code, category description. Note - payee, transferAmount, payeeReceiveAmount, payeeFspFee, payeeFspCommission, ilpPacket, and condition should not be set if errorInformation is set.
       extensionList:
         $ref: '#/definitions/ExtensionList'
         description: Optional extension, specific to deployment.
@@ -3800,16 +3828,16 @@ definitions:
     description: Data model for the complex type IndividualTransfer.
     properties:
       transferId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies messages related to the same /transfers sequence.
       transferAmount:
         $ref: '#/definitions/Money'
         description: Transaction amount to be sent.
       ilpPacket:
-        type: string
+        $ref: '#/definitions/IlpPacket'
         description: ILP Packet containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data.
       condition:
-        type: string
+        $ref: '#/definitions/IlpCondition'
         description: Condition that must be fulfilled to commit the transfer.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -3825,10 +3853,10 @@ definitions:
     description: Data model for the complex type IndividualTransferResult.
     properties:
       transferId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies messages related to the same /transfers sequence.
       fulfilment:
-        type: string
+        $ref: '#/definitions/IlpFulfilment'
         description: Fulfilment of the condition specified with the transaction. Note - Either fulfilment or errorInformation should be set, not both.
       errorInformation:
         $ref: '#/definitions/ErrorInformation'
@@ -3844,10 +3872,10 @@ definitions:
     description: Data model for the complex type Money.
     properties:
       currency:
-        type: string
+        $ref: '#/definitions/Currency'
         description: Currency of the amount.
       amount:
-        type: string
+        $ref: '#/definitions/Amount'
         description: Amount of Money.
     required:
     - currency
@@ -3858,10 +3886,10 @@ definitions:
     description: POST /participants/{Type}/{ID}/{SubId}, /participants/{Type}/{ID} object
     properties:
       fspId:
-        type: string
+        $ref: '#/definitions/FspId'
         description: FSP Identifier that the Party belongs to.
       currency:
-        type: string
+        $ref: '#/definitions/Currency'
         description: Indicate that the provided Currency is supported by the Party.
     required:
     - fspId
@@ -3871,7 +3899,7 @@ definitions:
     description: PUT /participants/{Type}/{ID}/{SubId}, /participants/{Type}/{ID} object
     properties:
       fspId:
-        type: string
+        $ref: '#/definitions/FspId'
         description: FSP Identifier that the Party belongs to.
   ParticipantsIDPutResponse:
     title: ParticipantsIDPutResponse
@@ -3886,7 +3914,7 @@ definitions:
         maxItems: 10000
         description: List of PartyResult elements that were either created or failed to be created.
       currency:
-        type: string
+        $ref: '#/definitions/Currency'
         description: Indicate that the provided Currency was set to be supported by each successfully added PartyIdInfo.
     required:
     - partyList
@@ -3896,7 +3924,7 @@ definitions:
     description: POST /participants object
     properties:
       requestId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: The ID of the request, decided by the client. Used for identification of the callback from the server.
       partyList:
         type: array
@@ -3906,7 +3934,7 @@ definitions:
         maxItems: 10000
         description: List of PartyIdInfo elements that the client would like to update or create FSP information about.
       currency:
-        type: string
+        $ref: '#/definitions/Currency'
         description: Indicate that the provided Currency is supported by each PartyIdInfo in the list.
     required:
     - requestId
@@ -3920,10 +3948,10 @@ definitions:
         $ref: '#/definitions/PartyIdInfo'
         description: Party Id type, id, sub ID or type, and FSP Id.
       merchantClassificationCode:
-        type: string
+        $ref: '#/definitions/MerchantClassificationCode'
         description: Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments.
       name:
-        type: string
+        $ref: '#/definitions/PartyName'
         description: Display name of the Party, could be a real name or a nick name.
       personalInfo:
         $ref: '#/definitions/PartyPersonalInfo'
@@ -3936,13 +3964,13 @@ definitions:
     description: Data model for the complex type PartyComplexName.
     properties:
       firstName:
-        type: string
+        $ref: '#/definitions/FirstName'
         description: Party’s first name.
       middleName:
-        type: string
+        $ref: '#/definitions/MiddleName'
         description: Party’s middle name.
       lastName:
-        type: string
+        $ref: '#/definitions/LastName'
         description: Party’s last name.
   PartyIdInfo:
     title: PartyIdInfo
@@ -3950,16 +3978,16 @@ definitions:
     description: Data model for the complex type PartyIdInfo.
     properties:
       partyIdType:
-        type: string
+        $ref: '#/definitions/PartyIdType'
         description: Type of the identifier.
       partyIdentifier:
-        type: string
+        $ref: '#/definitions/PartyIdentifier'
         description: An identifier for the Party.
       partySubIdOrType:
-        type: string
+        $ref: '#/definitions/PartySubIdOrType'
         description: A sub-identifier or sub-type for the Party.
       fspId:
-        type: string
+        $ref: '#/definitions/FspId'
         description: FSP ID (if known)
     required:
     - partyIdType
@@ -3983,7 +4011,7 @@ definitions:
         $ref: '#/definitions/PartyComplexName'
         description: First, middle and last name for the Party.
       dateOfBirth:
-        type: string
+        $ref: '#/definitions/DateOfBirth'
         description: Date of birth for the Party.
   PartyResult:
     title: PartyResult
@@ -4004,13 +4032,13 @@ definitions:
     description: POST /quotes object
     properties:
       quoteId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Common ID between the FSPs for the quote object, decided by the Payer FSP. The ID should be reused for resends of the same quote for a transaction. A new ID should be generated for each new quote for a transaction.
       transactionId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Common ID (decided by the Payer FSP) between the FSPs for the future transaction object. The actual transaction will be created as part of a successful transfer process. The ID should be reused for resends of the same quote for a transaction. A new ID should be generated for each new quote for a transaction.
       transactionRequestId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies an optional previously-sent transaction request.
       payee:
         $ref: '#/definitions/Party'
@@ -4019,7 +4047,7 @@ definitions:
         $ref: '#/definitions/Party'
         description: Information about the Payer in the proposed financial transaction.
       amountType:
-        type: string
+        $ref: '#/definitions/AmountType'
         description: SEND for send amount, RECEIVE for receive amount.
       amount:
         $ref: '#/definitions/Money'
@@ -4037,10 +4065,10 @@ definitions:
         $ref: '#/definitions/GeoCode'
         description: Longitude and Latitude of the initiating Party. Can be used to detect fraud.
       note:
-        type: string
+        $ref: '#/definitions/Note'
         description: A memo that will be attached to the transaction.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Expiration is optional. It can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, and Merchant to know that their request has a time limit.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4060,7 +4088,7 @@ definitions:
     properties:
       transferAmount:
         $ref: '#/definitions/Money'
-        description: The amount of money that the Payee FSP should receive.
+        description: The amount of Money that the Payer FSP should transfer to the Payee FSP.
       payeeReceiveAmount:
         $ref: '#/definitions/Money'
         description: The amount of Money that the Payee should receive in the end-to-end transaction. Optional as the Payee FSP might not want to disclose any optional Payee fees.
@@ -4071,16 +4099,16 @@ definitions:
         $ref: '#/definitions/Money'
         description: Transaction commission from the Payee FSP.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Date and time until when the quotation is valid and can be honored when used in the subsequent transaction.
       geoCode:
         $ref: '#/definitions/GeoCode'
         description: Longitude and Latitude of the Payee. Can be used to detect fraud.
       ilpPacket:
-        type: string
+        $ref: '#/definitions/IlpPacket'
         description: The ILP Packet that must be attached to the transfer by the Payer.
       condition:
-        type: string
+        $ref: '#/definitions/IlpCondition'
         description: The condition that must be attached to the transfer by the Payer.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4096,10 +4124,10 @@ definitions:
     description: Data model for the complex type Refund.
     properties:
       originalTransactionId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Reference to the original transaction ID that is requested to be refunded.
       refundReason:
-        type: string
+        $ref: '#/definitions/RefundReason'
         description: Free text indicating the reason for the refund.
     required:
     - originalTransactionId
@@ -4109,10 +4137,10 @@ definitions:
     description: Data model for the complex type Transaction. The Transaction type is used to carry end-to-end data between the Payer FSP and the Payee FSP in the ILP Packet. Both the transactionId and the quoteId in the data model are decided by the Payer FSP in the POST /quotes.
     properties:
       transactionId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: ID of the transaction, the ID is decided by the Payer FSP during the creation of the quote.
       quoteId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: ID of the quote, the ID is decided by the Payer FSP during the creation of the quote.
       payee:
         $ref: '#/definitions/Party'
@@ -4127,7 +4155,7 @@ definitions:
         $ref: '#/definitions/TransactionType'
         description: Type of the transaction.
       note:
-        type: string
+        $ref: '#/definitions/Note'
         description: Memo associated to the transaction, intended to the Payee.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4145,10 +4173,10 @@ definitions:
     description: PUT /transactionRequests/{ID} object
     properties:
       transactionId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Identifies a related transaction (if a transaction has been created).
       transactionRequestState:
-        type: string
+        $ref: '#/definitions/TransactionRequestState'
         description: State of the transaction request.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4161,13 +4189,13 @@ definitions:
     description: PUT /transactions/{ID} object
     properties:
       completedTimestamp:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Time and date when the transaction was completed.
       transactionState:
-        type: string
+        $ref: '#/definitions/TransactionState'
         description: State of the transaction.
       code:
-        type: string
+        $ref: '#/definitions/Code'
         description: Optional redemption information provided to Payer after transaction has been completed.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4180,22 +4208,22 @@ definitions:
     description: Data model for the complex type TransactionType.
     properties:
       scenario:
-        type: string
+        $ref: '#/definitions/TransactionScenario'
         description: Deposit, withdrawal, refund, …
       subScenario:
-        type: string
+        $ref: '#/definitions/TransactionSubScenario'
         description: Possible sub-scenario, defined locally within the scheme.
       initiator:
-        type: string
+        $ref: '#/definitions/TransactionInitiator'
         description: Who is initiating the transaction - Payer or Payee
       initiatorType:
-        type: string
+        $ref: '#/definitions/TransactionInitiatorType'
         description: Consumer, agent, business, …
       refundInfo:
         $ref: '#/definitions/Refund'
         description: Extra information specific to a refund scenario. Should only be populated if scenario is REFUND
       balanceOfPayments:
-        type: string
+        $ref: '#/definitions/BalanceOfPayments'
         description: Balance of Payments code.
     required:
     - scenario
@@ -4207,25 +4235,25 @@ definitions:
     description: POST /transfers Request object
     properties:
       transferId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: The common ID between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. The ID should be reused for resends of the same transfer. A new ID should be generated for each new transfer.
       payeeFsp:
-        type: string
+        $ref: '#/definitions/FspId'
         description: Payee FSP in the proposed financial transaction.
       payerFsp:
-        type: string
+        $ref: '#/definitions/FspId'
         description: Payer FSP in the proposed financial transaction.
       amount:
         $ref: '#/definitions/Money'
         description: The transfer amount to be sent.
       ilpPacket:
-        type: string
+        $ref: '#/definitions/IlpPacket'
         description: The ILP Packet containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data.
       condition:
-        type: string
+        $ref: '#/definitions/IlpCondition'
         description: The condition that must be fulfilled to commit the transfer.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Expiration can be set to get a quick failure expiration of the transfer. The transfer should be rolled back if no fulfilment is delivered before this time.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4244,7 +4272,7 @@ definitions:
     description: POST /transactionRequests object
     properties:
       transactionRequestId:
-        type: string
+        $ref: '#/definitions/CorrelationId'
         description: Common ID between the FSPs for the transaction request object, decided by the Payee FSP. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request.
       payee:
         $ref: '#/definitions/Party'
@@ -4259,16 +4287,16 @@ definitions:
         $ref: '#/definitions/TransactionType'
         description: Type of transaction.
       note:
-        type: string
+        $ref: '#/definitions/Note'
         description: Reason for the transaction request, intended to the Payer.
       geoCode:
         $ref: '#/definitions/GeoCode'
         description: Longitude and Latitude of the initiating Party. Can be used to detect fraud.
       authenticationType:
-        type: string
+        $ref: '#/definitions/AuthenticationType'
         description: OTP or QR Code, otherwise empty.
       expiration:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4285,13 +4313,13 @@ definitions:
     description: PUT /transfers/{ID} object
     properties:
       fulfilment:
-        type: string
+        $ref: '#/definitions/IlpFulfilment'
         description: Fulfilment of the condition specified with the transaction. Mandatory if transfer has completed successfully.
       completedTimestamp:
-        type: string
+        $ref: '#/definitions/DateTime'
         description: Time and date when the transaction was completed.
       transferState:
-        type: string
+        $ref: '#/definitions/TransferState'
         description: State of the transfer.
       extensionList:
         $ref: '#/definitions/ExtensionList'
@@ -4430,7 +4458,7 @@ parameters:
     in: header
     type: string
     required: true
-    description: The FSPIOP-Source header field is a non-HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing and signature verification (see header field FSPIOP-Signature).
+    description: The FSPIOP-Source header field is a non-HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing and signature verification (see header field FSPIOP-Signature). 
   FSPIOP-Destination:
     name: FSPIOP-Destination
     in: header
