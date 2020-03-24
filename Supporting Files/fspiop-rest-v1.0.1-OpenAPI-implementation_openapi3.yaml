@@ -3335,6 +3335,9 @@ components:
                   type: string
                   description: FSP ID (if known).
                   example: 1234
+                extensionList:
+                  $ref: '#/components/schemas/ExtensionList'
+                  description: Optional extension, specific to deployment.
             merchantClassificationCode:
               type: string
               description: Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments.
