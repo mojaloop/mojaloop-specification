@@ -1645,7 +1645,7 @@ paths:
           $ref: '#/responses/ErrorResponse503' 
   /authorizations:
     post:
-      description: The HTTP request POST /authorizations is used to request the Payer to enter the applicable credentials in the Payee FSP or PISP system.
+      description: The HTTP request POST /authorizations is used to request the Payer to enter the applicable credentials in the PISP system.
       summary: AuthorizationsByID
       tags:
       - authorizations
@@ -1732,8 +1732,7 @@ paths:
         501:
           $ref: '#/responses/ErrorResponse501'
         503:
-          $ref: '#/responses/ErrorResponse503'          
-
+          $ref: '#/responses/ErrorResponse503'
   /authorizations/{ID}:
     parameters:
     - $ref: '#/parameters/ID'
