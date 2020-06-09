@@ -29,7 +29,7 @@ This document introduces and describes the _Open API_ (Application Programming I
 
 The transfer of funds from a Payer to a Payee should be performed in near real-time. As soon as a financial transaction has been agreed to by both parties, it is deemed irrevocable. This means that a completed transaction cannot be reversed in the API. To reverse a transaction, a new negated refund transaction should be created from the Payee of the original transaction.
 
-The API is designed to be sufficiently generic to support both a wide number of use cases and extensibility of those use cases, However, it should contain sufficient detail to enable implementation in an unambiguous fashion.
+The API is designed to be sufficiently generic to support both a wide number of use cases and extensibility of those use cases. However, it should contain sufficient detail to enable implementation in an unambiguous fashion.
 
 Version 1.0 of the API is designed to be used within a country or region, international remittance that requires foreign exchange is not supported. This version also contains basic support for the [Interledger Protocol](#4-interledger-protocol), which will in future versions of the API be used for supporting foreign exchange and multi-hop financial transactions.
 
@@ -202,7 +202,7 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
 |**Accept**|**application/vnd.interoperability.resource+json**|0..1<br>Mandatory in a request from a client. Not used in a callback from the server.</br>The **Accept**<sup>10</sup> header field indicates the version of the API the client would like the server to use. See HTTP Accept Header [Section 3.3.4.1](#3341-http-accept-header) for more information on requesting a specific version of the API.|
-|**Content-Length**|**3495**|0..1|The **Content-Type**<sup>11</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.><br>**Note**: The API supports a maximum size of 5242880 bytes (5 Megabytes).<br>|
+|**Content-Length**|**3495**|0..1|The **Content-Length**<sup>11</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.<br>**Note**: The API supports a maximum size of 5242880 bytes (5 Megabytes).<br>|
 |**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>12</sup> header indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
 |**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**<sup>13</sup> header field indicates the date when the request was sent.|
 |**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|The **X-Forwarded-For**<sup>14</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple **X-Forwarded-For** values as in the example shown here should be expected and supported by implementers of the API.<br>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 723915. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.</br>|
@@ -223,7 +223,7 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|**Content-Lenght**|**3495**|0..1|The **Content-Length**<sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
+|**Content-Length**|**3495**|0..1|The **Content-Length**<sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
 |**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>17</sup> header field indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
 
 **Table 2 -- HTTP response header fields**
@@ -238,11 +238,11 @@ The following HTTP methods, as defined in RFC 7231<sup>18</sup>, are supported b
 
   - Object information concerning a previously created object (HTTP **POST**) or sent information request (HTTP **GET**).
   - Acknowledgement that whether an object was deleted (HTTP **DELETE**).
-  - Error information in case the HTTP **POST** or HTTP **GET** request failed to be processed on the server.
+  - Error information in case the HTTP **GET**, **POST**, or **DELETE** request failed to be processed on the server.
 
 - **POST** -- The HTTP **POST** method is used from a client to request an object to be created on the server. As all services in the API are asynchronous, the response to the **POST** method will not contain the created object. The created object will instead come as part of a callback using the HTTP **PUT** method.
 
-- **DELETE** -- The HTTP **DELETE** method is used from a client to request an object to be deleted on the server. The HTTP **DELETE** method should only be supported in a common Account Lookup System (ALS) for deleting information regarding a previously added Party (an account holder in a FSP), no other object types can be deleted. As all services in the API are asynchronous, the response to the HTTP **DELETE** method will not contain the final acknowledgement that the object was deleted or not; the final acknowledgement will come as a callback using the HTTP PUT method.
+- **DELETE** -- The HTTP **DELETE** method is used from a client to request an object to be deleted on the server. The HTTP **DELETE** method should only be supported in a common Account Lookup System (ALS) for deleting information regarding a previously added Party (an account holder in an FSP), no other object types can be deleted. As all services in the API are asynchronous, the response to the HTTP **DELETE** method will not contain the final acknowledgement that the object was deleted or not; the final acknowledgement will come as a callback using the HTTP **PUT** method.
 
 #### 3.2.3 HTTP Sequence Flow
 
@@ -311,7 +311,7 @@ For some services when a Switch is used, the destination FSP might be unknown. A
 
 #### 3.2.4 HTTP Response Status Codes
 
-The API supports the HTTP response status codes19 in [Table 3](#table-3).
+The API supports the HTTP response status codes<sup>19</sup> in [Table 3](#table-3).
 
 ###### Table 3
 
@@ -334,11 +334,11 @@ Any HTTP status codes 3*xx*<sup>20</sup> returned by the server should not be re
 
 An implementation of the API should also be capable of handling other errors not defined above as the request could potentially be routed through proxy servers.
 
-As all requests in the API are asynchronous, additional HTTP error codes for server errors (error codes starting with 5*xx*21 that are *not* defined in [Table 3](#table-3)) are not used by the API itself. Any error on the server during actual processing of a request will be sent as part of an error callback to the client (see [Section 9.2](#9.2-error-in-server During Processing of Request)).
+As all requests in the API are asynchronous, additional HTTP error codes for server errors (error codes starting with 5*xx*21 that are *not* defined in [Table 3](#table-3)) are not used by the API itself. Any error on the server during actual processing of a request will be sent as part of an error callback to the client (see [Section 9.2](#92-error-in-server-during-processing-of-request)).
 
 #### 3.2.4.1 Error Information in HTTP Response
 
-In addition to the HTTP response code, all HTTP error responses (4*xx* and 5*xx* status codes) can optionally contain an **ErrorInformation** element, defined in [Section 7.4.2](#742-errorinformation) This element should be used to give more detailed information to the client if possible.
+In addition to the HTTP response code, all HTTP error responses (4*xx* and 5*xx* status codes) can optionally contain an **ErrorInformation** element, defined in [Section 7.4.2](#742-errorinformation). This element should be used to give more detailed information to the client if possible.
 
 #### 3.2.5 Idempotent Services in Server
 
@@ -361,7 +361,7 @@ To simplify duplicate analysis, it is recommended to create and store a hash val
 
 ### 3.3 API Versioning
 
-The strategy of the development of the API is to maintain backwards compatibility between the API and its resources and services to the maximum extent possible; however, changes to the API should be expected by implementing parties. Versioning of the API is specific to the API resource (for example, **/participants**, **/quotes**, **/transfers**).
+The API development strategy is to maintain backwards compatibility between the API and its resources and services to the maximum extent possible; however, changes to the API should be expected by implementing parties. Versioning of the API is specific to the API resource (for example, **/participants**, **/quotes**, **/transfers**).
 
 There are two types of API resource versions: _Minor_ versions, which are backwards-compatible, and _major_ versions, which are backwards-incompatible.
 
@@ -455,8 +455,7 @@ Along with HTTP status 406, the supported versions should be listed as part of t
 {
     "errorInformation": {
         "errorCode": "3001",
-        "errorDescription": "The Client requested an unsupported version, see exten-
-sion list for supported version(s).",
+        "errorDescription": "The Client requested an unsupported version, see extension list for supported version(s).",
         "extensionList": [
             { "key": "1", "value": "0"},
             { "key": "2", "value": "1"},
@@ -528,7 +527,7 @@ ILP is a standard for internetworking payment networks. In the same way that the
 
 ILP is not a scheme. It is a set of standards that, if implemented by multiple payment schemes, will allow those schemes to be interoperable. Therefore, implementing ILP involves adapting an existing scheme to conform to those standards. Conformance means ensuring that transfers between accounts within the scheme are done in two phases (_reserve_ and _commit_) and defining a mapping between the accounts in the scheme and the global ILP Addressing scheme. This can be done by modifying the scheme itself, or by the entities that provide ILP-conformant access to the scheme using scheme adaptors.
 
-The basic prerequisites for an ILP payment are the Payee ILP address(see [Section 4.3](#43-ilp-addressing)) and the condition (see [Section 4.4](#44-conditional-transfers)). In the current version of the API, both these prerequisites should be returned by the Payee FSP during quoting API Resource **/quotes**, **see** [Section 6.5](#65-api-resource-quotes)) of the financial transaction.
+The basic prerequisites for an ILP payment are the Payee ILP address (see [Section 4.3](#43-ilp-addressing)) and the condition (see [Section 4.4](#44-conditional-transfers)). In the current version of the API, both these prerequisites should be returned by the Payee FSP during quoting API Resource **/quotes**, **see** [Section 6.5](#65-api-resource-quotes)) of the financial transaction.
 
 ### 4.3 ILP Addressing
 
@@ -564,7 +563,7 @@ To support conditional transfers for ILP, a ledger must support a transfer API t
 
 When the fulfilment of a transfer is submitted to a ledger, the ledger must ensure that the fulfilment is valid for the condition that was attached to the original transfer request. If it is valid, the transfer is committed, otherwise it is rejected, and the transfer remains in a pending state until a valid fulfilment is submitted or the transfer expires.
 
-ILP supports a variety of conditions for performing a conditional payment, but implementers of the API should use the SHA-256 hash of a 32-byte pre-image. The condition attached to the transfer is the SHA-256 hash and the fulfilment of that condition is the pre-image. Therefore, if the condition attached to a transfer is a SHA -256 hash, then when a fulfilment is submitted for that transaction, the ledger will validate it by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition.
+ILP supports a variety of conditions for performing a conditional payment, but implementers of the API should use the SHA-256 hash of a 32-byte preimage. The condition attached to the transfer is the SHA-256 hash and the fulfilment of that condition is the preimage. Therefore, if the condition attached to a transfer is a SHA-256 hash, then when a fulfilment is submitted for that transaction, the ledger will validate it by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition.
 
 See [Section 6.5.1.2 Interledger Payment Request](#6512-interledger-payment-request) for concrete information on how to generate the fulfilment and the condition.
 
@@ -626,7 +625,7 @@ Two different modes for quoting between FSPs are supported in the API: _Non-disc
 
 - _Disclosing of fees_ can be used for use cases in which the Payee FSP wants to subsidize the transaction in some use cases; for  example, Cash-In at another FSP's agent.
 
-The _Non-Disclosing of fees_ mode should be the standard supported way of quoting in most schemes. _Disclosing of fees_ might be used in some schemes; for example, a scheme in which a dynamic fee structure is used and a FSP wants the ability to subsidize the Cash-In use case based on the dynamic cost.
+The _Non-Disclosing of fees_ mode should be the standard supported way of quoting in most schemes. _Disclosing of fees_ might be used in some schemes; for example, a scheme in which a dynamic fee structure is used and an FSP wants the ability to subsidize the Cash-In use case based on the dynamic cost.
 
 In addition, the Payer can decide if the amount should be _Receive amount_ or _Send amount_.
 
@@ -640,7 +639,7 @@ All taxes are assumed to be FSP-internal, which means that taxes are not sent as
 
 **Note:** Dynamic fees implemented using a Switch, or any other intermediary, are not supported in this version of the API.
 
- #### 5.1.1 Non-Disclosing of Fees
+#### 5.1.1 Non-Disclosing of Fees
 
 The fees and commission payments related to an interoperable transaction when fees are not disclosed are shown in [Figure 6](#figure-6). The fees and commission that are directly part of the API are identified by green text. The FSP internal fees, commission, and bonus payments are identified by red text. These are not part of the transaction between a Payer FSP and a Payee FSP, but the amount that the Payee will receive after any FSP internal fees can be sent for information by the Payee FSP.
 
@@ -715,6 +714,8 @@ Transfer amount = Quote Amount -- Payee FSP Commission
 **Listing 8 -- Relation between transfer amount and quote amount for non-disclosing send amount**
 
 The reason for a Payee FSP fee to be absent in the equation is that the Payer would like to send a certain amount from their account. The Payee will receive less funds instead of a fee being added on top of the amount.
+
+#### 5.1.2 Disclosing of Fees
 
 The fees and commission payments related to an interoperable transaction when fees are disclosed can be seen in [Figure 11](#figure-11). The fees and commission that are directly related to the API are marked with green text. Internal Payee fees, bonus, and commission are marked with red text, these will have an implication on the amount that is sent by the Payer and received by the Payee. They are not part of the interoperable transaction between a Payer FSP and a Payee FSP, but the actual amount to be received by the Payee after internal Payee FSP fees have been deducted can be sent for information by the Payee FSP.
 
@@ -833,7 +834,7 @@ Payee Receive Amount = Transfer Amount - Payee FSP Fee + Payee FSP Commission
 
 **Listing 11 -- Relation between transfer amount and Payee receive amount**
 
-The actual Payee receive amount including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 18](#table-18).
+The actual amount that Payee receives including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 18](#table-18).
 
 #### 5.1.5 Tax Information
 
@@ -845,7 +846,7 @@ Tax on Agent Commission is tax for an _Agent_ as a result of the Agent receiving
 
 #### 5.1.5.2 Tax on FSP Internal Fee
 
-FSPs could be taxed on FSP internal fees that they receive from the transactions; for example, Payer fees to Payer FSP or Payee fees to Payee FSP. This tax should be handled internally within the FSP and collected by the FSPs because they receive a fee.
+FSPs could be taxed on FSP internal fees that they receive from the transactions; for example, Payer fees to Payer FSP or Payee fees to Payee FSP. This tax should be handled internally within the FSPs and collected by the FSPs because they receive the fees.
 
 #### 5.1.5.3 Tax on Amount (Consumption tax)
 
@@ -861,11 +862,11 @@ In the API, there is a possibility for a Payee FSP to add a commission to either
 
 #### 5.1.5.5.1 Non-Disclosing of Fees
 
-For non-disclosing of fees, all FSP commission from the Payee FSP should understood as the Payer FSP receiving a fee from the Payee FSP. The tax on the received fee should be handled internally within the Payer FSP, similar to the way it is handled in [Section 5.1.5.2](#5152-tax-on-fsp-internal-fee).
+For non-disclosing of fees, all FSP commission from the Payee FSP must be considered as the Payer FSP receiving a fee from the Payee FSP. The tax on the received fee should be handled internally within the Payer FSP, similar to the way it is handled in [Section 5.1.5.2](#5152-tax-on-fsp-internal-fee).
 
 #### 5.1.5.5.2 Disclosing of Fees
 
-If the Payee FSP commission amount is less than or equal to the amount of transaction fees originating from the Payer FSP, then the Payee FSP commission should always be understood as being used for covering fees that the Payer would otherwise need to pay.
+If the Payee FSP commission amount is less than or equal to the amount of transaction fees originating from the Payer FSP, then the Payee FSP commission must be considered as being used for covering fees that the Payer would otherwise need to pay.
 
 If the Payee FSP commission amount is higher than the fees from the Payer FSP, the excess FSP commission should be handled similarly as [Section 5.1.5.5.1](#51551-non-disclosing-of-fees).
 
@@ -915,8 +916,7 @@ See [Figure 21](#figure-21) for a highly simplified view of the movement of mone
 
 **Figure 21 -- Simplified view of the movement of money for the Agent-initiated Cash-In with send amount example**
 
-#### 5.1.6.3 Agent-Initiated Cash-In 
-(Receive amount)
+#### 5.1.6.3 Agent-Initiated Cash-In (Receive amount)
 
 [Figure 22](#figure-22) shows an example of Agent-Initiated Cash-In where receive amount is used. The fees are disclosed as the Payee (the Consumer) would like to know the fees in advance of accepting the Cash-In. In the example, the Payee would like to Cash-In so that they receive 100 USD using an Agent (the Payer) in the Payer FSP system. The Payer FSP would like to have 2 USD in fees to cover the agent commission; the Payee FSP decides to subsidize the transaction by 1 USD by giving 1 USD in FSP commission to cover 50% of the Payer FSP fees. 99 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 1 USD.
 
@@ -958,8 +958,7 @@ See [Figure 25](#figure-25) for a highly simplified view of the movement of mone
 
 **Figure 25 -- Simplified view of the movement of money for the Customer-Initiated Merchant Payment example**
 
-#### 5.1.6.5 Customer-Initiated Cash-Out 
-(Receive amount)
+#### 5.1.6.5 Customer-Initiated Cash-Out (Receive amount)
 
 A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 26](#figure-26) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 102 USD is transferred from the Payer FSP to the Payee FSP.
 
@@ -978,8 +977,7 @@ See [Figure 27](#figure-27) for a highly simplified view of the movement of mone
 
 **Figure 27 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example**
 
-#### 5.1.6.6 Customer-Initiated Cash-Out 
-(Send amount)
+#### 5.1.6.6 Customer-Initiated Cash-Out (Send amount)
 
 A Customer-Initiated Cash-Out is typically a receive amount, this
 example is shown in [Section 5.1.6.5](#5165-customer-initiated-cash-out). This section shows an example where send amount is used instead; see [Figure 28](#figure-28) for an example. In the example, the Payer would like to Cash-Out 100 USD from their account. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 99 USD is transferred from the Payer FSP to the Payee FSP.
@@ -1088,7 +1086,7 @@ Merchant-Initiated Merchant Payment authorized on POS example**
 
 #### 5.1.6.11 Refund
 
-[Figure 38](#figure-38) shows an example of a Refund transaction of the entire amount of the example in [Section 5.1.6.3, Agent-Initiated Cash-In (Receive amount](#5163-agent-initiated-cash-in))
+[Figure 38](#figure-38) shows an example of a Refund transaction of the entire amount of the example in [Section 5.1.6.3](#5163-agent-initiated-cash-in-receive-amount).
 
 ###### Figure 38
 
@@ -1109,7 +1107,7 @@ See [Figure 39](#figure-39) for a highly simplified view of the movement of mone
 
 ### 5.2 Party Addressing
 
-Both Parties in a financial transaction, (that is, the Payer and the Payee) are addressed in the API by a _Party ID Type_ (element **PartyIdType**, [Section 7.3.25](#7325-partyidtype)), **a** _Party ID_ (**PartyIdentifier**, [Section 7.3.24](#7324-partyidentifier)), **and** an optional _Party Sub ID or Type_ (**PartySubIdOrType**, [Section 7.3.27](#7327-partysubidortype)). Some Sub-Types are pre-defined in the API for personal identifiers (**PersonalIdentifierType**, [Section 7.5.7](#757-personalidentifiertype)); for example, for passport number or driver's license number.
+Both Parties in a financial transaction, (that is, the Payer and the Payee) are addressed in the API by a _Party ID Type_ (**PartyIdType**, [Section 7.3.25](#7325-partyidtype)), a _Party ID_ (**PartyIdentifier**, [Section 7.3.24](#7324-partyidentifier)), and an optional _Party Sub ID or Type_ (**PartySubIdOrType**, [Section 7.3.27](#7327-partysubidortype)). Some Sub-Types are pre-defined in the API for personal identifiers (**PersonalIdentifierType**, [Section 7.5.7](#757-personalidentifiertype)); for example, for passport number or driver's license number.
 
 The following are basic examples of how the elements _Party ID Type_ and _Party ID_ can be used:
 - To use mobile phone number **+123456789** as the counterparty in a financial transaction, set *Party ID Type* to **MSISDN** and _Party ID_ to **+123456789**.
@@ -1291,17 +1289,17 @@ On a high level, the API can be used to perform the following actions:
 |URI|HTTP method GET|HTTP method PUT|HTTP method POST|HTTP method DELETE|
 |---|---|---|---|---|
 |**/participants**|Not supported|Not supported|Request that an ALS create FSP information regarding the parties provided in the body or, if the information already exists, request that the ALS update it|Not supported|
-|**/participants/_{ID}_**|Not supported|Callback to inform a Peer FSP about a previously-created list of parties.|Not supported|Not Supported|
-|**/participants/_{Type}_/_{ID}_ Alternative: /participants/_{Type}_/_{ID}_/_{SubId}_**|Get FSP information regarding a Party from either a Peer FSP or an ALS.|Callback to inform a Peer FSP about the requested or created FSP information.|Request an ALS to create FSP information regarding a Party or, if the information already exists, request that the ALS update it|Request that an ALS delete FSP information regarding a Party.|
-|**/parties/_{Type}_/_{ID}_ Alternative: /parties/_{Type}_/_{ID}_/_{SubId}_**|Get information regarding a Party from a Peer FSP.|Callback to inform a Peer FSP about the requested information about the Party.|Not supported|Not support|
+|**/participants/_{ID}_ **|Not supported|Callback to inform a Peer FSP about a previously-created list of parties.|Not supported|Not Supported|
+|**/participants/_{Type}_/_{ID}_ Alternative: /participants/_{Type}_/_{ID}_/_{SubId}_ **|Get FSP information regarding a Party from either a Peer FSP or an ALS.|Callback to inform a Peer FSP about the requested or created FSP information.|Request an ALS to create FSP information regarding a Party or, if the information already exists, request that the ALS update it|Request that an ALS delete FSP information regarding a Party.|
+|**/parties/_{Type}_/_{ID}_ Alternative: /parties/_{Type}_/_{ID}_/_{SubId}_ **|Get information regarding a Party from a Peer FSP.|Callback to inform a Peer FSP about the requested information about the Party.|Not supported|Not support|
 |**/transactionRequests**|Not supported|Not supported|Request a Peer FSP to ask a Payer for approval to transfer funds to a Payee. The Payer can either reject or approve the request.|Not supported|
-|**/transactionRequests/_{ID}_**|Get information about a previously-sent transaction request.|Callback to inform a Peer FSP about a previously-sent transaction request.|Not supported|Not supported|
+|**/transactionRequests/_{ID}_ **|Get information about a previously-sent transaction request.|Callback to inform a Peer FSP about a previously-sent transaction request.|Not supported|Not supported|
 |**/quotes**|Not supported|Not supported|Request that a Peer FSP create a new quote for performing a transaction.|Not supported|
-|**/quotes/_{ID}_**|Get information about a previously-requested quote.|Callback to inform a Peer FSP about a previously- requested quote.|Not supported|Not supported|
-|**/authorizations/_{ID}_**|Get authorization for a transaction from the Payer whom is interacting with the Payee FSP system.|Callback to inform Payer FSP regarding authorization information.|Not supported|Not supported|
+|**/quotes/_{ID}_ **|Get information about a previously-requested quote.|Callback to inform a Peer FSP about a previously- requested quote.|Not supported|Not supported|
+|**/authorizations/_{ID}_ **|Get authorization for a transaction from the Payer whom is interacting with the Payee FSP system.|Callback to inform Payer FSP regarding authorization information.|Not supported|Not supported|
 |**/transfers**|Not supported|Not supported|Request a Peer FSP to perform the transfer of funds related to a transaction.|Not supported|    
-|**/transfers/_{ID}_**|Get information about a previously-performed transfer.|Callback to inform a Peer FSP about a previously-performed transfer.|Not supported|Not supported|
-|**/transactions/_{ID}_**|Get information about a previously-performed transaction.|Callback to inform a Peer FSP about a previously-performed transaction.|Not supported|Not supported|
+|**/transfers/_{ID}_ **|Get information about a previously-performed transfer.|Callback to inform a Peer FSP about a previously-performed transfer.|Not supported|Not supported|
+|**/transactions/_{ID}_ **|Get information about a previously-performed transaction.|Callback to inform a Peer FSP about a previously-performed transaction.|Not supported|Not supported|
 
 **Table 5 – API-supported services**
 
@@ -1349,11 +1347,11 @@ This section describes the services that can be requested by a client on the res
 
 #### 6.2.2.1 GET /participants/_{Type}_/_{ID}_
 
-Alternative URI: **GET /participants/_{Type}_/_{ID}_/**_{SubId}_
+Alternative URI: **GET /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_
 
 Logical API service: **Lookup Participant Information**
 
-The HTTP request **GET /participants/_{Type}_/_{ID}_** (or **GET /participants/_{Type}_/_{ID}_/**_{SubId}_) is used to find out in which FSP the requested Party, defined by _{Type}_, _{ID}_ and optionally _{SubId}_, is located (for example, **GET** **/participants/MSISDN/123456789**, or **GET /participants/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
+The HTTP request **GET /participants/**_{Type}_**/**_{ID}_ (or **GET /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to find out in which FSP the requested Party, defined by _{Type}_, _{ID}_ and optionally _{SubId}_, is located (for example, **GET** **/participants/MSISDN/123456789**, or **GET /participants/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
 
 This HTTP request should support a query string (see [Section 3.1.3](#313-uri-syntax) for more information regarding URI syntax) for filtering of currency. To use filtering of currency, the HTTP request **GET /participants/**_{Type}_**/**_{ID}_**?currency=**_XYZ_ should be used, where _XYZ_ is the requested currency.
 
@@ -1393,7 +1391,7 @@ Alternative URI: **POST /participants/**_{Type}_/_{ID}_/_{SubId}_
 
 Logical API service: **Create Participant Information**
 
-The HTTP request **POST /participants/** _{Type}_ **/** _{ID}_ (or **POST /participants/** _{Type}_ **/** _{ID}_ **/** _{SubId}_) is used to create information on the server regarding the provided identity, defined by _{Type}_, _{ID}_, and optionally _{SubId}_ (for example, **POST** **/participants/MSISDN/123456789** or **POST /participants/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
+The HTTP request **POST /participants/**_{Type}_**/**_{ID}_ (or **POST /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to create information on the server regarding the provided identity, defined by _{Type}_, _{ID}_, and optionally _{SubId}_ (for example, **POST** **/participants/MSISDN/123456789** or **POST /participants/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
 
 Callback and data model information for **POST /participants**/_{Type}_**/**_{ID}_ (alternative **POST** **/participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
@@ -1408,7 +1406,7 @@ Callback and data model information for **POST /participants**/_{Type}_**/**_{ID
 |**fspId**|1|FspId|FSP Identifier that the Party belongs to.|
 |**currency**|0..1|Currency|Indicate that the provided Currency is supported by the Party.|
 
-**Table 7 -- POST /participants/_{Type}_/_{ID}_ (alternative POST /participants/_{Type}_/_{ID}_/_{SubId}_) data model** Hold me
+**Table 7 -- POST /participants/_{Type}_/_{ID}_ (alternative POST /participants/_{Type}_/_{ID}_/_{SubId}_) data model**
 
 #### 6.2.2.4 DELETE /participants/_{Type}_/_{ID}_
 
@@ -1490,7 +1488,7 @@ If the server is unable to find, create or delete the associated FSP of the prov
 |---|---|---|---|
 |**errorInformation**|1|ErrorInformation|Error code, category description.|
 
-**Table 10 -- PUT /participants/{<Type}*/_{ID}_/error (alternative PUT /participants/_{Type}_/_{ID}_/_{SubId}_/error) data model**
+**Table 10 -- PUT /participants/_{Type}_/_{ID}_/error (alternative PUT /participants/_{Type}_/_{ID}_/_{SubId}_/error) data model**
 
 #### 6.2.4.2 PUT /participants/_{ID}_/error
 
@@ -1535,16 +1533,16 @@ This section describes the services that can be requested by a client in the API
 
 #### 6.3.2.1 GET /parties/_{Type}_/_{ID}_
 
-Alternative URI: **GET /parties/**_{Type}_/_{ID}_/_{SubId}_
+Alternative URI: **GET /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_
 
 Logical API service: **Lookup Party Information**
 
-The HTTP request **GET /parties/**_{Type}_/_{ID}_ (or **GET /parties/**_{Type}_/_{ID}_/_{SubId}_) is used to lookup information regarding the requested Party, defined by _{Type}_, _{ID}_ and optionally _{SubId}_ (for example, **GET /parties/MSISDN/123456789**, or **GET** **/parties/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
+The HTTP request **GET /parties/**_{Type}_**/**_{ID}_ (or **GET /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to lookup information regarding the requested Party, defined by _{Type}_, _{ID}_ and optionally _{SubId}_ (for example, **GET /parties/MSISDN/123456789**, or **GET** **/parties/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
 
-Callback and data model information for **GET /parties/**_{Type}_/_{ID}_ (alternative **GET /parties/**_{Type}_/_{ID}_/_{SubId}_):
+Callback and data model information for **GET /parties/**_{Type}_**/**_{ID}_ (alternative **GET /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
-- Callback - [**PUT /parties/**_{Type}_/_{ID}_](#6331-put-partiestypeid)
-- Error Callback - [**PUT /parties/**_{Type}_/_{ID}_**/error**](#6341-put-partiestypeiderror)
+- Callback - [**PUT /parties/**_{Type}_**/**_{ID}_](#6331-put-partiestypeid)
+- Error Callback - [**PUT /parties/**_{Type}_**/**_{ID}_**/error**](#6341-put-partiestypeiderror)
 - Data Model -- Empty body
 
 #### 6.3.3 Callbacks
@@ -1553,11 +1551,11 @@ This section describes the callbacks that are used by the server for services pr
 
 #### 6.3.3.1 PUT /parties/_{Type}_/_{ID}_
 
-Alternative URI: **PUT /parties/**_{Type}_/_{ID}_/_{SubId}_
+Alternative URI: **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_
 
 Logical API service: **Return Party Information**
 
-The callback **PUT /parties/*_{Type}_*/**{ID} (or **PUT /parties/**_{Type}_/_{ID}_/_{SubId}_) is used to inform the client of a successful result of the Party information lookup. See [Table 12](#table-12) for data model.
+The callback **PUT /parties/**_{Type}_**/**_{ID}_ (or **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to inform the client of a successful result of the Party information lookup. See [Table 12](#table-12) for data model.
 
 ###### Table 12
 
@@ -1574,11 +1572,11 @@ This section describes the error callbacks that are used by the server under the
 
 #### 6.3.4.1 PUT /parties/_{Type}_/_{ID}_/error
 
-Alternative URI: **PUT /parties/**_{Type}_/_{ID}_/_{SubId}_**/error**
+Alternative URI: **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**
 
 Logical API service: **Return Party Information Error**
 
-If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback **PUT /parties/**_{Type}_/_{ID}_**/error** (or **PUT /parties/**_{Type}_/_{ID}_/_{SubId}_**/error**) is used. See [Table 13](#table-13) for data model.
+If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback **PUT /parties/**_{Type}_**/**_{ID}_**/error** (or **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**) is used. See [Table 13](#table-13) for data model.
 
 ###### Table 13
 
@@ -1590,7 +1588,7 @@ If the server is unable to find Party information of the provided identity, or a
 
 #### 6.3.5 States
 
-There are no states defined for the **/parties** resource; either a FSP has information regarding the requested identity or it does not.
+There are no states defined for the **/parties** resource; either an FSP has information regarding the requested identity or it does not.
 
 ### 6.4 API Resource /transactionRequests
 
@@ -1600,7 +1598,7 @@ The primary service that the API resource **/transactionRequests** enables is fo
 
 - The Payee is trusted (that is, the Payer has pre-approved the Payee in the Payer FSP), or
 
-- An authorization value - that is, a _one-time password_ (_OTP_) is correctly validated using the API Resource **/authorizations**, **see** [Section 6.6](#66-api-resource-authorizations).
+- An authorization value - that is, a _one-time password_ (_OTP_) is correctly validated using the API Resource **/authorizations**, see [Section 6.6](#66-api-resource-authorizations).
 
 Alternatively, the Payer could make the decision manually.
 
@@ -1630,7 +1628,7 @@ Alternatively, the Payer could make the decision manually.
 
 **Figure 44 -- Example process in which a transaction request is rejected**
 
-###### 6.4.2 Requests
+#### 6.4.2 Requests
 
 This section describes the services that a client can request on the resource **/transactionRequests**.
 
@@ -1711,7 +1709,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Request Information Error**
 
-If the server is unable to find or create a transaction request, or another processing error occurs, the error callback **PUT** **/transactionRequests/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 14](#table-14)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6421-get-transactionrequestsid). See [Table 16](#table-16) for data model.
+If the server is unable to find or create a transaction request, or another processing error occurs, the error callback **PUT** **/transactionRequests/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 14](#table-14)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6421-get-transactionrequestsid). See [Table 16](#table-16) for data model.
 
 ###### Table 16
 
@@ -1752,7 +1750,7 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 {% uml src="assets/diagrams/sequence/figure46.plantuml" %}
 {% enduml %}
 
-**Figure 46 -- Example process for resource /quotes**
+**Figure 46 -- Example process for the API resource /quotes**
 
 #### 6.5.1.1 Quote Expiry Details
 
@@ -1769,7 +1767,7 @@ Payee FSP must:
 - Determine the ILP Address (see [Section 4.3](#43-ILP-addressing) for more information) of the Payee and the amount that the Payee will receive. Note that since the **amount** element in the ILP Packet is defined as an UInt64, which is an Integer value, the amount should be multiplied with the currency's exponent (for example, USD's exponent is 2, which means the amount should be multiplied by 10<sup>2</sup>, and JPY's exponent is 0, which means the amount should be multiplied by 10<sup>0</sup>). Both the ILP Address and the amount should be populated in the ILP Packet (see [Section 4.5](#45-ilp-packet) for more information).
 
 - Populate the **data** element in the ILP Packet by the Transaction ([Section 7.4.17](#7417-transaction)) data model.
-- Generate the fulfilment and the condition (see [Section 4.4](#44-conditional-transfers) for more information). Populate the **condition** element in the **PUT /quotes/**_{ID}_(#6531-put-quotesid) ([Table 18](#table-18)) data model with the generated condition.
+- Generate the fulfilment and the condition (see [Section 4.4](#44-conditional-transfers) for more information). Populate the **condition** element in the **PUT /quotes/**_{ID}_ (see [Section 6.5.3.1](#6531-put-quotesid)). [Table 18](#table-18) shows data model with the generated condition.
 
 The fulfilment is a temporary secret that is generated for each financial transaction by the Payee FSP and used as the trigger to commit the transfers that make up an ILP payment.
 
@@ -1843,7 +1841,7 @@ Callback and data model information for **POST /quotes**:
 | **payee** | 1 | Party | Information about the Payee in the proposed financial transaction. |
 | **payer** | 1 | Party | Information about the Payer in the proposed financial transaction. |
 | **amountType** | 1 | AmountType |**SEND** for send amount, **RECEIVE** for receive amount. |
-| **amount** | 1 | Money | Depending on **amountType**:<br>If **SEND**: The amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.</br> <br>If **RECEIVE**: The amount the Payee should receive; that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities.</br> |
+| **amount** | 1 | Money | Depending on **amountType**:<br>If **SEND**: The amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.<br>If **RECEIVE**: The amount the Payee should receive; that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities.</br> |
 | **fees** | 0..1 | Money | Fees in the transaction. <li>The fees element should be empty if fees should be non-disclosed.</li><li>The fees element should be non-empty if fee should be disclosed.</li> |
 | **transactionType** | 1 | TransactionType | Type of transaction for which the quote is requested. |
 | **geoCode** | 0..1 | GeoCode | Longitude and Latitude of the initiating Party. Can be used to detect fraud. |
@@ -1892,7 +1890,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Quote Information Error**
 
-If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/quotes/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the **quoteId** (see [Table 17](#table-17)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6521-get-quotesid). See [Table 19](#table-19) for data model.
+If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/quotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **quoteId** (see [Table 17](#table-17)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6521-get-quotesid). See [Table 19](#table-19) for data model.
 
 ###### Table 19
 
@@ -1916,7 +1914,7 @@ If the server is unable to find or create a quote, or some other processing erro
 
 ### 6.6 API Resource /authorizations
 
-This section defines the logical API resource **Authorizations**,described in _Generic Transaction Patterns_.
+This section defines the logical API resource **Authorizations**, described in _Generic Transaction Patterns_.
 
 The API resource **/authorizations** is used to request the Payer to enter the applicable credentials in the Payee FSP system for approving the financial transaction, when the Payer has initiated the transaction from a POS, ATM, or similar, in the Payee FSP system and would like to authorize by an OTP.
 
@@ -2037,7 +2035,7 @@ This section defines the logical API resource **Transfers**, described in _Gener
 
 The services provided by the API resource **/transfers** are used for performing the hop-by-hop ILP transfer or transfers, and to perform the end-to-end financial transaction by sending the transaction details from the Payer FSP to the Payee FSP. The transaction details are sent as part of the transfer data model in the ILP Packet.
 
-The Interledger protocol assumes that the setup of a financial transaction is achieved using an end-to-end protocol, but that an ILP transfer is implemented on the back of hop-by-hop protocols between FSPs connected to a common ledger. In the current version of the API, the [API Resource **/quotes**](#65-api-resource-quotes) performs the setup of the financial transaction. Before a transfer can be performed, the quote must be performed to setup the financial transaction. See API Resource **/quotes**, [Section 6.5](#65-api-resource-quotes), for more information.
+The Interledger protocol assumes that the setup of a financial transaction is achieved using an end-to-end protocol, but that an ILP transfer is implemented on the back of hop-by-hop protocols between FSPs connected to a common ledger. In the current version of the API, the API Resource **/quotes** performs the setup of the financial transaction. Before a transfer can be performed, the quote must be performed to setup the financial transaction. See [Section 6.5](#65-api-resource-quotes) for more information.
 
 An ILP transfer is exchanged between two account holders on either side of a common ledger. It is usually expressed in the form of a request to execute a transfer on the common ledger and a notification to the recipient of the transfer that the transfer has been reserved in their favor, including a condition that must be fulfilled to commit the transfer.
 
@@ -2089,7 +2087,7 @@ In [Figure 51](#figure-51), an expiry has been set to 30 seconds from the curren
 
 **Figure 52 -- Client receiving an expired transfer**
 
-To limit these kinds of error scenarios, the clients (Payer FSP and optional Switch in [Figure 52](#figure-52)) participating in the ILP transfer should allow some extra time after actual expiry time during which the callback from the server can be received. The client or clients should also query the server after expiry, but before the end of the extra time, if any callback from the server has been lost due to communication failure. Reconciliation could still be necessary though, even with extra time allowed and querying the server for the transaction.
+To limit these kinds of error scenarios, the clients (Payer FSP and optional Switch in [Figure 52](#figure-52)) participating in the ILP transfer should allow some extra time after actual expiry time during which the callback from the server can be received. The client(s) should also query the server after expiry, but before the end of the extra time, if any callback from the server has been lost due to communication failure. Reconciliation could still be necessary though, even with extra time allowed and querying the server for the transaction.
 
 #### 6.7.1.6 Optional Additional Clearing Check
 
@@ -2178,7 +2176,7 @@ Callback and data model information for **POST /transfers**:
 | --- | --- | --- | --- |
 | **transferId** | 1| CorrelationId | The common ID between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. The ID should be reused for resends of the same transfer. A new ID should be generated for each new transfer. |
 | **payeeFsp** | 1 | FspId | Payee FSP in the proposed financial transaction. |
-| **payerFsp** | 1 | FspId | Payee FSP in the proposed financial transaction. |
+| **payerFsp** | 1 | FspId | Payer FSP in the proposed financial transaction. |
 | **amount** | 1 | Money | The transfer amount to be sent. |
 | **ilpPacket** | 1 | IlpPacket | The ILP Packet containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data. |
 | **condition** | 1 | IlpCondition | The condition that must be fulfilled to commit the transfer. |
@@ -2222,7 +2220,7 @@ Logical API service: **Return Transfer Information Error**
 
 If the server is unable to find or create a transfer, or another processing error occurs, the error callback **PUT**
 
-**/transfers/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 22](#table-22)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6721-get-transfersid). See [Table 24](#table-24) for data model.
+**/transfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 22](#table-22)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6721-get-transfersid). See [Table 24](#table-24) for data model.
 
 ###### Table 24
 
@@ -2249,11 +2247,11 @@ This section defines the logical API resource **Transactions**, described in _Ge
 
 The services provided by the API resource **/transactions** are used for getting information about the performed end-to-end financial transaction; for example, to get information about a possible token that was created as part of the transaction.
 
-The actual financial transaction is performed using the services provided by the [API Resource **/transfers**](#67-api-resource-transfers), [Section 6.7](#67-api-resource-transfers), which includes the end-to-end financial transaction between the Payer FSP and the Payee FSP.
+The actual financial transaction is performed using the services provided by the API Resource **/transfers** (see [Section 6.7](#67-api-resource-transfers)), which includes the end-to-end financial transaction between the Payer FSP and the Payee FSP.
 
 #### 6.8.1 Service Details
 
-[Figure 56](#figure-56) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{TransactionID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
+[Figure 56](#figure-56) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{ID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
 
 ###### Figure 56
 
@@ -2298,8 +2296,7 @@ The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requ
 | --- | --- | --- | --- |
 | **completedTimestamp** | 0..1 | DateTime | Time and date when the transaction was completed. |
 | **transactionState** | 1 | TransactionState | State of the transaction. |
-| **code** | 0..1 | Code | Optional redemption information provided to
-Payer after transaction has been completed. |
+| **code** | 0..1 | Code | Optional redemption information provided to Payer after transaction has been completed. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
 
 **Table 25 -- PUT /transactions/_{ID}_ data model**
@@ -2314,7 +2311,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Information Error**
 
-If the server is unable to find or create a transaction, or another processing error occurs, the error callback **PUT** **/transactions/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6821-get-transactionsid). See [Table 26](#table-26) for data model.
+If the server is unable to find or create a transaction, or another processing error occurs, the error callback **PUT** **/transactions/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6821-get-transactionsid). See [Table 26](#table-26) for data model.
 
 ###### Table 26
 
@@ -2518,8 +2515,8 @@ The HTTP request **POST /bulkTransfers** is used to request the creation of a bu
 | --- | --- | --- | --- |
 | **bulkTransferId** | 1 | CorrelationId | Common ID between the FSPs and the optional Switch for the bulk transfer object, decided by the Payer FSP. The ID should be reused for resends of the same bulk transfer. A new ID should be generated for each new bulk transfer. |
 | **bulkQuoteId** | 1 | CorrelationId | ID of the related bulk quote |
+| **payeeFsp** | 1 | FspId | Payee FSP identifier. |
 | **payerFsp** | 1 | FspId | Payer FSP identifier. |
-| **payeeFsp** | 1 | FspId | Payer FSP identifier. |
 | **individualTransfers** | 1..1000 | IndividualTransfer | List of IndividualTransfer elements. |
 | **expiration** | 1 | DateTime | Expiration time of the transfers. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
@@ -2557,9 +2554,9 @@ This section describes the error callbacks that are used by the server under the
 
 Alternative URI: N/A
 
-Logical API service: _Return Bulk Transfer Information Error_
+Logical API service: **Return Bulk Transfer Information Error**
 
-If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback **PUT** **/bulkTransfers/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 30](#table-30)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61022-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61021-get-bulktransfersid). See [Table 32](#table-32) for data model.
+If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback **PUT** **/bulkTransfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 30](#table-30)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61022-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61021-get-bulktransfersid). See [Table 32](#table-32) for data model.
 
 ###### Table 32
 
@@ -2623,7 +2620,7 @@ This section defines element data types used by the API.
 
 #### 7.2.1 String
 
-The API data type **String** is a normal JSON String31, always limited by a minimum and maximum number of characters.
+The API data type **String** is a normal JSON String<sup>31</sup>, always limited by a minimum and maximum number of characters.
 
 ##### 7.2.1.1 Example Format
 
@@ -2675,9 +2672,9 @@ The API data type **Name** is a JSON String, restricted by a regular expression 
 
 ##### 7.2.4.1 Regular Expression
 
-The regular expression for restricting the **Name** type appears in [Listing 14](#listing-14). The restriction does not allow a string consisting of whitespace only, all Unicode32 characters are allowed, as well as the period (**.**) (apostrophe (**'**), dash (**-**), comma (**,**) and space characters ( ). The maximum number of characters in the **Name** is 128.
+The regular expression for restricting the **Name** type appears in [Listing 14](#listing-14). The restriction does not allow a string consisting of whitespace only, all Unicode32 characters are allowed, as well as the period (**.**), apostrophe (**'**), dash (**-**), comma (**,**) and space characters ( ). The maximum number of characters in the **Name** is 128.
 
-**Note:** In some programming languages, Unicode support must be specifically enabled. For example, if Java is used the flag UNICODE\_CHARACTER\_CLASS must be enabled to allow Unicode characters.
+**Note:** In some programming languages, Unicode support must be specifically enabled. For example, if Java is used, the flag UNICODE\_CHARACTER\_CLASS must be enabled to allow Unicode characters.
 
 ###### Listing 14
 
@@ -2759,7 +2756,7 @@ The regular expression for restricting the **ErrorCode** type appears in [Listin
 
 #### 7.2.9 TokenCode
 
-The API data type **TokenCode** is a JSON String between four and 32 characters. It can consist of either digits, uppercase characters from **a** to **z**, lowercase characters from **a** to **z**, or a combination of the three.
+The API data type **TokenCode** is a JSON String between four and 32 characters. It can consist of either digits, uppercase characters from **A** to **Z**, lowercase characters from **a** to **z**, or a combination of the three.
 
 ##### 7.2.9.1 Regular Expression
 
@@ -2796,7 +2793,7 @@ The regular expression for restricting the **Latitude** type appears in [Listing
 ###### Listing 21
 
 ```
-^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9\])(?:(?:\.\[0-9]{1,6})?))$
+^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$
 ```
 
 **Listing 21 -- Regular expression for data type Latitude**
@@ -2812,7 +2809,7 @@ The regular expression for restricting the **Longitude** type appears in [Listin
 ###### Listing 22
 
 ```
-^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9]\[0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$
+^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$
 ```
 
 **Listing 22 -- Regular expression for data type Longitude**
@@ -2821,7 +2818,7 @@ The regular expression for restricting the **Longitude** type appears in [Listin
 
 The API data type **Amount** is a JSON String in a canonical format that is restricted by a regular expression for interoperability reasons.
 
-#### 7.2.13.1 Regular Expression
+##### 7.2.13.1 Regular Expression
 
 The regular expression for restricting the **Amount** type appears in [Listing 23](#listing-23). This pattern does not allow any trailing zeroes at all, but allows an amount without a minor currency unit. It also only allows four digits in the minor currency unit; a negative value is not allowed. Using more than 18 digits in the major currency unit is not allowed.
 
@@ -2903,7 +2900,7 @@ The regular expression for restricting the **Date** type appears in [Listing 25]
 
 Two examples of the **Date** type appear below:
 
-**1982-05-23**
+**1982-05-23**<br>
 **1987-08-05**
 
 #### 7.2.16 UUID
@@ -2944,11 +2941,11 @@ The regular expression for restricting the **BinaryString** type appears in [Lis
 
 **Listing 27 -- Regular expression for data type BinaryString**
 
-#### 7.2.17.2 Example Format
+##### 7.2.17.2 Example Format
 
 **BinaryString(32..256)** -- Between 32 and 256 characters of data base64url encoded.
 
-#### 7.2.17.2.1 Example
+##### 7.2.17.2.1 Example
 
 An example of a **BinaryString(32..256)** appears below. Note that a padding character ('**=**') has been added to ensure that the string is a multiple of four characters.
 
@@ -2958,7 +2955,7 @@ An example of a **BinaryString(32..256)** appears below. Note that a padding cha
 
 The API data type **BinaryString32** is a fixed size version of the API data type **BinaryString** in [Section 7.2.17](#7217-binarystring), where the raw underlying data is always of 32 bytes. The data type **BinaryString32** should not use a padding character as the size of the underlying data is fixed.
 
-#### 7.2.18.1 Regular Expression
+##### 7.2.18.1 Regular Expression
 
 The regular expression for restricting the **BinaryString32** type appears in [Listing 28](#listing-28).
 
@@ -2993,7 +2990,7 @@ This section defines elements types used by the API.
 
 **Table 34 -- Element AmountType**
 
-**7.3.2 AuthenticationType**
+#### 7.3.2 AuthenticationType
 
 [Table 35](#table-35) contains the data model for the element **AuthenticationType**.
 
@@ -3013,7 +3010,7 @@ This section defines elements types used by the API.
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **AuthenticationValues** | 1 | Depending on AuthenticationType: <br>If OTP: OtpValue</br> <br>If QRCODE: String(1..64)</br> | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. |
+| **AuthenticationValues** | 1 | Depending on AuthenticationType:<br>If OTP: OtpValue<br>If QRCODE: String(1..64) | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. |
 
 **Table 36  -- Element AuthenticationValue**
 
@@ -3325,7 +3322,7 @@ This section defines elements types used by the API.
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionInitiator** | 1 | Enum of String(1..32) |
+| **TransactionInitiator** | 1 | Enum of String(1..32) | |
 
 **Table 62 -- Element Transaction Initiator**
 
@@ -3469,7 +3466,7 @@ This section describes complex types used by the API.
 | **transactionId** | 1 | CorrelationId | Identifies transaction message. |
 | **payee** | 1 | Party | Information about the Payee in the proposed financial transaction. |
 | **amountType** | 1 | AmountType | **SEND** for sendAmount, **RECEIVE** for receiveAmount. |
-| **amount** | 1 | Money | Depending on **amountType**: <br>If **SEND**: The amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.</br><br>If **RECEIVE**: The amount the Payee should receive; that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities.</br> |
+| **amount** | 1 | Money | Depending on **amountType**: <br>If **SEND**: The amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.<br>If **RECEIVE**: The amount the Payee should receive; that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities. |
 | **fees** | 0..1 | Money | Fees in the transaction.<ul><li>The fees element should be empty if fees should be non-disclosed.</li><li>The fees element should be non-empty if fees should be disclosed.</li></ul>
 | **transactionType** | 1 | TransactionType | Type of transaction that the quote is requested for. |
 | **note** | 0..1 | Note | Memo that will be attached to the transaction.|
@@ -3523,9 +3520,10 @@ This section describes complex types used by the API.
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **transferId** | 1 | CorrelationId | Identifies messages related to the same /transfers sequence. |
-| **fulfilment** | 0..1 | IlpFulfilment | Fulfilment of the condition specified with the transaction.<br>**Note:** Either **fulfilment** or **errorInformation** should be set, not both.</br>
-| **errorInformation** | 0..1 | ErrorInformation | If transfer is REJECTED, error information may be provided. <br>**Note:** Either **fulfilment** or **errorInformation** should be set, not both</br>.|
+| **fulfilment** | 0..1 | IlpFulfilment | Fulfilment of the condition specified with the transaction.<br>**Note:** Either **fulfilment** or **errorInformation** should be set, not both. |
+| **errorInformation** | 0..1 | ErrorInformation | If transfer is REJECTED, error information may be provided. <br>**Note:** Either **fulfilment** or **errorInformation** should be set, not both.|
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment.|
+
 **Table 76 -- Complex type IndividualTransferResult**
 
 #### 7.4.9 GeoCode
@@ -3543,7 +3541,7 @@ This section describes complex types used by the API.
 
 #### 7.4.10 Money
 
-[Table 78](#table 78) contains the data model for the complex type **Money**.
+[Table 78](#table-78) contains the data model for the complex type **Money**.
 
 ###### Table 78
 
@@ -3895,7 +3893,7 @@ See [Table 99](#table-99) for all communication errors defined in the API.
 
 ###### Table 99
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **1000** | Communication error | Generic communication error. | X | X | X | X | X | X | X | X | X |
 | **1001** | Destination communication error | Destination of the request failed to be reached. This usually indicates that a Peer FSP failed to respond from an intermediate entity. | X | X | X | X | X | X | X | X | X |
@@ -3914,7 +3912,7 @@ See [Table 100](#Table-100) for server errors defined in the API.
 
 ###### Table 100
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **2000** | Generic server error | Generic server error to be used in order not to disclose information that may be considered private. | X | X | X | X | X | X | X | X | X |
 | **2001** | Internal server error | Generic unexpected exception. This usually indicates a bug or unhandled error case. | X | X | X | X | X | X | X | X | X |
@@ -3949,7 +3947,7 @@ Low level categories defined under client Errors:
 
 ###### Table 101
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **3000** | Generic client error | Generic client error, used in order not to disclose information that may be considered private. | X | X | X | X | X | X | X | X | X |
 | **3001** | Unacceptable version requested | Client requested to use a protocol version which is not supported by the server. | X | X | X | X | X | X | X | X | X |
@@ -3960,7 +3958,7 @@ Low level categories defined under client Errors:
 
 ###### Table 102
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **3100** | Generic validation error | Generic validation error to be used in order not to disclose information that may be considered private. | X | X | X | X | X | X | X | X | X |
 | **3101** | Malformed syntax | Format of the parameter is not valid. For example, amount set to **5.ABC**. The error description field should specify which information element is erroneous. | X | X | X | X | X | X | X | X | X |
@@ -3975,7 +3973,7 @@ Low level categories defined under client Errors:
 
 ###### Table 103
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **3200** | Generic ID not found | Generic ID error provided by the client. | X | X | X | X | X | X | X | X | X |
 | **3201** | Destination FSP Error | Destination FSP does not exist or cannot be found. | X | X | X | X | X | X | X | X | X |
@@ -3993,7 +3991,7 @@ Low level categories defined under client Errors:
 
 ###### Table 104
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **3300** | Generic expired error | Generic expired object error, to be used in order not to disclose information that may be considered private. | X | X | X | X | X | X | X | X | X |
 | **3301** | Transaction request expired | Client requested to use a transaction request that has already expired. |||| X ||||||
@@ -4022,7 +4020,7 @@ See [Table 105](#table-105) for Payer errors defined in the API.
 
 ###### Table 105
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **4000** | Generic Payer error | Generic error related to the Payer or Payer FSP. Used for protecting information that may be considered private. ||| X | X | X | X | X | X | X |
 | **4001** | Payer FSP insufficient liquidity | Payer FSP has insufficient liquidity to perform the transfer. |||||| X ||||
@@ -4056,7 +4054,7 @@ See [Table 106](#table-106) for all Payee errors defined in the API.
 
 ###### Table 106
 
-| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotates | /bulkTransfers |
+| **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **5000** | Generic Payee error | Generic error due to the Payer or Payer FSP, to be used in order not to disclose information that may be considered private. ||| X | X | X | X | X | X | X |
 | **5001** | Payee FSP insufficient liquidity | Payee FSP has insufficient liquidity to perform the transfer. |||||| X ||||
@@ -4109,7 +4107,7 @@ The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction 
 
 ### 8.2 Payee Initiated Transaction
 
-The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payee would like to request that Payer transfer funds to a Payee. The Payer and the Payee are assumed to be in different FSPs, and the approval of the transaction is performed in the Payer FSP. If the transaction information and approval occur on a Payee device instead, use the related [_Payee Initiated Transaction using OTP_](#83-payee-initiated-transaction-using-otp) pattern described in [Section 8.3](#83-payee-initiated-transaction-using-otp) instead. [Figure 64](#figure-64) shows the sequence diagram for a _Payee Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
+The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payee would like to request that Payer transfer funds to a Payee. The Payer and the Payee are assumed to be in different FSPs, and the approval of the transaction is performed in the Payer FSP. If the transaction information and approval occur on a Payee device instead, use the related _Payee Initiated Transaction using OTP_ pattern described in [Section 8.3](#83-payee-initiated-transaction-using-otp) instead. [Figure 64](#figure-64) shows the sequence diagram for a _Payee Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
 ###### Figure-64
 
@@ -4317,7 +4315,7 @@ The following list provides a detailed description of all the steps in the seque
 
 ## 10. End-to-End Example
 
-This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see _Signature_) and field level encryption using JWE (see _Encryption_).
+This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see [_Signature_](/documents/Signature.md)) and field level encryption using JWE (see [_Encryption_]((/documents/Encryption.md))).
 
 ### 10.1 Example Setup
 
@@ -4416,7 +4414,7 @@ After the Switch has verified the request correctly, the information that the ac
 
 When the Switch has successfully stored the information that the account holder identified by **MSISDN** and **123456789** is located in FSP **MobileMoney**, the Switch must send a callback using the service [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid) to notify the FSP **MobileMoney** about the outcome of the request in [Listing 29](#listing-29). [Listing 31](#listing-31) shows the HTTP request for the callback.
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request. In the callback, the **Accept** header should not be used as this is a callback to an earlier requested service. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 29](#listing-29), as detailed in [Section 3.2.3.5](#6231-put-participantstypeid). See [Section 6.2.3.1](#6231-put-participantstypeid) for more information about the callback [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid.
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request. In the callback, the **Accept** header should not be used as this is a callback to an earlier requested service. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 29](#listing-29), as detailed in [Section 3.2.3.5](#6231-put-participantstypeid). See [Section 6.2.3.1](#6231-put-participantstypeid) for more information about the callback [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid).
 
 ###### Listing 31 
 
@@ -4584,6 +4582,9 @@ The FSP **BankNrOne** sends the HTTP request in [Listing 39](#listing-39) to req
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.2.2](#6522-post-quotes) for more information about the service [**POST /quotes**](#6522-post-quotes). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
+###### Listing 39
+
+````
 POST /quotes HTTP/1.1
 Accept: application/vnd.interoperability.quotes+json;version=1
 Content-Type: application/vnd.interoperability.quotes+json;version=1.0
@@ -4591,10 +4592,6 @@ Content-Length: 975
 Date: Tue, 15 Nov 2017 10:13:40 GMT
 FSPIOP-Source: BankNrOne
 FSPIOP-Destination: MobileMoney
-
-###### Listing 39
-
-````
 {
     "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
     "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
@@ -4833,7 +4830,7 @@ Date: Tue, 15 Nov 2017 10:14:01
 FSPIOP-Source: BankNrOne
 FSPIOP-Destination: MobileMoney
 {
-    "transferId":"11436b17- c690
+    "transferId":"11436b17-c690-4a30-8505-42a2c4eafb9d",
     "payerFsp":"BankNrOne",
     "payeeFsp": "MobileMoney",
     "amount": {
@@ -4896,7 +4893,7 @@ Date: Tue, 15 Nov 2017 10:14:01 GMT
 FSPIOP-Source: BankNrOne
 FSPIOP-Destination: MobileMoney
 {
-    "transferId":"11436b17- c690-4a30-8505-42a2c4eafb9d",
+    "transferId":"11436b17-c690-4a30-8505-42a2c4eafb9d",
     "payerFsp":"BankNrOne",
     "payeeFsp": "MobileMoney",
     "amount": {

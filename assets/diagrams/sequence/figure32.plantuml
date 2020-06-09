@@ -123,8 +123,8 @@ activate PayeeFSP
 PayeeFSP ->> Switch: **POST /transactionRequests**\n(amount=100 USD)
 activate Switch
 PayeeFSP <<-- Switch: **HTTP 202** (Accepted)
-activate PayerFSP
 PayerFSP <<- Switch: **POST /transactionRequests**\n(amount=100 USD)
+activate PayerFSP
 PayerFSP -->> Switch: **HTTP 202** (Accepted)
 PayerFSP -> PayerFSP: Perform optional validation
 PayerFSP ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Receives status)
@@ -142,10 +142,10 @@ Switch ->> PayeeFSP: **POST /quotes**\n(amountType=RECEIVE,\namount=100 USD)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Fee is 0 USD
-Switch <<- PayeeFSP: **PUT /quotes/**<i><ID></i>\n(transferAmount=100 USD,\npayeeFSPFee=2 USD)
+Switch <<- PayeeFSP: **PUT /quotes/**<i><ID></i>\n(transferAmount=100 USD,\npayeeFSPFee=0 USD)
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-Switch ->> PayerFSP: **PUT /quotes/**<i><ID></i>\n(transferAmount=100 USD,\npayeeFSPFee=2 USD)
+Switch ->> PayerFSP: **PUT /quotes/**<i><ID></i>\n(transferAmount=100 USD,\npayeeFSPFee=0 USD)
 Switch <<-- PayerFSP: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Payer fee is 1 USD in Payer\nFSP for Merchant Payment

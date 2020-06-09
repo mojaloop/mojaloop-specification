@@ -120,10 +120,10 @@ activate PayerFSP
 PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
 PayerFSP -> PayerFSP: Perform quote\n(process not shown here)
 PayerFSP -> PayerFSP: Perform transfer\n(process not shown here)
-PayerFSP ->> Switch: **GET /transactions/**<i><transactionID></i>
+PayerFSP ->> Switch: **GET /transactions/**<i><ID></i>
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **GET /transactions/**<i><transactionID></i>
+Switch ->> PayeeFSP: **GET /transactions/**<i><ID></i>
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Lookup transaction\ninformation

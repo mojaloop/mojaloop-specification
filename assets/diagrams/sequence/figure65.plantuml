@@ -222,12 +222,12 @@ Group #Oldlace Option #2
   PayerFSP -> PayerFSP: Generate OTP
   Payer <- PayerFSP: Use OTP\nto confirm
 end
-PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount and fees)
+PayerFSP ->> Switch: **GET /authorizations/**<i><ID></i>\n(Amount and fees)
 activate Switch
 autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 autonumber resume
-Switch ->> PayeeFSP: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount and fees)
+Switch ->> PayeeFSP: **GET /authorizations/**<i><ID></i>\n(Amount and fees)
 activate PayeeFSP
 autonumber stop
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
@@ -237,12 +237,12 @@ Payee -> Payee: Payer\napproves/rejects\ntransaction\nusing OTP
 autonumber stop
 PayeeFSP <<-- Payee: Entered OTP
 autonumber resume
-Switch <<- PayeeFSP: **PUT /authorizations/**<i><TransactionRequestID></i>\n(OTP)
+Switch <<- PayeeFSP: **PUT /authorizations/**<i><ID></i>\n(OTP)
 autonumber stop
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 autonumber resume
-PayerFSP <<- Switch: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(OTP)
+PayerFSP <<- Switch: **PUT /authorizations/**<i><ID></i>\n(OTP)
 autonumber stop
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
@@ -295,7 +295,7 @@ else
   activate PayeeFSP
   Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
   autonumber resume
-  PayeeFSP -> PayeeFSP: Lookup\ntranaction\ninformation
+  PayeeFSP -> PayeeFSP: Lookup\ntransaction\ninformation
   PayeeFSP -> Payee: Transaction\nnotification
   autonumber stop
   Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
@@ -317,24 +317,24 @@ else
       data
     end hnote
     autonumber resume
-    PayerFSP ->> Switch: **GET /transactions/**<i><TransactionID></i>
+    PayerFSP ->> Switch: **GET /transactions/**<i><ID></i>
     activate Switch
     autonumber stop
     PayerFSP <<-- Switch: **HTTP 202** (Accepted)
     autonumber resume
-    Switch ->> PayeeFSP: **GET /transactions/**<i><TransactionID></i>
+    Switch ->> PayeeFSP: **GET /transactions/**<i><ID></i>
     activate PayeeFSP
     autonumber stop
     Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
     autonumber resume
     PayeeFSP -> PayeeFSP: Lookup\ntransaction\ninformation
     autonumber resume
-    Switch <<- PayeeFSP: **PUT /transactions/**<i><ID></i>\n(Transaction detail)
+    Switch <<- PayeeFSP: **PUT /transactions/**<i><ID></i>\n(Transaction details)
     autonumber stop
     Switch -->> PayeeFSP: **HTTP 200** (OK)
     deactivate PayeeFSP
     autonumber resume
-    PayerFSP ->> Switch: **PUT /transactions/**<i><ID></i>\n(Transaction detail)
+    PayerFSP ->> Switch: **PUT /transactions/**<i><ID></i>\n(Transaction details)
     autonumber stop
     PayerFSP <<-- Switch: **HTTP 200** (OK)
     deactivate Switch

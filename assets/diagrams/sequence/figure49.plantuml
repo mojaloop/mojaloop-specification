@@ -129,12 +129,12 @@ activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP ->> PayeePOS: Total amount is 100 USD,\nfee is 0 USD
 PayeePOS ->> PayerOTC: Please enter your OTP\nto confirm Merchant Payment\nof 100 USD, fee is 0 USD
-PayeePOS <<- PayerOTC: OTP Not received
-PayeeFSP <<- PayeePOS: OTP Not received
-Switch <<- PayeeFSP: **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
+PayeePOS <<- PayerOTC: OTP not received
+PayeeFSP <<- PayeePOS: OTP not received
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- Switch:  **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
+PayerFSP <<- Switch:  **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Resend OTP (optionally\nregenerate) as customer\ndid not receive it
