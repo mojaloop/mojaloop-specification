@@ -191,11 +191,11 @@ PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 autonumber resume
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on the fee model)
-Payer <- PayerFSP: Will you approve the\ntransaction request\nfor 100 USD\n(including fees)\nto Payee?
+Payer <- PayerFSP: Will you approve the\ntransaction request\nfor 100 USD\n(plus fees)\nto Payee?
 deactivate PayerFSP
 Alt #OldLace Alternatives
   hnote over of Payer #OldLace
-    User rejects the
+    User rejects
     transaction request
   end hnote
   autonumber resume
@@ -218,7 +218,7 @@ Alt #OldLace Alternatives
   autonumber stop
 else
   hnote over of Payer #OldLace
-    User approves the
+    User approves
     transaction request
   end hnote
   Payer -> PayerFSP: I approve the\ntransaction request
@@ -255,23 +255,23 @@ else
       Get transaction data
     end hnote
     autonumber resume
-    PayerFSP ->> Switch: **GET /transactions/**<i><ID></i>
+    PayerFSP ->> Switch: **GET /transactions/**<i><TransactionID></i>
     activate Switch
     autonumber stop
     PayerFSP <<-- Switch: **HTTP 202** (Accepted)
     autonumber resume
-    Switch ->> PayeeFSP: **GET /transactions/**<i><ID></i>
+    Switch ->> PayeeFSP: **GET /transactions/**<i><TransactionID></i>
     activate PayeeFSP
     autonumber stop
     Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
     autonumber resume
     PayeeFSP -> PayeeFSP: Looksup transaction\ninformation
-    Switch <<- PayeeFSP: **PUT /transactions/**<i><ID></i>\n(Transaction details)
+    Switch <<- PayeeFSP: **PUT /transactions/**<i><TransactionID></i>\n(Transaction details)
     autonumber stop
     Switch -->> PayeeFSP: **HTTP 200** (OK)
     deactivate PayeeFSP
     autonumber resume
-    PayerFSP <<- Switch: **PUT /transactions/**<i><ID></i>\n(Transaction details)
+    PayerFSP <<- Switch: **PUT /transactions/**<i><TransactionID></i>\n(Transaction details)
     autonumber stop
     PayerFSP -->> Switch: **HTTP 200** (OK)
     deactivate Switch

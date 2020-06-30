@@ -230,23 +230,23 @@ group #OldLace Optional
   hnote left of PayerFSP #OldLace
     Get transaction data
   end hnote
-  PayerFSP ->> Switch: **GET /transactions/**<i><ID></i>
+  PayerFSP ->> Switch: **GET /transactions/**<i><TransactionID></i>
   activate Switch
   autonumber stop
   PayerFSP <<-- Switch: **HTTP 202** (Accepted)
   autonumber resume
-  Switch <<- PayeeFSP: **GET /transactions/**<i><ID></i>
+  Switch <<- PayeeFSP: **GET /transactions/**<i><TransactionID></i>
   activate PayeeFSP
   autonumber stop
   Switch -->> PayeeFSP: **HTTP 202** (Accepted)
   autonumber resume
   PayeeFSP -> PayeeFSP: Lookup\ntransaction\ninformation
-  Switch <<- PayeeFSP: **PUT /transactions/**<i><ID></i>\n(Transaction details)
+  Switch <<- PayeeFSP: **PUT /transactions/**<i><TransactionID></i>\n(Transaction details)
   autonumber stop
   Switch -->> PayeeFSP: **HTTP 200** (OK)
   deactivate PayeeFSP
   autonumber resume
-  PayerFSP <<- Switch: **PUT /transactions/**<i><ID></i>\n(Transaction details)
+  PayerFSP <<- Switch: **PUT /transactions/**<i><TransactionID></i>\n(Transaction details)
   autonumber stop
   PayerFSP -->> Switch: **HTTP 200** (OK)
   deactivate Switch

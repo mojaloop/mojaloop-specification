@@ -238,7 +238,7 @@ The following HTTP methods, as defined in RFC 7231<sup>18</sup>, are supported b
 
   - Object information concerning a previously created object (HTTP **POST**) or sent information request (HTTP **GET**).
   - Acknowledgement that whether an object was deleted (HTTP **DELETE**).
-  - Error information in case the HTTP **GET**, **POST**, or **DELETE** request failed to be processed on the server.
+  - Error information in case the HTTP **POST** or HTTP **GET** request failed to be processed on the server.
 
 - **POST** -- The HTTP **POST** method is used from a client to request an object to be created on the server. As all services in the API are asynchronous, the response to the **POST** method will not contain the created object. The created object will instead come as part of a callback using the HTTP **PUT** method.
 
@@ -361,7 +361,7 @@ To simplify duplicate analysis, it is recommended to create and store a hash val
 
 ### 3.3 API Versioning
 
-The API development strategy is to maintain backwards compatibility between the API and its resources and services to the maximum extent possible; however, changes to the API should be expected by implementing parties. Versioning of the API is specific to the API resource (for example, **/participants**, **/quotes**, **/transfers**).
+The strategy of the development of the API is to maintain backwards compatibility between the API and its resources and services to the maximum extent possible; however, changes to the API should be expected by implementing parties. Versioning of the API is specific to the API resource (for example, **/participants**, **/quotes**, **/transfers**).
 
 There are two types of API resource versions: _Minor_ versions, which are backwards-compatible, and _major_ versions, which are backwards-incompatible.
 
@@ -563,7 +563,7 @@ To support conditional transfers for ILP, a ledger must support a transfer API t
 
 When the fulfilment of a transfer is submitted to a ledger, the ledger must ensure that the fulfilment is valid for the condition that was attached to the original transfer request. If it is valid, the transfer is committed, otherwise it is rejected, and the transfer remains in a pending state until a valid fulfilment is submitted or the transfer expires.
 
-ILP supports a variety of conditions for performing a conditional payment, but implementers of the API should use the SHA-256 hash of a 32-byte preimage. The condition attached to the transfer is the SHA-256 hash and the fulfilment of that condition is the preimage. Therefore, if the condition attached to a transfer is a SHA-256 hash, then when a fulfilment is submitted for that transaction, the ledger will validate it by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition.
+ILP supports a variety of conditions for performing a conditional payment, but implementers of the API should use the SHA-256 hash of a 32-byte pre-image. The condition attached to the transfer is the SHA-256 hash and the fulfilment of that condition is the pre-image. Therefore, if the condition attached to a transfer is a SHA-256 hash, then when a fulfilment is submitted for that transaction, the ledger will validate it by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition.
 
 See [Section 6.5.1.2 Interledger Payment Request](#6512-interledger-payment-request) for concrete information on how to generate the fulfilment and the condition.
 
@@ -834,7 +834,7 @@ Payee Receive Amount = Transfer Amount - Payee FSP Fee + Payee FSP Commission
 
 **Listing 11 -- Relation between transfer amount and Payee receive amount**
 
-The actual amount that Payee receives including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 18](#table-18).
+The Payee receive amount including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 18](#table-18).
 
 #### 5.1.5 Tax Information
 
@@ -846,7 +846,7 @@ Tax on Agent Commission is tax for an _Agent_ as a result of the Agent receiving
 
 #### 5.1.5.2 Tax on FSP Internal Fee
 
-FSPs could be taxed on FSP internal fees that they receive from the transactions; for example, Payer fees to Payer FSP or Payee fees to Payee FSP. This tax should be handled internally within the FSPs and collected by the FSPs because they receive the fees.
+FSPs could be taxed on FSP internal fees that they receive from the transactions; for example, Payer fees to Payer FSP or Payee fees to Payee FSP. This tax should be handled internally within the FSP and collected by the FSPs because they receive a fee.
 
 #### 5.1.5.3 Tax on Amount (Consumption tax)
 
@@ -862,11 +862,11 @@ In the API, there is a possibility for a Payee FSP to add a commission to either
 
 #### 5.1.5.5.1 Non-Disclosing of Fees
 
-For non-disclosing of fees, all FSP commission from the Payee FSP must be considered as the Payer FSP receiving a fee from the Payee FSP. The tax on the received fee should be handled internally within the Payer FSP, similar to the way it is handled in [Section 5.1.5.2](#5152-tax-on-fsp-internal-fee).
+For non-disclosing of fees, all FSP commission from the Payee FSP should be understood as the Payer FSP receiving a fee from the Payee FSP. The tax on the received fee should be handled internally within the Payer FSP, similar to the way it is handled in [Section 5.1.5.2](#5152-tax-on-fsp-internal-fee).
 
 #### 5.1.5.5.2 Disclosing of Fees
 
-If the Payee FSP commission amount is less than or equal to the amount of transaction fees originating from the Payer FSP, then the Payee FSP commission must be considered as being used for covering fees that the Payer would otherwise need to pay.
+If the Payee FSP commission amount is less than or equal to the amount of transaction fees originating from the Payer FSP, then the Payee FSP commission should always be understood as being used for covering fees that the Payer would otherwise need to pay.
 
 If the Payee FSP commission amount is higher than the fees from the Payer FSP, the excess FSP commission should be handled similarly as [Section 5.1.5.5.1](#51551-non-disclosing-of-fees).
 
@@ -1107,7 +1107,7 @@ See [Figure 39](#figure-39) for a highly simplified view of the movement of mone
 
 ### 5.2 Party Addressing
 
-Both Parties in a financial transaction, (that is, the Payer and the Payee) are addressed in the API by a _Party ID Type_ (**PartyIdType**, [Section 7.3.25](#7325-partyidtype)), a _Party ID_ (**PartyIdentifier**, [Section 7.3.24](#7324-partyidentifier)), and an optional _Party Sub ID or Type_ (**PartySubIdOrType**, [Section 7.3.27](#7327-partysubidortype)). Some Sub-Types are pre-defined in the API for personal identifiers (**PersonalIdentifierType**, [Section 7.5.7](#757-personalidentifiertype)); for example, for passport number or driver's license number.
+Both Parties in a financial transaction, (that is, the Payer and the Payee) are addressed in the API by a _Party ID Type_ (element **PartyIdType**, [Section 7.3.25](#7325-partyidtype)), a _Party ID_ (**PartyIdentifier**, [Section 7.3.24](#7324-partyidentifier)), and an optional _Party Sub ID or Type_ (**PartySubIdOrType**, [Section 7.3.27](#7327-partysubidortype)). Some Sub-Types are pre-defined in the API for personal identifiers (**PersonalIdentifierType**, [Section 7.5.7](#757-personalidentifiertype)); for example, for passport number or driver's license number.
 
 The following are basic examples of how the elements _Party ID Type_ and _Party ID_ can be used:
 - To use mobile phone number **+123456789** as the counterparty in a financial transaction, set *Party ID Type* to **MSISDN** and _Party ID_ to **+123456789**.
@@ -1750,7 +1750,7 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 {% uml src="assets/diagrams/sequence/figure46.plantuml" %}
 {% enduml %}
 
-**Figure 46 -- Example process for the API resource /quotes**
+**Figure 46 -- Example process for resource /quotes**
 
 #### 6.5.1.1 Quote Expiry Details
 
@@ -2251,7 +2251,7 @@ The actual financial transaction is performed using the services provided by the
 
 #### 6.8.1 Service Details
 
-[Figure 56](#figure-56) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{ID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
+[Figure 56](#figure-56) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{TransactionID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
 
 ###### Figure 56
 
