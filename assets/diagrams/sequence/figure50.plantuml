@@ -131,10 +131,10 @@ PayeeFSP ->> PayeePOS: Total amount is 100 USD,\nfee is 0 USD
 PayeePOS ->> PayerOTC: Please enter your OTP\nto confirm Merchant Payment\nof 100 USD, fee is 0 USD
 PayeePOS <<- PayerOTC: Enters "12346"
 PayeeFSP <<- PayeePOS: "12346" is the OTP
-Switch <<- PayeeFSP: **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- Switch:  **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
+PayerFSP <<- Switch:  **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\nOTP incorrect, decrease retriesLeft
@@ -148,10 +148,10 @@ PayeeFSP ->> PayeePOS: Incorrect OTP,\n1 retry left
 PayeePOS ->> PayerOTC: Please enter your OTP to\nconfirm Merchant Payment of\n100 USD, fee is 0 USD, last retry
 PayeePOS <<- PayerOTC: Enters "12345"
 PayeeFSP <<- PayeePOS: "12345" is the OTP
-Switch <<- PayeeFSP: **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- Switch: **PUT /autorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
+PayerFSP <<- Switch: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Validates OTP sent by\nPayee FSP, OTP OK, perform\ntransfer (not shown here)

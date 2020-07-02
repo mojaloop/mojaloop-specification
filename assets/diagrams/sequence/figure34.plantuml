@@ -128,8 +128,8 @@ activate PayeeFSP
 PayeeFSP ->> Switch: **POST /transactionRequests**\n(amount=100 USD)
 activate Switch
 PayeeFSP <<-- Switch: **HTTP 202** (Accepted)
-activate PayerFSP
 PayerFSP <<- Switch: **POST /transactionRequests**\n(amount=100 USD)
+activate PayerFSP
 PayerFSP -->> Switch: **HTTP 202** (Accepted)
 PayerFSP -> PayerFSP: Perform optional validation
 PayerFSP ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
@@ -160,16 +160,16 @@ PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: OTP is pre-generated
 Payer <<- PayerFSP: Use you pre-generated OTP to accept\ntransaction of 100 USD, 2 USD\nin fees.
-PayerFSP ->> Switch: **GET /authorizations/**\n<i>{TransactionRequestID}</i>/\n(amount=100 USD, fees=2 USD,\nretriesLeft=2, type=OTP)
+PayerFSP ->> Switch: **GET /authorizations/**\n<i>{TransactionRequestID}</i>\n(amount=100 USD, fees=2 USD,\nretriesLeft=2, type=OTP)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **GET /authorizations/**\n<i>{TransactionRequestID}</i>/\n(amount=100 USD, fees=2 USD,\nretriesLeft=2, type=OTP)
+Switch ->> PayeeFSP: **GET /authorizations/**\n<i>{TransactionRequestID}</i>\n(amount=100 USD, fees=2 USD,\nretriesLeft=2, type=OTP)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP ->> PayeeATM: Total fee for Cash-Out of\n100 USD is 2 USD
 PayeeATM ->> PayerOTC: Please enter you OTP\nto confirm Cash-Out of 100 USD,\nfee is 2 USD
-PayeeATM ->> PayerOTC: Enters "12345"
-PayeeFSP ->> PayeeATM: "12345" is the OTP
+PayeeATM <<- PayerOTC: Enters "12345"
+PayeeFSP <<- PayeeATM: "12345" is the OTP
 Switch <<- PayeeFSP: **PUT /authorizations/**\n<i>{transactionRequestID}</i>\n(otp="12345")
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP

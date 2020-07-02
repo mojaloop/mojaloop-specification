@@ -124,10 +124,10 @@ deactivate PayerFSP
 PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: Rate Payer FSP quote\n(depending on fee model)
-PayerFSP ->> Switch: **POST /quotes/**\n(Transaction details)
+PayerFSP ->> Switch: **POST /quotes**\n(Transaction details)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **POST /quotes/**\n(Transaction details)
+Switch ->> PayeeFSP: **POST /quotes**\n(Transaction details)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Rate Payee FSP\nfees/commission,\ngenerate condition

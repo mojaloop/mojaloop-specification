@@ -124,7 +124,7 @@ activate PayerFSP
 PayerFSP ->> Switch: **POST /quotes**\n(amountType=RECEIVE,\namount=100 USD)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **POST /quotes**\n(amountType=REVEIVE,\namount=100 USD)
+Switch ->> PayeeFSP: **POST /quotes**\n(amountType=RECEIVE,\namount=100 USD)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Interoperable fee is 0 USD in\nPayee FSP for Merchant\nPayment, but 1 USD in\ninternal Payee fee for Merchant
@@ -140,21 +140,21 @@ deactivate PayerFSP
 Payer ->> PayerFSP: Perform transaction
 activate PayerFSP
 PayerFSP -> PayerFSP: Reserve 101 USD from Payer\naccount, 100 USD to Switch\naccount and 1 USD to\nfee account
-PayerFSP ->> Switch: **POST /transfer**\n(amount=100 USD)
+PayerFSP ->> Switch: **POST /transfers**\n(amount=100 USD)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 Switch -> Switch: Reserve 100 USD from Payer FSP\naccount to Payee FSP account
-Switch ->> PayeeFSP: **POST /transfer**\n(amount=100 USD)
+Switch ->> PayeeFSP: **POST /transfers**\n(amount=100 USD)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Transfer 100 USD from Switch\naccount to Payee account, 1 USD\nfrom Payee to fee account
 PayeeFSP -> Payee: You have received 100 USD\nfrom Payer and paid 1 USD\nin internal fee. Please give\ngoods or service to Payer.
 Payee ->> PayerOTC: Here is your goods or service
-Switch <<- PayeeFSP: **PUT /transfer/**<i><ID></i>
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 Switch -> Switch: Commit reserved transfer
-PayerFSP <<- Switch: **PUT /transfer/**<i><ID></i>
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Commit reserved transfer

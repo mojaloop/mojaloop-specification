@@ -130,11 +130,11 @@ Loop #OldLace
     Payee FSP
   end hnote
   PayerFSP -> PayerFSP: Reserve each individual\ntransfer from Payer\naccount to Payee FSP account
-  PayerFSP ->> Switch: **POST /bulkTransfers/**\n(List of individual transfers\nincluding ILP packet and condition)
+  PayerFSP ->> Switch: **POST /bulkTransfers**\n(List of individual transfers\nincluding ILP packet and condition)
   activate Switch
   PayerFSP <<-- Switch: **HTTP 202** (Accepted)
   Switch -> Switch: Reserve each individual\ntransfer from Payer FSP\nto Payee FSP
-  Switch ->> PayeeFSP: **POST /bulkTransfers/**\n(List of individual transfers\nincluding ILP packet and condition)
+  Switch ->> PayeeFSP: **POST /bulkTransfers**\n(List of individual transfers\nincluding ILP packet and condition)
   activate PayeeFSP
   Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
   PayeeFSP -> PayeeFSP: Perform each transfer from \nPayer FSP account to Payee \naccount, generate fulfilments
