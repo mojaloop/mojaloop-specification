@@ -1,0 +1,4537 @@
+swagger: "2.0"
+info:
+  version: "1.1"
+  title: Open API for FSP Interoperability (FSPIOP)
+  description: Based on API Definition.docx updated on 2020-05-19 Version 1.1. Note - The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header.
+  license:
+    name: CC BY-ND 4.0
+    url: https://github.com/mojaloop/mojaloop-specification/blob/master/LICENSE.md
+  contact:
+    name: "Sam Kummary"
+    url: https://github.com/mojaloop/mojaloop-specification/issues
+basePath: /fsp
+schemes:
+- http
+- https
+
+paths:
+  /participants/{ID}/error:
+    put:
+      description: If there is an error during FSP information creation in the server, the error callback PUT /participants/{ID}/error is used. The <ID> in the URI should contain the requestId that was used for the creation of the participant information.
+      summary: ParticipantsByIDAndError
+      tags:
+      - participants
+      operationId: ParticipantsByIDAndError
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation":
+            {
+                "errorCode": "3100", 
+                "errorDescription": "Generic validation error", 
+                "extensionList":
+                {
+                  "extension":
+                  [ 
+                      { 
+                          "key": "SchemeKey1", 
+                          "value": "Additional informatioon regarding a Scheme specific Key - 1" 
+                      },
+                      { 
+                          "key": "SchemeKey2", 
+                          "value": "Additional informatioon regarding a Scheme specific Key - 2" 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /participants/{ID}:
+    put:
+      description: The callback PUT /participants/<ID> is used to inform the client of the result of the creation of the provided list of identities.
+      summary: ParticipantsByID
+      tags:
+      - participants
+      operationId: ParticipantsByIDPut
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ParticipantsIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "partyList": 
+            [ 
+                { 
+                    partyId: {
+                      partyIdType: "PERSONAL_ID",
+                      partyIdentifier: "p123456789"
+                    }
+                }, 
+                { 
+                    partyId: {
+                      partyIdType: "PERSONAL_ID",
+                      partyIdentifier: "p987654321"
+                    }
+                }
+            ],
+            "currency": "USD"
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /participants/{Type}/{ID}/error:
+    put:
+      description: If the server is unable to find, create or delete the associated FSP of the provided identity, or another processing error occurred, the error callback PUT /participants/<Type>/<ID>/error (or PUT /participants/<Type>/<ID>/<SubId>/error) is used.
+      summary: ParticipantsErrorByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsErrorByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/Type'
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation":
+            {
+                "errorCode": "3100", 
+                "errorDescription": "Generic validation error", 
+                "extensionList":
+                {
+                  "extension":
+                  [ 
+                      { 
+                          "key": "AdditionalInfo", 
+                          "value": "Generic validation error to be used in order not to disclose information that may be considered private." 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /participants/{Type}/{ID}/{SubId}/error:
+    put:
+      description: If the server is unable to find, create or delete the associated FSP of the provided identity, or another processing error occurred, the error callback PUT /participants/<Type>/<ID>/error (or PUT /participants/<Type>/<ID>/<SubId>/error) is used.
+      summary: ParticipantsSubIdErrorByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsSubIdErrorByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/Type'
+      - $ref: '#/parameters/ID'
+      - $ref: '#/parameters/SubId'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation":
+            {
+                "errorCode": "3100", 
+                "errorDescription": "Generic validation error", 
+                "extensionList":
+                {
+                  "extension":
+                  [ 
+                      { 
+                          "key": "AdditionalInfo", 
+                          "value": "Generic validation error to be used in order not to disclose information that may be considered private." 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /participants/{Type}/{ID}/{SubId}:
+    parameters:
+    - $ref: '#/parameters/Type'
+    - $ref: '#/parameters/ID'
+    - $ref: '#/parameters/SubId'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /participants/<Type>/<ID> (or GET /participants/<Type>/<ID>/<SubId>) is used to find out in which FSP the requested Party, defined by <Type>, <ID> and optionally <SubId>, is located (for example, GET /participants/MSISDN/123456789, or GET /participants/BUSINESS/shoecompany/employee1). This HTTP request should support a query string for filtering of currency. To use filtering of currency, the HTTP request GET /participants/<Type>/<ID>?currency=XYZ should be used, where XYZ is the requested currency.
+      summary: ParticipantsSubIdByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsSubIdByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /participants/<Type>/<ID> (or PUT /participants/<Type>/<ID>/<SubId>) is used to inform the client of a successful result of the lookup, creation, or deletion of the FSP information related to the Party. If the FSP information is deleted, the fspId element should be empty; otherwise the element should include the FSP information for the Party.
+      summary: ParticipantsSubIdByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsSubIdByTypeAndID3
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ParticipantsTypeIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "fspId": "1234" 
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    post:
+      description: The HTTP request POST /participants/<Type>/<ID> (or POST /participants/<Type>/<ID>/<SubId>) is used to create information in the server regarding the provided identity, defined by <Type>, <ID>, and optionally <SubId> (for example, POST /participants/MSISDN/123456789 or POST /participants/BUSINESS/shoecompany/employee1). An ExtensionList element has been added to this reqeust in version v1.1
+      summary: ParticipantsSubIdByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsSubIdByTypeAndIDPost
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ParticipantsTypeIDSubIDPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          {
+            "fspId": "1234",
+            "currency": "USD"
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    delete:
+      description: The HTTP request DELETE /participants/<Type>/<ID> (or DELETE /participants/<Type>/<ID>/<SubId>) is used to delete information in the server regarding the provided identity, defined by <Type> and <ID>) (for example, DELETE /participants/MSISDN/123456789), and optionally <SubId>. This HTTP request should support a query string to delete FSP information regarding a specific currency only. To delete a specific currency only, the HTTP request DELETE /participants/<Type>/<ID>?currency=XYZ should be used, where XYZ is the requested currency.
+        Note -  The Account Lookup System should verify that it is the Party’s current FSP that is deleting the FSP information.
+      summary: ParticipantsSubIdByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsSubIdByTypeAndID2
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /participants/{Type}/{ID}:
+    parameters:
+    - $ref: '#/parameters/Type'
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /participants/<Type>/<ID> (or GET /participants/<Type>/<ID>/<SubId>) is used to find out in which FSP the requested Party, defined by <Type>, <ID> and optionally <SubId>, is located (for example, GET /participants/MSISDN/123456789, or GET /participants/BUSINESS/shoecompany/employee1). This HTTP request should support a query string for filtering of currency. To use filtering of currency, the HTTP request GET /participants/<Type>/<ID>?currency=XYZ should be used, where XYZ is the requested currency.
+      summary: ParticipantsByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /participants/<Type>/<ID> (or PUT /participants/<Type>/<ID>/<SubId>) is used to inform the client of a successful result of the lookup, creation, or deletion of the FSP information related to the Party. If the FSP information is deleted, the fspId element should be empty; otherwise the element should include the FSP information for the Party.
+      summary: ParticipantsByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsByTypeAndID3
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ParticipantsTypeIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "fspId": "1234" 
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    post:
+      description: The HTTP request POST /participants/<Type>/<ID> (or POST /participants/<Type>/<ID>/<SubId>) is used to create information in the server regarding the provided identity, defined by <Type>, <ID>, and optionally <SubId> (for example, POST /participants/MSISDN/123456789 or POST /participants/BUSINESS/shoecompany/employee1). An ExtensionList element has been added to this request in version v1.1
+      summary: ParticipantsByIDAndType
+      tags:
+      - participants
+      operationId: ParticipantsByIDAndType
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ParticipantsTypeIDSubIDPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          {
+            "fspId": "1234",
+            "currency": "USD"
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    delete:
+      description: The HTTP request DELETE /participants/<Type>/<ID> (or DELETE /participants/<Type>/<ID>/<SubId>) is used to delete information in the server regarding the provided identity, defined by <Type> and <ID>) (for example, DELETE /participants/MSISDN/123456789), and optionally <SubId>. This HTTP request should support a query string to delete FSP information regarding a specific currency only. To delete a specific currency only, the HTTP request DELETE /participants/<Type>/<ID>?currency=XYZ should be used, where XYZ is the requested currency.
+        Note -  The Account Lookup System should verify that it is the Party’s current FSP that is deleting the FSP information.
+      summary: ParticipantsByTypeAndID
+      tags:
+      - participants
+      operationId: ParticipantsByTypeAndID2
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /participants:
+    post:
+      description: The HTTP request POST /participants is used to create information in the server regarding the provided list of identities. This request should be used for bulk creation of FSP information for more than one Party. The optional currency parameter should indicate that each provided Party supports the currency
+      summary: Participants
+      tags:
+      - participants
+      operationId: Participants1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ParticipantsPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          {
+            "requestId": "b51ec534-ee48-4575-b6a9-ead2955b8069",
+            "partyList":
+              [ {
+                "partyIdType": "PERSONAL_ID",
+                "partyIdentifier": "16135551212",
+                "partySubIdOrType": "PASSPORT",
+                "fspId": "1234"
+              },
+              {
+                "partyIdType": "PERSONAL_ID",
+                "partyIdentifier": "16135551234",
+                "partySubIdOrType": "DRIVING_LICENSE",
+                "fspId": "1234",
+              } ],
+              "currency": "USD"
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /parties/{Type}/{ID}:
+    parameters:
+    - $ref: '#/parameters/Type'
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /parties/<Type>/<ID> (or GET /parties/<Type>/<ID>/<SubId>) is used to lookup information regarding the requested Party, defined by <Type>, <ID> and optionally <SubId> (for example, GET /parties/MSISDN/123456789, or GET /parties/BUSINESS/shoecompany/employee1).
+      summary: PartiesByTypeAndID
+      tags:
+      - parties
+      operationId: PartiesByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /parties/<Type>/<ID> (or PUT /parties/<Type>/<ID>/<SubId>) is used to inform the client of a successful result of the Party information lookup.
+      summary: PartiesByTypeAndID2
+      tags:
+      - parties
+      operationId: PartiesByTypeAndID2
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema: 
+          $ref: '#/definitions/PartiesTypeIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          {
+            "party":
+            {
+                "partyIdInfo":
+                {
+                  "partyIdType": "PERSONAL_ID", 
+                  "partyIdentifier": "16135551212",
+                  "partySubIdOrType": "DRIVING_LICENSE",
+                  "fspId": "1234",
+                  
+                },
+                "merchantClassificationCode": "4321",
+                "name": "Justin Trudeau", 
+                "personalInfo": 
+                { 
+                  "complexName": 
+                    { 
+                      "firstName": "Justin", 
+                      "middleName": "Pierre", 
+                      "lastName": "Trudeau"
+                    },
+                    "dateOfBirth": "1971-12-25" 
+                }
+             }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /parties/{Type}/{ID}/error:
+    put:
+      description: If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback PUT /parties/<Type>/<ID>/error (or PUT /parties/<Type>/<ID>/<SubId>/error) is used.
+      summary: PartiesErrorByTypeAndID
+      tags:
+      - parties
+      operationId: PartiesErrorByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/Type'
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "3204", 
+                "errorDescription": "Party not found", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "AdditionalInfo", 
+                          "value": "Party with the provided identifier, identifier type, and optional sub id or type was not found." 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /parties/{Type}/{ID}/{SubId}:
+    parameters:
+    - $ref: '#/parameters/Type'
+    - $ref: '#/parameters/ID'
+    - $ref: '#/parameters/SubId'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /parties/<Type>/<ID> (or GET /parties/<Type>/<ID>/<SubId>) is used to lookup information regarding the requested Party, defined by <Type>, <ID> and optionally <SubId> (for example, GET /parties/MSISDN/123456789, or GET /parties/BUSINESS/shoecompany/employee1).
+      summary: PartiesSubIdByTypeAndID
+      tags:
+      - parties
+      operationId: PartiesSubIdByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /parties/<Type>/<ID> (or PUT /parties/<Type>/<ID>/<SubId>) is used to inform the client of a successful result of the Party information lookup.
+      summary: PartiesSubIdByTypeAndID
+      tags:
+      - parties
+      operationId: PartiesSubIdByTypeAndIDPut
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema: 
+          $ref: '#/definitions/PartiesTypeIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "party":
+            {
+                "partyIdInfo":
+                {
+                  "partyIdType": "PERSONAL_ID", 
+                  "partyIdentifier": "16135551212",
+                  "partySubIdOrType": "DRIVING_LICENSE",
+                  "fspId": "1234"
+                },
+                "merchantClassificationCode": "4321",
+                "name": "Justin Trudeau", 
+                "personalInfo": 
+                { 
+                  "complexName": 
+                    { 
+                      "firstName": "Justin", 
+                      "middleName": "Pierre", 
+                      "lastName": "Trudeau"
+                    },
+                    "dateOfBirth": "1971-12-25" 
+                }
+             }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /parties/{Type}/{ID}/{SubId}/error:
+    put:
+      description: If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback PUT /parties/<Type>/<ID>/error (or PUT /parties/<Type>/<ID>/<SubId>/error) is used.
+      summary: PartiesSubIdErrorByTypeAndID
+      tags:
+      - parties
+      operationId: PartiesSubIdErrorByTypeAndID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/Type'
+      - $ref: '#/parameters/ID'
+      - $ref: '#/parameters/SubId'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "3204", 
+                "errorDescription": "Party not found", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "AdditionalInfo", 
+                          "value": "Party with the provided identifier, identifier type, and optional sub id or type was not found." 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transactionRequests/{ID}/error:
+    put:
+      description: If the server is unable to find or create a transaction request, or another processing error occurs, the error callback PUT /transactionRequests/<ID>/error is used. The <ID> in the URI should contain the transactionRequestId that was used for the creation of the transaction request, or the <ID> that was used in the GET /transactionRequests/<ID>.
+      summary: TransactionRequestsErrorByID
+      tags:
+      - transactionRequests
+      operationId: TransactionRequestsErrorByID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "3200",
+                "errorDescription": "Generic ID not found",
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "AdditionalInfo", 
+                          "value": "Generic ID error provided by the client." 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transactionRequests/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /transactionRequests/<ID> is used to get information regarding an earlier created or requested transaction request. The <ID> in the URI should contain the transactionRequestId that was used for the creation of the transaction request.
+      summary: TransactionRequestsByID
+      tags:
+      - transactionRequests
+      operationId: TransactionRequestsByID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /transactionRequests/<ID> is used to inform the client of a requested or created transaction request. The <ID> in the URI should contain the transactionRequestId that was used for the creation of the transaction request, or the <ID> that was used in the GET /transactionRequests/<ID>.
+      summary: TransactionRequestsByID
+      tags:
+      - transactionRequests
+      operationId: TransactionRequestsByIDPut
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TransactionRequestsIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "transactionId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+            "transactionRequestState": "RECEIVED", 
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "trx-req-additional-info", 
+                      "value": "This is a merch type transaction" 
+                  }
+              ]
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transactionRequests:
+    post:
+      description: The HTTP request POST /transactionRequests is used to request the creation of a transaction request for the provided financial transaction in the server.
+      summary: TransactionRequests
+      tags:
+      - transactionRequests
+      operationId: TransactionRequests
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TransactionRequestsPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "transactionRequestId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+            "payee": 
+            { 
+                "partyIdInfo":
+                {
+                  "partyIdType": "PERSONAL_ID", 
+                  "partyIdentifier": "16135551212",
+                  "partySubIdOrType": "DRIVING_LICENSE",
+                  "fspId": "1234"
+                },
+                "merchantClassificationCode": "4321",
+                "name": "Justin Trudeau", 
+                "personalInfo": 
+                { 
+                    "complexName": 
+                   { 
+                        "firstName": "Justin", 
+                        "middleName": "Pierre", 
+                        "lastName": "Trudeau" 
+                    }, 
+                    "dateOfBirth": "1971-12-25" 
+                } 
+             }, 
+            "payer":  #PartyIdInfo type
+            {
+              "partyIdType": "PERSONAL_ID", 
+              "partyIdentifier": "16135551212",
+              "partySubIdOrType": "DRIVING_LICENSE",
+              "fspId": "1234"
+            }, 
+            "amount": 
+            { 
+                "currency": "USD", 
+                "amount": "123.45" 
+            }, 
+            "transactionType": 
+            { 
+                "scenario": "DEPOSIT", 
+                "subScenario": "locally defined sub-scenario", 
+                "initiator": "PAYEE", 
+                "initiatorType": "CONSUMER", 
+                "refundInfo": 
+                { 
+                    "originalTransactionId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+                    "refundReason": "free text indicating reason for the refund" 
+                }, 
+                "balanceOfPayments": "123" 
+             }, 
+            "note": "Free-text memo", 
+            "geoCode": 
+            { 
+                "latitude": "+45.4215", 
+                "longitude": "+75.6972" 
+            },
+            "authenticationType": "OTP", 
+            "expiration": "2016-05-24T08:38:08.699-04:00", 
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "AdditionalInfo1", 
+                      "value": "This is a Type-A Merchant request" 
+                  }, 
+                  { 
+                      "key": "AdditionalInfo2", 
+                      "value": "This is a QR code type transaction" 
+                  }
+              ]
+            }
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /quotes/{ID}/error:
+    put:
+      description: If the server is unable to find or create a quote, or some other processing error occurs, the error callback PUT /quotes/<ID>/error is used. The <ID> in the URI should contain the quoteId that was used for the creation of the quote, or the <ID> that was used in the GET /quotes/<ID>.
+      summary: QuotesByIDAndError
+      tags:
+      - quotes
+      operationId: QuotesByIDAndError
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "3205", 
+                "errorDescription": "Quote ID not found", 
+                "extensionList":
+                {
+                  "extension":
+                  [ 
+                      { 
+                          "key": "AdditionalInfo", 
+                          "value": "Provided Quote ID was not found on the server." 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /quotes/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /quotes/<ID> is used to get information regarding an earlier created or requested quote. The <ID> in the URI should contain the quoteId that was used for the creation of the quote.
+      summary: QuotesByID
+      tags:
+      - quotes
+      operationId: QuotesByID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /quotes/<ID> is used to inform the client of a requested or created quote. The <ID> in the URI should contain the quoteId that was used for the creation of the quote, or the <ID> that was used in the GET /quotes/<ID>GET /quotes/<ID>.
+      summary: QuotesByID
+      tags:
+      - quotes
+      operationId: QuotesByID1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/QuotesIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "transferAmount": 
+            { 
+                "currency": "USD", 
+                "amount": "124.45" 
+            },
+            "payeeReceiveAmount": 
+            { 
+                "currency": "USD", 
+                "amount": "123.45" 
+            },
+            "payeeFspFee":
+            { 
+                "currency": "USD",
+                "amount": "1.45" 
+            },
+            "payeeFspCommission":
+            { 
+                "currency": "USD", 
+                "amount": "0" 
+            },
+            "expiration": "2016-05-24T08:38:08.699-04:00", 
+            "geoCode":
+            { 
+                "latitude": "+45.4215", 
+                "longitude": "+75.6972" 
+            },
+            "ilpPacket": "AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA",
+            "condition": "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA",
+            "extensionList":
+            {
+              "extension":
+              [ 
+                  { 
+                      "key": "AdditionalInfo", 
+                      "value": "This is a customized extension for the ABC Scheme" 
+                  }
+              ]
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /quotes:
+    post:
+      description: The HTTP request POST /quotes is used to request the creation of a quote for the provided financial transaction in the server.
+      summary: Quotes
+      tags:
+      - quotes
+      operationId: Quotes
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/QuotesPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "quoteId": "b51ec534-ee48-4575-b6a9-ead2955b8069",
+            "transactionId": "a8323bc6-c228-4df2-ae82-e5a997baf899",
+            "transactionRequestId": "a8323bc6-c228-4df2-ae82-e5a997baf890",
+            "payee": 
+            { 
+                "partyIdInfo":
+                {
+                  "partyIdType": "PERSONAL_ID", 
+                  "partyIdentifier": "16135551212",
+                  "partySubIdOrType": "DRIVING_LICENSE",
+                  "fspId": "1234"
+                },
+                "merchantClassificationCode": "4321",
+                "name": "Justin Trudeau", 
+                "personalInfo": 
+                { 
+                    "complexName": 
+                   { 
+                        "firstName": "Justin", 
+                        "middleName": "Pierre",
+                        "lastName": "Trudeau" 
+                    }, 
+                    "dateOfBirth": "1971-12-25" 
+                } 
+             }, 
+            "payer": 
+            { 
+                "partyIdInfo":
+                {
+                  "partyIdType": "PERSONAL_ID", 
+                  "partyIdentifier": "16135551212",
+                  "partySubIdOrType": "PASSPORT",
+                  "fspId": "1234"
+                },
+                "merchantClassificationCode": "1234",
+                "name": "Donald Trump", 
+                "personalInfo": 
+                { 
+                    "complexName": 
+                   { 
+                        "firstName": "Donald", 
+                        "middleName": "John", 
+                        "lastName": "Trump" 
+                    }, 
+                    "dateOfBirth": "1946-06-14" 
+                 } 
+            }, 
+            "amountType": "SEND",
+            "amount":
+            { 
+                "currency": "USD", 
+                "amount": "123.45" 
+            },
+            "fees":
+            { 
+                "currency": "USD", 
+                "amount": "1.25" 
+            },
+            "transactionType": 
+            { 
+                "scenario": "DEPOSIT", 
+                "subScenario": "locally defined sub-scenario", 
+                "initiator": "PAYEE", 
+                "initiatorType": "CONSUMER", 
+                "refundInfo": 
+                { 
+                    "originalTransactionId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+                    "refundReason": "free text indicating reason for the refund" 
+                }, 
+                "balanceOfPayments": "123" 
+             }, 
+            "geoCode": 
+            { 
+                "latitude": "+45.4215", 
+                "longitude": "+75.6972" 
+            },
+            "note": "Free-text memo",
+            "expiration": "2016-05-24T08:38:08.699-04:00", 
+            "extensionList":
+            {
+              "extension":
+              [ 
+                  { 
+                      "key": "AdditionalInfo", 
+                      "value": "This is an ABC Scheme specific element" 
+                  }
+              ]
+            }
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /authorizations/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /authorizations/<ID> is used to request the Payer to enter the applicable credentials in the Payee FSP system. The <ID> in the URI should contain the transactionRequestID, received from the POST /transactionRequests service earlier in the process. This request requires a query string to be included in the URI, with the following key-value pairs -
+        authenticationType=<Type>, where <Type> value is a valid authentication type from the enumeration AuthenticationType.
+        retriesLeft==<NrOfRetries>, where <NrOfRetries> is the number of retries left before the financial transaction is rejected. <NrOfRetries> must be expressed in the form of the data type Integer. retriesLeft=1 means that this is the last retry before the financial transaction is rejected.
+        amount=<Amount>, where <Amount> is the transaction amount that will be withdrawn from the Payer’s account. <Amount> must be expressed in the form of the data type Amount.
+        currency=<Currency>, where <Currency> is the transaction currency for the amount that will be withdrawn from the Payer’s account. The <Currency> value must be expressed in the form of the enumeration CurrencyCode.
+        An example URI containing all the required key-value pairs in the query string is the following - GET /authorization/3d492671-b7af-4f3f-88de-76169b1bdf88?authenticationType=OTP&retriesLeft=2&amount=102&currency=USD
+      summary: AuthorizationsByID
+      tags:
+      - authorizations
+      operationId: AuthorizationsByIDGet
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /authorizations/<ID> is used to inform the client of the result of a previously-requested authorization. The <ID> in the URI should contain the <ID> that was used in the GET /authorizations/<ID>.
+      summary: AuthorizationsByID
+      tags:
+      - authorizations
+      operationId: AuthorizationsByIDPut
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/AuthorizationsIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "authenticationInfo": 
+            { 
+                "authentication": "OTP", 
+                "authenticationValue": "1234" 
+            },
+            "responseType": "ENTERED"
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /authorizations/{ID}/error:
+    put:
+      description: If the server is unable to find the transaction request, or another processing error occurs, the error callback PUT /authorizations/<ID>/error is used. The <ID> in the URI should contain the <ID> that was used in the GET /authorizations/<ID>.
+      summary: AuthorizationsByIDAndError
+      tags:
+      - authorizations
+      operationId: AuthorizationsByIDAndError
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "5100", 
+                "errorDescription": "This is an error description", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transfers/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /transfers/<ID> is used to get information regarding an earlier created or requested transfer. The <ID> in the URI should contain the transferId that was used for the creation of the transfer.
+      summary: TransfersByIDGet
+      tags:
+      - transfers
+      operationId: TransfersByIDGet
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    patch:
+      description: The HTTP request PATCH /transfers/<ID> is used by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The <ID> in the URI should contain the transferId that was used for the creation of the transfer. Please note that this request does not generate a callback.
+      summary: TransfersByIDPatch
+      tags:
+      - transfers
+      operationId: TransfersByIDPatch
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TransfersIDPatchResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "completedTimestamp": "2020-04-07T08:38:08.699-04:00",
+            "transferState": "COMMITTED"
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /transfers/<ID> is used to inform the client of a requested or created transfer. The <ID> in the URI should contain the transferId that was used for the creation of the transfer, or the <ID> that was used in the GET /transfers/<ID>.
+      summary: TransfersByIDPut
+      tags:
+      - transfers
+      operationId: TransfersByIDPut
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TransfersIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "fulfilment": "WLctttbu2HvTsa1XWvUoGRcQozHsqeu9Ahl2JW9Bsu8",
+            "completedTimestamp": "2016-05-24T08:38:08.699-04:00",
+            "transferState": "COMMITTED",
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transfers/{ID}/error:
+    put:
+      description: If the server is unable to find or create a transfer, or another processing error occurs, the error callback PUT /transfers/<ID>/error is used. The <ID> in the URI should contain the transferId that was used for the creation of the transfer, or the <ID> that was used in the GET /transfers/<ID>.
+      summary: TransfersByIDAndError
+      tags:
+      - transfers
+      operationId: TransfersByIDAndError
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "5100", 
+                "errorDescription": "This is an error description", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transfers:
+    post:
+      description: The HTTP request POST /transfers is used to request the creation of a transfer for the next ledger, and a financial transaction for the Payee FSP.
+      summary: Transfers
+      tags:
+      - transfers
+      operationId: transfers
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TransfersPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "transferId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+            "payeeFsp": "1234", 
+            "payerFsp": "5678", 
+            "amount": 
+            { 
+                "currency": "USD", 
+                "amount": "123.45" 
+            }, 
+            "ilpPacket": "AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA",
+            "condition": "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA",
+            "expiration": "2016-05-24T08:38:08.699-04:00", 
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transactions/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /transactions/<ID> is used to get transaction information regarding a financial transaction created earlier. The <ID> in the URI should contain the transactionId that was used for the creation of the quote, as the transaction is created as part of another process (the transfer process).
+      summary: TransactionsByID
+      tags:
+      - transactions
+      operationId: TransactionsByID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /transactions/<ID> is used to inform the client of a requested transaction. The <ID> in the URI should contain the <ID> that was used in the GET /transactions/<ID>.
+      summary: TransactionsByID
+      tags:
+      - transactions
+      operationId: TransactionsByID1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/TransactionsIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "completedTimestamp": "2016-05-24T08:38:08.699-04:00", 
+            "transactionState": "RECEIVED",
+            "code": "Test-Code",
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /transactions/{ID}/error:
+    put:
+      description: If the server is unable to find or create a transaction, or another processing error occurs, the error callback PUT /transactions/<ID>/error is used. The <ID> in the URI should contain the <ID> that was used in the GET /transactions/<ID>.
+      summary: TransactionsErrorByID
+      tags:
+      - transactions
+      operationId: TransactionsErrorByID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "5100", 
+                "errorDescription": "This is an error description", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+            } 
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /bulkQuotes/{ID}/error:
+    put:
+      description: If the server is unable to find or create a bulk quote, or another processing error occurs, the error callback PUT /bulkQuotes/<ID>/error is used. The <ID> in the URI should contain the bulkQuoteId that was used for the creation of the bulk quote, or the <ID> that was used in the GET /bulkQuotes/<ID>.
+      summary: BulkQuotesErrorByID
+      tags:
+      - bulkQuotes
+      operationId: BulkQuotesErrorByID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "5100", 
+                "errorDescription": "This is an error description", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+            } 
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /bulkQuotes/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /bulkQuotes/<ID> is used to get information regarding an earlier created or requested bulk quote. The <ID> in the URI should contain the bulkQuoteId that was used for the creation of the bulk quote.
+      summary: BulkQuotesByID
+      tags:
+      - bulkQuotes
+      operationId: BulkQuotesByID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /bulkQuotes/<ID> is used to inform the client of a requested or created bulk quote. The <ID> in the URI should contain the bulkQuoteId that was used for the creation of the bulk quote, or the <ID> that was used in the GET /bulkQuotes/<ID>.
+      summary: BulkQuotesByID
+      tags:
+      - bulkQuotes
+      operationId: BulkQuotesByID1
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/BulkQuotesIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "individualQuoteResults": 
+            [ { 
+                quoteId: "b51ec534-ee48-4575-b6a9-ead2955b8069",
+                payee: 
+                { 
+                    partyIdInfo:
+                    {
+                      partyIdType: "PERSONAL_ID", 
+                      partyIdentifier: "16135551212",
+                      partySubIdOrType: "DRIVING_LICENSE",
+                      fspId: "1234"
+                    },
+                    merchantClassificationCode: "4321",
+                    name: "Justin Trudeau", 
+                    personalInfo: 
+                    { 
+                      complexName: 
+                      { 
+                        firstName: "Justin", 
+                        middleName: "Pierre", 
+                        lastName: "Trudeau"
+                      }, 
+                      dateOfBirth: "1971-12-25" 
+                    }
+                 },
+                receiveAmount:
+                { 
+                    currency: "USD", 
+                    amount: "123.45" 
+                },
+                payeeFspFee:
+                { 
+                    currency: "USD", 
+                    amount: "1.45" 
+                },
+                payeeFspCommission:
+                { 
+                    currency: "USD", 
+                    amount: "1.45" 
+                },
+                ilpPacket: "AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA",
+                condition: "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA",
+                errorInformation: 
+                {
+                  errorCode: "5100",
+                  errorDescription: "This is an error description",
+                  extensionList:
+                  {
+                    extension:
+                    [ 
+                        { 
+                            "key": "errorDescription", 
+                            "value": "This is a more detailed error description" 
+                        }, 
+                        { 
+                            "key": "errorDescription", 
+                            "value": "This is a more detailed error description" 
+                        }
+                    ]
+                  }
+                },
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+              }
+            ],
+            "expiration": "2016-05-24T08:38:08.699-04:00", 
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /bulkQuotes:
+    post:
+      description: The HTTP request POST /bulkQuotes is used to request the creation of a bulk quote for the provided financial transactions in the server.
+      summary: BulkQuotes
+      tags:
+      - bulkQuotes
+      operationId: BulkQuotes
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/BulkQuotesPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "bulkQuoteId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+            "payer": 
+            { 
+                "partyIdInfo":
+                {
+                  "partyIdType": "PERSONAL_ID", 
+                  "partyIdentifier": "16135551212",
+                  "partySubIdOrType": "PASSPORT",
+                  "fspId": "1234"
+                },
+                "merchantClassificationCode": "1234",
+                "name": "Justin Trudeau", 
+                "personalInfo": 
+                { 
+                    "complexName": 
+                   { 
+                        "firstName": "Justin", 
+                        "middleName": "Pierre", 
+                        "lastName": "Trudeau" 
+                    }, 
+                    "dateOfBirth": "1971-12-25" 
+                } 
+            }, 
+            "geoCode": { 
+                "latitude": "+45.4215", 
+                "longitude": "+75.6972" 
+            }, 
+            "individualQuotes": 
+            [ { 
+                "quoteId": "b51ec534-ee48-4575-b6a9-ead2955b8069",
+                "transactionId": "b51ec534-ee48-4575-b6a9-ead2955b8069",
+                "payee": 
+                { 
+                    "partyIdInfo":
+                    {
+                      "partyIdType": "PERSONAL_ID", 
+                      "partyIdentifier": "16135551212",
+                      "partySubIdOrType": "PASSPORT",
+                      "fspId": "1234"
+                    },
+                    "merchantClassificationCode": "1234",
+                    "name": "Justin Trudeau", 
+                    "personalInfo": 
+                    { 
+                        "complexName": 
+                       { 
+                            "firstName": "Justin", 
+                            "middleName": "Pierre", 
+                            "lastName": "Trudeau" 
+                        }, 
+                        "dateOfBirth": "1971-12-25" 
+                    } 
+                 },
+                "amountType": "RECEIVE",
+                "amount":
+                { 
+                    "currency": "USD", 
+                    "amount": "123.45" 
+                },
+                "fees":
+                { 
+                    "currency": "USD", 
+                    "amount": "1.45" 
+                },
+                "transactionType": 
+                { 
+                    "scenario": "DEPOSIT", 
+                    "subScenario": "locally defined sub-scenario", 
+                    "initiator": "PAYEE", 
+                    "initiatorType": "CONSUMER", 
+                    "refundInfo": 
+                    { 
+                        "originalTransactionId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+                        "refundReason": "free text indicating reason for the refund" 
+                    }, 
+                    "balanceOfPayments": "123" 
+                 },
+                "note": "Note sent to Payee",
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+                } ], 
+            "expiration": "2016-05-24T08:38:08.699-04:00", 
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /bulkTransfers/{ID}:
+    parameters:
+    - $ref: '#/parameters/ID'
+    #Headers
+    - $ref: '#/parameters/Content-Type'
+    - $ref: '#/parameters/Date'
+    - $ref: '#/parameters/X-Forwarded-For'
+    - $ref: '#/parameters/FSPIOP-Source'
+    - $ref: '#/parameters/FSPIOP-Destination'
+    - $ref: '#/parameters/FSPIOP-Encryption'
+    - $ref: '#/parameters/FSPIOP-Signature'
+    - $ref: '#/parameters/FSPIOP-URI'
+    - $ref: '#/parameters/FSPIOP-HTTP-Method'
+    get:
+      description: The HTTP request GET /bulkTransfers/<ID> is used to get information regarding an earlier created or requested bulk transfer. The <ID> in the URI should contain the bulkTransferId that was used for the creation of the bulk transfer.
+      summary: BulkTransferByID
+      tags:
+      - bulkTransfers
+      operationId: BulkTransferByID
+      produces:
+      - application/json
+      parameters:
+      #Headers
+      - $ref: '#/parameters/Accept'
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+    put:
+      description: The callback PUT /bulkTransfers/<ID> is used to inform the client of a requested or created bulk transfer. The <ID> in the URI should contain the bulkTransferId that was used for the creation of the bulk transfer (POST /bulkTransfers), or the <ID> that was used in the GET /bulkTransfers/<ID>.
+      summary: BulkTransfersByIDPut
+      tags:
+      - bulkTransfers
+      operationId: BulkTransfersByIDPut
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/BulkTransfersIDPutResponse'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      x-examples:
+        "application/json":
+          { 
+            "completedTimestamp": "2016-05-24T08:38:08.699-04:00", 
+            "individualTransferResults": 
+            [ 
+                {
+                    "transferId": "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+                    "fulfilment": "WLctttbu2HvTsa1XWvUoGRcQozHsqeu9Ahl2JW9Bsu8", 
+                    "errorInformation": 
+                    {
+                        "errorCode": "5100", 
+                        "errorDescription": "This is an error description", 
+                        extensionList:
+                        {
+                          extension:
+                          [ 
+                              { 
+                                  "key": "errorDescription", 
+                                  "value": "This is a more detailed error description" 
+                              }, 
+                              { 
+                                  "key": "errorDescription", 
+                                  "value": "This is a more detailed error description" 
+                              }
+                          ]
+                        }
+                    },
+                    extensionList:
+                    {
+                      extension:
+                      [ 
+                          { 
+                              "key": "errorDescription", 
+                              "value": "This is a more detailed error description" 
+                          }, 
+                          { 
+                              "key": "errorDescription", 
+                              "value": "This is a more detailed error description" 
+                          }
+                      ]
+                    }
+                },
+                { 
+                    "transferId": "a8323bc6-c228-4df2-ae82-e5a997baf890", 
+                    "fulfilment": "WLctttbu2HvTsa1XWvUoGRcQozHsqeu9Ahl2JW9Bsu8", 
+                    "errorInformation": 
+                    {
+                        "errorCode": "5100", 
+                        "errorDescription": "This is an error description", 
+                        extensionList:
+                        {
+                          extension:
+                          [ 
+                              { 
+                                  "key": "errorDescription", 
+                                  "value": "This is a more detailed error description" 
+                              }, 
+                              { 
+                                  "key": "errorDescription", 
+                                  "value": "This is a more detailed error description" 
+                              }
+                          ]
+                        }
+                    },
+                    extensionList:
+                    {
+                      extension:
+                      [ 
+                          { 
+                              "key": "errorDescription", 
+                              "value": "This is a more detailed error description" 
+                          }, 
+                          { 
+                              "key": "errorDescription", 
+                              "value": "This is a more detailed error description" 
+                          }
+                      ]
+                    }
+                }
+            ],
+            "bulkTransferState": "COMPLETED", 
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /bulkTransfers:
+    post:
+      description: The HTTP request POST /bulkTransfers is used to request the creation of a bulk transfer in the server.
+      summary: BulkTransfers
+      tags:
+      - bulkTransfers
+      operationId: BulkTransfers
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/BulkTransfersPostRequest'
+      #Headers
+      - $ref: '#/parameters/Accept'
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            bulkTransferId: "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+            bulkQuoteId: "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+            payeeFsp: "1234",
+            payerFsp: "5678",
+            individualTransfers: 
+            [ { 
+                transferId: "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+                transferAmount: 
+                { 
+                    currency: "USD", 
+                    amount: "123.45" 
+                }, 
+                ilpPacket: "AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA",
+                condition: "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA",
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+              }, 
+              { 
+                transferId: "b51ec534-ee48-4575-b6a9-ead2955b8069", 
+                transferAmount:
+                { 
+                    currency: "USD", 
+                    amount: "1233.55" 
+                }, 
+                ilpPacket: "AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA",
+                condition: "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA",
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+              }
+            ], 
+            expiration: "2016-05-24T08:38:08.699-04:00",
+            extensionList:
+            {
+              extension:
+              [ 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }, 
+                  { 
+                      "key": "errorDescription", 
+                      "value": "This is a more detailed error description" 
+                  }
+              ]
+            }
+          }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  /bulkTransfers/{ID}/error:
+    put:
+      description: If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback PUT /bulkTransfers/<ID>/error is used. The <ID> in the URI should contain the bulkTransferId that was used for the creation of the bulk transfer (POST /bulkTransfers), or the <ID> that was used in the GET /bulkTransfers/<ID>.
+      summary: BulkTransfersErrorByID
+      tags:
+      - bulkTransfers
+      operationId: BulkTransfersErrorByID
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/ID'
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ErrorInformationObject'
+      #Headers
+      - $ref: '#/parameters/Content-Length'
+      - $ref: '#/parameters/Content-Type'
+      - $ref: '#/parameters/Date'
+      - $ref: '#/parameters/X-Forwarded-For'
+      - $ref: '#/parameters/FSPIOP-Source'
+      - $ref: '#/parameters/FSPIOP-Destination'
+      - $ref: '#/parameters/FSPIOP-Encryption'
+      - $ref: '#/parameters/FSPIOP-Signature'
+      - $ref: '#/parameters/FSPIOP-URI'
+      - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+        "application/json":
+          { 
+            "errorInformation": 
+            {
+                "errorCode": "5100", 
+                "errorDescription": "This is an error description", 
+                extensionList:
+                {
+                  extension:
+                  [ 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }, 
+                      { 
+                          "key": "errorDescription", 
+                          "value": "This is a more detailed error description" 
+                      }
+                  ]
+                }
+            } 
+          }
+      responses:
+        200:
+          $ref: '#/responses/Response200'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+
+definitions:
+  Amount:
+    title: Amount
+    type: string
+    pattern: ^([0]|([1-9][0-9]{0,17}))([.][0-9]{0,3}[1-9])?$
+    description: The API data type Amount is a JSON String in a canonical format that is restricted by a regular expression for interoperability reasons. This pattern does not allow any trailing zeroes at all, but allows an amount without a minor currency unit. It also only allows four digits in the minor currency unit; a negative value is not allowed. Using more than 18 digits in the major currency unit is not allowed.
+  AmountType:
+    title: AmountType
+    type: string
+    enum:
+    - SEND
+    - RECEIVE
+    description: Below are the allowed values for the enumeration AmountType 
+      - SEND Amount the Payer would like to send, that is, the amount that should be withdrawn from the Payer account including any fees.
+      - RECEIVE Amount the Payer would like the Payee to receive, that is, the amount that should be sent to the receiver exclusive fees.
+  AuthenticationType:
+    title: AuthenticationTypeEnum
+    type: string
+    enum:
+    - OTP
+    - QRCODE
+    description: Below are the allowed values for the enumeration AuthenticationType.
+      - OTP One-time password generated by the Payer FSP.
+      - QRCODE QR code used as One Time Password.
+  AuthenticationValue:
+    title: AuthenticationValue
+    #enum: [ $ref: '#/definitions/OtpValue', $ref: '#/definitions/QRCODE']
+    #Pattern below just indicates that the value can be an OTP or QRCODE. Effectively it only evaluates to the second part value QRCODE. This can be replaced by 'oneOf' or 'anyOf' construct once OpenAPI version 3 is released
+    type: string
+    pattern: ^\d{3,10}$|^\S{1,64}$
+    description: Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type.
+  AuthorizationResponse:
+    title: AuthorizationResponse
+    type: string
+    enum:
+    - ENTERED
+    - REJECTED
+    - RESEND
+    description: Below are the allowed values for the enumeration
+      - ENTERED Consumer entered the authentication value.
+      - REJECTED Consumer rejected the transaction.
+      - RESEND Consumer requested to resend the authentication value.
+  BalanceOfPayments:
+    title: BalanceOfPayments
+    type: string
+    pattern: ^[1-9]\d{2}$
+    description: (BopCode) The API data type BopCode is a JSON String of 3 characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. https://www.imf.org/external/np/sta/bopcode/
+  BinaryString:
+    type: string
+    pattern: ^[A-Za-z0-9-_]+[=]{0,2}$
+    description: The API data type BinaryString is a JSON String. The string is a base64url  encoding of a string of raw bytes, where padding (character ‘=’) is added at the end of the data if needed to ensure that the string is a multiple of 4 characters. The length restriction indicates the allowed number of characters.
+  BinaryString32:
+    type: string
+    pattern: ^[A-Za-z0-9-_]{43}$
+    description: The API data type BinaryString32 is a fixed size version of the API data type BinaryString, where the raw underlying data is always of 32 bytes. The data type BinaryString32 should not use a padding character as the size of the underlying data is fixed.
+  BulkTransferState:
+    title: BulkTransactionStateEnum
+    type: string
+    enum:
+    - RECEIVED
+    - PENDING
+    - ACCEPTED
+    - PROCESSING
+    - COMPLETED
+    - REJECTED
+    description: Below are the allowed values for the enumeration
+      - RECEIVED Payee FSP has received the bulk transfer from the Payer FSP.
+      - PENDING Payee FSP has validated the bulk transfer.
+      - ACCEPTED Payee FSP has accepted to process the bulk transfer.
+      - PROCESSING Payee FSP has started to transfer fund to the Payees.
+      - COMPLETED Payee FSP has completed transfer of funds to the Payees.
+      - REJECTED Payee FSP has rejected to process the bulk transfer.
+  Code:
+    title: Code
+    type: string
+    pattern: ^[0-9a-zA-Z]{4,32}$
+    description: Any code/token returned by the Payee FSP (TokenCode Type).
+  CorrelationId:
+    title: CorrelationId
+    type: string
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+    description: Identifier that correlates all messages of the same sequence. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘).
+  Currency:
+    title: CurrencyEnum
+    description: The currency codes defined in ISO 4217 as three-letter alphabetic codes are used as the standard naming representation for currencies.
+    type: string
+    minLength: 3
+    maxLength: 3
+    enum:
+    - AED
+    - AFN
+    - ALL
+    - AMD
+    - ANG
+    - AOA
+    - ARS
+    - AUD
+    - AWG
+    - AZN
+    - BAM
+    - BBD
+    - BDT
+    - BGN
+    - BHD
+    - BIF
+    - BMD
+    - BND
+    - BOB
+    - BRL
+    - BSD
+    - BTN
+    - BWP
+    - BYN
+    - BZD
+    - CAD
+    - CDF
+    - CHF
+    - CLP
+    - CNY
+    - COP
+    - CRC
+    - CUC
+    - CUP
+    - CVE
+    - CZK
+    - DJF
+    - DKK
+    - DOP
+    - DZD
+    - EGP
+    - ERN
+    - ETB
+    - EUR
+    - FJD
+    - FKP
+    - GBP
+    - GEL
+    - GGP
+    - GHS
+    - GIP
+    - GMD
+    - GNF
+    - GTQ
+    - GYD
+    - HKD
+    - HNL
+    - HRK
+    - HTG
+    - HUF
+    - IDR
+    - ILS
+    - IMP
+    - INR
+    - IQD
+    - IRR
+    - ISK
+    - JEP
+    - JMD
+    - JOD
+    - JPY
+    - KES
+    - KGS
+    - KHR
+    - KMF
+    - KPW
+    - KRW
+    - KWD
+    - KYD
+    - KZT
+    - LAK
+    - LBP
+    - LKR
+    - LRD
+    - LSL
+    - LYD
+    - MAD
+    - MDL
+    - MGA
+    - MKD
+    - MMK
+    - MNT
+    - MOP
+    - MRO
+    - MUR
+    - MVR
+    - MWK
+    - MXN
+    - MYR
+    - MZN
+    - NAD
+    - NGN
+    - NIO
+    - NOK
+    - NPR
+    - NZD
+    - OMR
+    - PAB
+    - PEN
+    - PGK
+    - PHP
+    - PKR
+    - PLN
+    - PYG
+    - QAR
+    - RON
+    - RSD
+    - RUB
+    - RWF
+    - SAR
+    - SBD
+    - SCR
+    - SDG
+    - SEK
+    - SGD
+    - SHP
+    - SLL
+    - SOS
+    - SPL
+    - SRD
+    - STD
+    - SVC
+    - SYP
+    - SZL
+    - THB
+    - TJS
+    - TMT
+    - TND
+    - TOP
+    - TRY
+    - TTD
+    - TVD
+    - TWD
+    - TZS
+    - UAH
+    - UGX
+    - USD
+    - UYU
+    - UZS
+    - VEF
+    - VND
+    - VUV
+    - WST
+    - XAF
+    - XCD
+    - XDR
+    - XOF
+    - XPF
+    - YER
+    - ZAR
+    - ZMW
+    - ZWD
+  Date:
+    title: Date
+    type: string
+    pattern: ^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$
+    description: The API data type Date is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.
+      This format, as specified in ISO 8601, contains a date only. A more readable version of the format is yyyy-MM-dd. Examples - "1982-05-23", "1987-08-05"
+  DateOfBirth:
+    title: DateofBirth (type Date)
+    type: string
+    pattern: ^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$
+    description: Date of Birth of the Party.
+  DateTime:
+    title: DateTime
+    type: string
+    pattern: ^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:(\.\d{3}))(?:Z|[+-][01]\d:[0-5]\d)$
+    description: The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.
+      The format is according to ISO 8601, expressed in a combined date, time and time zone format. A more readable version of the format is yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]. Examples -  "2016-05-24T08:38:08.699-04:00", "2016-05-24T08:38:08.699Z" (where Z indicates Zulu time zone, same as UTC).
+  ErrorCode:
+    title: ErrorCode
+    type: string
+    pattern: ^[1-9]\d{3}$
+    description: The API data type ErrorCode is a JSON String of four characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. Each error code in the API is a four-digit number, for example, 1234, where the first number (1 in the example) represents the high-level error category, the second number (2 in the example) represents the low-level error category, and the last two numbers (34 in the example) represents the specific error.
+  ErrorDescription:
+    title: ErrorDescription
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Error description string.
+  ExtensionKey:
+    title: ExtensionKey
+    type: string
+    minLength: 1
+    maxLength: 32
+    description: Extension key.
+  ExtensionValue:
+    title: ExtensionValue
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Extension value.
+  FirstName:
+    title: FirstName
+    type: string
+    minLength: 1
+    maxLength: 128
+    pattern: ^(?!\s*$)[\w .,'-]{1,128}$
+    description: First name of the Party (Name Type).
+  FspId:
+    title: FspId
+    type: string
+    minLength: 1
+    maxLength: 32
+    description: FSP identifier.
+  IlpCondition:
+    title: IlpCondition
+    type: string
+    pattern: ^[A-Za-z0-9-_]{43}$
+    maxLength: 48
+    description: Condition that must be attached to the transfer by the Payer.
+  IlpFulfilment:
+    title: IlpFulfilment
+    type: string
+    pattern: ^[A-Za-z0-9-_]{43}$
+    maxLength: 48
+    description: Fulfilment that must be attached to the transfer by the Payee.
+  IlpPacket:
+    title: IlpPacket
+    type: string
+    pattern: ^[A-Za-z0-9-_]+[=]{0,2}$
+    minLength: 1
+    maxLength: 32768
+    description: Information for recipient (transport layer information).
+  Integer:
+    title: Integer
+    type: string
+    pattern: ^[1-9]\d*$
+    description: The API data type Integer is a JSON String consisting of digits only. Negative numbers and leading zeroes are not allowed. The data type is always limited to a specific number of digits.
+  LastName:
+    title: LastName
+    type: string
+    minLength: 1
+    maxLength: 128
+    pattern: ^(?!\s*$)[\w .,'-]{1,128}$
+    description: Last name of the Party (Name Type).
+  Latitude:
+    title: Latitude
+    type: string
+    pattern: ^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$
+    description: The API data type Latitude is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.
+  Longitude:
+    title: Longitude
+    type: string
+    pattern: ^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$
+    description: The API data type Longitude is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.
+  MerchantClassificationCode:
+    title: MerchantClassificationCode
+    type: string
+    pattern: ^[\d]{1,4}$
+    description: A limited set of pre-defined numbers. This list would be a limited set of numbers identifying a set of popular merchant types like School Fees, Pubs and Restaurants, Groceries, etc.
+  MiddleName:
+    title: MiddleName
+    type: string
+    minLength: 1
+    maxLength: 128
+    pattern: ^(?!\s*$)[\w .,'-]{1,128}$
+    description: Middle name of the Party (Name Type).
+  Name:
+    title: Name
+    type: string
+    pattern: ^(?!\s*$)[\w .,'-]{1,128}$
+    description: The API data type Name is a JSON String, restricted by a regular expression to avoid characters which are generally not used in a name.
+      Regular Expression - The regular expression for restricting the Name type is "^(?!\s*$)[\w .,'-]{1,128}$". The restriction does not allow a string consisting of whitespace only, all Unicode characters are allowed, as well as the period (.) (apostrophe (‘), dash (-), comma (,) and space characters ( ).
+      Note -  In some programming languages, Unicode support must be specifically enabled. For example, if Java is used the flag UNICODE_CHARACTER_CLASS must be enabled to allow Unicode characters.
+  Note:
+    title: Note
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Memo assigned to transaction
+  OtpValue:
+    title: OtpValue
+    type: string
+    pattern: ^\d{3,10}$
+    description: The API data type OtpValue is a JSON String of 3 to 10 characters, consisting of digits only. Negative numbers are not allowed. One or more leading zeros are allowed.
+  PartyIdentifier:
+    title: PartyIdentifier
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Identifier of the Party.
+  PartyIdType:
+    title: PartyIdTypeEnum
+    type: string
+    enum:
+    - MSISDN
+    - EMAIL
+    - PERSONAL_ID
+    - BUSINESS
+    - DEVICE
+    - ACCOUNT_ID
+    - IBAN
+    - ALIAS
+    description: Below are the allowed values for the enumeration
+      - MSISDN An MSISDN (Mobile Station International Subscriber Directory Number, that is, the phone number) is used as reference to a participant. The MSISDN identifier should be in international format according to the ITU-T E.164 standard. Optionally, the MSISDN may be prefixed by a single plus sign, indicating the international prefix.
+      - EMAIL An email is used as reference to a participant. The format of the email should be according to the informational RFC 3696.
+      - PERSONAL_ID A personal identifier is used as reference to a participant. Examples of personal identification are passport number, birth certificate number, and national registration number. The identifier number is added in the PartyIdentifier element. The personal identifier type is added in the PartySubIdOrType element.
+      - BUSINESS A specific Business (for example, an organization or a company) is used as reference to a participant. The BUSINESS identifier can be in any format. To make a transaction connected to a specific username or bill number in a Business, the PartySubIdOrType element should be used.
+      - DEVICE A specific device (for example, a POS or ATM) ID connected to a specific business or organization is used as reference to a Party. For referencing a specific device under a specific business or organization, use the PartySubIdOrType element.
+      - ACCOUNT_ID A bank account number or FSP account ID should be used as reference to a participant. The ACCOUNT_ID identifier can be in any format, as formats can greatly differ depending on country and FSP.
+      - IBAN A bank account number or FSP account ID is used as reference to a participant. The IBAN identifier can consist of up to 34 alphanumeric characters and should be entered without whitespace.
+      - ALIAS An alias is used as reference to a participant. The alias should be created in the FSP as an alternative reference to an account owner. Another example of an alias is a username in the FSP system. The ALIAS identifier can be in any format. It is also possible to use the PartySubIdOrType element for identifying an account under an Alias defined by the PartyIdentifier.
+  PartyName:
+    title: PartyName
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Name of the Party. Could be a real name or a nickname.
+  PartySubIdOrType:
+    title: PartySubIdOrType
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Either a sub-identifier of a PartyIdentifier, or a sub-type of the PartyIdType, normally a PersonalIdentifierType.
+  PersonalIdentifierType:
+    title: PersonalIdentifierType
+    type: string
+    enum:
+    - PASSPORT
+    - NATIONAL_REGISTRATION
+    - DRIVING_LICENSE
+    - ALIEN_REGISTRATION
+    - NATIONAL_ID_CARD
+    - EMPLOYER_ID
+    - TAX_ID_NUMBER
+    - SENIOR_CITIZENS_CARD
+    - MARRIAGE_CERTIFICATE 
+    - HEALTH_CARD
+    - VOTERS_ID
+    - UNITED_NATIONS
+    - OTHER_ID
+    description: Below are the allowed values for the enumeration
+      - PASSPORT A passport number is used as reference to a Party.
+      - NATIONAL_REGISTRATION A national registration number is used as reference to a Party.
+      - DRIVING_LICENSE A driving license is used as reference to a Party.
+      - ALIEN_REGISTRATION An alien registration number is used as reference to a Party.
+      - NATIONAL_ID_CARD A national ID card number is used as reference to a Party.
+      - EMPLOYER_ID A tax identification number is used as reference to a Party.
+      - TAX_ID_NUMBER A tax identification number is used as reference to a Party.
+      - SENIOR_CITIZENS_CARD A senior citizens card number is used as reference to a Party.
+      - MARRIAGE_CERTIFICATE A marriage certificate number is used as reference to a Party.
+      - HEALTH_CARD A health card number is used as reference to a Party.
+      - VOTERS_ID A voter’s identification number is used as reference to a Party.
+      - UNITED_NATIONS An UN (United Nations) number is used as reference to a Party.
+      - OTHER_ID Any other type of identification type number is used as reference to a Party.
+  QRCODE:
+    title: QRCODE
+    type: string
+    minLength: 1
+    maxLength: 64
+    description: QR code used as One Time Password.
+  RefundReason:
+    title: RefundReason
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Reason for the refund.
+  TokenCode:
+    title: TokenCode
+    type: string
+    pattern: ^[0-9a-zA-Z]{4,32}$
+    description: The API data type TokenCode is a JSON String between 4 and 32 characters, consisting of digits or upper or lowercase characters from a to z.
+  TransactionInitiator:
+    title: TransactionInitiatorEnum
+    type: string
+    enum:
+    - PAYER
+    - PAYEE
+    description: Below are the allowed values for the enumeration
+      - PAYER Sender of funds is initiating the transaction. The account to send from is either owned by the Payer or is connected to the Payer in some way.
+      - PAYEE Recipient of the funds is initiating the transaction by sending a transaction request. The Payer must approve the transaction, either automatically by a pre-generated OTP or by pre-approval of the Payee, or by manually approving in his or her own Device.
+  TransactionInitiatorType:
+    title: TransactionInitiatorTypeEnum
+    type: string
+    enum:
+    - CONSUMER
+    - AGENT
+    - BUSINESS
+    - DEVICE
+    description: Below are the allowed values for the enumeration
+      - CONSUMER Consumer is the initiator of the transaction.
+      - AGENT Agent is the initiator of the transaction.
+      - BUSINESS Business is the initiator of the transaction.
+      - DEVICE Device is the initiator of the transaction.
+  TransactionRequestState:
+    title: TransactionRequestStateEnum
+    type: string
+    enum:
+    - RECEIVED
+    - PENDING
+    - ACCEPTED
+    - REJECTED
+    description: Below are the allowed values for the enumeration
+      - RECEIVED Payer FSP has received the transaction from the Payee FSP.
+      - PENDING Payer FSP has sent the transaction request to the Payer.
+      - ACCEPTED Payer has approved the transaction.
+      - REJECTED Payer has rejected the transaction.
+  TransactionScenario:
+    title: TransactionScenarioEnum
+    type: string
+    enum:
+    - DEPOSIT
+    - WITHDRAWAL
+    - TRANSFER
+    - PAYMENT
+    - REFUND
+    description: Below are the allowed values for the enumeration
+      - DEPOSIT Used for performing a Cash-In (deposit) transaction. In a normal scenario, electronic funds are transferred from a Business account to a Consumer account, and physical cash is given from the Consumer to the Business User.
+      - WITHDRAWAL Used for performing a Cash-Out (withdrawal) transaction. In a normal scenario, electronic funds are transferred from a Consumer’s account to a Business account, and physical cash is given from the Business User to the Consumer.
+      - TRANSFER Used for performing a P2P (Peer to Peer, or Consumer to Consumer) transaction.
+      - PAYMENT Usually used for performing a transaction from a Consumer to a Merchant or Organization, but could also be for a B2B (Business to Business) payment. The transaction could be online for a purchase in an Internet store, in a physical store where both the Consumer and Business User are present, a bill payment, a donation, and so on.
+      - REFUND Used for performing a refund of transaction. 
+  TransactionState:
+    title: TransactionStateEnum
+    type: string
+    enum:
+    - RECEIVED
+    - PENDING
+    - COMPLETED
+    - REJECTED
+    description: Below are the allowed values for the enumeration
+      - RECEIVED Payee FSP has received the transaction from the Payer FSP.
+      - PENDING Payee FSP has validated the transaction.
+      - COMPLETED Payee FSP has successfully performed the transaction.
+      - REJECTED Payee FSP has failed to perform the transaction.
+  TransactionSubScenario:
+    title: TransactionSubScenario
+    type: string
+    pattern: ^[A-Z_]{1,32}$
+    description: Possible sub-scenario, defined locally within the scheme (UndefinedEnum Type).
+  TransferState:
+    title: TransferStateEnum
+    type: string
+    enum:
+    - RECEIVED
+    - RESERVED
+    - COMMITTED
+    - ABORTED
+    description: Below are the allowed values for the enumeration
+      - RECEIVED Next ledger has received the transfer.
+      - RESERVED Next ledger has reserved the transfer.
+      - COMMITTED Next ledger has successfully performed the transfer.
+      - ABORTED Next ledger has aborted the transfer due a rejection or failure to perform the transfer.
+  UndefinedEnum:
+    title: UndefinedEnum
+    type: string
+    pattern: ^[A-Z_]{1,32}$
+    description: The API data type UndefinedEnum is a JSON String consisting of 1 to 32 uppercase characters including an underscore character (_).
+
+  #Complex Types
+  AuthenticationInfo:
+    title: AuthenticationInfo
+    type: object
+    description: Data model for the complex type AuthenticationInfo
+    properties:
+      authentication:
+        $ref: '#/definitions/AuthenticationType'
+        description: Type of authentication.
+      authenticationValue:
+        $ref: '#/definitions/AuthenticationValue'
+        description: Authentication value.
+    required:
+    - authentication
+    - authenticationValue
+  AuthorizationsIDPutResponse:
+    title: AuthorizationsIDPutResponse
+    type: object
+    description: PUT /authorizations/{ID} object
+    properties:
+      authenticationInfo:
+        $ref: '#/definitions/AuthenticationInfo'
+        description: OTP or QR Code if entered, otherwise empty.
+      responseType:
+        $ref: '#/definitions/AuthorizationResponse'
+        description: Enum containing response information; if the customer entered the authentication value, rejected the transaction, or requested a resend of the authentication value.
+    required:
+    - responseType
+  BulkQuotesPostRequest:
+    title: BulkQuotesPostRequest
+    type: object
+    description: POST /bulkQuotes object
+    properties:
+      bulkQuoteId:
+        $ref: '#/definitions/CorrelationId'
+        description: Common ID between the FSPs for the bulk quote object, decided by the Payer FSP. The ID should be reused for resends of the same bulk quote. A new ID should be generated for each new bulk quote.
+      payer:
+        $ref: '#/definitions/Party'
+        description: Information about the Payer in the proposed financial transaction.
+      geoCode:
+        $ref: '#/definitions/GeoCode'
+        description: Longitude and Latitude of the initiating Party. Can be used to detect fraud.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Expiration is optional to let the Payee FSP know when a quote no longer needs to be returned.
+      individualQuotes:
+        type: array
+        minItems: 1
+        maxItems: 1000
+        items:
+          $ref: '#/definitions/IndividualQuote'
+        description: List of quotes elements.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - bulkQuoteId
+    - payer
+    - individualQuotes
+  BulkQuotesIDPutResponse:
+    title: BulkQuotesIDPutResponse
+    type: object
+    description: PUT /bulkQuotes/{ID} object
+    properties:
+      individualQuoteResults:
+        type: array
+        maxItems: 1000
+        items:
+          $ref: '#/definitions/IndividualQuoteResult'
+        description: Fees for each individual transaction, if any of them are charged per transaction.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Date and time until when the quotation is valid and can be honored when used in the subsequent transaction request.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - expiration
+  BulkTransfersPostRequest:
+    title: BulkTransfersPostRequest
+    type: object
+    description: POST /bulkTransfers object
+    properties:
+      bulkTransferId:
+        $ref: '#/definitions/CorrelationId'
+        description: Common ID between the FSPs and the optional Switch for the bulk transfer object, decided by the Payer FSP. The ID should be reused for resends of the same bulk transfer. A new ID should be generated for each new bulk transfer.
+      bulkQuoteId:
+        $ref: '#/definitions/CorrelationId'
+        description: ID of the related bulk quote.
+      payerFsp:
+        $ref: '#/definitions/FspId'
+        description: Payer FSP identifier.
+      payeeFsp:
+        $ref: '#/definitions/FspId'
+        description: Payee FSP identifier.
+      individualTransfers:
+        type: array
+        minItems: 1
+        maxItems: 1000
+        items:
+          $ref: '#/definitions/IndividualTransfer'
+        description: List of IndividualTransfer elements.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Expiration time of the transfers.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - bulkTransferId
+    - bulkQuoteId
+    - payerFsp
+    - payeeFsp
+    - individualTransfers
+    - expiration
+  BulkTransfersIDPutResponse:
+    title: BulkTransfersIDPutResponse
+    type: object
+    description: PUT /bulkTransfers/{ID} object
+    properties:
+      completedTimestamp:
+        $ref: '#/definitions/DateTime'
+        description: Time and date when the bulk transaction was completed.
+      individualTransferResults:
+        type: array
+        maxItems: 1000
+        items:
+          $ref: '#/definitions/IndividualTransferResult'
+        description: List of IndividualTransferResult elements.
+      bulkTransferState:
+        $ref: '#/definitions/BulkTransferState'
+        description: The state of the bulk transfer.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - bulkTransferState
+  ErrorInformation:
+    title: ErrorInformation
+    type: object
+    description: Data model for the complex type ErrorInformation.
+    properties:
+      errorCode:
+        $ref: '#/definitions/ErrorCode'
+        description: Specific error number.
+      errorDescription:
+        $ref: '#/definitions/ErrorDescription'
+        description: Error description string.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional list of extensions, specific to deployment.
+    required:
+    - errorCode
+    - errorDescription
+  ErrorInformationObject:
+    title: ErrorInformationObject
+    type: object
+    description: Data model for the complex type object that contains ErrorInformation.
+    properties:
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+    required:
+    - errorInformation
+  ErrorInformationResponse:
+    title: ErrorInformationResponse
+    type: object
+    description: Data model for the complex type object that contains an optional element ErrorInformation used along with 4xx and 5xx responses.
+    properties:
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+  Extension:
+    title: Extension
+    type: object
+    description: Data model for the complex type Extension
+    properties:
+      key:
+        $ref: '#/definitions/ExtensionKey'
+        description: Extension key.
+      value:
+        $ref: '#/definitions/ExtensionValue'
+        description: Extension value.
+    required:
+    - key
+    - value
+  ExtensionList:
+    title: ExtensionList
+    type: object
+    description: Data model for the complex type ExtensionList
+    properties:
+      extension:
+        type: array
+        items:
+          $ref: '#/definitions/Extension'
+        minItems: 1
+        maxItems: 16
+        description: Number of Extension elements
+    required:
+    - extension
+  GeoCode:
+    title: GeoCode
+    type: object
+    description: Data model for the complex type GeoCode. Indicates the geographic location from where the transaction was initiated.
+    properties:
+      latitude:
+        $ref: '#/definitions/Latitude'
+        description: Latitude of the Party.
+      longitude:
+        $ref: '#/definitions/Longitude'
+        description: Longitude of the   Party.
+    required:
+    - latitude
+    - longitude
+  IndividualQuote:
+    title: IndividualQuote
+    type: object
+    description: Data model for the complex type IndividualQuote.
+    properties:
+      quoteId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies quote message.
+      transactionId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies transaction message.
+      payee:
+        $ref: '#/definitions/Party'
+        description: Information about the Payee in the proposed financial transaction.
+      amountType:
+        $ref: '#/definitions/AmountType'
+        description: SEND for sendAmount, RECEIVE for receiveAmount.
+      amount:
+        $ref: '#/definitions/Money'
+        description: Depending on amountType -
+          If SEND - The amount the Payer would like to send, that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.
+          If RECEIVE - The amount the Payee should receive, that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities.
+      fees:
+        $ref: '#/definitions/Money'
+        description: The fees in the transaction.
+          The fees element should be empty if fees should be non-disclosed.
+          The fees element should be non-empty if fees should be disclosed.
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+        description: Type of transaction that the quote is requested for.
+      note:
+        $ref: '#/definitions/Note'
+        description: Memo that will be attached to the transaction.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - quoteId
+    - transactionId
+    - payee
+    - amountType
+    - amount
+    - transactionType
+  IndividualQuoteResult:
+    title: IndividualQuoteResult
+    type: object
+    description: Data model for the complex type IndividualQuoteResult.
+    properties:
+      quoteId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies quote message.
+      payee:
+        $ref: '#/definitions/Party'
+        description: Information about the Payee in the proposed financial transaction.
+      transferAmount:
+        $ref: '#/definitions/Money'
+        description: The amount of Money that the Payer FSP should transfer to the Payee FSP.
+      payeeReceiveAmount:
+        $ref: '#/definitions/Money'
+        description: Amount that the Payee should receive in the end-to-end transaction. Optional as the Payee FSP might not want to disclose any optional Payee fees.
+      payeeFspFee:
+        $ref: '#/definitions/Money'
+        description: Payee FSP’s part of the transaction fee.
+      payeeFspCommission:
+        $ref: '#/definitions/Money'
+        description: Transaction commission from the Payee FSP
+      ilpPacket:
+        $ref: '#/definitions/IlpPacket'
+        description: The ILP Packet that must be attached to the transfer by the Payer.
+      condition:
+        $ref: '#/definitions/IlpCondition'
+        description: The condition that must be attached to the transfer by the Payer.
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+        description: Error code, category description. Note - payee, transferAmount, payeeReceiveAmount, payeeFspFee, payeeFspCommission, ilpPacket, and condition should not be set if errorInformation is set.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - quoteId
+  IndividualTransfer:
+    title: IndividualTransfer
+    type: object
+    description: Data model for the complex type IndividualTransfer.
+    properties:
+      transferId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies messages related to the same /transfers sequence.
+      transferAmount:
+        $ref: '#/definitions/Money'
+        description: Transaction amount to be sent.
+      ilpPacket:
+        $ref: '#/definitions/IlpPacket'
+        description: ILP Packet containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data.
+      condition:
+        $ref: '#/definitions/IlpCondition'
+        description: Condition that must be fulfilled to commit the transfer.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transferId
+    - transferAmount
+    - ilpPacket
+    - condition
+  IndividualTransferResult:
+    title: IndividualTransferResult
+    type: object
+    description: Data model for the complex type IndividualTransferResult.
+    properties:
+      transferId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies messages related to the same /transfers sequence.
+      fulfilment:
+        $ref: '#/definitions/IlpFulfilment'
+        description: Fulfilment of the condition specified with the transaction. Note - Either fulfilment or errorInformation should be set, not both.
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+        description: If transfer is REJECTED, error information may be provided. Note - Either fulfilment or errorInformation should be set, not both.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transferId
+  Money:
+    title: Money
+    type: object
+    description: Data model for the complex type Money.
+    properties:
+      currency:
+        $ref: '#/definitions/Currency'
+        description: Currency of the amount.
+      amount:
+        $ref: '#/definitions/Amount'
+        description: Amount of Money.
+    required:
+    - currency
+    - amount
+  ParticipantsTypeIDSubIDPostRequest:
+    title: ParticipantsTypeIDSubIDPostRequest
+    type: object
+    description: POST /participants/{Type}/{ID}/{SubId}, /participants/{Type}/{ID} object
+    properties:
+      fspId:
+        $ref: '#/definitions/FspId'
+        description: FSP Identifier that the Party belongs to.
+      currency:
+        $ref: '#/definitions/Currency'
+        description: Indicate that the provided Currency is supported by the Party.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - fspId
+  ParticipantsTypeIDPutResponse:
+    title: ParticipantsTypeIDPutResponse
+    type: object
+    description: PUT /participants/{Type}/{ID}/{SubId}, /participants/{Type}/{ID} object
+    properties:
+      fspId:
+        $ref: '#/definitions/FspId'
+        description: FSP Identifier that the Party belongs to.
+  ParticipantsIDPutResponse:
+    title: ParticipantsIDPutResponse
+    type: object
+    description: PUT /participants/{ID} object
+    properties:
+      partyList:
+        type: array
+        items:
+          $ref: '#/definitions/PartyResult'
+        minItems: 1
+        maxItems: 10000
+        description: List of PartyResult elements that were either created or failed to be created.
+      currency:
+        $ref: '#/definitions/Currency'
+        description: Indicate that the provided Currency was set to be supported by each successfully added PartyIdInfo.
+    required:
+    - partyList
+  ParticipantsPostRequest:
+    title: ParticipantsPostRequest
+    type: object
+    description: POST /participants object
+    properties:
+      requestId:
+        $ref: '#/definitions/CorrelationId'
+        description: The ID of the request, decided by the client. Used for identification of the callback from the server.
+      partyList:
+        type: array
+        items:
+          $ref: '#/definitions/PartyIdInfo'
+        minItems: 1
+        maxItems: 10000
+        description: List of PartyIdInfo elements that the client would like to update or create FSP information about.
+      currency:
+        $ref: '#/definitions/Currency'
+        description: Indicate that the provided Currency is supported by each PartyIdInfo in the list.
+    required:
+    - requestId
+    - partyList
+  Party:
+    title: Party
+    type: object
+    description: Data model for the complex type Party.
+    properties:
+      partyIdInfo:
+        $ref: '#/definitions/PartyIdInfo'
+        description: Party Id type, id, sub ID or type, and FSP Id.
+      merchantClassificationCode:
+        $ref: '#/definitions/MerchantClassificationCode'
+        description: Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments.
+      name:
+        $ref: '#/definitions/PartyName'
+        description: Display name of the Party, could be a real name or a nick name.
+      personalInfo:
+        $ref: '#/definitions/PartyPersonalInfo'
+        description: Personal information used to verify identity of Party such as first, middle, last name and date of birth.
+    required:
+    - partyIdInfo
+  PartyComplexName:
+    title: PartyComplexName
+    type: object
+    description: Data model for the complex type PartyComplexName.
+    properties:
+      firstName:
+        $ref: '#/definitions/FirstName'
+        description: Party’s first name.
+      middleName:
+        $ref: '#/definitions/MiddleName'
+        description: Party’s middle name.
+      lastName:
+        $ref: '#/definitions/LastName'
+        description: Party’s last name.
+  PartyIdInfo:
+    title: PartyIdInfo
+    type: object
+    description: Data model for the complex type PartyIdInfo. An ExtensionList element has been added to this reqeust in version v1.1
+    properties:
+      partyIdType:
+        $ref: '#/definitions/PartyIdType'
+        description: Type of the identifier.
+      partyIdentifier:
+        $ref: '#/definitions/PartyIdentifier'
+        description: An identifier for the Party.
+      partySubIdOrType:
+        $ref: '#/definitions/PartySubIdOrType'
+        description: A sub-identifier or sub-type for the Party.
+      fspId:
+        $ref: '#/definitions/FspId'
+        description: FSP ID (if known)
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - partyIdType
+    - partyIdentifier
+  PartiesTypeIDPutResponse:
+    title: PartiesTypeIDPutResponse
+    type: object
+    description: PUT /parties/{Type}/{ID} object
+    properties:
+      party:
+        $ref: '#/definitions/Party'
+        description: Information regarding the requested Party.
+    required:
+    - party
+  PartyPersonalInfo:
+    title: PartyPersonalInfo
+    type: object
+    description: Data model for the complex type PartyPersonalInfo.
+    properties:
+      complexName:
+        $ref: '#/definitions/PartyComplexName'
+        description: First, middle and last name for the Party.
+      dateOfBirth:
+        $ref: '#/definitions/DateOfBirth'
+        description: Date of birth for the Party.
+  PartyResult:
+    title: PartyResult
+    type: object
+    description: Data model for the complex type PartyResult.
+    properties:
+      partyId:
+        $ref: '#/definitions/PartyIdInfo'
+        description: Party Id type, id, sub ID or type, and FSP Id.
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+        description: If the Party failed to be added, error information should be provided. Otherwise, this parameter should be empty to indicate success.
+    required:
+      - partyId
+  QuotesPostRequest:
+    title: QuotesPostRequest
+    type: object
+    description: POST /quotes object
+    properties:
+      quoteId:
+        $ref: '#/definitions/CorrelationId'
+        description: Common ID between the FSPs for the quote object, decided by the Payer FSP. The ID should be reused for resends of the same quote for a transaction. A new ID should be generated for each new quote for a transaction.
+      transactionId:
+        $ref: '#/definitions/CorrelationId'
+        description: Common ID (decided by the Payer FSP) between the FSPs for the future transaction object. The actual transaction will be created as part of a successful transfer process. The ID should be reused for resends of the same quote for a transaction. A new ID should be generated for each new quote for a transaction.
+      transactionRequestId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies an optional previously-sent transaction request.
+      payee:
+        $ref: '#/definitions/Party'
+        description: Information about the Payee in the proposed financial transaction.
+      payer:
+        $ref: '#/definitions/Party'
+        description: Information about the Payer in the proposed financial transaction.
+      amountType:
+        $ref: '#/definitions/AmountType'
+        description: SEND for send amount, RECEIVE for receive amount.
+      amount:
+        $ref: '#/definitions/Money'
+        description: Depending on amountType. If SEND - The amount the Payer would like to send, that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.
+          If RECEIVE - The amount the Payee should receive, that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities.
+      fees:
+        $ref: '#/definitions/Money'
+        description: The fees in the transaction.
+          The fees element should be empty if fees should be non-disclosed.
+          The fees element should be non-empty if fees should be disclosed.
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+        description: Type of transaction for which the quote is requested.
+      geoCode:
+        $ref: '#/definitions/GeoCode'
+        description: Longitude and Latitude of the initiating Party. Can be used to detect fraud.
+      note:
+        $ref: '#/definitions/Note'
+        description: A memo that will be attached to the transaction.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Expiration is optional. It can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, and Merchant to know that their request has a time limit.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - quoteId
+    - transactionId
+    - payee
+    - payer
+    - amountType
+    - amount
+    - transactionType
+  QuotesIDPutResponse:
+    title: QuotesIDPutResponse
+    type: object
+    description: PUT /quotes/{ID} object
+    properties:
+      transferAmount:
+        $ref: '#/definitions/Money'
+        description: The amount of Money that the Payer FSP should transfer to the Payee FSP.
+      payeeReceiveAmount:
+        $ref: '#/definitions/Money'
+        description: The amount of Money that the Payee should receive in the end-to-end transaction. Optional as the Payee FSP might not want to disclose any optional Payee fees.
+      payeeFspFee:
+        $ref: '#/definitions/Money'
+        description: Payee FSP’s part of the transaction fee.
+      payeeFspCommission:
+        $ref: '#/definitions/Money'
+        description: Transaction commission from the Payee FSP.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Date and time until when the quotation is valid and can be honored when used in the subsequent transaction.
+      geoCode:
+        $ref: '#/definitions/GeoCode'
+        description: Longitude and Latitude of the Payee. Can be used to detect fraud.
+      ilpPacket:
+        $ref: '#/definitions/IlpPacket'
+        description: The ILP Packet that must be attached to the transfer by the Payer.
+      condition:
+        $ref: '#/definitions/IlpCondition'
+        description: The condition that must be attached to the transfer by the Payer.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transferAmount
+    - expiration
+    - ilpPacket
+    - condition
+  Refund:
+    title: Refund
+    type: object
+    description: Data model for the complex type Refund.
+    properties:
+      originalTransactionId:
+        $ref: '#/definitions/CorrelationId'
+        description: Reference to the original transaction ID that is requested to be refunded.
+      refundReason:
+        $ref: '#/definitions/RefundReason'
+        description: Free text indicating the reason for the refund.
+    required:
+    - originalTransactionId
+  Transaction:
+    title: Transaction
+    type: object
+    description: Data model for the complex type Transaction. The Transaction type is used to carry end-to-end data between the Payer FSP and the Payee FSP in the ILP Packet. Both the transactionId and the quoteId in the data model are decided by the Payer FSP in the POST /quotes.
+    properties:
+      transactionId:
+        $ref: '#/definitions/CorrelationId'
+        description: ID of the transaction, the ID is decided by the Payer FSP during the creation of the quote.
+      quoteId:
+        $ref: '#/definitions/CorrelationId'
+        description: ID of the quote, the ID is decided by the Payer FSP during the creation of the quote.
+      payee:
+        $ref: '#/definitions/Party'
+        description: Information about the Payee in the proposed financial transaction.
+      payer:
+        $ref: '#/definitions/Party'
+        description: Information about the Payer in the proposed financial transaction.
+      amount:
+        $ref: '#/definitions/Money'
+        description: Transaction amount to be sent.
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+        description: Type of the transaction.
+      note:
+        $ref: '#/definitions/Note'
+        description: Memo associated to the transaction, intended to the Payee.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transactionId
+    - quoteId
+    - payee
+    - payer
+    - amount
+    - transactionType
+  TransactionRequestsIDPutResponse:
+    title: TransactionRequestsIDPutResponse
+    type: object
+    description: PUT /transactionRequests/{ID} object
+    properties:
+      transactionId:
+        $ref: '#/definitions/CorrelationId'
+        description: Identifies a related transaction (if a transaction has been created).
+      transactionRequestState:
+        $ref: '#/definitions/TransactionRequestState'
+        description: State of the transaction request.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transactionRequestState
+  TransactionsIDPutResponse:
+    title: TransactionsIDPutResponse
+    type: object
+    description: PUT /transactions/{ID} object
+    properties:
+      completedTimestamp:
+        $ref: '#/definitions/DateTime'
+        description: Time and date when the transaction was completed.
+      transactionState:
+        $ref: '#/definitions/TransactionState'
+        description: State of the transaction.
+      code:
+        $ref: '#/definitions/Code'
+        description: Optional redemption information provided to Payer after transaction has been completed.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transactionState
+  TransactionType:
+    title: TransactionType
+    type: object
+    description: Data model for the complex type TransactionType.
+    properties:
+      scenario:
+        $ref: '#/definitions/TransactionScenario'
+        description: Deposit, withdrawal, refund, …
+      subScenario:
+        $ref: '#/definitions/TransactionSubScenario'
+        description: Possible sub-scenario, defined locally within the scheme.
+      initiator:
+        $ref: '#/definitions/TransactionInitiator'
+        description: Who is initiating the transaction - Payer or Payee
+      initiatorType:
+        $ref: '#/definitions/TransactionInitiatorType'
+        description: Consumer, agent, business, …
+      refundInfo:
+        $ref: '#/definitions/Refund'
+        description: Extra information specific to a refund scenario. Should only be populated if scenario is REFUND
+      balanceOfPayments:
+        $ref: '#/definitions/BalanceOfPayments'
+        description: Balance of Payments code.
+    required:
+    - scenario
+    - initiator
+    - initiatorType
+  TransfersPostRequest:
+    title: TransfersPostRequest
+    type: object
+    description: POST /transfers Request object
+    properties:
+      transferId:
+        $ref: '#/definitions/CorrelationId'
+        description: The common ID between the FSPs and the optional Switch for the transfer object, decided by the Payer FSP. The ID should be reused for resends of the same transfer. A new ID should be generated for each new transfer.
+      payeeFsp:
+        $ref: '#/definitions/FspId'
+        description: Payee FSP in the proposed financial transaction.
+      payerFsp:
+        $ref: '#/definitions/FspId'
+        description: Payer FSP in the proposed financial transaction.
+      amount:
+        $ref: '#/definitions/Money'
+        description: The transfer amount to be sent.
+      ilpPacket:
+        $ref: '#/definitions/IlpPacket'
+        description: The ILP Packet containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data.
+      condition:
+        $ref: '#/definitions/IlpCondition'
+        description: The condition that must be fulfilled to commit the transfer.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Expiration can be set to get a quick failure expiration of the transfer. The transfer should be rolled back if no fulfilment is delivered before this time.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transferId
+    - payeeFsp
+    - payerFsp
+    - amount
+    - ilpPacket
+    - condition
+    - expiration
+  TransactionRequestsPostRequest:
+    title: TransactionRequestsPostRequest
+    type: object
+    description: POST /transactionRequests object
+    properties:
+      transactionRequestId:
+        $ref: '#/definitions/CorrelationId'
+        description: Common ID between the FSPs for the transaction request object, decided by the Payee FSP. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request.
+      payee:
+        $ref: '#/definitions/Party'
+        description: Information about the Payee in the proposed financial transaction.
+      payer:
+        $ref: '#/definitions/PartyIdInfo'
+        description: Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction.
+      amount:
+        $ref: '#/definitions/Money'
+        description: Requested amount to be transferred from the Payer to Payee.
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+        description: Type of transaction.
+      note:
+        $ref: '#/definitions/Note'
+        description: Reason for the transaction request, intended to the Payer.
+      geoCode:
+        $ref: '#/definitions/GeoCode'
+        description: Longitude and Latitude of the initiating Party. Can be used to detect fraud.
+      authenticationType:
+        $ref: '#/definitions/AuthenticationType'
+        description: OTP or QR Code, otherwise empty.
+      expiration:
+        $ref: '#/definitions/DateTime'
+        description: Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transactionRequestId
+    - payee
+    - payer
+    - amount
+    - transactionType
+  TransfersIDPatchResponse:
+    title: TransfersIDPatchResponse
+    type: object
+    description: PATCH /transfers/{ID} object
+    properties:
+      completedTimestamp:
+        $ref: '#/definitions/DateTime'
+        description: Time and date when the transaction was completed.
+      transferState:
+        $ref: '#/definitions/TransferState'
+        description: State of the transfer.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - completedTimestamp
+    - transferState
+  TransfersIDPutResponse:
+    title: TransfersIDPutResponse
+    type: object
+    description: PUT /transfers/{ID} object
+    properties:
+      fulfilment:
+        $ref: '#/definitions/IlpFulfilment'
+        description: Fulfilment of the condition specified with the transaction. Mandatory if transfer has completed successfully.
+      completedTimestamp:
+        $ref: '#/definitions/DateTime'
+        description: Time and date when the transaction was completed.
+      transferState:
+        $ref: '#/definitions/TransferState'
+        description: State of the transfer.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional extension, specific to deployment.
+    required:
+    - transferState
+
+responses:
+  Response200:
+    description: OK
+  Response202:
+    description: Accepted
+  ErrorResponse400:
+    description: Bad Request - The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse401:
+    description: Unauthorized - The request requires authentication in order to be processed.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse403:
+    description: Forbidden - The request was denied and will be denied in the future.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse404:
+    description: Not Found - The resource specified in the URI was not found.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse405:
+    description: Method Not Allowed - An unsupported HTTP method for the request was used.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse406:
+    description: Not acceptable - The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse501:
+    description: Not Implemented - The server does not support the requested service. The client should not retry.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse503:
+    description: Service Unavailable - The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+
+parameters:
+  Accept:
+    name: Accept
+    in: header
+    required: true
+    type: string
+    description: The Accept header field indicates the version of the API the client would like the server to use.
+  Content-Length:
+    name: Content-Length
+    in: header
+    required: false
+    type: integer
+    description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body. Note - The API supports a maximum size of 5242880 bytes (5 Megabytes)
+  Content-Type:
+    name: Content-Type
+    in: header
+    type: string
+    required: true
+    description: The Content-Type header indicates the specific version of the API used to send the payload body.
+  Date:
+    name: Date
+    in: header
+    type: string
+    required: true
+    description: The Date header field indicates the date when the request was sent.
+  X-Forwarded-For:
+    name: X-Forwarded-For
+    in: header
+    type: string
+    required: false
+    description: The X-Forwarded-For header field is an unofficially accepted standard used for informational purposes of the originating client IP address, as a request might pass multiple proxies, firewalls, and so on. Multiple X-Forwarded-For values as in the example shown here should be expected and supported by implementers of the API.
+      Note - An alternative to X-Forwarded-For is defined in RFC 7239. However, to this point RFC 7239 is less-used and supported than X-Forwarded-For.
+  FSPIOP-Source:
+    name: FSPIOP-Source
+    in: header
+    type: string
+    required: true
+    description: The FSPIOP-Source header field is a non-HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing and signature verification (see header field FSPIOP-Signature). 
+  FSPIOP-Destination:
+    name: FSPIOP-Destination
+    in: header
+    type: string
+    required: false
+    description: The `FSPIOP-Destination` header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field must be set by the original sender of the request if the destination is known (valid for all services except GET /parties) so that any entities between the client and the server do not need to parse the payload for routing purposes. If the destination is not known (valid for service GET /parties), the field should be left empty.
+  FSPIOP-Encryption:
+    name: FSPIOP-Encryption
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-Encryption header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.
+  FSPIOP-Signature:
+    name: FSPIOP-Signature
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-Signature header field is a non-HTTP standard field used by the API for applying an end-to-end request signature.
+  FSPIOP-URI:
+    name: FSPIOP-URI
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-URI header field is a non-HTTP standard field used by the API for signature verification, should contain the service URI. Required if signature verification is used, for more information see API Signature document.
+  FSPIOP-HTTP-Method:
+    name: FSPIOP-HTTP-Method
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-HTTP-Method header field is a non-HTTP standard field used by the API for signature verification, should contain the service HTTP method. Required if signature verification is used, for more information see API Signature document.
+  ID:
+    name: ID
+    in: path
+    required: true
+    type: string
+  Type:
+    name: Type
+    in: path
+    required: true
+    type: string
+  SubId:
+    name: SubId
+    in: path
+    required: true
+    type: string
