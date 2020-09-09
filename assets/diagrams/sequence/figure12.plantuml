@@ -116,7 +116,7 @@ participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-Payer ->> PayerFSP: I would like to Payee to\nsend 100 USD to Payee
+Payer ->> PayerFSP: I would like to send\n100 USD to Payee
 activate PayerFSP
 PayerFSP -> PayerFSP: Rate fee for Payer for\nhandling transaction in\nPayer FSP => fee 1 USD
 PayerFSP ->> Switch: **POST /quotes**\n(amountType=RECEIVE,\namount=100 USD, fees=1 USD)

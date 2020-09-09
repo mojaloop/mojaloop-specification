@@ -145,7 +145,7 @@ autonumber stop
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Lookup party\ninformation\nRegarding\nMSISDN\n+123456789
 autonumber resume
-Switch <<- PayeeFSP: **Put /parties/MSISDN/123456789**
+Switch <<- PayeeFSP: **Put /parties/MSISDN/123456789**\n(Party information)
 autonumber stop
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
@@ -206,7 +206,7 @@ PayerFSP <-- Switch: **HTTL 202** (Accepted)
 autonumber resume
 Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
 autonumber stop
-Switch ->> PayeeFSP: **POST /transfes**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
+Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, condition, ILP packet\nincluding transaction ID)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 autonumber resume
