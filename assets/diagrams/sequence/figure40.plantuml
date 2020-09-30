@@ -118,19 +118,19 @@ participant "\nFSP 2" as fsp2
 user ->> userfsp: I would like to pay or receive\nfunds to/from +123456789
 activate userfsp
 userfsp -> userfsp: +123456789 is not\nwithin this system,\nask FSP 1
-userfsp ->> fsp1: **GET /participant/MSISDN/123456789**
+userfsp ->> fsp1: **GET /participants/MSISDN/123456789**
 activate fsp1
 userfsp <<-- fsp1: **HTTP 202** (Accepted)
 fsp1 -> fsp1: +123456789 is not\nwithin this system
-userfsp <<- fsp1: **PUT /participant/MSISDN/123456789/error**
+userfsp <<- fsp1: **PUT /participants/MSISDN/123456789/error**
 userfsp -->> fsp1: **HTTP 200** (OK)
 deactivate fsp1
 userfsp -> userfsp: Not in FSP 1, ask FSP 2
-userfsp ->> fsp2: **GET /participant/MSISDN/123456789**
+userfsp ->> fsp2: **GET /participants/MSISDN/123456789**
 activate fsp2
 userfsp <<-- fsp2: **HTTP 202** (Accepted)
 fsp2 -> fsp2: +123456789 is\nwithin this system
-userfsp <<- fsp2: **PUT /participant/MSISDN/123456789/error**
+userfsp <<- fsp2: **PUT /participants/MSISDN/123456789/error**
 userfsp -->> fsp2: **HTTP 200** (OK)
 deactivate fsp2
 userfsp -> userfsp: +123456789 found\nin FSP 2
