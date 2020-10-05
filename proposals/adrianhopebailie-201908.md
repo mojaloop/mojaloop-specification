@@ -42,6 +42,7 @@ Approved/Rejected Date: N/A
 | ------- | ---------- | ------------------ | -------------------------- |
 | 1.0     | 2019-08-29 | Adrian Hope-Bailie | Initial draft              |
 | 1.1     | 2019-11-12 | Adrian Hope-Bailie | Updates following workshop |
+| 1.2     | 2020-10-05 | Lewis Daly         | Updates to include thirdparty transaction notifications |
 
 ## Change Request Background
 
@@ -195,6 +196,24 @@ system (or even a system that supports real-time clearing).
 In this case it is important for the CNP that is bridging the Mojaloop system to
 the other system(s) to be able to express and expected clearing time for
 transactions.
+
+### Generalizing Transaction Outcome Notifications for Payees and other Participants
+
+In the v1.1 of the FSPIOP-API, a new form of notification was created... [todo]
+
+In addition, there is a greater need for flexibility in being able to send 
+transaction outcome notifications to other interested participants, such as a Payment 
+Initiation Service Provider (PISP) or a Cross Network Provider (CNP).
+
+This proposal includes a new `Subscribers` data element to be included in the 
+`Transaction` object, which is exchanged during the `PUT /quotes` and `POST /transfers`
+requests. [todo - clarify that subscribers is also in the `POST /quotes`]
+
+This data element allows the Payer and Payee participants to include themselves and 
+other parties they might be acting on the behalf of to the list of subscribers. Upon the
+conclusion of a transaction, the switch can then use this list of subscribers to send
+notifications to all interested parties.
+
 
 ## Proposed Solution
 
@@ -562,6 +581,99 @@ In the response the CNP can provide a value date that they commit to, based on
 their knowledge of and SLAs with the external systems that will receive the
 payment.
 
+
+### Generalizing Transaction Outcome Notifications for Payees and other Participants
+
+The `Subscriber` data element takes the form of:
+
+| Name               | Cardinality | Type               | Description                                                                             |
+| ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
+| id                 | 1           | `FspId`            | The id of a participant interested in the transaction                                   |
+| role               | 1           | `SubscriptionRole` | The role of the subscription                                                            |
+
+Where `SubscriptionRole` is a enum of the following values:
+[ todo: revise ]
+
+| Name               | Description | 
+| ------------------ | ----------- | 
+| `PAYER`            | 1           | 
+| `PAYEE`            | 1           | 
+| `INITIATOR`            | 1           | 
+
+
+The `subscribers` list is included in the following requests:
+1. Plaintext in the `POST /quotes` request
+2. Inside the `Transaction` field of `PUT /quotes` (i.e. `transaction.subscribers`)
+3. Inside the `Transaction` field of `POST /transfers` (i.e. `transaction.subscribers`)
+
+
+#### Sending subscribers with a `POST /quotes`
+
+Including the `subscribers` list with the `POST /quotes` request allows the PayerFSP to 
+
+For example, in a 'normal' peer-to-peer transaction:
+```http
+POST /quotes
+Headers: ...
+Body: {
+  "subscribers": [
+    {
+      "id": "dfspA",
+      "role": PAYER"
+    }    
+  ]
+  [ todo ]
+  ...
+
+}
+```
+
+Or, in the case of a 3rd party initiated transaction:
+```http
+POST /quotes
+Headers: ...
+Body: {
+  "subscribers": [
+    {
+      "id": "dfspA",
+      "role": PAYER"
+    },   
+    {
+      "id": "pispA",
+      "role": "INITIATOR"
+    },   
+  ]
+  [ todo ]
+  ...
+
+}
+```
+
+#### In the `PUT /quotes` callback
+
+In the `PUT /quotes` callback from the PayeeFSP, the `subscribers` list is included in the `Transaction` object.
+
+1. To form the `subscribers` list, the PayeeFSP must take the original list from the `POST /quotes` request
+2. Optionally, the PayeeFSP includes themselves or any other party in the list
+
+##### Protecting against tampering with the `subscribers` list
+
+[todo - the list is finalized in `PUT /quotes` by the payeeFsp, and can't be tampered with]
+- additionally, the PayerFSP must also ensure that the PayeeFSP didn't _remove_ anything from this list
+  [ todo: what does the PayerFSP do do in this case? ]
+
+
+##### Replacing the v1.1 Behaviour
+
+This presents us with the opportunity to replace the `PUT /transfers` behaviour with this new, more general approach to subscribing to callbacks.
+
+
+[ todo - finish ]
+
+
+
+
+
 ## Data Model Changes
 
 `POST /quotes` request:
@@ -582,7 +694,7 @@ payment.
 | expiration           | 0..1        | `DateTime`        | Expiration is optional.                                                                                 |
 | accountAddress       | 0..1        | `AccountAddress`  | The address of the payee account, used for routing where the quote goes via one or more intermediaries. |
 | participants         | 1           | `ParticipantList` | The participants in the transaction.                                                                    |
-| maxValueDate         | 0..1        | DateTime          | The maximum Value Date for this transaction to clear in the payee’s account                             |
+| maxValueDate         | 0..1        | `DateTime`        | The maximum Value Date for this transaction to clear in the payee’s account                             |
 | extensionList        | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                             |
 
 `PUT /quotes` response callback:
@@ -599,7 +711,7 @@ payment.
 | echoData           | 0..1        | `EchoData`      | Opaque data provided by the payee that must be echoed back unchanged in the transfer.                       |
 | condition          | 1           | `IlpCondition`  | The condition that must be attached to the transfer by the Payer.                                           |
 | participants       | 0..16       | `Participant`   | The participants in the transaction.                                                                        |
-| valueDate          | 0..1        | DateTime        | The maximum Value Date for this transaction to clear in the payee’s account                                 |
+| valueDate          | 0..1        | `DateTime`      | The maximum Value Date for this transaction to clear in the payee’s account                                 |
 | extensionList      | 0..1        | `ExtensionList` | Optional extension, specific to deployment.                                                                 |
 
 `POST /transfers` request:
@@ -656,6 +768,13 @@ payment.
 | personalInfo               | 0..1        | `PartyPersonalInfo`          | Personal information used to verify identity of Party such as name and date of birth. |
 | accounts                   | 0..1        | `AccountList`                | A list of accounts that can accept transfers for the party.                           |
 
+`Transaction`:
+
+| Name               | Cardinality | Type             | Description                                                                             |
+| ------------------ | ----------- | ---------------- | --------------------------------------------------------------------------------------- |
+| subscribers        | 0..1        | `Subscriber`     | A list of subscribers who should be notified on the conclusion of the transaction       |
+<!-- TODO other existing transaction stuff-->
+
 `TransactionResult`:
 
 | Name               | Cardinality | Type             | Description                                                                             |
@@ -664,3 +783,18 @@ payment.
 | transactionState   | 1           | TransactionState | State of the transaction.                                                               |
 | code               | 0..1        | Code             | Optional redemption information provided to Payer after transaction has been completed. |
 | extensionList      | 0..1        | ExtensionList    | Optional extension, specific to deployment.                                             |
+
+
+
+`Subscriber`:
+
+| Name               | Cardinality | Type               | Description                                                                             |
+| ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
+| id                 | 1           | `FspId`            | The id of a participant interested in the transaction                                   |
+| role               | 1           | `SubscriptionRole` | The of the subscription 
+
+`SubscriptionRole` Enum:
+
+PayerFSP
+PayeeFSP
+TransactionInitiator
