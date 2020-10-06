@@ -18,6 +18,7 @@ Approved/Rejected Date: N/A
       - [A Note on Payee Privacy](#a-note-on-payee-privacy)
     - [Regulatory Data Exchange](#regulatory-data-exchange)
     - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems)
+    - [Generalizing Transaction Outcome Notifications](#Generalizing-Transaction-Outcome-Notifications)
   - [Proposed Solution](#proposed-solution)
     - [Upgrading to Interledger Protocol version 4](#upgrading-to-interledger-protocol-version-4-1)
     - [Generation of the Condition and Fulfillment](#generation-of-the-condition-and-fulfillment-1)
@@ -34,6 +35,7 @@ Approved/Rejected Date: N/A
       - [Fees and Rates](#fees-and-rates)
       - [Regulatory Data](#regulatory-data)
     - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems-1)
+    - [Generalizing Transaction Outcome Notifications](#Generalizing-Transaction-Outcome-Notifications-1)
   - [Data Model Changes](#data-model-changes)
 
 ## Document History
@@ -197,19 +199,21 @@ In this case it is important for the CNP that is bridging the Mojaloop system to
 the other system(s) to be able to express and expected clearing time for
 transactions.
 
-### Generalizing Transaction Outcome Notifications for Payees and other Participants
+### Generalizing Transaction Outcome Notifications
 
-In the v1.1 of the FSPIOP-API, a new form of notification was created... [todo]
+v1.1 of the FSPIOP-API introduced a new optional notification for the PayeeFSP. The
+PayeeFSP can request a notification from the switch by sending a `PUT /transfers/{id}`
+request to the switch with a `transferState` of `RESERVED`.
 
-In addition, there is a greater need for flexibility in being able to send 
-transaction outcome notifications to other interested participants, such as a Payment 
-Initiation Service Provider (PISP) or a Cross Network Provider (CNP).
+With the addition of Thirdparty APIs, there is a greater need for flexibility in 
+delivering transaction outcome notifications to other interested participants, such as
+a Payment Initiation Service Providers (PISPs) or  Cross Network Provider (CNPs).
 
-This proposal includes a new `Subscribers` data element to be included in the 
-`Transaction` object, which is exchanged during the `PUT /quotes` and `POST /transfers`
-requests. [todo - clarify that subscribers is also in the `POST /quotes`]
+This proposal includes a new `Subscribers` data element to be included in (1) the request 
+body of the `POST /quotes` request, and (2) inside the  `Transaction` object, which is 
+exchanged during the `PUT /quotes` and `POST /transfers` requests.
 
-This data element allows the Payer and Payee participants to include themselves and 
+`Subscribers` allows the Payer and Payee participants to include themselves and 
 other parties they might be acting on the behalf of to the list of subscribers. Upon the
 conclusion of a transaction, the switch can then use this list of subscribers to send
 notifications to all interested parties.
@@ -582,9 +586,12 @@ their knowledge of and SLAs with the external systems that will receive the
 payment.
 
 
-### Generalizing Transaction Outcome Notifications for Payees and other Participants
+### Generalizing Transaction Outcome Notifications
 
-The `Subscriber` data element takes the form of:
+`POST /quotes#subscribers` is a list of `Subscriber` objects each
+representing an interested party in the transaction.
+
+The `Subscriber` object takes the form of:
 
 | Name               | Cardinality | Type               | Description                                                                             |
 | ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
@@ -592,13 +599,12 @@ The `Subscriber` data element takes the form of:
 | role               | 1           | `SubscriptionRole` | The role of the subscription                                                            |
 
 Where `SubscriptionRole` is a enum of the following values:
-[ todo: revise ]
 
-| Name               | Description | 
-| ------------------ | ----------- | 
-| `PAYER`            | 1           | 
-| `PAYEE`            | 1           | 
-| `INITIATOR`            | 1           | 
+| Name               | Description                                | 
+| ------------------ | ------------------------------------------ | 
+| `PAYER`            | The sender of the funds                    | 
+| `PAYEE`            | The recipient of the funds                 | 
+| `INITIATOR`        | The participant initiating the transaction | 
 
 
 The `subscribers` list is included in the following requests:
@@ -609,69 +615,76 @@ The `subscribers` list is included in the following requests:
 
 #### Sending subscribers with a `POST /quotes`
 
-Including the `subscribers` list with the `POST /quotes` request allows the PayerFSP to 
+Including the `subscribers` list with the `POST /quotes` request allows the 
+PayerFSP to specify themselves and any other interested party who should be
+notified by the switch upon the conclusion of a transaction.
 
-For example, in a 'normal' peer-to-peer transaction:
-```http
-POST /quotes
-Headers: ...
-Body: {
-  "subscribers": [
-    {
-      "id": "dfspA",
-      "role": PAYER"
-    }    
-  ]
-  [ todo ]
-  ...
 
-}
+
+For example, in a 'normal' peer-to-peer transaction, between two 
+participants, `dfspA` and `dfspB`, dfspA can set the `quotes#subscribers`
+object like so:
+```json
+[
+  {
+    "id": "dfspA",
+    "role": "PAYER"
+  }    
+]
 ```
 
-Or, in the case of a 3rd party initiated transaction:
-```http
-POST /quotes
-Headers: ...
-Body: {
-  "subscribers": [
+>See [below](#quote-request-with-a-single-subscriber) for a full example of this request
+
+Or, in the case of a 3rd party initiated transaction, where a PISP `pispA`
+has initiated a transaction:
+
+```json
+[
     {
       "id": "dfspA",
-      "role": PAYER"
-    },   
+      "role": "PAYER"
+    },
     {
       "id": "pispA",
       "role": "INITIATOR"
     },   
   ]
-  [ todo ]
-  ...
-
-}
 ```
 
-#### In the `PUT /quotes` callback
+> See [below](#quote-request-with-multiple-subscribers) for a full example of this request
 
-In the `PUT /quotes` callback from the PayeeFSP, the `subscribers` list is included in the `Transaction` object.
+#### Subscribers in the Transaction object
 
-1. To form the `subscribers` list, the PayeeFSP must take the original list from the `POST /quotes` request
-2. Optionally, the PayeeFSP includes themselves or any other party in the list
+It is the responsibility of the PayeeFSP to form the Transaction object to be included in the `PUT /quotes/{id}` callback.
+
+To build the `transaction#subscribers` field, the PayeeFSP takes the following steps:
+1. Copy the value of `subscribers` from the `POST /quote` payload
+2. Optionally append new `Subscriber` objects to the `subscribers` list
+> The PayeeFSP can append a `Subscriber` object for themselves to request a callback 
+> on the conclusion of the transaction - equivalent to the new behaviour introduced 
+> in v1.1 of the API
+
 
 ##### Protecting against tampering with the `subscribers` list
 
-[todo - the list is finalized in `PUT /quotes` by the payeeFsp, and can't be tampered with]
-- additionally, the PayerFSP must also ensure that the PayeeFSP didn't _remove_ anything from this list
-  [ todo: what does the PayerFSP do do in this case? ]
+Since the `Transaction` object is finalized by the PayeeFSP in the `PUT /quotes/{id}` callback, 
+participants are unable to modify the `transaction#subscribers` after this point. Modifications
+to `transaction#subscribers` would lead to an invalid condition and fulfilment, and void the
+transaction.
+
+Additionally, upon receiving the `PUT /quotes/{id}` callback, the PayerDFSP MUST validate the 
+`transaction#subscribers`, and ensure that the PayeeFSP only appended to the `subscribers` list,
+and did not remove any of the elements originally specified in the `POST /quotes` request.
 
 
-##### Replacing the v1.1 Behaviour
+##### Payee Notification Subscriptions - two methods
 
-This presents us with the opportunity to replace the `PUT /transfers` behaviour with this new, more general approach to subscribing to callbacks.
+This leaves the PayeeFSP with 2 methods to request a callback from the switch upon the conclusion of a transaction:
+1. In `PUT /transfers/{id}`, set the `transferState` to `RESERVED`
+2. In `PUT /quotes/{id}` append a `Subscriber` object representing the PayeeFSP to `transaction#subscribers`
 
-
-[ todo - finish ]
-
-
-
+In the interests of preserving backwards compatibility, we propose to keep the `v1.1` notification behaviour,
+but mark it as deprecated, to be removed in `v3.0` of the API
 
 
 ## Data Model Changes
@@ -798,3 +811,126 @@ This presents us with the opportunity to replace the `PUT /transfers` behaviour 
 PayerFSP
 PayeeFSP
 TransactionInitiator
+
+
+
+A `subscribers` list is expressed as:
+
+| Name               | Cardinality | Type               | Description                                                                             |
+| ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
+| `subscribers`      | 1...16      | `Subscriber`       | A list of Subscribers who are interested in the outcome of this Transaction             |
+
+
+## Examples
+
+### quote request with a single subscriber
+
+```http
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=2 
+Content-Type: application/vnd.interoperability.quotes+json;version=2.0 
+Content-Length: 50
+Date: Tue, 19 June 2021 08:00:00 GMT
+FSPIOP-Source: dfspA
+FSPIOP-Destination: dfspB
+{
+  "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+  "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+  "payee": {
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "123456789",
+      "fspId": "MobileMoney"
+    }
+  },
+  "payer": {
+    "personalInfo": {
+      "complexName": {
+        "firstName": "Mats",
+        "lastName": "Hagman"
+      }
+    },
+    "partyIdInfo": {
+      "partyIdType": "IBAN",
+      "partyIdentifier": "SE4550000000058398257466",
+      "fspId": "BankNrOne"
+    }
+  },
+  "amountType": "RECEIVE",
+  "amount": {
+    "amount": "100",
+    "currency": "USD"
+  },
+  "transactionType": {
+    "scenario": "TRANSFER",
+    "initiator": "PAYER",
+    "initiatorType": "CONSUMER"
+  },
+  "note": "Birthday Present",
+  "expiration": "2020-06-19T09:00:00.000-01:00",
+  "subscribers": [
+    {
+      "id": "dfspA",
+      "role": "PAYER"
+    }    
+  ]
+}
+```
+
+### quote request with multiple subscribers
+
+```http
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=2 
+Content-Type: application/vnd.interoperability.quotes+json;version=2.0 
+Content-Length: 50
+Date: Tue, 19 June 2021 08:00:00 GMT
+FSPIOP-Source: dfspA
+FSPIOP-Destination: dfspB
+{
+  "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+  "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+  "payee": {
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "123456789",
+      "fspId": "MobileMoney"
+    }
+  },
+  "payer": {
+    "personalInfo": {
+      "complexName": {
+        "firstName": "Mats",
+        "lastName": "Hagman"
+      }
+    },
+    "partyIdInfo": {
+      "partyIdType": "IBAN",
+      "partyIdentifier": "SE4550000000058398257466",
+      "fspId": "BankNrOne"
+    }
+  },
+  "amountType": "RECEIVE",
+  "amount": {
+    "amount": "100",
+    "currency": "USD"
+  },
+  "transactionType": {
+    "scenario": "TRANSFER",
+    "initiator": "PAYER",
+    "initiatorType": "CONSUMER"
+  },
+  "note": "Birthday Present",
+  "expiration": "2020-06-19T09:00:00.000-01:00",
+  "subscribers": [
+    {
+      "id": "dfspA",
+      "role": "PAYER"
+    },
+    {
+      "id": "pispA",
+      "role": "INITIATOR"
+    },   
+  ]
+}
+```
