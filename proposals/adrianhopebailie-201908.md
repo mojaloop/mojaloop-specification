@@ -37,6 +37,7 @@ Approved/Rejected Date: N/A
     - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems-1)
     - [Generalizing Transaction Outcome Notifications](#Generalizing-Transaction-Outcome-Notifications-1)
   - [Data Model Changes](#data-model-changes)
+  - [Examples](#examples)
 
 ## Document History
 
@@ -209,9 +210,9 @@ With the addition of Thirdparty APIs, there is a greater need for flexibility in
 delivering transaction outcome notifications to other interested participants, such as
 a Payment Initiation Service Providers (PISPs) or  Cross Network Provider (CNPs).
 
-This proposal includes a new `Subscribers` data element to be included in (1) the request 
-body of the `POST /quotes` request, and (2) inside the  `Transaction` object, which is 
-exchanged during the `PUT /quotes` and `POST /transfers` requests.
+This proposal includes a new `Subscribers` data element to be included in 
+1. the request body of the `POST /quotes` request, and
+2. inside the  `Transaction` object, which is exchanged during the `PUT /quotes` and `POST /transfers` requests.
 
 `Subscribers` allows the Payer and Payee participants to include themselves and 
 other parties they might be acting on the behalf of to the list of subscribers. Upon the
@@ -607,10 +608,10 @@ Where `SubscriptionRole` is a enum of the following values:
 | `INITIATOR`        | The participant initiating the transaction | 
 
 
-The `subscribers` list is included in the following requests:
+The `subscribers` list is included in the following request bodies:
 1. Plaintext in the `POST /quotes` request
-2. Inside the `Transaction` field of `PUT /quotes` (i.e. `transaction.subscribers`)
-3. Inside the `Transaction` field of `POST /transfers` (i.e. `transaction.subscribers`)
+2. Inside the `Transaction` field of `PUT /quotes` (i.e. `transaction#subscribers`)
+3. Inside the `Transaction` field of `POST /transfers` (i.e. `transaction#subscribers`)
 
 
 #### Sending subscribers with a `POST /quotes`
@@ -618,8 +619,6 @@ The `subscribers` list is included in the following requests:
 Including the `subscribers` list with the `POST /quotes` request allows the 
 PayerFSP to specify themselves and any other interested party who should be
 notified by the switch upon the conclusion of a transaction.
-
-
 
 For example, in a 'normal' peer-to-peer transaction, between two 
 participants, `dfspA` and `dfspB`, dfspA can set the `quotes#subscribers`
@@ -707,6 +706,7 @@ but mark it as deprecated, to be removed in `v3.0` of the API
 | expiration           | 0..1        | `DateTime`        | Expiration is optional.                                                                                 |
 | accountAddress       | 0..1        | `AccountAddress`  | The address of the payee account, used for routing where the quote goes via one or more intermediaries. |
 | participants         | 1           | `ParticipantList` | The participants in the transaction.                                                                    |
+| subscribers          | 0..16       |
 | maxValueDate         | 0..1        | `DateTime`        | The maximum Value Date for this transaction to clear in the payee’s account                             |
 | extensionList        | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                             |
 
@@ -783,10 +783,18 @@ but mark it as deprecated, to be removed in `v3.0` of the API
 
 `Transaction`:
 
-| Name               | Cardinality | Type             | Description                                                                             |
-| ------------------ | ----------- | ---------------- | --------------------------------------------------------------------------------------- |
-| subscribers        | 0..1        | `Subscriber`     | A list of subscribers who should be notified on the conclusion of the transaction       |
-<!-- TODO other existing transaction stuff-->
+| Name               | Cardinality | Type              | Description                                                                                 |
+| ------------------ | ----------- | ----------------- | ------------------------------------------------------------------------------------------- |
+| transactionId      | 1           | `CorrelationId`   | ID of the transaction, the ID is decided by the Payer FSP during the creation of the quote. |
+| quoteId            | 1           | `CorrelationId`   | ID of the quote, the ID is decided by the Payer FSP during the creation of the quote.       |
+| payee              | 1           | `Party`           | Information about the Payee in the proposed financial transaction.                          |
+| payer              | 1           | `Party`           | Information about the Payer in the proposed financial transaction.                          |
+| amount             | 1           | `Money`           | Transaction amount to be sent.                                                              |
+| transactionType    | 1           | `TransactionType` | Type of the transaction.                                                                    |
+| subscribers        | 0..16       | `Subscriber`      | A list of subscribers who should be notified on the conclusion of the transaction           |
+| note               | 0..1        | `Note`            | Memo associated to the transaction, intended to the Payee.                                  |
+| extensionList      | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                 |
+
 
 `TransactionResult`:
 
@@ -798,7 +806,6 @@ but mark it as deprecated, to be removed in `v3.0` of the API
 | extensionList      | 0..1        | ExtensionList    | Optional extension, specific to deployment.                                             |
 
 
-
 `Subscriber`:
 
 | Name               | Cardinality | Type               | Description                                                                             |
@@ -808,10 +815,11 @@ but mark it as deprecated, to be removed in `v3.0` of the API
 
 `SubscriptionRole` Enum:
 
-PayerFSP
-PayeeFSP
-TransactionInitiator
-
+| Name               | Description                                | 
+| ------------------ | ------------------------------------------ | 
+| `PAYER`            | The sender of the funds                    | 
+| `PAYEE`            | The recipient of the funds                 | 
+| `INITIATOR`        | The participant initiating the transaction | 
 
 
 A `subscribers` list is expressed as:
@@ -823,13 +831,13 @@ A `subscribers` list is expressed as:
 
 ## Examples
 
-### quote request with a single subscriber
+### Quote Request with a Single Subscriber
 
 ```http
 POST /quotes HTTP/1.1
 Accept: application/vnd.interoperability.quotes+json;version=2 
 Content-Type: application/vnd.interoperability.quotes+json;version=2.0 
-Content-Length: 50
+Content-Length: 662
 Date: Tue, 19 June 2021 08:00:00 GMT
 FSPIOP-Source: dfspA
 FSPIOP-Destination: dfspB
@@ -877,13 +885,13 @@ FSPIOP-Destination: dfspB
 }
 ```
 
-### quote request with multiple subscribers
+### Quote Request with Multiple Subscribers
 
 ```http
 POST /quotes HTTP/1.1
 Accept: application/vnd.interoperability.quotes+json;version=2 
 Content-Type: application/vnd.interoperability.quotes+json;version=2.0 
-Content-Length: 50
+Content-Length: 696
 Date: Tue, 19 June 2021 08:00:00 GMT
 FSPIOP-Source: dfspA
 FSPIOP-Destination: dfspB
