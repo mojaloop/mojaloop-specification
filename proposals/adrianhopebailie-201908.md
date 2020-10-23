@@ -605,7 +605,7 @@ Where `SubscriptionRole` is a enum of the following values:
 | ------------------ | ------------------------------------------ | 
 | `PAYER`            | The sender of the funds                    | 
 | `PAYEE`            | The recipient of the funds                 | 
-| `INITIATOR`        | The participant initiating the transaction | 
+| `PISP`        | The participant initiating the transaction | 
 
 
 The `subscribers` list is included in the following request bodies:
@@ -645,7 +645,7 @@ has initiated a transaction:
     },
     {
       "id": "pispA",
-      "role": "INITIATOR"
+      "role": "PISP"
     },   
   ]
 ```
@@ -819,7 +819,7 @@ but mark it as deprecated, to be removed in `v3.0` of the API
 | ------------------ | ------------------------------------------ | 
 | `PAYER`            | The sender of the funds                    | 
 | `PAYEE`            | The recipient of the funds                 | 
-| `INITIATOR`        | The participant initiating the transaction | 
+| `PISP`        | The participant initiating the transaction | 
 
 
 A `subscribers` list is expressed as:
@@ -937,7 +937,7 @@ FSPIOP-Destination: dfspB
     },
     {
       "id": "pispA",
-      "role": "INITIATOR"
+      "role": "PISP"
     },   
   ]
 }
