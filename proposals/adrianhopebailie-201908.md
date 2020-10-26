@@ -18,6 +18,7 @@ Approved/Rejected Date: N/A
       - [A Note on Payee Privacy](#a-note-on-payee-privacy)
     - [Regulatory Data Exchange](#regulatory-data-exchange)
     - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems)
+    - [Generalizing Transaction Outcome Notifications](#Generalizing-Transaction-Outcome-Notifications)
   - [Proposed Solution](#proposed-solution)
     - [Upgrading to Interledger Protocol version 4](#upgrading-to-interledger-protocol-version-4-1)
     - [Generation of the Condition and Fulfillment](#generation-of-the-condition-and-fulfillment-1)
@@ -34,7 +35,9 @@ Approved/Rejected Date: N/A
       - [Fees and Rates](#fees-and-rates)
       - [Regulatory Data](#regulatory-data)
     - [Connecting to non-Mojaloop systems](#connecting-to-non-mojaloop-systems-1)
+    - [Generalizing Transaction Outcome Notifications](#Generalizing-Transaction-Outcome-Notifications-1)
   - [Data Model Changes](#data-model-changes)
+  - [Examples](#examples)
 
 ## Document History
 
@@ -42,6 +45,7 @@ Approved/Rejected Date: N/A
 | ------- | ---------- | ------------------ | -------------------------- |
 | 1.0     | 2019-08-29 | Adrian Hope-Bailie | Initial draft              |
 | 1.1     | 2019-11-12 | Adrian Hope-Bailie | Updates following workshop |
+| 1.2     | 2020-10-05 | Lewis Daly         | Updates to include thirdparty transaction notifications |
 
 ## Change Request Background
 
@@ -195,6 +199,26 @@ system (or even a system that supports real-time clearing).
 In this case it is important for the CNP that is bridging the Mojaloop system to
 the other system(s) to be able to express and expected clearing time for
 transactions.
+
+### Generalizing Transaction Outcome Notifications
+
+v1.1 of the FSPIOP-API introduced a new optional notification for the PayeeFSP. The
+PayeeFSP can request a notification from the switch by sending a `PUT /transfers/{id}`
+request to the switch with a `transferState` of `RESERVED`.
+
+With the addition of Thirdparty APIs, there is a greater need for flexibility in 
+delivering transaction outcome notifications to other interested participants, such as
+a Payment Initiation Service Providers (PISPs) or  Cross Network Provider (CNPs).
+
+This proposal includes a new `Subscribers` data element to be included in 
+1. the request body of the `POST /quotes` request, and
+2. inside the  `Transaction` object, which is exchanged during the `PUT /quotes` and `POST /transfers` requests.
+
+`Subscribers` allows the Payer and Payee participants to include themselves and 
+other parties they might be acting on the behalf of to the list of subscribers. Upon the
+conclusion of a transaction, the switch can then use this list of subscribers to send
+notifications to all interested parties.
+
 
 ## Proposed Solution
 
@@ -562,6 +586,106 @@ In the response the CNP can provide a value date that they commit to, based on
 their knowledge of and SLAs with the external systems that will receive the
 payment.
 
+
+### Generalizing Transaction Outcome Notifications
+
+`POST /quotes#subscribers` is a list of `Subscriber` objects each
+representing an interested party in the transaction.
+
+The `Subscriber` object takes the form of:
+
+| Name               | Cardinality | Type               | Description                                                                             |
+| ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
+| id                 | 1           | `FspId`            | The id of a participant interested in the transaction                                   |
+| role               | 1           | `SubscriptionRole` | The role of the subscription                                                            |
+
+Where `SubscriptionRole` is a enum of the following values:
+
+| Name               | Description                                | 
+| ------------------ | ------------------------------------------ | 
+| `PAYER`            | The sender of the funds                    | 
+| `PAYEE`            | The recipient of the funds                 | 
+| `PISP`        | The participant initiating the transaction | 
+
+
+The `subscribers` list is included in the following request bodies:
+1. Plaintext in the `POST /quotes` request
+2. Inside the `Transaction` field of `PUT /quotes` (i.e. `transaction#subscribers`)
+3. Inside the `Transaction` field of `POST /transfers` (i.e. `transaction#subscribers`)
+
+
+#### Sending subscribers with a `POST /quotes`
+
+Including the `subscribers` list with the `POST /quotes` request allows the 
+PayerFSP to specify themselves and any other interested party who should be
+notified by the switch upon the conclusion of a transaction.
+
+For example, in a 'normal' peer-to-peer transaction, between two 
+participants, `dfspA` and `dfspB`, dfspA can set the `quotes#subscribers`
+object like so:
+```json
+[
+  {
+    "id": "dfspA",
+    "role": "PAYER"
+  }    
+]
+```
+
+>See [below](#quote-request-with-a-single-subscriber) for a full example of this request
+
+Or, in the case of a 3rd party initiated transaction, where a PISP `pispA`
+has initiated a transaction:
+
+```json
+[
+    {
+      "id": "dfspA",
+      "role": "PAYER"
+    },
+    {
+      "id": "pispA",
+      "role": "PISP"
+    },   
+  ]
+```
+
+> See [below](#quote-request-with-multiple-subscribers) for a full example of this request
+
+#### Subscribers in the Transaction object
+
+It is the responsibility of the PayeeFSP to form the Transaction object to be included in the `PUT /quotes/{id}` callback.
+
+To build the `transaction#subscribers` field, the PayeeFSP takes the following steps:
+1. Copy the value of `subscribers` from the `POST /quote` payload
+2. Optionally append new `Subscriber` objects to the `subscribers` list
+> The PayeeFSP can append a `Subscriber` object for themselves to request a callback 
+> on the conclusion of the transaction - equivalent to the new behaviour introduced 
+> in v1.1 of the API
+
+
+##### Protecting against tampering with the `subscribers` list
+
+Since the `Transaction` object is finalized by the PayeeFSP in the `PUT /quotes/{id}` callback, 
+participants are unable to modify the `transaction#subscribers` after this point. Modifications
+to `transaction#subscribers` would lead to an invalid condition and fulfilment, and void the
+transaction.
+
+Additionally, upon receiving the `PUT /quotes/{id}` callback, the PayerDFSP MUST validate the 
+`transaction#subscribers`, and ensure that the PayeeFSP only appended to the `subscribers` list,
+and did not remove any of the elements originally specified in the `POST /quotes` request.
+
+
+##### Payee Notification Subscriptions - two methods
+
+This leaves the PayeeFSP with 2 methods to request a callback from the switch upon the conclusion of a transaction:
+1. In `PUT /transfers/{id}`, set the `transferState` to `RESERVED`
+2. In `PUT /quotes/{id}` append a `Subscriber` object representing the PayeeFSP to `transaction#subscribers`
+
+In the interests of preserving backwards compatibility, we propose to keep the `v1.1` notification behaviour,
+but mark it as deprecated, to be removed in `v3.0` of the API
+
+
 ## Data Model Changes
 
 `POST /quotes` request:
@@ -582,7 +706,8 @@ payment.
 | expiration           | 0..1        | `DateTime`        | Expiration is optional.                                                                                 |
 | accountAddress       | 0..1        | `AccountAddress`  | The address of the payee account, used for routing where the quote goes via one or more intermediaries. |
 | participants         | 1           | `ParticipantList` | The participants in the transaction.                                                                    |
-| maxValueDate         | 0..1        | DateTime          | The maximum Value Date for this transaction to clear in the payee’s account                             |
+| subscribers          | 0..16       |
+| maxValueDate         | 0..1        | `DateTime`        | The maximum Value Date for this transaction to clear in the payee’s account                             |
 | extensionList        | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                             |
 
 `PUT /quotes` response callback:
@@ -599,7 +724,7 @@ payment.
 | echoData           | 0..1        | `EchoData`      | Opaque data provided by the payee that must be echoed back unchanged in the transfer.                       |
 | condition          | 1           | `IlpCondition`  | The condition that must be attached to the transfer by the Payer.                                           |
 | participants       | 0..16       | `Participant`   | The participants in the transaction.                                                                        |
-| valueDate          | 0..1        | DateTime        | The maximum Value Date for this transaction to clear in the payee’s account                                 |
+| valueDate          | 0..1        | `DateTime`      | The maximum Value Date for this transaction to clear in the payee’s account                                 |
 | extensionList      | 0..1        | `ExtensionList` | Optional extension, specific to deployment.                                                                 |
 
 `POST /transfers` request:
@@ -656,6 +781,21 @@ payment.
 | personalInfo               | 0..1        | `PartyPersonalInfo`          | Personal information used to verify identity of Party such as name and date of birth. |
 | accounts                   | 0..1        | `AccountList`                | A list of accounts that can accept transfers for the party.                           |
 
+`Transaction`:
+
+| Name               | Cardinality | Type              | Description                                                                                 |
+| ------------------ | ----------- | ----------------- | ------------------------------------------------------------------------------------------- |
+| transactionId      | 1           | `CorrelationId`   | ID of the transaction, the ID is decided by the Payer FSP during the creation of the quote. |
+| quoteId            | 1           | `CorrelationId`   | ID of the quote, the ID is decided by the Payer FSP during the creation of the quote.       |
+| payee              | 1           | `Party`           | Information about the Payee in the proposed financial transaction.                          |
+| payer              | 1           | `Party`           | Information about the Payer in the proposed financial transaction.                          |
+| amount             | 1           | `Money`           | Transaction amount to be sent.                                                              |
+| transactionType    | 1           | `TransactionType` | Type of the transaction.                                                                    |
+| subscribers        | 0..16       | `Subscriber`      | A list of subscribers who should be notified on the conclusion of the transaction           |
+| note               | 0..1        | `Note`            | Memo associated to the transaction, intended to the Payee.                                  |
+| extensionList      | 0..1        | `ExtensionList`   | Optional extension, specific to deployment.                                                 |
+
+
 `TransactionResult`:
 
 | Name               | Cardinality | Type             | Description                                                                             |
@@ -664,3 +804,141 @@ payment.
 | transactionState   | 1           | TransactionState | State of the transaction.                                                               |
 | code               | 0..1        | Code             | Optional redemption information provided to Payer after transaction has been completed. |
 | extensionList      | 0..1        | ExtensionList    | Optional extension, specific to deployment.                                             |
+
+
+`Subscriber`:
+
+| Name               | Cardinality | Type               | Description                                                                             |
+| ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
+| id                 | 1           | `FspId`            | The id of a participant interested in the transaction                                   |
+| role               | 1           | `SubscriptionRole` | The of the subscription 
+
+`SubscriptionRole` Enum:
+
+| Name               | Description                                | 
+| ------------------ | ------------------------------------------ | 
+| `PAYER`            | The sender of the funds                    | 
+| `PAYEE`            | The recipient of the funds                 | 
+| `PISP`        | The participant initiating the transaction | 
+
+
+A `subscribers` list is expressed as:
+
+| Name               | Cardinality | Type               | Description                                                                             |
+| ------------------ | ----------- | ------------------ | --------------------------------------------------------------------------------------- |
+| `subscribers`      | 1...16      | `Subscriber`       | A list of Subscribers who are interested in the outcome of this Transaction             |
+
+
+## Examples
+
+### Quote Request with a Single Subscriber
+
+```http
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=2 
+Content-Type: application/vnd.interoperability.quotes+json;version=2.0 
+Content-Length: 662
+Date: Tue, 19 June 2021 08:00:00 GMT
+FSPIOP-Source: dfspA
+FSPIOP-Destination: dfspB
+{
+  "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+  "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+  "payee": {
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "123456789",
+      "fspId": "MobileMoney"
+    }
+  },
+  "payer": {
+    "personalInfo": {
+      "complexName": {
+        "firstName": "Mats",
+        "lastName": "Hagman"
+      }
+    },
+    "partyIdInfo": {
+      "partyIdType": "IBAN",
+      "partyIdentifier": "SE4550000000058398257466",
+      "fspId": "BankNrOne"
+    }
+  },
+  "amountType": "RECEIVE",
+  "amount": {
+    "amount": "100",
+    "currency": "USD"
+  },
+  "transactionType": {
+    "scenario": "TRANSFER",
+    "initiator": "PAYER",
+    "initiatorType": "CONSUMER"
+  },
+  "note": "Birthday Present",
+  "expiration": "2020-06-19T09:00:00.000-01:00",
+  "subscribers": [
+    {
+      "id": "dfspA",
+      "role": "PAYER"
+    }    
+  ]
+}
+```
+
+### Quote Request with Multiple Subscribers
+
+```http
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=2 
+Content-Type: application/vnd.interoperability.quotes+json;version=2.0 
+Content-Length: 696
+Date: Tue, 19 June 2021 08:00:00 GMT
+FSPIOP-Source: dfspA
+FSPIOP-Destination: dfspB
+{
+  "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+  "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+  "payee": {
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "123456789",
+      "fspId": "MobileMoney"
+    }
+  },
+  "payer": {
+    "personalInfo": {
+      "complexName": {
+        "firstName": "Mats",
+        "lastName": "Hagman"
+      }
+    },
+    "partyIdInfo": {
+      "partyIdType": "IBAN",
+      "partyIdentifier": "SE4550000000058398257466",
+      "fspId": "BankNrOne"
+    }
+  },
+  "amountType": "RECEIVE",
+  "amount": {
+    "amount": "100",
+    "currency": "USD"
+  },
+  "transactionType": {
+    "scenario": "TRANSFER",
+    "initiator": "PAYER",
+    "initiatorType": "CONSUMER"
+  },
+  "note": "Birthday Present",
+  "expiration": "2020-06-19T09:00:00.000-01:00",
+  "subscribers": [
+    {
+      "id": "dfspA",
+      "role": "PAYER"
+    },
+    {
+      "id": "pispA",
+      "role": "PISP"
+    },   
+  ]
+}
+```
