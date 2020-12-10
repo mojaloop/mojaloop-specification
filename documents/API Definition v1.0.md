@@ -3743,7 +3743,7 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 ###### Table 91
 
 | **Name** | **Description** |
-| --- | --- | --- | --- |
+| --- | --- |
 | **MSISDN** | An MSISDN (Mobile Station International Subscriber Directory Number; that is, a phone number) is used in reference to a Party. The MSISDN identifier should be in international format according to the ITU-T E.164<sup>37</sup> standard. Optionally, the MSISDN may be prefixed by a single plus sign, indicating the international prefix. |
 | **EMAIL** | An email is used in reference to a Party. The format of the email should be according to the informational RFC 3696<sup>38</sup>. |
 | **PERSONAL_ID** | A personal identifier is used in reference to a participant. Examples of personal identification are passport number, birth certificate number, and national registration number. The identifier number is added in the **PartyIdentifier** element. The personal identifier type is added in the **PartySubIdOrType** element. |
