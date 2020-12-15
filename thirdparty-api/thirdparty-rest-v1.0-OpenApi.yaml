@@ -1,0 +1,847 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: Mojaloop ThirdParty API
+  description: A Mojaloop API for thirdparty interactions between PISPs (Payment Initiation Service Providers) and DFSPs (Digital Financial Service Providers)
+  license:
+    name: TBD
+basePath: /
+schemes:
+- http
+- https
+
+paths:
+  /consents:
+    post:
+      description: >
+        Create a consent object. Called by DFSP after the succesful creation 
+        and validation of a consentRequest
+      summary: CreateConsent
+      operationId: CreateConsent
+      tags:
+        - consent
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema: 
+            $ref: '#/definitions/Consent'
+      # Headers
+        - $ref: '#/parameters/Content-Length'
+        - $ref: '#/parameters/Content-Type'
+        - $ref: '#/parameters/Date'
+        - $ref: '#/parameters/X-Forwarded-For'
+        - $ref: '#/parameters/FSPIOP-Source'
+        - $ref: '#/parameters/FSPIOP-Destination'
+        - $ref: '#/parameters/FSPIOP-Encryption'
+        - $ref: '#/parameters/FSPIOP-Signature'
+        - $ref: '#/parameters/FSPIOP-URI'
+        - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+          "application/json":
+            { 
+              "id": "123",
+              "requestId": "456",
+              "initiatorId": "PISP A",
+              "participantId": "DFSP A",
+              # TODO: fix this up
+              "scopes": [
+                { 
+                  "scope": "account.balanceInquiry",
+                  "accountId": "12345-67890"
+                },
+                { 
+                  "scope": "account.sendTransfer",
+                  "accountId": "12345-67890"
+                },
+                { 
+                  "scope": "account.sendTransfer",
+                  "accountId": "77777-38937"
+                }
+              ],
+              "credential": null
+            }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+  
+  /consents/{ID}:
+    put:
+      # TODO: better description
+      description: >
+        Updates a consent object.
+      summary: UpdateConsent
+      operationId: UpdateConsent
+      tags:
+        - consent
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/ID'
+        - name: body
+          in: body
+          required: true
+          schema: 
+            $ref: '#/definitions/Consent'
+      # Headers
+        - $ref: '#/parameters/Content-Length'
+        - $ref: '#/parameters/Content-Type'
+        - $ref: '#/parameters/Date'
+        - $ref: '#/parameters/X-Forwarded-For'
+        - $ref: '#/parameters/FSPIOP-Source'
+        - $ref: '#/parameters/FSPIOP-Destination'
+        - $ref: '#/parameters/FSPIOP-Encryption'
+        - $ref: '#/parameters/FSPIOP-Signature'
+        - $ref: '#/parameters/FSPIOP-URI'
+        - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+          "application/json":
+            { 
+              "requestId": "456",
+              "initiatorId": "PISP A",
+              "participantId": "DFSP A",
+              "scopes": [
+                {
+                  "scope": "account.balanceInquiry",
+                  "accountId": "12345-67890"
+                },
+                { 
+                  "scope": "account.sendTransfer",
+                  "accountId": "12345-67890"
+                },
+                { 
+                  "scope": "account.sendTransfer",
+                  "accountId": "77777-38937"
+                }
+              ],
+              "credential": {
+                "id": "5678", 
+                "credentialType": "FIDO",
+                "credentialStatus": "ACTIVE",
+                "challenge": {
+                  "payload": base64(...),
+                  "signature": base64(...)
+                },
+                "payload": base64(...)
+              },
+            }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+
+  /consents/{ID}/createCredential:
+    post:
+      summary: CreateCredentialRequest
+      operationId: CreateCredentialRequest
+      description: >
+        Creates a credential for the given Consent object
+      tags:
+        - consent
+      parameters:
+        - $ref: '#/parameters/ID'
+        - name: body
+          in: body
+          required: true
+          schema: 
+            $ref: '#/definitions/CreateCredential'
+      # Headers
+        - $ref: '#/parameters/Content-Length'
+        - $ref: '#/parameters/Content-Type'
+        - $ref: '#/parameters/Date'
+        - $ref: '#/parameters/X-Forwarded-For'
+        - $ref: '#/parameters/FSPIOP-Source'
+        - $ref: '#/parameters/FSPIOP-Destination'
+        - $ref: '#/parameters/FSPIOP-Encryption'
+        - $ref: '#/parameters/FSPIOP-Signature'
+        - $ref: '#/parameters/FSPIOP-URI'
+        - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+          "application/json":
+            { 
+              "type": "FIDO"
+            }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+
+  /consentRequests:
+    post:
+      description: Create a consent request. Called by a PISP.
+      summary: CreateConsentRequest
+      tags:
+        - consentRequest
+      operationId: CreateConsentRequest
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema: 
+            $ref: '#/definitions/ConsentRequest'
+        # Headers
+        - $ref: '#/parameters/Content-Length'
+        - $ref: '#/parameters/Content-Type'
+        - $ref: '#/parameters/Date'
+        - $ref: '#/parameters/X-Forwarded-For'
+        - $ref: '#/parameters/FSPIOP-Source'
+        - $ref: '#/parameters/FSPIOP-Destination'
+        - $ref: '#/parameters/FSPIOP-Encryption'
+        - $ref: '#/parameters/FSPIOP-Signature'
+        - $ref: '#/parameters/FSPIOP-URI'
+        - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+          "application/json":
+            { 
+              "id": "456",
+              "initiatorId": "PISP A",
+              "accountIds": [ "dfspa.lewis.1234", "dfspa.lewis.5678" ],
+              "authChannels": [ "Web", "OTP" ],
+              "scopes": [ "accounts.getBalance", "accounts.transfer" ],
+              "callbackUri": "pisp-app://callback..."
+            }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+
+  /consentRequests/{ID}:      
+    put:
+      description: |
+        Update a consent request
+        - Called by a PISP to add the authToken parameter
+        - Called by a DFSP to include the authorizationUri
+      summary: UpdateConsentRequest
+      tags:
+        - consentRequest
+      operationId: UpdateConsentRequest
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/ID'
+        - name: body
+          in: body
+          required: true
+          schema: 
+            $ref: '#/definitions/ConsentRequest'
+        # Headers
+        - $ref: '#/parameters/Content-Length'
+        - $ref: '#/parameters/Content-Type'
+        - $ref: '#/parameters/Date'
+        - $ref: '#/parameters/X-Forwarded-For'
+        - $ref: '#/parameters/FSPIOP-Source'
+        - $ref: '#/parameters/FSPIOP-Destination'
+        - $ref: '#/parameters/FSPIOP-Encryption'
+        - $ref: '#/parameters/FSPIOP-Signature'
+        - $ref: '#/parameters/FSPIOP-URI'
+        - $ref: '#/parameters/FSPIOP-HTTP-Method'
+      x-examples:
+          "application/json":
+            { 
+              "initiatorId": "PISP A",
+              "accountIds": [ "dfspa.lewis.1234", "dfspa.lewis.5678" ],
+              "authChannels": [ "OTP" ],
+              "scopes": [ "accounts.getBalance", "accounts.transfer" ],
+              "callbackUri": "pisp-app://callback...",
+              "authorizationUri": "pisp-app://callback",
+              "authToken": "000111"
+            }
+      responses:
+        202:
+          $ref: '#/responses/Response202'
+        400:
+          $ref: '#/responses/ErrorResponse400'
+        401:
+          $ref: '#/responses/ErrorResponse401'
+        403:
+          $ref: '#/responses/ErrorResponse403'
+        404:
+          $ref: '#/responses/ErrorResponse404'
+        405:
+          $ref: '#/responses/ErrorResponse405'
+        406:
+          $ref: '#/responses/ErrorResponse406'
+        501:
+          $ref: '#/responses/ErrorResponse501'
+        503:
+          $ref: '#/responses/ErrorResponse503'
+
+definitions:
+  CorrelationId:
+    title: CorrelationId
+    type: string
+    pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+    description: Identifier that correlates all messages of the same sequence. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘).
+  Date:
+    title: Date
+    type: string
+    pattern: ^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$
+    description: The API data type Date is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.
+      This format, as specified in ISO 8601, contains a date only. A more readable version of the format is yyyy-MM-dd. Examples - "1982-05-23", "1987-08-05"
+  DateTime:
+    title: DateTime
+    type: string
+    pattern: ^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:(\.\d{3}))(?:Z|[+-][01]\d:[0-5]\d)$
+    description: The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons.
+      The format is according to ISO 8601, expressed in a combined date, time and time zone format. A more readable version of the format is yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]. Examples -  "2016-05-24T08:38:08.699-04:00", "2016-05-24T08:38:08.699Z" (where Z indicates Zulu time zone, same as UTC).
+  ErrorCode:
+    title: ErrorCode
+    type: string
+    pattern: ^[1-9]\d{3}$
+    description: The API data type ErrorCode is a JSON String of four characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. Each error code in the API is a four-digit number, for example, 1234, where the first number (1 in the example) represents the high-level error category, the second number (2 in the example) represents the low-level error category, and the last two numbers (34 in the example) represents the specific error.
+  ErrorDescription:
+    title: ErrorDescription
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Error description string.
+  ExtensionKey:
+    title: ExtensionKey
+    type: string
+    minLength: 1
+    maxLength: 32
+    description: Extension key.
+  ExtensionValue:
+    title: ExtensionValue
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Extension value.
+  FspId:
+    title: FspId
+    type: string
+    minLength: 1
+    maxLength: 32
+    description: FSP identifier.
+  Integer:
+    title: Integer
+    type: string
+    pattern: ^[1-9]\d*$
+    description: The API data type Integer is a JSON String consisting of digits only. Negative numbers and leading zeroes are not allowed. The data type is always limited to a specific number of digits.
+  Note:
+    title: Note
+    type: string
+    minLength: 1
+    maxLength: 128
+    description: Memo assigned to transaction
+  AuthChannelsEnum:
+    title: AuthChannelsEnum
+    type: string
+    enum:
+      - WEB
+      - OTP
+    description: |
+      The channels requested for a ConsentRequest
+      - "WEB" The PISP is requesting the WEB Consent flow 
+      - "OTP" The PISP is requesting the OTP Consent flow
+    
+  # TODO: AuthScopes may need to be scheme specific...
+  AuthScopesEnum:
+    title: AuthScopesEnum
+    type: string
+    enum:
+      - accounts.getBalance
+      - accounts.transfer
+    description: |
+      The scopes requested for a ConsentRequest
+      - "accounts.getBalance" - Get the balance of a given account
+      - "accounts.transfer" - initiate a transfer from an account
+    
+  CredentialTypeEnum:
+    title: CredentialTypeEnum
+    type: string
+    enum:
+      - FIDO
+    description: |
+      The type of the Credential
+      - "FIDO" - A FIDO public/private keypair
+
+  CredentialStatusEnum:
+    title: CredentialStatus
+    type: string
+    enum:
+      - PENDING
+      - ACTIVE
+    description: |
+      The status of the Credential's creation
+      - "PENDING" - The PISP has requested a challenge, or the challenge has initialized but not yet answered by the PISP
+      - "ACTIVE" - The Credential is valid, and ready to be used by the PISP
+    
+  #Complex Types
+  Consent:
+    title: Consent
+    type: object
+    description: Data model for the complex type Consent
+    properties:
+      id: 
+        allOf:
+          - $ref: '#/definitions/CorrelationId'
+        description: >
+          Common ID between the PISP and FSP for the Consent object
+          decided by the DFSP who creates the Consent
+
+          This field is REQUIRED for POST /consent
+      requestId:
+        allOf:
+          - $ref: '#/definitions/CorrelationId'
+        description: >
+          The id of the ConsentRequest that was used to initiate the
+          creation of this Consent
+      participantId:
+        $ref: '#/definitions/FspId'
+        description: FSP identifier who issued this Consent
+      initiatorId:
+        allOf:
+          - $ref: '#/definitions/FspId'
+        description: PISP identifier who uses this Consent
+      scopes:
+        type: array
+        items:
+          $ref: '#/definitions/Scope'
+      credential:
+        $ref: '#/definitions/Credential'
+
+  Scope:
+    title: Scope
+    type: object
+    description: Scope + Account Identifier mapping for a Consent
+    properties:
+      scope:
+        $ref: '#/definitions/AuthScopesEnum'
+      accountId:
+        type: string
+        description: >
+          A long-lived account identifier provided by the DFSP
+          this MUST NOT be Bank Account Number or anything that
+          may expose a User's private bank account information
+    required:
+      - scope
+      - accountId
+
+  Credential:
+    title: Credential
+    type: object
+    # TODO: A better description
+    description: |
+      A credential used to allow a user to prove their identity and access
+      to an account with a DFSP
+    properties:
+      # TODO: do we need this id?
+      id: 
+        type: string
+        description: The id of a Credential
+      type:
+        $ref: '#/definitions/CredentialTypeEnum'
+      status:
+        $ref: '#/definitions/CredentialStatusEnum'
+      challenge:
+        $ref: '#/definitions/CredentialChallenge'
+      payload:
+        type: string
+        description: Base64 encoded bytes - The public key of the Public/Private keypair
+      # TODO: do we need an identifier to identify the FIDO key as well as the public key?
+    required:
+      - id
+      - credentialType
+      - credentialStatus
+
+  CreateCredential:
+    title: CreateCredential
+    type: object
+    # TODO: A better description
+    description: |
+      A credential used to allow a user to prove their identity and access
+      to an account with a DFSP
+    properties:
+      type:
+        $ref: '#/definitions/CredentialTypeEnum'
+    required:
+      - credentialType
+    
+  CredentialChallenge:
+    title: CredentialChallenge
+    type: object
+    description: |
+      The challenge issued by a DFSP that must be answered by the PISP
+    properties: 
+      payload: 
+        type: string
+        description: Base64 encoded binary of the challenge that must be answered by the PISP
+      signature:
+        type: string
+        description: Base64 enoded binary string or result of the payload signed by the PISP using the private key
+    required:
+      - payload
+
+  ConsentRequest:
+    title: ConsentRequest
+    type: object
+    description: Data model for the complex type ConsentRequest
+    properties:
+      # TODO: We may want to make this less ambiguous by separating out into
+      #   CreateConsentRequest and UpdateConsentRequest models
+      id: 
+        allOf:
+          - $ref: '#/definitions/CorrelationId'
+        description: >
+          Common ID between the PISP and FSP for the ConsentRequest object
+          decided by the PISP. The ID should be reused for resends of the same
+          ConsentRequest. A new ID should be generated for each new ConsentRequest.
+
+          This field is REQUIRED for POST /consentRequest
+      initiatorId:
+        # We can't add in our own description with a ref. `allOf` is a workaround for this
+        allOf:
+          - $ref: '#/definitions/FspId'
+        description: PISP identifier who initiated this ConsentRequest
+      accountIds:
+        type: array
+        minItems: 1
+        description: Array of DFSP specific account identifiers
+        items:
+          type: string
+          description: DFSP specific account identifier, e.g. `dfspa.alice.1234`
+      authChannels:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/definitions/AuthChannelsEnum'
+        description: A list of requested authorization channels.
+      scopes:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/definitions/AuthScopesEnum'
+        description: A list of the requested scopes a PISP would like for the given Consent
+      callbackUri:
+        type: string
+        # TODO: this should be a uri type with a regex to enforce
+        description: >
+          When using the WEB auth channel, callbackUri determines where the webpage should 
+          redirect at the end of the WEB login flow. This field is REQUIRED when authChannels
+          contains at least 'WEB'
+      authorizationUri: 
+        type: string
+        # TODO: this should be a uri type with a regex to enforce
+        description: >
+          `authorizationUri` tells the PISP where to direct their user to perform the WEB login flow.
+          For OTP based authorization, this will be set to the same value as the `callbackUri`, to inform
+          the PISP to prompt their user for an OTP.
+      authToken:
+        type: string
+        description: >
+          The token issued to the PISP at the end of the auth flow. The PISP must fill
+          out this value. 
+          - For the WEB auth flow this token will be passed in along as 
+          a URL parameter in the `callbackUri`. 
+          - For the OTP auth flow, this will be the otp value delivered to the user directly from the DFSP
+    required:
+      - id
+      - initiatorId
+      - participantId
+      - authChannels
+      - scopes
+  ErrorInformation:
+    title: ErrorInformation
+    type: object
+    description: Data model for the complex type ErrorInformation.
+    properties:
+      errorCode:
+        $ref: '#/definitions/ErrorCode'
+        description: Specific error number.
+      errorDescription:
+        $ref: '#/definitions/ErrorDescription'
+        description: Error description string.
+      extensionList:
+        $ref: '#/definitions/ExtensionList'
+        description: Optional list of extensions, specific to deployment.
+    required:
+    - errorCode
+    - errorDescription
+  ErrorInformationObject:
+    title: ErrorInformationObject
+    type: object
+    description: Data model for the complex type object that contains ErrorInformation.
+    properties:
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+    required:
+    - errorInformation
+  ErrorInformationResponse:
+    title: ErrorInformationResponse
+    type: object
+    description: Data model for the complex type object that contains an optional element ErrorInformation used along with 4xx and 5xx responses.
+    properties:
+      errorInformation:
+        $ref: '#/definitions/ErrorInformation'
+  Extension:
+    title: Extension
+    type: object
+    description: Data model for the complex type Extension
+    properties:
+      key:
+        $ref: '#/definitions/ExtensionKey'
+        description: Extension key.
+      value:
+        $ref: '#/definitions/ExtensionValue'
+        description: Extension value.
+    required:
+    - key
+    - value
+  ExtensionList:
+    title: ExtensionList
+    type: object
+    description: Data model for the complex type ExtensionList
+    properties:
+      extension:
+        type: array
+        items:
+          $ref: '#/definitions/Extension'
+        minItems: 1
+        maxItems: 16
+        description: Number of Extension elements
+    required:
+    - extension
+
+responses:
+  Response200:
+    description: OK
+  Response202:
+    description: Accepted
+  ErrorResponse400:
+    description: Bad Request - The application cannot process the request; for example, due to malformed syntax or the payload exceeded size restrictions.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse401:
+    description: Unauthorized - The request requires authentication in order to be processed.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse403:
+    description: Forbidden - The request was denied and will be denied in the future.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse404:
+    description: Not Found - The resource specified in the URI was not found.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse405:
+    description: Method Not Allowed - An unsupported HTTP method for the request was used.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse406:
+    description: Not acceptable - The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse501:
+    description: Not Implemented - The server does not support the requested service. The client should not retry.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+  ErrorResponse503:
+    description: Service Unavailable - The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.
+    schema:
+      $ref: '#/definitions/ErrorInformationResponse'
+    headers:
+      Content-Length:
+        description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body.
+        type: integer
+      Content-Type:
+        description: The Content-Type header indicates the specific version of the API used to send the payload body.
+        type: string
+
+parameters:
+  Accept:
+    name: Accept
+    in: header
+    required: true
+    type: string
+    description: The Accept header field indicates the version of the API the client would like the server to use.
+  Content-Length:
+    name: Content-Length
+    in: header
+    required: false
+    type: integer
+    description: The Content-Length header field indicates the anticipated size of the payload body. Only sent if there is a body. Note - The API supports a maximum size of 5242880 bytes (5 Megabytes)
+  Content-Type:
+    name: Content-Type
+    in: header
+    type: string
+    required: true
+    description: The Content-Type header indicates the specific version of the API used to send the payload body.
+  Date:
+    name: Date
+    in: header
+    type: string
+    required: true
+    description: The Date header field indicates the date when the request was sent.
+  X-Forwarded-For:
+    name: X-Forwarded-For
+    in: header
+    type: string
+    required: false
+    description: The X-Forwarded-For header field is an unofficially accepted standard used for informational purposes of the originating client IP address, as a request might pass multiple proxies, firewalls, and so on. Multiple X-Forwarded-For values as in the example shown here should be expected and supported by implementers of the API.
+      Note - An alternative to X-Forwarded-For is defined in RFC 7239. However, to this point RFC 7239 is less-used and supported than X-Forwarded-For.
+  FSPIOP-Source:
+    name: FSPIOP-Source
+    in: header
+    type: string
+    required: true
+    description: The FSPIOP-Source header field is a non-HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing and signature verification (see header field FSPIOP-Signature). 
+  FSPIOP-Destination:
+    name: FSPIOP-Destination
+    in: header
+    type: string
+    required: false
+    description: The `FSPIOP-Destination` header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field must be set by the original sender of the request if the destination is known (valid for all services except GET /parties) so that any entities between the client and the server do not need to parse the payload for routing purposes. If the destination is not known (valid for service GET /parties), the field should be left empty.
+  FSPIOP-Encryption:
+    name: FSPIOP-Encryption
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-Encryption header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.
+  FSPIOP-Signature:
+    name: FSPIOP-Signature
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-Signature header field is a non-HTTP standard field used by the API for applying an end-to-end request signature.
+  FSPIOP-URI:
+    name: FSPIOP-URI
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-URI header field is a non-HTTP standard field used by the API for signature verification, should contain the service URI. Required if signature verification is used, for more information see API Signature document.
+  FSPIOP-HTTP-Method:
+    name: FSPIOP-HTTP-Method
+    in: header
+    type: string
+    required: false
+    description: The FSPIOP-HTTP-Method header field is a non-HTTP standard field used by the API for signature verification, should contain the service HTTP method. Required if signature verification is used, for more information see API Signature document.
+  ID:
+    name: ID
+    in: path
+    required: true
+    type: string
+  Type:
+    name: Type
+    in: path
+    required: true
+    type: string
+  SubId:
+    name: SubId
+    in: path
+    required: true
+    type: string
