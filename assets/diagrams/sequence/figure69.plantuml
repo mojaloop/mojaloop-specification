@@ -59,7 +59,7 @@ autonumber stop
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 Switch -> Switch: Reserve each individual\ntransfer from Payer FSP\nto Payee FSP
 autonumber resume
-Switch ->> PayeeFSP: **POST /bulktransfers**\n(List of individual transfers\nincluding ILP packet and condition)
+Switch ->> PayeeFSP: **POST /bulkTransfers**\n(List of individual transfers\nincluding ILP packet and condition)
 activate PayeeFSP
 autonumber stop
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)

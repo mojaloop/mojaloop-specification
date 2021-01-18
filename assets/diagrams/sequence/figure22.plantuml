@@ -125,10 +125,10 @@ PayerFSP -> PayerFSP: Fee is 2 USD in Payer\nFSP for Cash-in,\nPayer will receiv
 PayerFSP ->> Switch: **POST /quotes**\n(amountType=RECEIVE,\namount=100 USD, fees=2 USD)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **POST /quotes**\n(amountType=REVEIVE,\namount=100 USD, fees=2 USD)
+Switch ->> PayeeFSP: **POST /quotes**\n(amountType=RECEIVE,\namount=100 USD, fees=2 USD)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: PayeeFSP decides to give\n1 USD in commission to\nPayer so that\nCash-in only costs 1 USD
+PayeeFSP -> PayeeFSP: Payee FSP decides to give\n1 USD in commission to\nPayer so that\nCash-in only costs 1 USD
 PayeeFSP ->> Payee: By paying 101 USD in cash\nto Payer, you will receive\n100 USD to your account
 PayeeFSP <<-- Payee: OK
 Switch <<- PayeeFSP: **PUT /quotes/**<i><ID></i> \n(transferAmount=99 USD,\npayeeReceiveAmount=100 USD,\npayeeFspCommission=1 USD)
@@ -144,20 +144,20 @@ PayerOTC ->> Payer: OK, here is 101 USD
 Payer ->> PayerFSP: Perform transaction
 activate PayerFSP
 PayerFSP -> PayerFSP: Reserve 1 USD from Agent\ncommission to Payer account,\n100 USD from Payer account,\n99 USD to Switch account and 1\nUSD to fee account, 1 USD from\nFSP Commission to fee account
-PayerFSP ->> Switch: **POST /transfer**\n(amount = 99 USD)
+PayerFSP ->> Switch: **POST /transfers**\n(amount = 99 USD)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 Switch -> Switch: Reserve 99 USD from Payer FSP\naccount to Payee FSP account
-Switch ->> PayeeFSP: **POST /transfer**\n(amount = 99 USD)
+Switch ->> PayeeFSP: **POST /transfers**\n(amount = 99 USD)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Transfer 99 USD from Switch\naccount and 1 USD from\ninternal commission account\nto Payee account
 PayeeFSP -> Payee: You have Cashed-in 100 USD
-Switch <<- PayeeFSP: **PUT /transfer/**<i><ID></i>
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 Switch -> Switch: Commit reserved transfer
-PayerFSP <<- Switch: **PUT /transfer/**<i><ID></i>
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Commit reserved transfer

@@ -125,7 +125,7 @@ PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 Switch ->> PayeeFSP: **POST /quotes**\n(amountType=SEND,\namount=99 USD, fees=1 USD)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Rate transaction fee or commission\nfor handeling transaction in\nPayee FSP => commission 3\nUSD (1 USD to pay for Payer's\nfee, 2 USD in excess commission)
+PayeeFSP -> PayeeFSP: Rate transaction fee or commission\nfor handeling transaction in\nPayee FSP => FSP commission 3\nUSD (1 USD to pay for Payer's\nfee, 2 USD in excess commission)
 group Optional
 PayeeFSP ->> Payee: If accepted, you will receive\n100 USD out of Payer's 100 USD
 hnote left of PayeeFSP

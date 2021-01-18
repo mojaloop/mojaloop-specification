@@ -155,14 +155,14 @@ PayerFSP -[hidden]> Switch
 activate PayerFSP
 PayerFSP -> PayerFSP: Generate OTP, "12345"
 Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant of 100 USD,\n0 USD in fees.
-PayerFSP ->> Switch: **GET /authorizations/**\n<i>{TransactionRequestID}</i>/\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
+PayerFSP ->> Switch: **GET /authorizations/**\n<i>{TransactionRequestID}</i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **GET /authorizations/**\n<i>{TransactionRequestID}</i>/\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
+Switch ->> PayeeFSP: **GET /authorizations/**\n<i>{TransactionRequestID}</i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP ->> PayeePOS: Total amount is 100 USD,\nfee is 0 USD
 PayeePOS ->> PayerOTC: Please enter you OTP\nto confirm Merchant Payment\nof 100 USD, fee is 0 USD
-PayeePOS ->> PayerOTC: Enters "12345"
-PayeeFSP ->> PayeePOS: "12345" is the OTP
+PayeePOS <<- PayerOTC: Enters "12345"
+PayeeFSP <<- PayeePOS: "12345" is the OTP
 Switch <<- PayeeFSP: **PUT /authorizations/***\n<i>{transactionRequestID}</i>\n(otp="12345")
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 PayerFSP <<- Switch: **PUT /authorizations/***\n<i>{transactionRequestID}</i>\n(otp="12345")

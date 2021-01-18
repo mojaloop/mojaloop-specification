@@ -122,7 +122,7 @@ userfsp -> userfsp: +123456789 is not\nwithin this system
 userfsp ->> Switch: **GET /parties/MSISDN/123456789**
 activate Switch
 userfsp <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> ALS: **GET /parties/MSISDN/123456789**
+Switch ->> ALS: **GET /participants/MSISDN/123456789**
 activate ALS
 Switch <<-- ALS: **HTTP 202** (Accepted)
 ALS -> ALS: Lookup which FSP MSISDN\n+123456789 belongs to.

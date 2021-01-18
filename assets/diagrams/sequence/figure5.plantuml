@@ -53,24 +53,24 @@ FSP ->> Switch: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP)
 activate FSP
 activate Switch
 FSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Source=**Account Lookup)
+Switch ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Destination=**Account Lookup)
 activate ALS
 Switch <<-- ALS: **HTTP 202** (Accepted)
 ALS -> ALS: Replace **FSPIOP-Source**\nwith **FSPIOP-Source**\nand vice versa for\nrouting of callback
-Switch <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Source=**Switch)
+Switch <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Destination=**Switch)
 Switch -->> ALS: **HTTP 200** (OK)
 deactivate ALS
-Switch -> Switch: Set **FSPIOP-Source**\nin original messages according\nto results of **PUT /participants**
-Switch ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP-Source=**FSP)
+Switch -> Switch: Set **FSPIOP-Destination**\nin original messages according\nto results of **PUT /participants**
+Switch ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP, **FSPIOP-Destination=**Peer FSP)
 activate PEERFSP
 Switch <<-- PEERFSP: **HTTP 202** (Accepted)
 PEERFSP -> PEERFSP: Optionally validate message\nsignature using stored certificate\nfor FSP in **FSPIOP-Source**
-PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Source** and\nvisa versa for routing of callback
-Switch <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP-Source=**FSP)
+PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination** and\nvice versa for routing of callback
+Switch <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP-Destination=**FSP)
 Switch -->> PEERFSP: **HTTP 200** (OK)
 deactivate PEERFSP
-Switch -> Switch: Route messages according\nto **FSPIOP-Source**
-FSP <<- Switch: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Source=**FSP)
+Switch -> Switch: Route messages according\nto **FSPIOP-Destination**
+FSP <<- Switch: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
 FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 deactivate FSP

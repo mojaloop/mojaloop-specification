@@ -135,10 +135,10 @@ deactivate Switch
 deactivate PayeeFSP
 activate PayerFSP
 PayerFSP -> PayerFSP: Do quote, generate OTP,\nnotify user (process\nnot shown here)
-PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount include fees)
+PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount including fees)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: PayerFSP -> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount include fees)
+Switch ->> PayeeFSP: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount including fees)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> Payee: Show fees on POS

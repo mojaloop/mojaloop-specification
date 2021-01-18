@@ -157,6 +157,6 @@ PayerFSP <<- Switch: **POST /transfer/**<i><ID></i>
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Commit reserved transfer
-Payer <- PayerFSP: Transation successful,\nyou have paid 1 USD in fee
+Payer <- PayerFSP: Transaction successful,\nyou have paid 1 USD in fee
 deactivate PayerFSP
 @enduml

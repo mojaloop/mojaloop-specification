@@ -126,10 +126,10 @@ Loop #OldLace
     Payee FSP
   end hnote
   PayerFSP -> PayerFSP: Rate Payer FSP bulk quote\n(process not shown here)
-  PayerFSP ->> Switch: **POST /bulkQuotes/**\n(Bulk info and list of individual quotes)
+  PayerFSP ->> Switch: **POST /bulkQuotes**\n(Bulk info and list of individual quotes)
   activate Switch
   PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-  Switch ->> PayeeFSP: **POST /bulkQuotes/**\n(Bulk info and list of individual quotes)
+  Switch ->> PayeeFSP: **POST /bulkQuotes**\n(Bulk info and list of individual quotes)
   activate PayeeFSP
   Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
   PayeeFSP -> PayeeFSP: Rate Payee FSP\nfee/commission and\ngenerate condition per\nindividual transfer

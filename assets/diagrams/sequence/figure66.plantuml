@@ -135,7 +135,7 @@ Loop #Oldlace
   ALS -> ALS: Lookup FSP for\nrequested Type/ID
   autonumber stop
   PayerFSP ->> ALS: **PUT /participants/**<i><PartyIdType>**/**</i><i><PartyId></i>
-  PayerFSP <<-- ALS: **HTTP 202** (Accepted)
+  PayerFSP <<-- ALS: **HTTP 200** (OK)
   deactivate ALS
   autonumber resume
   PayerFSP -> PayerFSP: Place transaction\nin bulk file\nper Payee FSP
@@ -156,13 +156,13 @@ Loop #Oldlace
   autonumber resume
   PayerFSP ->> Switch: **POST /bulkQuotes**\n(Bulk info and list\nof individual quotes)
   autonumber stop
-  PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+  activate Switch
   autonumber resume
+  PayerFSP <<-- Switch: **HTTP 202** (Accepted)
   Switch ->> PayeeFSP: **POST /bulkQuotes**\n(Bulk info and list of individual quotes)
   activate PayeeFSP
   autonumber stop
   Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-  activate Switch
   autonumber resume
   PayeeFSP -> PayeeFSP: Rate Payee FSP\nfee/commission and\ngenerate condition per\nindividual transfer
   autonumber stop

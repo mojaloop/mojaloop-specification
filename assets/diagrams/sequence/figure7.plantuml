@@ -129,7 +129,7 @@ deactivate PayeeFSP
 PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i>
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Keep commission,\nfee for Payer for\nhandling transaction in\nPayer FSP => total fee 1 USD
+PayerFSP -> PayerFSP: Keep commission\nfee for Payer for\nhandling transaction in\nPayer FSP => total fee 1 USD
 PayerFSP ->> Payer: Sending 100 USD to Payee\nwill cost 1 USD in fees
 deactivate PayerFSP
 @enduml
