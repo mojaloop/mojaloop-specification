@@ -41,7 +41,7 @@ The following conventions are used in this document to identify the specified ty
 
 This document provides the glossary for the Open API for FSP Interoperability Specification. Terms have been compiled from three sources:
 
-- ITU-T Digital Financial Services Focus Group Glossary (ITU-T)<sup>[ITU-T Digital Financial Services Focus Group Glossary (ITU-T)](https://www.itu.int/en/ITU-T/focusgroups/dfs/Documents/201701/ITU\_FGDFS\_DFS-Glossary.pdf)</sup>,
+- ITU-T Digital Financial Services Focus Group Glossary (ITU-T)<sup>[ITU-T Digital Financial Services Focus Group Glossary (ITU-T)](https://www.itu.int/dms_pub/itu-t/opb/tut/T-TUT-ECOPO-2018-PDF-E.pdf)</sup>,
 
 - Feedback from Technology Service Providers (TSPs) in the Product Development Partnership (PDP) work groups, and
 
