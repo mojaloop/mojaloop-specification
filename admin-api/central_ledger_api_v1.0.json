@@ -1,0 +1,3355 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Central Ledger API",
+        "description": "API for admin processes initiated by a Mojaloop Hub Operator",
+        "license": {
+            "name": "The Mojaloop files are made available by the Mojaloop Foundation under the Apache License, Version 2.0 (the License) and you may not use these files except in compliance with the License.",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        },
+        "version": "1.0"
+    },
+    "tags": [],
+    "paths": {
+        "/enums": {
+            "get": {
+                "summary": "Retrieve labels for Promfana",
+                "description": "The `GET /enums` request is used by Promfana to retrieve the labels for the metrics displayed. This API request is for programmatic consumption only and is not to be exposed outside the Hub.",
+                "operationId": "getEnums",
+                "tags": [
+                    "enums"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetEnumsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "summary": "Check health of Central Ledger Admin API services",
+                "description": "The `GET /health` request is used for programmatic consumption only and is not to be exposed outside the Hub.",
+                "operationId": "getHealth",
+                "tags": [
+                    "health"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetHealthResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/metrics": {
+            "get": {
+                "summary": "Get Prometheus metrics",
+                "description": "The `GET /metrics` request is used to get Prometheus metrics about indicators defined at the core level. This API request is used for programmatic consumption only and is not to be exposed outside the Hub.",
+                "operationId": "getMetrics",
+                "tags": [
+                    "metrics"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants": {
+            "get": {
+                "summary": "Get information about all participants",
+                "operationId": "getParticipants",
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create participants in the Hub",
+                "operationId": "postParticipants",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostParticipantsRequest"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostParticipantsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants/limits": {
+            "get": {
+                "summary": "View limits for all participants",
+                "operationId": "getParticipantsLimits",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/Currency"
+                    },
+                    {
+                        "$ref": "#/components/parameters/LimitType"
+                    },
+                ],
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsLimitsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants/{name}": {
+            "get": {
+                "summary": "Get information about a particular participant",
+                "operationId": "getParticipantsName",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsNameResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update participant details (activate/deactivate a participant)",
+                "description": "The `PUT /participants/{name}` request is used to update details of the participant that is specified in the `{name}` path parameter. Currently, updating only the `isActive` flag is supported.",
+                "operationId": "putParticipantsName",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParticipantIsActive"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsNameResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants/{name}/endpoints": {
+            "get": {
+                "summary": "View participant endpoints",
+                "operationId": "getParticipantsNameEndpoints",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsNameEndpointsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add/Update participant endpoints",
+                "operationId": "postParticipantsNameEndpoints",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostParticipantsNameEndpointsRequest"
+                            }
+                        }
+                    }
+                },
+
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/201"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "406": {
+                        "$ref": "#/components/responses/406"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    }
+                }
+            }
+        },
+        "/participants/{name}/limits": {
+            "get": {
+                "summary": "View participant limits",
+                "operationId": "getParticipantsNameLimits",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Currency"
+                    },
+                    {
+                        "$ref": "#/components/parameters/LimitType"
+                    },
+                ],
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsNameLimitsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Adjust participant limits",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PutParticipantsNameLimitsRequest"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PutParticipantsNameLimitsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants/{name}/positions": {
+            "get": {
+                "summary": "View participant positions",
+                "operationId": "getParticipantsNamePositions",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Currency"
+                    }
+                ],
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsNamePositionsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants/{name}/accounts": {
+            "get": {
+                "summary": "View participant accounts and balances",
+                "operationId": "getParticipantsNameAccounts",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetParticipantsNameAccountsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create Hub accounts",
+                "operationId": "postParticipantsNameAccounts",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostParticipantsNameAccountsRequest"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostParticipantsNameAccountsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/participants/{name}/initialPositionAndLimits": {
+            "post": {
+                "summary": "Add initial participant limits and position",
+                "operationId": "postParticipantsNameInitialpositionandlimits",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostInitialPositionAndLimitsRequest"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/201"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "406": {
+                        "$ref": "#/components/responses/406"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    }
+                }
+            }
+        },
+        "/participants/{name}/accounts/{id}": {
+            "post": {
+                "summary": "Record Funds In or Out of participant account",
+                "operationId": "postParticipantsNameAccountsId",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    },
+                    {
+                        "$ref": "#/components/parameters/AccountIdentifier"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParticipantFunds"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "202": {
+                        "$ref": "#/components/responses/202"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "406": {
+                        "$ref": "#/components/responses/406"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update participant accounts",
+                "description": "The PUT /participants/{name}/accounts/{id} request is used to update account details of a participant. Currently, updating only the isActive flag is supported.",
+                "operationId": "putParticipantsNameAccountsId",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    },
+                    {
+                        "$ref": "#/components/parameters/AccountIdentifier"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AccountIsActive"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "406": {
+                        "$ref": "#/components/responses/406"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    }
+                }
+            }
+        },
+        "/participants/{name}/accounts/{id}/transfers/{transferId}": {
+            "put": {
+                "summary": "Record Funds In or Out of participant account",
+                "operationId": "putParticipantsNameAccountsIdTransfersTransferid",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ParticipantName"
+                    },
+                    {
+                        "$ref": "#/components/parameters/AccountIdentifier"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TransferIdentifier"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecordFundsOut"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "participants"
+                ],
+                "responses": {
+                    "202": {
+                        "$ref": "#/components/responses/202"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "406": {
+                        "$ref": "#/components/responses/406"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    }
+                }
+            }
+        },
+        "/settlementModels": {
+            "get": {
+                "summary": "View all settlement models",
+                "tags": [
+                    "settlementModels"
+                ],
+                "operationId": "getSettlementmodels",
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetSettlementModelsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a settlement model",
+                "tags": [
+                    "settlementModels"
+                ],
+                "operationId": "postSettlementmodels",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SettlementModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/201"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "406": {
+                        "$ref": "#/components/responses/406"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    }
+                }
+            }
+        },
+        "/settlementModels/{name}": {
+            "get": {
+                "summary": "View settlement model by name",
+                "tags": [
+                    "settlementModels"
+                ],
+                "operationId": "getSettlementmodelsName",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SettlementModelName"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetSettlementModelsNameResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a settlement model",
+                "tags": [
+                    "settlementModels"
+                ],
+                "operationId": "putSettlementmodelsName",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SettlementModelName"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GetSettlementModelsNameResponse"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{id}": {
+            "get": {
+                "summary": "Retrieve transaction details by a transferId",
+                "tags": [
+                    "transaction"
+                ],
+                "operationId": "getTransfer",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/TransferId"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetTransactionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [{
+        "url": "http://127.0.0.1:3001/"
+    }],
+    "components": {
+        "schemas": {
+            "Accounts": {
+                "title": "Accounts",
+                "description": "The list of ledger accounts configured for the participant.",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/IndividualAccount"
+                }
+            },
+            "AccountIsActive": {
+                "type": "object",
+                "properties": {
+                    "isActive": {
+                        "type": "boolean",
+                        "description": "Participant account isActive boolean"
+                    }
+                },
+                "required": [
+                    "isActive"
+                ]
+            },
+            "Amount": {
+                "title": "Amount",
+                "type": "string",
+                "pattern": "^([0]|([1-9][0-9]{0,17}))([.][0-9]{0,3}[1-9])?$",
+                "description": "The API data type Amount is a JSON String in a canonical format that is restricted by a regular expression for interoperability reasons. This pattern does not allow any trailing zeroes at all, but allows an amount without a minor currency unit. It also only allows four digits in the minor currency unit; a negative value is not allowed. Using more than 18 digits in the major currency unit is not allowed."
+            },
+            "BulkProcessingState": {
+                "title": "BulkProcessingState",
+                "description": "The possible states that a bulk transaction can take within the bulk processing component of the switch.",
+                "type": "object",
+                "properties": {
+                    "RECEIVED": {
+                        "description": "The switch has received the individual transfer IDs part of the bulk transfer.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "RECEIVED_DUPLICATE": {
+                        "description": "The switch has identified an individual transfer as a duplicate.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "RECEIVED_INVALID": {
+                        "description": "The switch has identified an individual transfer as invalid within the Prepare or Position Handler.",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "ACCEPTED": {
+                        "description": "The switch has reserved funds for transfers in the bulk transfer.",
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "PROCESSING": {
+                        "description": "Fulfilment request has been received for the individual transfer.",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "FULFIL_DUPLICATE": {
+                        "description": "The switch has identified an individual transfer fulfil as a duplicate.",
+                        "type": "integer",
+                        "example": 6
+                    },
+                    "FULFIL_INVALID": {
+                        "description": "The switch has identified an individual transfer's fulfilment as invalid within the Fulfil or Position Handler.",
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "COMPLETED": {
+                        "description": "The switch has marked the individual transfer as committed.",
+                        "type": "integer",
+                        "example": 8
+                    },
+                    "REJECTED": {
+                        "description": "The switch has marked the individual transfer as rejected.",
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "EXPIRED": {
+                        "description": "The switch has marked the individual transfer as timed out.",
+                        "type": "integer",
+                        "example": 10
+                    }
+                }
+            },
+            "BulkTransferState": {
+                "title": "BulkTransferState",
+                "description": "The possible states that a bulk transaction can take.",
+                "type": "object",
+                "properties": {
+                    "ACCEPTED": {
+                        "description": "The switch has reserved the funds for the transfers in the bulk.",
+                        "type": "string",
+                        "example": "ACCEPTED"
+                    },
+                    "COMPLETED": {
+                        "description": "Final state when transfers in the bulk transfer are committed.",
+                        "type": "string",
+                        "example": "COMPLETED"
+                    },
+                    "EXPIRED": {
+                        "description": "Final state when transfers in the bulk transfer have expired.",
+                        "type": "string",
+                        "example": "EXPIRED"
+                    },
+                    "EXPIRING": {
+                        "description": "One or more individual transfers have expired.",
+                        "type": "string",
+                        "example": "EXPIRING"
+                    },
+                    "INVALID": {
+                        "description": "Final state when the switch has completed processing of a pending invalid bulk transfer.",
+                        "type": "string",
+                        "example": "INVALID"
+                    },
+                    "PENDING_FULFIL": {
+                        "description": "Fulfilment request has been received by the switch.",
+                        "type": "string",
+                        "example": "PENDING_FULFIL"
+                    },
+                    "PENDING_INVALID": {
+                        "description": "Validation of received bulk transfer is not successful.",
+                        "type": "string",
+                        "example": "PENDING_INVALID"
+                    },
+                    "PENDING_PREPARE": {
+                        "description": "Validation of received bulk transfer is successful.",
+                        "type": "string",
+                        "example": "PENDING_PREPARE"
+                    },
+                    "PROCESSING": {
+                        "description": "Fulfilment request has been received by the switch.",
+                        "type": "string",
+                        "example": "PROCESSING"
+                    },
+                    "RECEIVED": {
+                        "description": "The switch has received the bulk transfer.",
+                        "type": "string",
+                        "example": "RECEIVED"
+                    },
+                    "REJECTED": {
+                        "description": "Final state when the switch has completed the rejection request by the payee.",
+                        "type": "string",
+                        "example": "REJECTED"
+                    }
+                }
+            },
+            "BulkTransferStateEnum": {
+                "title": "BulkTransferStateEnum",
+                "description": "The enumeration of possible states that a bulk transaction can take.",
+                "type": "object",
+                "properties": {
+                    "ACCEPTED": {
+                        "description": "The switch has reserved the funds for the transfers in the bulk.",
+                        "type": "string",
+                        "example": "ACCEPTED"
+                    },
+                    "COMPLETED": {
+                        "description": "Final state when transfers in the bulk transfer are committed.",
+                        "type": "string",
+                        "example": "COMPLETED"
+                    },
+                    "EXPIRED": {
+                        "description": "Final state when transfers in the bulk transfer have expired.",
+                        "type": "string",
+                        "example": "COMPLETED"
+                    },
+                    "EXPIRING": {
+                        "description": "One or more individual transfers have expired.",
+                        "type": "string",
+                        "example": "PROCESSING"
+                    },
+                    "INVALID": {
+                        "description": "Final state when the switch has completed processing of a pending invalid bulk transfer.",
+                        "type": "string",
+                        "example": "REJECTED"
+                    },
+                    "PENDING_FULFIL": {
+                        "description": "Fulfilment request has been received by the switch.",
+                        "type": "string",
+                        "example": "PROCESSING"
+                    },
+                    "PENDING_INVALID": {
+                        "description": "Validation of received bulk transfer is not successful.",
+                        "type": "string",
+                        "example": "PENDING"
+                    },
+                    "PENDING_PREPARE": {
+                        "description": "Validation of received bulk transfer is successful.",
+                        "type": "string",
+                        "example": "PENDING"
+                    },
+                    "PROCESSING": {
+                        "description": "Fulfilment request has been received by the switch.",
+                        "type": "string",
+                        "example": "PROCESSING"
+                    },
+                    "RECEIVED": {
+                        "description": "The switch has received the bulk transfer.",
+                        "type": "string",
+                        "example": "RECEIVED"
+                    },
+                    "REJECTED": {
+                        "description": "Final state when the switch has completed the rejection request by the payee.",
+                        "type": "string",
+                        "example": "REJECTED"
+                    }
+                }
+            },
+            "Currency": {
+                "title": "CurrencyEnum",
+                "description": "The currency codes defined in ISO 4217 as three-letter alphabetic codes are used as the standard naming representation for currencies.",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3,
+                "enum": [
+                    "AED",
+                    "AFN",
+                    "ALL",
+                    "AMD",
+                    "ANG",
+                    "AOA",
+                    "ARS",
+                    "AUD",
+                    "AWG",
+                    "AZN",
+                    "BAM",
+                    "BBD",
+                    "BDT",
+                    "BGN",
+                    "BHD",
+                    "BIF",
+                    "BMD",
+                    "BND",
+                    "BOB",
+                    "BRL",
+                    "BSD",
+                    "BTN",
+                    "BWP",
+                    "BYN",
+                    "BZD",
+                    "CAD",
+                    "CDF",
+                    "CHF",
+                    "CLP",
+                    "CNY",
+                    "COP",
+                    "CRC",
+                    "CUC",
+                    "CUP",
+                    "CVE",
+                    "CZK",
+                    "DJF",
+                    "DKK",
+                    "DOP",
+                    "DZD",
+                    "EGP",
+                    "ERN",
+                    "ETB",
+                    "EUR",
+                    "FJD",
+                    "FKP",
+                    "GBP",
+                    "GEL",
+                    "GGP",
+                    "GHS",
+                    "GIP",
+                    "GMD",
+                    "GNF",
+                    "GTQ",
+                    "GYD",
+                    "HKD",
+                    "HNL",
+                    "HRK",
+                    "HTG",
+                    "HUF",
+                    "IDR",
+                    "ILS",
+                    "IMP",
+                    "INR",
+                    "IQD",
+                    "IRR",
+                    "ISK",
+                    "JEP",
+                    "JMD",
+                    "JOD",
+                    "JPY",
+                    "KES",
+                    "KGS",
+                    "KHR",
+                    "KMF",
+                    "KPW",
+                    "KRW",
+                    "KWD",
+                    "KYD",
+                    "KZT",
+                    "LAK",
+                    "LBP",
+                    "LKR",
+                    "LRD",
+                    "LSL",
+                    "LYD",
+                    "MAD",
+                    "MDL",
+                    "MGA",
+                    "MKD",
+                    "MMK",
+                    "MNT",
+                    "MOP",
+                    "MRO",
+                    "MUR",
+                    "MVR",
+                    "MWK",
+                    "MXN",
+                    "MYR",
+                    "MZN",
+                    "NAD",
+                    "NGN",
+                    "NIO",
+                    "NOK",
+                    "NPR",
+                    "NZD",
+                    "OMR",
+                    "PAB",
+                    "PEN",
+                    "PGK",
+                    "PHP",
+                    "PKR",
+                    "PLN",
+                    "PYG",
+                    "QAR",
+                    "RON",
+                    "RSD",
+                    "RUB",
+                    "RWF",
+                    "SAR",
+                    "SBD",
+                    "SCR",
+                    "SDG",
+                    "SEK",
+                    "SGD",
+                    "SHP",
+                    "SLL",
+                    "SOS",
+                    "SPL",
+                    "SRD",
+                    "STD",
+                    "SVC",
+                    "SYP",
+                    "SZL",
+                    "THB",
+                    "TJS",
+                    "TMT",
+                    "TND",
+                    "TOP",
+                    "TRY",
+                    "TTD",
+                    "TVD",
+                    "TWD",
+                    "TZS",
+                    "UAH",
+                    "UGX",
+                    "USD",
+                    "UYU",
+                    "UZS",
+                    "VEF",
+                    "VND",
+                    "VUV",
+                    "WST",
+                    "XAF",
+                    "XCD",
+                    "XDR",
+                    "XOF",
+                    "XPF",
+                    "YER",
+                    "ZAR",
+                    "ZMW",
+                    "ZWD"
+                ],
+                "example": "AED"
+            },
+            "CurrencyIsActive": {
+                "type": "object",
+                "properties": {
+                    "isActive": {
+                        "type": "boolean",
+                        "description": "Participant currency isActive boolean"
+                    }
+                },
+                "required": [
+                    "isActive"
+                ]
+            },
+            "DateTime": {
+                "title": "DateTime",
+                "type": "string",
+                "pattern": "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:(\\.\\d{3}))(?:Z|[+-][01]\\d:[0-5]\\d)$",
+                "description": "The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. The format is according to [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), expressed in a combined date, time and time zone format. A more readable version of the format is yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]. Examples are \"2016-05-24T08:38:08.699-04:00\", \"2016-05-24T08:38:08.699Z\" (where Z indicates Zulu time zone, same as UTC).",
+                "example": "2021-01-12T10:56:30.000Z"
+            },
+            "EndpointType": {
+                "title": "EndpointType",
+                "description": "The list of endpoints configured for every participant.",
+                "type": "object",
+                "properties": {
+                    "ALARM_NOTIFICATION_URL": {
+                        "description": "Participant callback URL to which alarm notifications can be sent.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "ALARM_NOTIFICATION_TOPIC": {
+                        "description": "Kafka topic used to publish alarm notifications.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "FSPIOP_CALLBACK_URL_TRANSFER_POST": {
+                        "description": "Participant URL where `POST /transfers` calls can be sent.",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "FSPIOP_CALLBACK_URL_TRANSFER_PUT": {
+                        "description": "Participant URL where `PUT /transfers/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "FSPIOP_CALLBACK_URL_TRANSFER_ERROR": {
+                        "description": "Participant URL where `PUT /transfers/<ID>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL": {
+                        "description": "Participant/Hub Operator email address where notifications can be sent when the Net Debit Cap threshold is breached.",
+                        "type": "integer",
+                        "example": 6
+                    },
+                    "NET_DEBIT_CAP_ADJUSTMENT_EMAIL": {
+                        "description": "Participant/Hub Operator email address where notifications can be sent when the Net Debit Cap is adjusted.",
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL": {
+                        "description": "Participant/Hub Operator email address where notifications can be sent when the DFSP's Net Position changes due to a settlement transfer.",
+                        "type": "integer",
+                        "example": 8
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_PUT": {
+                        "description": "Participant URL where `PUT /participants/<Type>/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT": {
+                        "description": "Participant URL where `PUT /participants/<Type>/<ID>/<SubId>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR": {
+                        "description": "Participant URL where `PUT /participants/<Type>/<ID>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 11
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR": {
+                        "description": "Participant URL where `PUT /participants/<Type>/<ID>/<SubId>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_DELETE": {
+                        "description": "Participant URL where `DELETE /participants/<Type>/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 13
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_DELETE": {
+                        "description": "Participant URL where `DELETE /participants/<Type>/<ID>/<SubId>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 14
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT": {
+                        "description": "Participant URL where `PUT /participants/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR": {
+                        "description": "Participant URL where `PUT /participants/<ID>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 16
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTIES_GET": {
+                        "description": "Participant URL where `GET /parties/<Type>/<ID>` calls can be sent.",
+                        "type": "integer",
+                        "example": 17
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET": {
+                        "description": "Participant URL where `GET /parties/<Type>/<ID>/<SubId>` calls can be sent.",
+                        "type": "integer",
+                        "example": 18
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTIES_PUT": {
+                        "description": "Participant URL where `PUT /parties/<Type>/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 19
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT": {
+                        "description": "Participant URL where `PUT /parties/<Type>/<ID>/<SubId>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 20
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR": {
+                        "description": "Participant URL where `PUT /parties/<Type>/<ID>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 21
+                    },
+                    "FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR": {
+                        "description": "Participant URL where `PUT /parties/<Type>/<ID>/<SubId>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 22
+                    },
+                    "FSPIOP_CALLBACK_URL_QUOTES": {
+                        "description": "Participant URL where `PUT /quotes/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 23
+                    },
+                    "FSPIOP_CALLBACK_URL_BULK_TRANSFER_POST": {
+                        "description": "Participant URL where `POST /bulkTransfers` calls can be sent.",
+                        "type": "integer",
+                        "example": 24
+                    },
+                    "FSPIOP_CALLBACK_URL_BULK_TRANSFER_PUT": {
+                        "description": "Participant URL where `PUT /bulkTransfers/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 25
+                    },
+                    "FSPIOP_CALLBACK_URL_BULK_TRANSFER_ERROR": {
+                        "description": "Participant URL where `PUT /bulkTransfers/<ID>/error` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 26
+                    },
+                    "FSPIOP_CALLBACK_URL_AUTHORIZATIONS": {
+                        "description": "Participant URL where `GET /authorizations/<ID>` calls can be sent.",
+                        "type": "integer",
+                        "example": 27
+                    },
+                    "FSPIOP_CALLBACK_URL_TRX_REQ_SERVICE": {
+                        "description": "Participant URL where `POST /transactionRequests` calls can be sent.",
+                        "type": "integer",
+                        "example": 28
+                    },
+                    "FSPIOP_CALLBACK_URL_BULK_QUOTES": {
+                        "description": "Participant URL where `PUT /bulkQuotes/<ID>` callbacks can be sent.",
+                        "type": "integer",
+                        "example": 29
+                    }
+                }
+            },
+            "ErrorInformation": {
+                "title": "ErrorInformation",
+                "type": "object",
+                "description": "Data model for the complex type ErrorInformation.",
+                "properties": {
+                    "errorCode": {
+                        "type": "string",
+                        "pattern": "^[1-9]\\d{3}$",
+                        "description": "Specific error number.",
+                        "example": 5100
+                    },
+                    "errorDescription": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "description": "Error description string.",
+                        "example": "This is an error description."
+                    },
+                    "extensionList": {
+                        "$ref": "#/components/schemas/ExtensionList"
+                    }
+                },
+                "required": [
+                    "errorCode",
+                    "errorDescription"
+                ]
+            },
+            "ErrorInformationObject": {
+                "title": "ErrorInformationObject",
+                "type": "object",
+                "description": "Data model for the complex type object that contains ErrorInformation.",
+                "properties": {
+                    "errorInformation": {
+                        "$ref": "#/components/schemas/ErrorInformation"
+                    }
+                },
+                "required": [
+                    "errorInformation"
+                ]
+            },
+            "ErrorInformationResponse": {
+                "title": "ErrorInformationResponse",
+                "type": "object",
+                "description": "Data model for the complex type object that contains an optional element ErrorInformation used along with 4xx and 5xx responses.",
+                "properties": {
+                    "errorInformation": {
+                        "$ref": "#/components/schemas/ErrorInformation"
+                    }
+                }
+            },
+            "Extension": {
+                "title": "Extension",
+                "type": "object",
+                "description": "Data model for the complex type Extension",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 32,
+                        "description": "Extension key."
+                    },
+                    "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "description": "Extension value."
+                    }
+                },
+                "required": [
+                    "key",
+                    "value"
+                ]
+            },
+            "ExtensionList": {
+                "title": "ExtensionList",
+                "type": "object",
+                "description": "Data model for the complex type ExtensionList",
+                "properties": {
+                    "extension": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Extension"
+                        },
+                        "minItems": 1,
+                        "maxItems": 16,
+                        "description": "Number of Extension elements"
+                    }
+                },
+                "required": [
+                    "extension"
+                ]
+            },
+            "GetEnumsResponse": {
+                "title": "GetEnumsResponse",
+                "type": "object",
+                "description": "GET /enums response JSON object.",
+                "properties": {
+                    "endpointType": {
+                        "$ref": "#/components/schemas/EndpointType"
+                    },
+                    "hubParticipant": {
+                        "$ref": "#/components/schemas/HubParticipant"
+                    },
+                    "ledgerAccountType": {
+                        "$ref": "#/components/schemas/LedgerAccountType"
+                    },
+                    "ledgerEntryType": {
+                        "$ref": "#/components/schemas/LedgerEntryType"
+                    },
+                    "participantLimitType": {
+                        "$ref": "#/components/schemas/ParticipantLimitType"
+                    },
+                    "transferParticipantRoleType": {
+                        "$ref": "#/components/schemas/TransferParticipantRoleType"
+                    },
+                    "transferState": {
+                        "$ref": "#/components/schemas/TransferState"
+                    },
+                    "transferStateEnum": {
+                        "$ref": "#/components/schemas/TransferStateEnum"
+                    },
+                    "bulkProcessingState": {
+                        "$ref": "#/components/schemas/BulkProcessingState"
+                    },
+                    "bulkTransferState": {
+                        "$ref": "#/components/schemas/BulkTransferState"
+                    },
+                    "bulkTransferStateEnum": {
+                        "$ref": "#/components/schemas/BulkTransferStateEnum"
+                    }
+                }
+            },
+            "GetHealthResponse": {
+                "title": "GetHealthResponse",
+                "type": "object",
+                "description": "GET /health response object",
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "uptime": {
+                        "$ref": "#/components/schemas/Uptime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/StartTime"
+                    },
+                    "versionNumber": {
+                        "$ref": "#/components/schemas/VersionNumber"
+                    },
+                    "services": {
+                        "$ref": "#/components/schemas/Services"
+                    }
+                }
+            },
+            "GetParticipantsLimitsResponse": {
+                "title": "GetParticipantsLimitsResponse",
+                "type": "array",
+                "description": "GET /participants/limits response JSON array. Each limit in the list is applied to the specified participant name and currency in each object.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "description": "The name of the participant.",
+                            "type": "string",
+                            "example": "payerfsp"
+                        },
+                        "currency": {
+                            "$ref": "#/components/schemas/Currency"
+                        },
+                        "limit": {
+                            "$ref": "#/components/schemas/ParticipantLimit"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "currency",
+                        "limit"
+                    ]
+                }
+            },
+            "GetParticipantsNameAccountsResponse": {
+                "title": "GetParticipantsNameAccountsResponse",
+                "type": "array",
+                "description": "GET /participants/{name}/accounts response JSON array.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "description": "Account identifier.",
+                            "example": 3
+                        },
+                        "ledgerAccountType": {
+                            "type": "string",
+                            "description": "Type of ledger account.",
+                            "example": "POSITION"
+                        },
+                        "currency": {
+                            "$ref": "#/components/schemas/Currency"
+                        },
+                        "isActive": {
+                            "description": "A flag to indicate whether or not the ledger account is active. Possible values are 1 and 0.",
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "value": {
+                            "type": "number",
+                            "description": "Account balance.",
+                            "example": 10
+                        },
+                        "reservedValue": {
+                            "type": "number",
+                            "description": "Value reserved in account.",
+                            "example": -90020
+                        },
+                        "changedDate": {
+                            "description": "The date and time when the account balance last changed.",
+                            "$ref": "#/components/schemas/DateTime"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "name",
+                        "ledgerAccountType",
+                        "currency",
+                        "isActive",
+                        "value",
+                        "reservedValue",
+                        "changedDate"
+                    ]
+                }
+            },
+            "GetParticipantsNameEndpointsResponse": {
+                "type": "array",
+                "description": "GET /participants/{name}/endpoints response JSON array.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Type of endpoint",
+                            "example": "FSPIOP_CALLBACK_URL_PARTIES_GET"
+                        },
+                        "value": {
+                            "type": "string",
+                            "description": "Endpoint value",
+                            "example": "http://dev1-sim-payerfsp.mojaloop.live/sim/payerfsp/inbound/parties/{{partyIdType}}/{{partyIdentifier}}"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "value"
+                    ]
+                }
+            },
+            "GetParticipantsNameLimitsResponse": {
+                "title": "GetParticipantsNameLimitsResponse",
+                "type": "array",
+                "description": "GET /participants/{name}/limits response JSON array.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "currency": {
+                            "$ref": "#/components/schemas/Currency"
+                        },
+                        "limit": {
+                            "$ref": "#/components/schemas/ParticipantLimit"
+                        }
+                    },
+                    "required": [
+                        "currency",
+                        "limit"
+                    ]
+                }
+            },
+            "GetParticipantsNamePositionsResponse": {
+                "title": "GetParticipantsNamePositionsResponse",
+                "type": "array",
+                "description": "GET /participants/{name}/positions response JSON array.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "currency": {
+                            "$ref": "#/components/schemas/Currency"
+                        },
+                        "value": {
+                            "type": "number",
+                            "description": "Position value.",
+                            "example": 10
+                        },
+                        "changedDate": {
+                            "description": "The date and time when the position changed.",
+                            "$ref": "#/components/schemas/DateTime"
+                        }
+                    },
+                    "required": [
+                        "currency",
+                        "value",
+                        "changedDate"
+                        ]
+                }
+            },
+            "GetParticipantsNameResponse": {
+                "title": "GetParticipantsNameResponse",
+                "type": "object",
+                "description": "GET /participants/{name} response JSON object.",
+                "properties": {
+                    "name": {
+                        "description": "The name of the participant.",
+                        "type": "string",
+                        "example": "payerfsp"
+                    },
+                    "id": {
+                        "description": "The identifier of the participant in the form of a fully qualified domain name combined with the participant's `fspId`.",
+                        "type": "string",
+                        "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
+                    },
+                    "created": {
+                        "description": "The date and time when the participant was created.",
+                        "$ref": "#/components/schemas/DateTime"
+                    },
+                    "isActive": {
+                        "description": "A flag to indicate whether or not the participant is active. Possible values are 1 and 0.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "links": {
+                        "description": "List of links for a Hypermedia-Driven RESTful Web Service.",
+                        "type": "object",
+                        "properties": {
+                            "self": {
+                                "description": "Fully qualified domain name combined with the `fspId` of the participant.",
+                                "type": "string",
+                                "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
+                            }
+                        }
+                    },
+                    "accounts": {
+                        "$ref": "#/components/schemas/Accounts"
+                    }
+                },
+                "required": [
+                    "name",
+                    "id",
+                    "created",
+                    "isActive",
+                    "links",
+                    "accounts"
+                ]
+            },
+            "GetParticipantsResponse": {
+                "title": "GetParticipantsResponse",
+                "type": "array",
+                "description": "GET /participants response JSON array.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "description": "The name of the participant.",
+                            "type": "string",
+                            "example": "payerfsp"
+                        },
+                        "id": {
+                            "description": "The identifier of the participant in the form of a fully qualified domain name combined with the participant's `fspId`.",
+                            "type": "string",
+                            "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
+                        },
+                        "created": {
+                            "description": "The date and time when the participant was created.",
+                            "$ref": "#/components/schemas/DateTime"
+                        },
+                        "isActive": {
+                            "description": "A flag to indicate whether or not the participant is active. Possible values are 1 and 0.",
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "links": {
+                            "description": "List of links for a Hypermedia-Driven RESTful Web Service.",
+                            "type": "object",
+                            "properties": {
+                                "self": {
+                                    "description": "Fully qualified domain name combined with the `fspId` of the participant.",
+                                    "type": "string",
+                                    "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
+                                }
+                            }
+                        },
+                        "accounts": {
+                            "$ref": "#/components/schemas/Accounts"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "id",
+                        "created",
+                        "isActive",
+                        "links",
+                        "accounts"
+                    ]
+                }
+            },
+            "GetSettlementModelsNameResponse": {
+                "title": "GetSettlementModelsNameResponse",
+                "type": "object",
+                "description": "GET /settlementModels/{name} response JSON object.",
+                "properties": {
+                    "settlementModelId": {
+                        "type": "integer",
+                        "description": "Settlement model identifier.",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Settlement model name.",
+                        "example": "DEFERREDNET"
+                    },
+                    "isActive": {
+                        "description": "A flag to indicate whether or not the settlement model is active. Possible values are 1 and 0.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "settlementGranularity": {
+                        "type": "string",
+                        "description": "Settlement granularity.",
+                        "example": "NET"
+                    },
+                    "settlementInterchange": {
+                        "type": "string",
+                        "description": "Settlement interchange.",
+                        "example": "MULTILATERAL"
+                    },
+                    "settlementDelay": {
+                        "type": "string",
+                        "description": "Settlement delay.",
+                        "example": "DEFERRED"
+                    },
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "requireLiquidityCheck": {
+                        "type": "boolean",
+                        "description": "A flag to indicate whether or not the settlement model requires liquidity check.",
+                        "example": true
+                    },
+                    "ledgerAccountTypeId": {
+                        "type": "string",
+                        "description": "Type of ledger account.",
+                        "example": "POSITION"
+                    },
+                    "autoPositionReset": {
+                        "type": "boolean",
+                        "description": "A flag to indicate whether or not the settlement model requires the automatic reset of the position.",
+                        "example": true
+                    }
+                },
+                "required": [
+                    "settlementModelId",
+                    "name",
+                    "isActive",
+                    "settlementGranularity",
+                    "settlementInterchange",
+                    "settlementDelay",
+                    "currency",
+                    "requireLiquidityCheck",
+                    "ledgerAccountTypeId",
+                    "autoPositionReset"
+                ]                
+            },
+            "GetSettlementModelsResponse": {
+                "title": "GetSettlementModelsResponse",
+                "type": "array",
+                "description": "GET /settlementModels response JSON array.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "settlementModelId": {
+                            "type": "integer",
+                            "description": "Settlement model identifier.",
+                            "example": 1
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Settlement model name.",
+                            "example": "DEFERREDNET"
+                        },
+                        "isActive": {
+                            "description": "A flag to indicate whether or not the settlement model is active. Possible values are 1 and 0.",
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "settlementGranularity": {
+                            "type": "string",
+                            "description": "Settlement granularity.",
+                            "example": "NET"
+                        },
+                        "settlementInterchange": {
+                            "type": "string",
+                            "description": "Settlement interchange.",
+                            "example": "MULTILATERAL"
+                        },
+                        "settlementDelay": {
+                            "type": "string",
+                            "description": "Settlement delay.",
+                            "example": "DEFERRED"
+                        },
+                        "currency": {
+                            "$ref": "#/components/schemas/Currency"
+                        },
+                        "requireLiquidityCheck": {
+                            "type": "boolean",
+                            "description": "A flag to indicate whether or not the settlement model requires liquidity check.",
+                            "example": true
+                        },
+                        "ledgerAccountTypeId": {
+                            "type": "string",
+                            "description": "Type of ledger account.",
+                            "example": "POSITION"
+                        },
+                        "autoPositionReset": {
+                            "type": "boolean",
+                            "description": "A flag to indicate whether or not the settlement model requires the automatic reset of the position.",
+                            "example": true
+                        }
+                    },
+                    "required": [
+                        "settlementModelId",
+                        "name",
+                        "isActive",
+                        "settlementGranularity",
+                        "settlementInterchange",
+                        "settlementDelay",
+                        "currency",
+                        "requireLiquidityCheck",
+                        "ledgerAccountTypeId",
+                        "autoPositionReset"
+                    ]
+                }                
+            },
+            "GetTransactionResponse": {
+                "title": "GetTransactionResponse",
+                "type": "object",
+                "description": "GET /transaction/{id} response object",
+                "properties": {
+                    "quoteId": {
+                        "$ref": "#/components/schemas/QuoteId"
+                    },
+                    "transactionId": {
+                        "$ref": "#/components/schemas/TransactionId"
+                    },
+                    "transactionRequestId": {
+                        "type": "string",
+                        "description": "Identifies an optional previously-sent transaction request."
+                    },
+                    "payee": {
+                        "$ref": "#/components/schemas/Party"
+                    },
+                    "payer": {
+                        "$ref": "#/components/schemas/Party"
+                    },
+                    "amount": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "transactionType": {
+                        "$ref": "#/components/schemas/TransactionType"
+                    },
+                    "note": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "description": "A memo that will be attached to the transaction."
+                    },
+                    "extensionList": {
+                        "$ref": "#/components/schemas/ExtensionList"
+                    }
+                }
+            },
+            "HubParticipant": {
+                "title": "HubParticipant",
+                "description": "Information about the scheme Hub participant.",
+                "type": "object",
+                "properties": {
+                    "participantId": {
+                        "description": "Identifier of the Hub participant.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Name of the Hub participant.",
+                        "type": "string",
+                        "example": "Hub"
+                    },
+                    "description": {
+                        "description": "Description of the Hub participant.",
+                        "type": "string",
+                        "example": "Hub Operator"
+                    },
+                    "isActive": {
+                        "description": "A flag to indicate whether or not the Hub participant is active. Possible values are 1 and 0.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "createdDate": {
+                        "description": "The date and time when the participant was created.",
+                        "$ref": "#/components/schemas/DateTime"
+                    },
+                    "createdBy": {
+                        "description": "The entity that created the Hub participant.",
+                        "type": "string",
+                        "example": "seeds"
+                    }
+                },
+                "required": [
+                    "participantId",
+                    "name",
+                    "description",
+                    "isActive",
+                    "createdDate",
+                    "createdBy"
+                ]
+            },
+            "IndividualAccount": {
+                "title": "IndividualAccount",
+                "type": "object",
+                "description": "Data model for the complex type IndividualAccount.",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Identifier of the ledger account.",
+                        "example": 1
+                    },
+                    "ledgerAccountType": {
+                        "type": "string",
+                        "description": "Type of the ledger account.",
+                        "example": "POSITION"
+                    },
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency",
+                        "description": "Currency of the ledger account."
+                    },
+                    "isActive": {
+                        "description": "A flag to indicate whether or not the ledger account is active. Possible values are 1 and 0.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "createdDate": {
+                        "description": "The time and date when the ledger account was created.",
+                        "$ref": "#/components/schemas/DateTime"
+                    },
+                    "createdBy": {
+                        "description": "The entity that created the ledger account.",
+                        "type": "string",
+                        "example": "unknown"
+                    }
+                },
+                "required": [
+                    "id",
+                    "ledgerAccountType",
+                    "currency",
+                    "isActive",
+                    "createdDate",
+                    "createdBy"
+                ]
+            },
+            "LedgerAccountType": {
+                "title": "LedgerAccountType",
+                "description": "The types of ledger accounts configured.",
+                "type": "object",
+                "properties": {
+                    "POSITION": {
+                        "description": "The DFSP Position Ledger that tracks how much a DFSP owes or is owed.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "SETTLEMENT": {
+                        "description": "The DFSP Settlement Ledger that mirrors the DFSP's Settlement Bank Account. Acts as a reconciliation account and mirrors the movement of real funds.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "HUB_RECONCILIATION": {
+                        "description": "The Hub Reconciliation Ledger that acts as a control account, and tracks the movement of funds across all DFSP Settlement Ledgers.",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "HUB_MULTILATERAL_SETTLEMENT": {
+                        "description": "The Hub Multilateral Net Settlement (HMLNS) Ledger that is used to capture the balancing journal entry for the Net Settlement amongst DFSPs.",
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "HUB_FEE": {
+                        "description": "The Hub Fee Ledger that is used to record the fee to be paid from the DFSPs to the Hub Operator.",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "INTERCHANGE_FEE": {
+                        "description": "The Hub Interchange Fee Ledger that captures the interchange fees to be paid between DFSPs.",
+                        "type": "integer",
+                        "example": 6
+                    }
+                }
+            },
+            "LedgerEntryType": {
+                "title": "LedgerEntryType",
+                "description": "The types of entries that can be recorded in ledgers.",
+                "type": "object",
+                "properties": {
+                    "PRINCIPLE_VALUE": {
+                        "description": "The principal amount to be settled between parties, derived from quotes from DFSPs.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "INTERCHANGE_FEE": {
+                        "description": "The interchange fee to be paid between DFSPs.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "HUB_FEE": {
+                        "description": "The fee that the DFSPs pay to the Hub Operator.",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "POSITION_DEPOSIT": {
+                        "description": "Used when increasing the Net Debit Cap.",
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "POSITION_WITHDRAWAL": {
+                        "description": "Used when decreasing Net Debit Cap.",
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "SETTLEMENT_NET_RECIPIENT": {
+                        "description": "Participant is settlement Net Recipient.",
+                        "type": "integer",
+                        "example": 6
+                    },
+                    "SETTLEMENT_NET_SENDER": {
+                        "description": "Participant is settlement Net Sender.",
+                        "type": "integer",
+                        "example": 7
+                    },
+                    "SETTLEMENT_NET_ZERO": {
+                        "description": "Participant is settlement Net Sender.",
+                        "type": "integer",
+                        "example": 8
+                    },
+                    "RECORD_FUNDS_IN": {
+                        "description": "The amount recorded in a DFSP's Settlement Ledger when a DFSP makes a deposit into their Settlement Bank Account.",
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "RECORD_FUNDS_OUT": {
+                        "description": "The amount recorded in a DFSP's Settlement Ledger when a DFSP withdraws money from their Settlement Bank Account.",
+                        "type": "integer",
+                        "example": 10
+                    }
+                }
+            },
+            "Limit": {
+                "type": "object",
+                "description": "Participant Limit",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Limit type",
+                        "example": "NET_DEBIT_CAP"
+                    },
+                    "value": {
+                        "type": "number",
+                        "description": "Limit value",
+                        "example": 10000,
+                        "enum": [
+                            0
+                        ],
+                        "x-constraint": {
+                            "positive": true
+                        }
+                    }
+                },
+                "required": [
+                    "type",
+                    "value"
+                ]
+            },
+            "Money": {
+                "title": "Money",
+                "type": "object",
+                "description": "Data model for the complex type Money.",
+                "properties": {
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "amount": {
+                        "$ref": "#/components/schemas/Amount"
+                    }
+                },
+                "required": [
+                    "currency",
+                    "amount"
+                ]
+            },
+            "Participant": {
+                "title": "Participant",
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "The name of the participant.",
+                        "type": "string",
+                        "example": "hub"
+                    },
+                    "id": {
+                        "description": "The identifier of the participant in the form of a fully qualified domain name combined with the participant's `fspId`.",
+                        "type": "string",
+                        "example": "dev1-central-ledger.mojaloop.live/participants/hub"
+                    },
+                    "created": {
+                        "description": "The date and time when the participant was created.",
+                        "$ref": "#/components/schemas/DateTime"
+                    },
+                    "isActive": {
+                        "description": "A flag to indicate whether or not the participant is active. Possible values are 1 and 0.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "links": {
+                        "description": "List of links for a Hypermedia-Driven RESTful Web Service.",
+                        "type": "object",
+                        "properties": {
+                            "self": {
+                                "description": "Fully qualified domain name combined with the `fspId` of the participant.",
+                                "type": "string",
+                                "example": "dev1-central-ledger.mojaloop.live/participants/hub"
+                            }
+                        }
+                    },
+                    "accounts": {
+                        "$ref": "#/components/schemas/Accounts"
+                    }
+                },
+                "required": [
+                    "name",
+                    "id",
+                    "created",
+                    "isActive",
+                    "links",
+                    "accounts"
+                ]
+            },
+            "ParticipantFunds": {
+                "type": "object",
+                "properties": {
+                    "transferId": {
+                        "type": "string",
+                        "x-format": {
+                            "guid": true
+                        },
+                        "example": "08564980-98b7-4404-a59e-fbcac92cdb50"
+                    },
+                    "externalReference": {
+                        "type": "string"
+                    },
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "recordFundsIn",
+                            "recordFundsOutPrepareReserve"
+                        ]
+                    },
+                    "reason": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "$ref": "#/components/schemas/Money"
+                    },
+                    "extensionList": {
+                        "$ref": "#/components/schemas/ExtensionList"
+                    }
+                },
+                "required": [
+                    "transferId",
+                    "externalReference",
+                    "action",
+                    "reason",
+                    "amount"
+                ]
+            },
+            "ParticipantIsActive": {
+                "type": "object",
+                "properties": {
+                    "isActive": {
+                        "type": "boolean",
+                        "description": "Participant isActive boolean"
+                    }
+                },
+                "required": [
+                    "isActive"
+                ]
+            },
+            "ParticipantLimit": {
+                "type": "object",
+                "description": "Participant limit",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Limit type",
+                        "example": "NET_DEBIT_CAP"
+                    },
+                    "value": {
+                        "type": "number",
+                        "description": "Limit value",
+                        "example": 10000
+                    },
+                    "alarmPercentage": {
+                        "type": "number",
+                        "description": "An alarm notification is triggered when a pre-sepcified percentage of the limit is reached. Specifying an alarmPercentage is optional. If not specified, it will default to 10 percent.",
+                        "example": 10
+                    }
+                },
+                "required": [
+                    "type",
+                    "value",
+                    "alarmPercentage"
+                ]
+            },
+            "ParticipantLimitType": {
+                "title": "ParticipantLimitType",
+                "description": "The type of participant limit recorded in the system.",
+                "type": "object",
+                "properties": {
+                    "NET_DEBIT_CAP": {
+                        "description": "The Net Debit Cap, that is, the maximum amount that a DFSP can owe to other DFSPs.",
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "Party": {
+                "title": "Party",
+                "type": "object",
+                "description": "Data model for the complex type Party.",
+                "properties": {
+                    "partyIdInfo": {
+                        "$ref": "#/components/schemas/PartyIdInfo"
+                    },
+                    "merchantClassificationCode": {
+                        "type": "string",
+                        "pattern": "^[\\d]{1,4}$",
+                        "description": "Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments."
+                    },
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "description": "Display name of the Party, could be a real name or a nick name."
+                    },
+                    "personalInfo": {
+                        "$ref": "#/components/schemas/PartyPersonalInfo"
+                    }
+                },
+                "required": [
+                    "partyIdInfo"
+                ]
+            },
+            "PartyComplexName": {
+                "title": "PartyComplexName",
+                "type": "object",
+                "description": "Data model for the complex type PartyComplexName.",
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "pattern": "^(?!\\s*$)[\\w .,'-]{1,128}$",
+                        "description": "Party’s first name."
+                    },
+                    "middleName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "pattern": "^(?!\\s*$)[\\w .,'-]{1,128}$",
+                        "description": "Party’s middle name."
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "pattern": "^(?!\\s*$)[\\w .,'-]{1,128}$",
+                        "description": "Party’s last name."
+                    }
+                }
+            },
+            "PartyIdentifier": {
+                "title": "PartyIdentifier",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "description": "Identifier of the Party."
+            },
+            "PartyIdInfo": {
+                "title": "PartyIdInfo",
+                "type": "object",
+                "description": "Data model for the complex type PartyIdInfo.",
+                "properties": {
+                    "partyIdType": {
+                        "$ref": "#/components/schemas/PartyIdType"
+                    },
+                    "partyIdentifier": {
+                        "$ref": "#/components/schemas/PartyIdentifier"
+                    },
+                    "partySubIdOrType": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "description": "A sub-identifier or sub-type for the Party."
+                    },
+                    "fspId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 32,
+                        "description": "FSP id (if known)"
+                    },
+                    "extensionList": {
+                        "$ref": "#/components/schemas/ExtensionList"
+                    }
+                },
+                "required": [
+                    "partyIdType",
+                    "partyIdentifier"
+                ]
+            },
+            "PartyIdType": {
+                "title": "PartyIdTypeEnum",
+                "type": "string",
+                "enum": [
+                    "MSISDN",
+                    "EMAIL",
+                    "PERSONAL_ID",
+                    "BUSINESS",
+                    "DEVICE",
+                    "ACCOUNT_ID",
+                    "IBAN",
+                    "ALIAS"
+                ],
+                "description": "Below are the allowed values for the enumeration - MSISDN An MSISDN (Mobile Station International Subscriber Directory Number, that is, the phone number) is used as reference to a participant. The MSISDN identifier should be in international format according to the ITU-T E.164 standard. Optionally, the MSISDN may be prefixed by a single plus sign, indicating the international prefix. - EMAIL An email is used as reference to a participant. The format of the email should be according to the informational RFC 3696. - PERSONAL_ID A personal identifier is used as reference to a participant. Examples of personal identification are passport number, birth certificate number, and national registration number. The identifier number is added in the PartyIdentifier element. The personal identifier type is added in the PartySubIdOrType element. - BUSINESS A specific Business (for example, an organization or a company) is used as reference to a participant. The BUSINESS identifier can be in any format. To make a transaction connected to a specific username or bill number in a Business, the PartySubIdOrType element should be used. - DEVICE A specific device (for example, a POS or ATM) id connected to a specific business or organization is used as reference to a Party. For referencing a specific device under a specific business or organization, use the PartySubIdOrType element. - ACCOUNT_ID A bank account number or FSP account id should be used as reference to a participant. The ACCOUNT_ID identifier can be in any format, as formats can greatly differ depending on country and FSP. - IBAN A bank account number or FSP account id is used as reference to a participant. The IBAN identifier can consist of up to 34 alphanumeric characters and should be entered without whitespace. - ALIAS An alias is used as reference to a participant. The alias should be created in the FSP as an alternative reference to an account owner. Another example of an alias is a username in the FSP system. The ALIAS identifier can be in any format. It is also possible to use the PartySubIdOrType element for identifying an account under an Alias defined by the PartyIdentifier."
+            },
+            "PartyPersonalInfo": {
+                "title": "PartyPersonalInfo",
+                "type": "object",
+                "description": "Data model for the complex type PartyPersonalInfo.",
+                "properties": {
+                    "complexName": {
+                        "$ref": "#/components/schemas/PartyComplexName"
+                    },
+                    "dateOfBirth": {
+                        "type": "string",
+                        "pattern": "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)$",
+                        "description": "Date of birth for the Party."
+                    }
+                }
+            },
+            "PostInitialPositionAndLimitsRequest": {
+                "type": "object",
+                "properties": {
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "limit": {
+                        "$ref": "#/components/schemas/Limit"
+                    },
+                    "initialPosition": {
+                        "type": "number",
+                        "description": "Initial Position Value",
+                        "example": 0
+                    }
+                },
+                "required": [
+                    "currency",
+                    "limit"
+                ]
+            },
+            "PostParticipantsNameAccountsRequest": {
+                "type": "object",
+                "properties": {
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Account type",
+                        "example": "HUB_MULTILATERAL_SETTLEMENT"
+                    }
+                },
+                "required": [
+                    "currency",
+                    "type"
+                ]
+            },
+            "PostParticipantsNameAccountsResponse": {
+                "title": "PostParticipantsNameAccountsResponse",
+                "type": "object",
+                "description": "POST /participants/{name}/accounts response JSON object.",
+                "$ref": "#/components/schemas/Participant"
+            },
+            "PostParticipantsNameEndpointsRequest": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Endpoint type",
+                        "example": "FSPIOP_CALLBACK_URL_PARTIES_GET"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Endpoint value",
+                        "example": "http://dev1-sim-payerfsp.mojaloop.live/sim/payerfsp/inbound/parties/{{partyIdType}}/{{partyIdentifier}}"
+                    }
+                },
+                "required": [
+                    "type",
+                    "value"
+                ]
+            },
+            "PostParticipantsRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the participant",
+                        "minLength": 2,
+                        "maxLength": 30,
+                        "x-format": {
+                            "alphanum": true
+                        }
+                    },
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    }
+                },
+                "required": [
+                    "name",
+                    "currency"
+                ]
+            },
+            "PostParticipantsResponse": {
+                "title": "PostParticipantsResponse",
+                "type": "object",
+                "description": "POST /participants response JSON object.",
+                "$ref": "#/components/schemas/Participant"
+            },
+            "PutParticipantsNameLimitsRequest": {
+                "type": "object",
+                "properties": {
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "limit": {
+                        "$ref": "#/components/schemas/ParticipantLimit"
+                    }
+                },
+                "required": [
+                    "currency",
+                    "limit"
+                ]
+            },
+            "PutParticipantsNameLimitsResponse": {
+                "type": "object",
+                "properties": {
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "limit": {
+                        "$ref": "#/components/schemas/ParticipantLimit"
+                    }
+                },
+                "required": [
+                    "currency",
+                    "limit"
+                ]
+            },
+            "QuoteId": {
+                "title": "QuoteId",
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                "description": "Quote Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the enjoi module has been fixed."
+            },
+            "RecordFundsOut": {
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "recordFundsOutCommit",
+                            "recordFundsOutAbort"
+                        ]
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "action",
+                    "reason"
+                ]
+            },
+            "Refund": {
+                "title": "Refund",
+                "type": "object",
+                "description": "Data model for the complex type Refund.",
+                "properties": {
+                    "originalTransactionId": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                        "description": "Reference to the original transaction id that is requested to be refunded."
+                    },
+                    "refundReason": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128,
+                        "description": "Free text indicating the reason for the refund."
+                    }
+                },
+                "required": [
+                    "originalTransactionId"
+                ]
+            },
+            "Service": {
+                "title": "Service",
+                "type": "object",
+                "description": "Data model for Service.",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Service name.",
+                        "example": "datastore"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "OK",
+                            "DOWN"
+                        ],
+                        "description": "Below are the allowed values for the enumeration. - OK - The service is up and running. - DOWN: The service is down.",
+                        "example": "OK"
+                            }
+                },
+                "required": [
+                    "name",
+                    "status"
+                ]
+            },
+            "Services": {
+                "title": "Services",
+                "description": "Data model for Services.",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Service"
+                }
+            },
+            "SettlementModel": {
+                "type": "object",
+                "required": [
+                    "autoPositionReset",
+                    "ledgerAccountType",
+                    "name",
+                    "requireLiquidityCheck",
+                    "settlementDelay",
+                    "settlementGranularity",
+                    "settlementInterchange"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the settlement model",
+                        "minLength": 2,
+                        "maxLength": 30,
+                        "x-format": {
+                            "alphanum": true
+                        }
+                    },
+                    "settlementGranularity": {
+                        "type": "string",
+                        "description": "Granularity type for the settlement model GROSS or NET",
+                        "enum": [
+                            "GROSS",
+                            "NET"
+                        ]
+                    },
+                    "settlementInterchange": {
+                        "type": "string",
+                        "description": "Interchange type for the settlement model BILATERAL or MULTILATERAL",
+                        "enum": [
+                            "BILATERAL",
+                            "MULTILATERAL"
+                        ]
+                    },
+                    "settlementDelay": {
+                        "type": "string",
+                        "description": "Delay type for the settlement model IMMEDIATE or DEFERRED",
+                        "enum": [
+                            "DEFERRED",
+                            "IMMEDIATE"
+                        ]
+                    },
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "requireLiquidityCheck": {
+                        "type": "boolean",
+                        "description": "Liquidity check boolean"
+                    },
+                    "ledgerAccountType": {
+                        "type": "string",
+                        "description": "Account type for the settlement model POSITION, SETTLEMENT or INTERCHANGE_FEE",
+                        "enum": [
+                            "INTERCHANGE_FEE",
+                            "POSITION"
+                        ]
+                    },
+                    "autoPositionReset": {
+                        "type": "boolean",
+                        "description": "Automatic position reset setting, which determines whether to execute the settlement transfer or not"
+                    }
+                }
+            },
+            "SettlementModelIsActive": {
+                "type": "object",
+                "required": [
+                    "isActive"
+                ],
+                "properties": {
+                    "isActive": {
+                        "type": "boolean",
+                        "description": "settlementModel isActive boolean"
+                    }
+                }
+            },
+            "StartTime": {
+                "title": "StartTime",
+                "description": "Time when the service was deployed or restarted.",
+                "$ref": "#/components/schemas/DateTime"
+            },
+            "Status": {
+                "title": "Status",
+                "type": "string",
+                "enum": [
+                    "OK",
+                    "DOWN"
+                ],
+                "description": "Below are the allowed values for the enumeration. - OK - The Central Ledger Admin API services are up and running. - DOWN - The Central Ledger Admin API services are down.",
+                "example": "OK"
+            },
+            "TransactionId": {
+                "title": "TransactionId",
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                "description": "Transaction Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the enjoi module has been fixed."
+            },
+            "TransactionType": {
+                "title": "TransactionType",
+                "type": "object",
+                "description": "Data model for the complex type TransactionType.",
+                "properties": {
+                    "scenario": {
+                        "type": "string",
+                        "enum": [
+                            "DEPOSIT",
+                            "WITHDRAWAL",
+                            "TRANSFER",
+                            "PAYMENT",
+                            "REFUND"
+                        ],  
+                        "description": "Below are the allowed values for the enumeration. - DEPOSIT Used for performing a Cash-In (deposit) transaction. In a normal scenario, electronic funds are transferred from a Business account to a Consumer account, and physical cash is given from the Consumer to the Business User. - WITHDRAWAL Used for performing a Cash-Out (withdrawal) transaction. In a normal scenario, electronic funds are transferred from a Consumer’s account to a Business account, and physical cash is given from the Business User to the Consumer. - TRANSFER Used for performing a P2P (Peer to Peer, or Consumer to Consumer) transaction. - PAYMENT Usually used for performing a transaction from a Consumer to a Merchant or Organization, but could also be for a B2B (Business to Business) payment. The transaction could be online for a purchase in an Internet store, in a physical store where both the Consumer and Business User are present, a bill payment, a donation, and so on. - REFUND Used for performing a refund of transaction."
+                    },
+                    "subScenario": {
+                        "type": "string",
+                        "pattern": "^[A-Z_]{1,32}$",
+                        "description": "Possible sub-scenario, defined locally within the scheme."
+                    },
+                    "initiator": {
+                        "type": "string",
+                        "enum": [
+                            "PAYER",
+                            "PAYEE"
+                        ],
+                        "description": "Who is initiating the transaction - Payer or Payee"
+                    },
+                    "initiatorType": {
+                        "type": "string",
+                        "enum":[
+                            "CONSUMER",
+                            "AGENT",
+                            "BUSINESS",
+                            "DEVICE"
+                        ],
+                        "description": "Consumer, agent, business, …"
+                    },
+                    "refundInfo": {
+                        "$ref": "#/components/schemas/Refund"
+                    },
+                    "balanceOfPayments": {
+                        "type": "string",
+                        "pattern": "^[1-9]\\d{2}$",
+                        "description": "Balance of Payments code."
+                    }
+                },
+                "required": [
+                    "scenario",
+                    "initiator",
+                    "initiatorType"
+                ]
+            },
+            "TransferParticipantRoleType": {
+                "title": "TransferParticipantRoleType",
+                "description": "The roles that participants can take in a transfer.",
+                "type": "object",
+                "properties": {
+                    "PAYER_DFSP": {
+                        "description": "The participant is the Payer DFSP in this transfer and is sending the funds.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "PAYEE_DFSP": {
+                        "description": "The participant is the Payee DFSP in this transfer and is receiving the funds.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "HUB": {
+                        "description": "The participant is representing the Hub Operator.",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "DFSP_SETTLEMENT": {
+                        "description": "Indicates the DFSP Settlement Ledger account.",
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "DFSP_POSITION": {
+                        "description": "Indicates the DFSP Position Ledger account.",
+                        "type": "integer",
+                        "example": 4
+                    }
+                }
+            },
+            "TransferState": {
+                "title": "TransferState",
+                "description": "The states that a transaction can take.",
+                "type": "object",
+                "properties": {
+                    "ABORTED_ERROR": {
+                        "description": "The transfer has been aborted by the switch as a consequence of its not having been received correctly (RECEIVED_ERROR).",
+                        "type": "string",
+                        "example": "ABORTED_ERROR"
+                    },
+                    "ABORTED_REJECTED": {
+                        "description": "The transfer has been aborted by the switch as a consequence of it having been rejected by the Payee DFSP (RECEIVED_REJECT).",
+                        "type": "string",
+                        "example": "ABORTED_REJECTED"
+                    },
+                    "COMMITTED": {
+                        "description": "The switch has successfully performed the transfer.",
+                        "type": "string",
+                        "example": "COMMITTED"
+                    },
+                    "EXPIRED_PREPARED": {
+                        "description": "The switch has aborted the transfer due to the transfer having EXPIRED from RECEIVED_PREPARE.",
+                        "type": "string",
+                        "example": "EXPIRED_PREPARED"
+                    },
+                    "EXPIRED_RESERVED": {
+                        "description": "The switch has aborted the transfer due to the transfer having EXPIRED transfer from RESERVED.",
+                        "type": "string",
+                        "example": "EXPIRED_RESERVED"
+                    },
+                    "FAILED": {
+                        "description": "Aborted the transfer due to failure to perform the transfer.",
+                        "type": "string",
+                        "example": "FAILED"
+                    },
+                    "INVALID": {
+                        "description": "The transfer has failed the switch's internal validation process and has been aborted.",
+                        "type": "string",
+                        "example": "INVALID"
+                    },
+                    "RECEIVED_ERROR": {
+                        "description": "The switch has received a transfer error callback.",
+                        "type": "string",
+                        "example": "RECEIVED_ERROR"
+                    },
+                    "RECEIVED_FULFIL": {
+                        "description": "The switch has reserved the transfer, and the transfer has been assigned to a settlement window.",
+                        "type": "string",
+                        "example": "RECEIVED_FULFIL"
+                    },
+                    "RECEIVED_PREPARE": {
+                        "description": "The switch has received the transfer.",
+                        "type": "string",
+                        "example": "RECEIVED_PREPARE"
+                    },
+                    "RECEIVED_REJECT": {
+                        "description": "The switch has received a transfer abort from the Payee DFSP.",
+                        "type": "string",
+                        "example": "RECEIVED_REJECT"
+                    },
+                    "RESERVED": {
+                        "description": "The switch has reserved the transfer.",
+                        "type": "string",
+                        "example": "RESERVED"
+                    },
+                    "RESERVED_TIMEOUT": {
+                        "description": "Expiring the transfer and returning funds to the Payer DFSP.",
+                        "type": "string",
+                        "example": "RESERVED_TIMEOUT"
+                    }
+                }
+            },
+            "TransferStateEnum": {
+                "title": "TransferStateEnum",
+                "description": "The enumeration of possible states that a transfer can take.",
+                "type": "object",
+                "properties": {
+                    "ABORTED_ERROR": {
+                        "description": "The transfer has been aborted by the switch as a consequence of its not having been received correctly (RECEIVED_ERROR).",
+                        "type": "string",
+                        "example": "ABORTED_ERROR"
+                    },
+                    "ABORTED_REJECTED": {
+                        "description": "The transfer has been aborted by the switch as a consequence of it having been rejected by the Payee DFSP (RECEIVED_REJECT).",
+                        "type": "string",
+                        "example": "ABORTED_REJECTED"
+                    },
+                    "COMMITTED": {
+                        "description": "The switch has successfully performed the transfer.",
+                        "type": "string",
+                        "example": "COMMITTED"
+                    },
+                    "EXPIRED_PREPARED": {
+                        "description": "The switch has aborted the transfer due to the transfer having EXPIRED from RECEIVED_PREPARE.",
+                        "type": "string",
+                        "example": "EXPIRED_PREPARED"
+                    },
+                    "EXPIRED_RESERVED": {
+                        "description": "The switch has aborted the transfer due to the transfer having EXPIRED transfer from RESERVED.",
+                        "type": "string",
+                        "example": "EXPIRED_RESERVED"
+                    },
+                    "FAILED": {
+                        "description": "Aborted the transfer due to failure to perform the transfer.",
+                        "type": "string",
+                        "example": "ABORTED"
+                    },
+                    "INVALID": {
+                        "description": "The transfer has failed the switch's internal validation process and has been aborted.",
+                        "type": "string",
+                        "example": "ABORTED"
+                    },
+                    "RECEIVED_ERROR": {
+                        "description": "The switch has received a transfer error callback.",
+                        "type": "string",
+                        "example": "RESERVED"
+                    },
+                    "RECEIVED_FULFIL": {
+                        "description": "The switch has reserved the transfer, and the transfer has been assigned to a settlement window.",
+                        "type": "string",
+                        "example": "RESERVED"
+                    },
+                    "RECEIVED_PREPARE": {
+                        "description": "The switch has received the transfer.",
+                        "type": "string",
+                        "example": "RECEIVED"
+                    },
+                    "RECEIVED_REJECT": {
+                        "description": "The switch has received a transfer abort from the Payee DFSP.",
+                        "type": "string",
+                        "example": "RESERVED"
+                    },
+                    "RESERVED": {
+                        "description": "The switch has reserved the transfer.",
+                        "type": "string",
+                        "example": "RESERVED"
+                    },
+                    "RESERVED_TIMEOUT": {
+                        "description": "Expiring the transfer and returning funds to the Payer DFSP.",
+                        "type": "string",
+                        "example": "RESERVED"
+                    }
+                }
+            },
+            "Uptime": {
+                "title": "Uptime",
+                "type": "number",
+                "format": "float",
+                "description": "Time since service has been deployed or restarted.",
+                "example": 1021435.95621047
+            },
+            "VersionNumber": {
+                "title": "VersionNumber",
+                "type": "string",
+                "description": "Version number of the Central Ledger Admin API release used.",
+                "example": "11.3.1"
+            },
+        },
+        "responses": {
+            "200": {
+                "description": "OK"
+            },
+            "201": {
+                "description": "Created"
+            },
+            "202": {
+                "description": "Accepted"
+            },
+            "400": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "403": {
+                "description": "Forbidden",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Not Found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "405": {
+                "description": "Method Not Allowed",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "406": {
+                "description": "Not Acceptable",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "501": {
+                "description": "Not Implemented",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            },
+            "503": {
+                "description": "Service Unavailable",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorInformationResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            #Query parameters
+            "Currency": {
+                "name": "currency",
+                "in": "query",
+                "required": false,
+                "schema": {
+                   "type": "string",
+                   "enum": [
+                        "AED",
+                        "AFA",
+                        "AFN",
+                        "ALL",
+                        "AMD",
+                        "ANG",
+                        "AOA",
+                        "AOR",
+                        "ARS",
+                        "AUD",
+                        "AWG",
+                        "AZN",
+                        "BAM",
+                        "BBD",
+                        "BDT",
+                        "BGN",
+                        "BHD",
+                        "BIF",
+                        "BMD",
+                        "BND",
+                        "BOB",
+                        "BRL",
+                        "BSD",
+                        "BTN",
+                        "BWP",
+                        "BYN",
+                        "BZD",
+                        "CAD",
+                        "CDF",
+                        "CHF",
+                        "CLP",
+                        "CNY",
+                        "COP",
+                        "CRC",
+                        "CUC",
+                        "CUP",
+                        "CVE",
+                        "CZK",
+                        "DJF",
+                        "DKK",
+                        "DOP",
+                        "DZD",
+                        "EEK",
+                        "EGP",
+                        "ERN",
+                        "ETB",
+                        "EUR",
+                        "FJD",
+                        "FKP",
+                        "GBP",
+                        "GEL",
+                        "GGP",
+                        "GHS",
+                        "GIP",
+                        "GMD",
+                        "GNF",
+                        "GTQ",
+                        "GYD",
+                        "HKD",
+                        "HNL",
+                        "HRK",
+                        "HTG",
+                        "HUF",
+                        "IDR",
+                        "ILS",
+                        "IMP",
+                        "INR",
+                        "IQD",
+                        "IRR",
+                        "ISK",
+                        "JEP",
+                        "JMD",
+                        "JOD",
+                        "JPY",
+                        "KES",
+                        "KGS",
+                        "KHR",
+                        "KMF",
+                        "KPW",
+                        "KRW",
+                        "KWD",
+                        "KYD",
+                        "KZT",
+                        "LAK",
+                        "LBP",
+                        "LKR",
+                        "LRD",
+                        "LSL",
+                        "LTL",
+                        "LVL",
+                        "LYD",
+                        "MAD",
+                        "MDL",
+                        "MGA",
+                        "MKD",
+                        "MMK",
+                        "MNT",
+                        "MOP",
+                        "MRO",
+                        "MUR",
+                        "MVR",
+                        "MWK",
+                        "MXN",
+                        "MYR",
+                        "MZN",
+                        "NAD",
+                        "NGN",
+                        "NIO",
+                        "NOK",
+                        "NPR",
+                        "NZD",
+                        "OMR",
+                        "PAB",
+                        "PEN",
+                        "PGK",
+                        "PHP",
+                        "PKR",
+                        "PLN",
+                        "PYG",
+                        "QAR",
+                        "RON",
+                        "RSD",
+                        "RUB",
+                        "RWF",
+                        "SAR",
+                        "SBD",
+                        "SCR",
+                        "SDG",
+                        "SEK",
+                        "SGD",
+                        "SHP",
+                        "SLL",
+                        "SOS",
+                        "SPL",
+                        "SRD",
+                        "STD",
+                        "SVC",
+                        "SYP",
+                        "SZL",
+                        "THB",
+                        "TJS",
+                        "TMT",
+                        "TND",
+                        "TOP",
+                        "TRY",
+                        "TTD",
+                        "TVD",
+                        "TWD",
+                        "TZS",
+                        "UAH",
+                        "UGX",
+                        "USD",
+                        "UYU",
+                        "UZS",
+                        "VEF",
+                        "VND",
+                        "VUV",
+                        "WST",
+                        "XAF",
+                        "XAG",
+                        "XAU",
+                        "XCD",
+                        "XDR",
+                        "XFO",
+                        "XFU",
+                        "XOF",
+                        "XPD",
+                        "XPF",
+                        "XPT",
+                        "YER",
+                        "ZAR",
+                        "ZMK",
+                        "ZMW",
+                        "ZWD",
+                        "ZWL",
+                        "ZWN",
+                        "ZWR"
+                    ]
+                },
+                "description": "Currency code"
+            },
+            "LimitType": {
+                "name": "limit",
+                "in": "query",
+                "required": false,
+                "schema": {
+                   "type": "string"
+                },
+                "description": "Limit type"
+            },
+            #Path parameters
+            "AccountIdentifier": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                   "type": "integer"
+                },
+                "description": "Account identifier",
+                "x-constraint": {
+                    "positive": true
+                }
+            },
+            "ParticipantName": {
+                "name": "name",
+                "in": "path",
+                "required": true,
+                "schema": {
+                   "type": "string",
+                   "minLength": 2,
+                   "maxLength": 30
+                },
+                "description": "Participant name",
+                "x-format": {
+                    "alphanum": true
+                }
+            },
+            "SettlementModelName": {
+                "name": "name",
+                "in": "path",
+                "required": true,
+                "schema": {
+                   "type": "string"
+                },
+                "description": "Settlement model name"
+            },
+            "TransferId": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                   "type": "string"
+                },
+                "description": "Transfer identifier",
+                "x-format": {
+                    "guid": true
+                }
+            },
+            "TransferIdentifier": {
+                "name": "transferId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                   "type": "string"
+                },
+                "description": "Transfer identifier",
+                "x-format": {
+                    "guid": true
+                }
+            }
+        }
+    }
+}
