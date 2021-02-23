@@ -22,6 +22,7 @@ optionally within square brackets <email>.
 ******'/
 
 @startuml
+
 ' declaring skinparam
 skinparam sequenceMessageAlign center
 skinparam shadowing false
@@ -32,38 +33,35 @@ skinparam SequenceLifeLineBorderColor Black
 skinparam ParticipantFontStyle Bold
 skinparam ParticipantFontSize 20
 skinparam ParticipantBackgroundColor WhiteSmoke
-skinparam ArrowColor Black
 
 hide footbox
 
 ' declare title
-' title Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source
+' title Error handling from client using GET request
 
 ' Actor Keys:
-' participant - FSP, Peer FSP and Optional Switch
+' participant - Client and Server
+
 
 ' declare actors
-participant "\nFSP" as FSP
-participant "Optional\nSwitch" as Switch
-participant "Peer\nFSP" as PEERFSP
+participant "Client" as client
+participant "Server" as server
 
 ' start flow
-FSP ->> Switch: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
-activate FSP
-activate Switch
-FSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Route message according\nto **FSPIOP-Destination**
-Switch ->> PEERFSP: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
-activate PEERFSP
-Switch <<-- PEERFSP: **HTTP 202** (Accepted)
-PEERFSP -> PEERFSP: Optionally validate messages signature\nusing stored certificate for\nFSP in **FSPIOP-Source**
-PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination**\nand visa versa for routing of callback
-Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-Switch -->> PEERFSP: **HTTP 200** (OK)
-Switch -> Switch: Route message according\nto **FSPIOP-Destination**
-deactivate PEERFSP
-FSP <<- Switch: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-FSP -->> Switch: **HTTP 200** (OK)
-deactivate Switch
-deactivate FSP
+autonumber 1 1 "<b>[0]"
+client ->> server: **POST /service**
+activate client
+activate server
+client <<-- server: **HTTP 202** (Accepted)
+'autonumber stop
+client -> client: No update received within\nreasonable time period,\ncheck status
+'autonumber resume
+client ->> server: **GET /service**<i><ID></i>
+autonumber stop
+client <<-- server: **HTTP 202** (Accepted)
+autonumber resume
+client <<- server: **PUT /service/**<i><ID></i>
+client -->> server: **HTTP 200** (OK)
+deactivate server
+deactivate client
 @enduml

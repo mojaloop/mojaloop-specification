@@ -102,54 +102,59 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title How to use the POST /transfers service
+' title Payer enters incorrect authorization value (OTP)
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
-' actor - Payee/Payer
+' actor - Payer/Payee(OTC/POS)
 
 ' declare actors
-actor "<$actor>\nPayer" as Payer
-participant "Payer\nFSP" as PayerFSP
-participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as PayeeFSP
-actor "<$actor>\nPayee" as Payee
+actor "<$actor>\nPayer\n" as Payer
+participant "\nPayer\nFSP" as PayerFSP
+participant "\n\nSwitch" as Switch
+participant "\nPayee\nFSP" as PayeeFSP
+actor "<$actor>\nPayee\n(POS)" as PayeePOS
+actor "<$actor>\nPayer\n(OTC)" as PayerOTC
 
 ' start flow
-Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
 activate PayerFSP
-PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
-PayerFSP -[hidden]> Switch
-deactivate PayerFSP
-PayerFSP -[hidden]> Switch
-activate PayerFSP
-PayerFSP -> PayerFSP: Quote\n(process not shown here)
-PayerFSP -[hidden]> Switch
-deactivate PayerFSP
-PayerFSP -[hidden]> Switch
-activate PayerFSP
-PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
-PayerFSP -[hidden]> Switch
-deactivate PayerFSP
-PayerFSP -[hidden]> Switch
-activate PayerFSP
-PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
+PayerFSP -> PayerFSP: Transaction request and\nquoting process (not shown)
+PayerFSP -> PayerFSP: Generate OTP, "12345", Payer FSP\nsets maximum retries to 2
+Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant\nof 100 USD,\n0 USD in fees.
+PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
-Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
+Switch ->> PayeeFSP: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Perform transfer from Switch\naccount to Payee account,\ngenerate fulfilment
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayeeFSP -> Payee: Transaction notification
+PayeeFSP ->> PayeePOS: Total amount is 100 USD,\nfee is 0 USD
+PayeePOS ->> PayerOTC: Please enter your OTP\nto confirm Merchant Payment\nof 100 USD, fee is 0 USD
+PayeePOS <<- PayerOTC: Enters "12346"
+PayeeFSP <<- PayeePOS: "12346" is the OTP
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
+PayerFSP <<- Switch:  **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Commit transfer from Payer\naccount to Payee FSP account
-Payer <- PayerFSP: Transaction notification
+PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\nOTP incorrect, decrease retriesLeft
+PayerFSP ->> Switch:  **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=1, type=OTP)
+activate Switch
+PayerFSP <<-- Switch: **HTTP 202** (Accepted)
+Switch ->> PayeeFSP:  **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=1, type=OTP)
+activate PayeeFSP
+Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
+PayeeFSP ->> PayeePOS: Incorrect OTP,\n1 retry left
+PayeePOS ->> PayerOTC: Please enter your OTP to\nconfirm Merchant Payment of\n100 USD, fee is 0 USD, last retry
+PayeePOS <<- PayerOTC: Enters "12345"
+PayeeFSP <<- PayeePOS: "12345" is the OTP
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
+Switch -->> PayeeFSP: **HTTP 200** (OK)
+deactivate PayeeFSP
+PayerFSP <<- Switch: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
+PayerFSP -->> Switch: **HTTP 200** (OK)
+deactivate Switch
+PayerFSP -> PayerFSP: Validates OTP sent by\nPayee FSP, OTP OK, perform\ntransfer (not shown here)
+PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 @enduml

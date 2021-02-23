@@ -102,7 +102,7 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Payer enters incorrect authorization value (OTP)
+' title Payer requests resend of authorization value (OTP)
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
@@ -129,32 +129,17 @@ activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP ->> PayeePOS: Total amount is 100 USD,\nfee is 0 USD
 PayeePOS ->> PayerOTC: Please enter your OTP\nto confirm Merchant Payment\nof 100 USD, fee is 0 USD
-PayeePOS <<- PayerOTC: Enters "12346"
-PayeeFSP <<- PayeePOS: "12346" is the OTP
-Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
+PayeePOS <<- PayerOTC: OTP not received
+PayeeFSP <<- PayeePOS: OTP not received
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- Switch:  **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(authenticationValue="12346")
+PayerFSP <<- Switch:  **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP,\nOTP incorrect, decrease retriesLeft
-PayerFSP ->> Switch:  **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=1, type=OTP)
-activate Switch
-PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP:  **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=1, type=OTP)
-activate PayeeFSP
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP ->> PayeePOS: Incorrect OTP,\n1 retry left
-PayeePOS ->> PayerOTC: Please enter your OTP to\nconfirm Merchant Payment of\n100 USD, fee is 0 USD, last retry
-PayeePOS <<- PayerOTC: Enters "12345"
-PayeeFSP <<- PayeePOS: "12345" is the OTP
-Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate PayeeFSP
-PayerFSP <<- Switch: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(otp="12345")
-PayerFSP -->> Switch: **HTTP 200** (OK)
-deactivate Switch
-PayerFSP -> PayerFSP: Validates OTP sent by\nPayee FSP, OTP OK, perform\ntransfer (not shown here)
+PayerFSP -> PayerFSP: Resend OTP (optionally\nregenerate) as customer\ndid not receive it
+Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant\nof 100 USD,\n0 USD in fees.
+PayerFSP -> PayerFSP: Resend GET /authorizations\n(not shown here)
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 @enduml

@@ -102,38 +102,30 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title How to use the services provided by /participants if there is no common Account Lookup System
+' title Example process in which a transaction request is rejected
 
 ' Actor Keys:
-' participant - FSP(User's) and FSP
-' actor - User
+' participant - FSP(Payer/Payee) and Switch
+' actor - Payee
 
 ' declare actors
-actor "<$actor>\nUser" as user
-participant "User's\nFSP" as userfsp
-participant "\nFSP 1" as fsp1
-participant "\nFSP 2" as fsp2
+participant "Payer\nFSP" as payerfsp
+participant "Optional\nSwitch" as Switch
+participant "Payee\nFSP" as payeefsp
+actor "<$actor>\nPayee" as Payee
 
 ' start flow
-user ->> userfsp: I would like to pay or receive\nfunds to/from +123456789
-activate userfsp
-userfsp -> userfsp: +123456789 is not\nwithin this system,\nask FSP 1
-userfsp ->> fsp1: **GET /participants/MSISDN/123456789**
-activate fsp1
-userfsp <<-- fsp1: **HTTP 202** (Accepted)
-fsp1 -> fsp1: +123456789 is not\nwithin this system
-userfsp <<- fsp1: **PUT /participants/MSISDN/123456789/error**
-userfsp -->> fsp1: **HTTP 200** (OK)
-deactivate fsp1
-userfsp -> userfsp: Not in FSP 1, ask FSP 2
-userfsp ->> fsp2: **GET /participants/MSISDN/123456789**
-activate fsp2
-userfsp <<-- fsp2: **HTTP 202** (Accepted)
-fsp2 -> fsp2: +123456789 is\nwithin this system
-userfsp <<- fsp2: **PUT /participants/MSISDN/123456789/error**
-userfsp -->> fsp2: **HTTP 200** (OK)
-deactivate fsp2
-userfsp -> userfsp: +123456789 found\nin FSP 2
-userfsp -[hidden]>fsp2
-deactivate userfsp
+activate payerfsp
+payerfsp -> payerfsp: Transaction request and\nquoting (process not shown)
+payerfsp -> payerfsp: User rejection, OTP not correct,\nor automatic rejection
+payerfsp ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Rejected state)
+activate Switch
+payerfsp <<-- Switch: **HTTP 200** (OK)
+deactivate payerfsp
+Switch ->> payeefsp: **PUT /transactionRequests/**<i><ID></i>\n(Rejected state)
+activate payeefsp
+Switch <<-- payeefsp: **HTTP 200** (OK)
+deactivate Switch
+payeefsp -> Payee: Transaction failed due\nto user rejection
+deactivate payeefsp
 @enduml

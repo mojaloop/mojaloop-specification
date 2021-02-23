@@ -102,44 +102,55 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Payer requests resend of authorization value (OTP)
+' title Example process for resource /authorizations
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
-' actor - Payer/Payee(OTC/POS)
+' participant - FSP(Payee) and Switch
+' actor - Payee/Payer(POS/ATM)
 
 ' declare actors
-actor "<$actor>\nPayer\n" as Payer
+'actor "<$actor>\nPayer" as Payer
 participant "\nPayer\nFSP" as PayerFSP
-participant "\n\nSwitch" as Switch
+participant "\nOptional\nSwitch" as Switch
 participant "\nPayee\nFSP" as PayeeFSP
-actor "<$actor>\nPayee\n(POS)" as PayeePOS
-actor "<$actor>\nPayer\n(OTC)" as PayerOTC
+actor "<$actor>\nPayee\n(POS/ATM)" as Payee
 
 ' start flow
+PayeeFSP <- Payee: I would like to receive\nfunds from +123456789
+activate PayeeFSP
+PayeeFSP <- PayeeFSP: Lookup +123456789\n(process not shown here)
+Switch <<- PayeeFSP: **POST /transactionRequests**\n(Payee information,\ntransaction details)
+activate Switch
+Switch -->> PayeeFSP: **HTTP 202** (Accepted)
+PayerFSP <<- Switch: **POST /transactionRequests**\n(Payee information,\ntransaction details)
 activate PayerFSP
-PayerFSP -> PayerFSP: Transaction request and\nquoting process (not shown)
-PayerFSP -> PayerFSP: Generate OTP, "12345", Payer FSP\nsets maximum retries to 2
-Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant\nof 100 USD,\n0 USD in fees.
-PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
+PayerFSP ->> Switch: **HTTP 202** (Accepted)
+PayerFSP -> PayerFSP: Perform optional validation
+PayerFSP ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
+PayerFSP <<- Switch: **HTTP 200** (OK)
+deactivate PayerFSP
+Switch ->> PayeeFSP: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
+Switch <<-- PayeeFSP: **HTTP 200** (OK)
+deactivate Switch
+deactivate PayeeFSP
+activate PayerFSP
+PayerFSP -> PayerFSP: Do quote, generate OTP,\nnotify user (process\nnot shown here)
+PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount including fees)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(amount=100 USD, fees=0 USD,\nretriesLeft=2, type=OTP)
+Switch ->> PayeeFSP: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount including fees)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP ->> PayeePOS: Total amount is 100 USD,\nfee is 0 USD
-PayeePOS ->> PayerOTC: Please enter your OTP\nto confirm Merchant Payment\nof 100 USD, fee is 0 USD
-PayeePOS <<- PayerOTC: OTP not received
-PayeeFSP <<- PayeePOS: OTP not received
-Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
+PayeeFSP -> Payee: Show fees on POS
+Payee -> Payee: Payer approves/rejects\ntransaction using OTP
+PayeeFSP <<-- Payee:
+Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(OTP)
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- Switch:  **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(resend OTP)
+PayerFSP <<- Switch: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(OTP)
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Resend OTP (optionally\nregenerate) as customer\ndid not receive it
-Payer <<- PayerFSP: Use OTP "12345" to accept\ntransaction to Merchant\nof 100 USD,\n0 USD in fees.
-PayerFSP -> PayerFSP: Resend GET /authorizations\n(not shown here)
+PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP
 PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 @enduml
