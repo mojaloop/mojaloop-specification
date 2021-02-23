@@ -56,7 +56,7 @@ FSP <<-- Switch: **HTTP 202** (Accepted)
 Switch ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Destination=**Account Lookup)
 activate ALS
 Switch <<-- ALS: **HTTP 202** (Accepted)
-ALS -> ALS: Replace **FSPIOP-Source**\nwith **FSPIOP-Source**\nand vice versa for\nrouting of callback
+ALS -> ALS: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination**\nand vice versa for\nrouting of callback
 Switch <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Destination=**Switch)
 Switch -->> ALS: **HTTP 200** (OK)
 deactivate ALS
