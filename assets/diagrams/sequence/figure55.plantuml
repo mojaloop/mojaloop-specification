@@ -102,55 +102,57 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Example process for resource /authorizations
+' title Commit notification where commit of transfer in Switch failed
 
 ' Actor Keys:
-' participant - FSP(Payee) and Switch
-' actor - Payee/Payer(POS/ATM)
+' participant - FSP(Payer/Payee) and Switch
+' actor - Payee/Payer
 
 ' declare actors
-'actor "<$actor>\nPayer" as Payer
-participant "\nPayer\nFSP" as PayerFSP
-participant "\nOptional\nSwitch" as Switch
-participant "\nPayee\nFSP" as PayeeFSP
-actor "<$actor>\nPayee\n(POS/ATM)" as Payee
+actor "<$actor>\nPayer" as Payer
+participant "Payer\nFSP" as PayerFSP
+participant "Switch" as Switch
+participant "Payee\nFSP" as PayeeFSP
+actor "<$actor>\nPayee" as Payee
 
 ' start flow
-PayeeFSP <- Payee: I would like to receive\nfunds from +123456789
-activate PayeeFSP
-PayeeFSP <- PayeeFSP: Lookup +123456789\n(process not shown here)
-Switch <<- PayeeFSP: **POST /transactionRequests**\n(Payee information,\ntransaction details)
-activate Switch
-Switch -->> PayeeFSP: **HTTP 202** (Accepted)
-PayerFSP <<- Switch: **POST /transactionRequests**\n(Payee information,\ntransaction details)
+Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
 activate PayerFSP
-PayerFSP ->> Switch: **HTTP 202** (Accepted)
-PayerFSP -> PayerFSP: Perform optional validation
-PayerFSP ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
-PayerFSP <<- Switch: **HTTP 200** (OK)
+PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
+PayerFSP -[hidden]> Switch
 deactivate PayerFSP
-Switch ->> PayeeFSP: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
-Switch <<-- PayeeFSP: **HTTP 200** (OK)
-deactivate Switch
-deactivate PayeeFSP
+PayerFSP -[hidden]> Switch
 activate PayerFSP
-PayerFSP -> PayerFSP: Do quote, generate OTP,\nnotify user (process\nnot shown here)
-PayerFSP ->> Switch: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount including fees)
+PayerFSP -> PayerFSP: Quote (process\nnot shown here)
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> PayeeFSP: **GET /authorizations/**\n<i><TransactionRequestID></i>\n(Amount including fees)
+Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
+Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=20 seconds)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> Payee: Show fees on POS
-Payee -> Payee: Payer approves/rejects\ntransaction using OTP
-PayeeFSP <<-- Payee:
-Switch <<- PayeeFSP: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(OTP)
+PayeeFSP -> PayeeFSP: Reserve transfer from Switch\naccount to Payee account,\ngenerate fulfilment
+PayeeFSP -> PayeeFSP: Request commit notification\nfrom Switch by sending transfer\nstate as reserved
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment,\ntransferState=RESERVED)
 Switch -->> PayeeFSP: **HTTP 200** (OK)
+Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP\nfailed, notify both FSPs
+Switch ->> PayeeFSP: **PATCH /transfers/**<i><ID></i>\n(transferState=ABORTED,\ncompletedTimestamp)
+Switch <<-- PayeeFSP: **HTTP 200** (OK)
+PayeeFSP -> PayeeFSP: Rollback reserved transfer\nfrom Switch to Payee
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>/**error**
 deactivate PayeeFSP
-PayerFSP <<- Switch: **PUT /authorizations/**\n<i><TransactionRequestID></i>\n(OTP)
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-PayerFSP -> PayerFSP: Validate OTP sent by Payee FSP
-PayerFSP -[hidden]> Switch
+PayerFSP -> PayerFSP: Rollback reserved transfer from\nPayer to Switch
+Payer <- PayerFSP: Transaction notification
 deactivate PayerFSP
 @enduml
