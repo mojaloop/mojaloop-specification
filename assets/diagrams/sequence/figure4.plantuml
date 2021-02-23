@@ -37,33 +37,28 @@ skinparam ArrowColor Black
 hide footbox
 
 ' declare title
-' title Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source
+' title HTTP PATCH call flow
 
 ' Actor Keys:
-' participant - FSP, Peer FSP and Optional Switch
+' participant - Switch and FSP
 
 ' declare actors
-participant "\nFSP" as FSP
-participant "Optional\nSwitch" as Switch
-participant "Peer\nFSP" as PEERFSP
+participant "Switch" as Switch
+participant "FSP" as FSP
 
 ' start flow
-FSP ->> Switch: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
-activate FSP
 activate Switch
-FSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Route message according\nto **FSPIOP-Destination**
-Switch ->> PEERFSP: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
-activate PEERFSP
-Switch <<-- PEERFSP: **HTTP 202** (Accepted)
-PEERFSP -> PEERFSP: Optionally validate messages signature\nusing stored certificate for\nFSP in **FSPIOP-Source**
-PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination**\nand visa versa for routing of callback
-Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-Switch -->> PEERFSP: **HTTP 200** (OK)
-Switch -> Switch: Route message according\nto **FSPIOP-Destination**
-deactivate PEERFSP
-FSP <<- Switch: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
-FSP -->> Switch: **HTTP 200** (OK)
-deactivate Switch
+activate FSP
+Switch ->> FSP: **POST /service/**//<ID>//
+FSP -->> Switch: **HTTP 202** (Accepted)
+FSP ->> FSP: Create object, state of \ncreated object is a \nnon-fiinalized state
+FSP ->> Switch: **PUT /service/**<ID> \n(Non-finalized state)
+Switch -->> FSP: **HTTP 200** (OK)
 deactivate FSP
+Switch ->> Switch: Handle callback, send\nnotificaction to FSP regarding\nthe object's finalized state
+Switch ->> FSP: **PATCH /service/**<ID>\n(Finalized state)
+activate FSP
+FSP -->> Switch: **HTTP 202** (Accepted)
+deactivate Switch
+FSP ->> FSP: Update object's state\naccording to new\ninformation
 @enduml

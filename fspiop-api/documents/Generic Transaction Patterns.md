@@ -553,9 +553,8 @@ The intermediary objects used in a _Payer-Initiated Transaction_ to perform the 
 
 Figure 1 shows the UML sequence diagram for a _Payer-Initiated Transaction_.
 
-{% uml src="assets/diagrams/sequence/figure63a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure64a.plantuml" %}
 {% enduml %}
-
 **Figure 1 -- Payer-Initiated Transaction**
 
 #### 4.1.4 Internal Processing Steps
@@ -846,9 +845,8 @@ The intermediary objects used in a _Payee-Initiated Transaction_ to perform the 
 
 Figure 2 shows the UML sequence diagram for a _Payee-Initiated Transaction_.
 
-{% uml src="assets/diagrams/sequence/figure64a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure65a.plantuml" %}
 {% enduml %}
-
 **Figure 2 -- Payee-Initiated Transaction**
 
 #### 4.2.4 Internal Processing Steps
@@ -1175,9 +1173,8 @@ The intermediary objects used in a _Payee-Initiated Transaction using OTP_ to pe
 
 Figure 3 shows the UML sequence diagram for a _Payee-Initiated Transaction using OTP_.
 
-{% uml src="assets/diagrams/sequence/figure65a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure66a.plantuml" %}
 {% enduml %}
-
 **Figure 3 -- Payee-Initiated Transaction using OTP**
 
 #### 4.3.4 Internal Processing Steps
@@ -1600,9 +1597,8 @@ The intermediary objects used in a _Bulk Transaction_ to perform the transaction
 
 Figure 4 shows the UML sequence diagram for a _Bulk Transaction_.
 
-{% uml src="assets/diagrams/sequence/figure66a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure67a.plantuml" %}
 {% enduml %}
-
 **Figure 4 -- Bulk Transaction**
 
 #### 4.4.4 Internal Processing Steps

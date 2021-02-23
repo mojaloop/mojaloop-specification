@@ -102,43 +102,27 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Example process for /parties resource
+' title How to use the services provided by /participants if there is no common Account Lookup System
 
 ' Actor Keys:
-' participant - FSP(User's), Switch, Account Lookup and FSP 
-' actor - Payee/Payer(User)
+' participant - FSP(User's) and Account Lookup Service
+' actor - User
 
 ' declare actors
 actor "<$actor>\nUser" as user
 participant "User's\nFSP" as userfsp
-participant "Optional\nSwitch" as Switch
 participant "Account\nLookup" as ALS
-participant "\nFSP 1" as fsp1
 
 ' start flow
-user -> userfsp: I would like to pay or receive\nfunds to/from +123456789
+user ->> userfsp: I would like to pay or receive\nfunds to/from +123456789
 activate userfsp
 userfsp -> userfsp: +123456789 is not\nwithin this system
-userfsp ->> Switch: **GET /parties/MSISDN/123456789**
-activate Switch
-userfsp <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> ALS: **GET /participants/MSISDN/123456789**
+userfsp ->> ALS: **GET /participants/MSISDN/123456789**
 activate ALS
-Switch <<-- ALS: **HTTP 202** (Accepted)
+userfsp <<-- ALS: **HTTP 202** (Accepted)
 ALS -> ALS: Lookup which FSP MSISDN\n+123456789 belongs to.
-Switch <<- ALS: **PUT /participants/MSISDN/123456789**\n(FSP 1)
-Switch -->> ALS: **HTTP 200** (OK)
+userfsp <<- ALS: **PUT /participants/MSISDN/123456789**\n(FSP ID)
+userfsp -->> ALS: **HTTP 200** (OK)
 deactivate ALS
-Switch ->> fsp1: **GET /parties/MSISDN/123456789**
-activate fsp1
-Switch <<-- fsp1: **HTTP 202** (Accepted)
-fsp1 -> fsp1: Lookup party information\nfor +123456789
-Switch <<- fsp1: **PUT /parties/MSISDN/123456789**\n(Party information)
-Switch -->> fsp1: **HTTP 200** (OK)
-deactivate fsp1
-userfsp <<- Switch: **PUT /parties/MSISDN/123456789**\n(Party information)
-userfsp -->> Switch: **HTTP 200** (OK)
-deactivate Switch
-user <- userfsp: Is "name" correct?
 deactivate userfsp
 @enduml
