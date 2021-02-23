@@ -38,7 +38,7 @@ skinparam ArrowColor Black
 hide footbox
 
 ' declare title
-' title Error on server during processing of request
+' title Error handling from client using resend of request
 
 ' Actor Keys:
 ' participant - Client and Server
@@ -52,12 +52,18 @@ participant "Server" as server
 autonumber 1 1 "<b>[0]"
 client ->> server: **POST /service**
 activate client
+client -> client: Timeout, resend\nservice request
+client ->> server: **POST /service**
 activate server
 client <<-- server: **HTTP 202** (Accepted)
 autonumber stop
-server -> server: Some processing error\noccurs, i.e. the request\ncan not be handled as\nrequested.
+client -> client: Timeout, resend\nservice request
 autonumber resume
-client <<- server: **PUT /service/**<i><ID></i>**/error**
+client ->> server: **POST /service**
+autonumber stop
+client <<-- server: **HTTP 202** (Accepted)
+autonumber resume
+client <<- server: **PUT /service/**<i><ID></i>
 client -->> server: **HTTP 200** (OK)
 deactivate server
 deactivate client

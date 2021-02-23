@@ -3962,13 +3962,12 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 
 ### 7.6 Error Codes
 
-###### Figure 62
+###### Figure 63
 
-Each error code in the API is a four-digit number, for example, **1234**, where the first number (**1** in the example) represents the high-level error category, the second number (**2** in the example) represents the low-level error category, and the last two numbers (**34** in the example) represents the specific error. [Figure 62](#figure-62) shows the structure of an error code. The following sections contain information about defined error codes for each high-level error category.
+Each error code in the API is a four-digit number, for example, **1234**, where the first number (**1** in the example) represents the high-level error category, the second number (**2** in the example) represents the low-level error category, and the last two numbers (**34** in the example) represents the specific error. [Figure 63](#figure-63) shows the structure of an error code. The following sections contain information about defined error codes for each high-level error category.
 
-![Figure 62](/assets/diagrams/images/figure62.svg)
-
-**Figure 62 -- Error code structure**
+![Figure 63](/assets/diagrams/images/figure63.svg)
+**Figure 63 -- Error code structure**
 
 Each defined high- and low-level category combination contains a generic error (_x_**0**_xx_), which can be used if there is no specific error, or if the server would not like to return information which is considered private.
 
@@ -4181,14 +4180,13 @@ This section provides information about how the logical transaction patterns fro
 
 ### 8.1 Payer Initiated Transaction
 
-The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payer would like to transfer funds to another Party whom is not located in the same FSP as the Payer. [Figure 63](#figure-63) shows the sequence diagram for a _Payer Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
+The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payer would like to transfer funds to another Party whom is not located in the same FSP as the Payer. [Figure 64](#figure-64) shows the sequence diagram for a _Payer Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
-###### Figure 63
+###### Figure 64
 
-{% uml src="assets/diagrams/sequence/figure63.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure64.plantuml" %}
 {% enduml %}
-
-**Figure 63 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
+**Figure 64 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
 
 ### 8.2 Payee Initiated Transaction
 
