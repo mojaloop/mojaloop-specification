@@ -1,6 +1,6 @@
 {
     "name": "mojaloop-specification",
-    "version": "11.0.0",
+    "version": "11.1.0",
     "description": "Mojaloop-specification",
     "dependencies": {
         "express": "4.17.1",
@@ -19,7 +19,10 @@
         "gitbook-plugin-variables": "1.1.0",
         "svgexport": "0.4.1"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "npm-audit-resolver": "2.2.1",
+        "npm-check-updates": "11.1.8"
+    },
     "scripts": {
         "run": "npm run gitbook:serve",
         "start": "npm run gitbook:serveNoReload",
