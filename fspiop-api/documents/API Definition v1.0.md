@@ -259,7 +259,6 @@ All the sequences and related services use an asynchronous call flow. No service
 
 {% uml src="assets/diagrams/sequence/figure1.plantuml" %}
 {% enduml %}
-
 **Figure 1 -- HTTP POST call flow**
 
 #### 3.2.3.2 HTTP GET Call Flow
@@ -270,7 +269,6 @@ All the sequences and related services use an asynchronous call flow. No service
 
 {% uml src="assets/diagrams/sequence/figure2.plantuml" %}
 {% enduml %}
-
 **Figure 2 -- HTTP GET call flow**
 
 #### 3.2.3.3 HTTP DELETE Call Flow
@@ -281,7 +279,6 @@ All the sequences and related services use an asynchronous call flow. No service
 
 {% uml src="assets/diagrams/sequence/figure3.plantuml" %}
 {% enduml %}
-
 **Figure 3 -- HTTP DELETE call flow**
 
 **Note:** It is also possible that requests to the ALS be routed through a Switch, or that the ALS and the Switch are the same server.
@@ -313,17 +310,15 @@ The non-standard HTTP header fields **FSPIOP-Destination** and **FSPIOP-Source**
 
 {% uml src="assets/diagrams/sequence/figure5.plantuml" %}
 {% enduml %}
-
 **Figure 5 -- Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source**
 
-For some services when a Switch is used, the destination FSP might be unknown. An example of this scenario is when an FSP sends a **GET /parties** to the Switch without knowing which Peer FSP that owns the Party (see [Section 6.3.1](#631-service-details) describing the scenario). **FSPIOP-Destination** will in that case be empty (or set to the Switch's ID) from the FSP, but will subsequently be set by the Switch to the correct Peer FSP. See [Figure 5](#figure-5) for an example describing the usage of **FSPIOP-Destination** and **FSPIOP-Source**.
+For some services when a Switch is used, the destination FSP might be unknown. An example of this scenario is when an FSP sends a **GET /parties** to the Switch without knowing which Peer FSP that owns the Party (see [Section 6.3.2](#632-service-details) describing the scenario). **FSPIOP-Destination** will in that case be empty (or set to the Switch's ID) from the FSP, but will subsequently be set by the Switch to the correct Peer FSP. See [Figure 6](#figure-6) for an example describing the usage of **FSPIOP-Destination** and **FSPIOP-Source**.
 
-###### Figure 5
+###### Figure 6
 
-{% uml src="assets/diagrams/sequence/figure5.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure6.plantuml" %}
 {% enduml %}
-
-**Figure 5 -- Example scenario where FSPIOP-Destination is unknown by FSP**
+**Figure 6 -- Example scenario where FSPIOP-Destination is unknown to FSP**
 
 #### 3.2.4 HTTP Response Status Codes
 
@@ -660,38 +655,35 @@ All taxes are assumed to be FSP-internal, which means that taxes are not sent as
 
 #### 5.1.1 Non-Disclosing of Fees
 
-The fees and commission payments related to an interoperable transaction when fees are not disclosed are shown in [Figure 6](#figure-6). The fees and commission that are directly part of the API are identified by green text. The FSP internal fees, commission, and bonus payments are identified by red text. These are not part of the transaction between a Payer FSP and a Payee FSP, but the amount that the Payee will receive after any FSP internal fees can be sent for information by the Payee FSP.
+The fees and commission payments related to an interoperable transaction when fees are not disclosed are shown in [Figure 7](#figure-7). The fees and commission that are directly part of the API are identified by green text. The FSP internal fees, commission, and bonus payments are identified by red text. These are not part of the transaction between a Payer FSP and a Payee FSP, but the amount that the Payee will receive after any FSP internal fees can be sent for information by the Payee FSP.
 
 For send amount (see [Section 5.1.1.2](#5112-non-disclosing-send-amount) for more information), internal Payer FSP fees on the Payer will affect the amount that is sent from the Payer FSP. For example, if the Payer FSP has a fee of 1 USD for a 100 USD interoperable financial transaction, 99 USD is sent from the Payer FSP. For receive amount (see [Section 5.1.1.1](#5111-non-disclosing-receive-amount) for more information), internal Payer FSP fees on the Payer will not affect the amount that is sent from the Payer FSP. Internal Payer FSP bonus or commission on the Payer should be hidden regardless of send or receive amount.
 
-###### Figure 6
+###### Figure 7
 
-![Fees and commission related to interoperability when fees are not disclosed](/assets/diagrams/images/figure6.svg)
-
-**Figure 6 -- Fees and commission related to interoperability when fees are not disclosed**
+![Figure 7](/assets/diagrams/images/figure7.svg)
+**Figure 7 -- Fees and commission related to interoperability when fees are not disclosed**
 
 See [Section 5.1.3](#513-fee-types) for more information on the fee types sent in the Interoperability API.
 
 #### 5.1.1.1 Non-Disclosing Receive Amount
 
-[Figure 7](#figure-7) shows an example of non-disclosing receive amount, in which the Payer would like the Payee to receive exactly 100 USD. For non-disclosing receive amount, the Payer FSP need not set the internal rating of the transaction until after the quote has been received because the Payee FSP knows what amount it will receive.
+[Figure 8](#figure-8) shows an example of non-disclosing receive amount, in which the Payer would like the Payee to receive exactly 100 USD. For non-disclosing receive amount, the Payer FSP need not set the internal rating of the transaction until after the quote has been received because the Payee FSP knows what amount it will receive.
 
 In this example, the Payee FSP decides to give commission to the Payer FSP since funds are flowing to the Payee FSP, which will later be spent in some way; this results in a future fee income for the Payee FSP. The Payer FSP can then decide how much in fees should be taken from the Payer for cost-plus pricing. In this example, the Payer FSP would like to have 1 USD from the Payer, which means that the Payer FSP will earn 2 USD in total, as the Payer FSP will also receive 1 USD in FSP commission from the Payee FSP.
 
-###### Figure 7
-
-{% uml src="assets/diagrams/sequence/figure7.plantuml" %}
-{% enduml %}
-
-**Figure 7 -- Example of non-disclosing receive amount**
-
 ###### Figure 8
 
-![Figure 8](/assets/diagrams/images/figure8.svg)
+{% uml src="assets/diagrams/sequence/figure8.plantuml" %}
+{% enduml %}
+**Figure 8 -- Example of non-disclosing receive amount**
 
-**Figure 8 -- Simplified view of money movement for non-disclosing receive amount example**
+###### Figure 9
 
-To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 18](#table-18), _Quote_ _Amount_ is **amount** in [Table 17](#table-17), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 18](#table-18), and Payee FSP commission is payeeFspCommission in [Table 18](#table-18).
+![Figure 9](/assets/diagrams/images/figure9.svg)
+**Figure 9 -- Simplified view of money movement for non-disclosing receive amount example**
+
+To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
 
 ###### Listing 7
 
@@ -703,26 +695,24 @@ Transfer amount = Quote Amount + Payee FSP Fee -- Payee FSP Commission
 
 #### 5.1.1.2 Non-Disclosing Send Amount
 
-[Figure 9](#figure-9) shows an example of non-disclosing send amount, where the Payer would like to send 100 USD from the Payer's account. For non-disclosing send amount, the Payer FSP must rate (determine the internal transaction fees, commission, or both) the transaction before the quote is sent to the Payee FSP so that the Payee FSP knows how much in funds it will receive in the transaction. The actual amount withdrawn from the Payer's account is not disclosed, nor are the fees.
+[Figure 10](#figure-10) shows an example of non-disclosing send amount, where the Payer would like to send 100 USD from the Payer's account. For non-disclosing send amount, the Payer FSP must rate (determine the internal transaction fees, commission, or both) the transaction before the quote is sent to the Payee FSP so that the Payee FSP knows how much in funds it will receive in the transaction. The actual amount withdrawn from the Payer's account is not disclosed, nor are the fees.
 
 In the example, the Payer FSP and the Payee FSP would like to have 1 USD each in fees so that the amount that will be received by the Payee is 98 USD. The actual amount that will be received by the Payee is in this example (not mandatory) returned in the callback to the Payer FSP, in the element **payeeReceiveAmount**.
 
-###### Figure 9
-
-{% uml src="assets/diagrams/sequence/figure9.plantuml" %}
-{% enduml %}
-
-**Figure 9 -- Example of non-disclosing send amount**
-
 ###### Figure 10
 
-[Figure 10](#figure-10) shows a simplified view of the movement of money for the non-disclosing send amount example.
+{% uml src="assets/diagrams/sequence/figure10.plantuml" %}
+{% enduml %}
+**Figure 10 -- Example of non-disclosing send amount**
 
-![Figure 10](/assets/diagrams/images/figure10.svg)
+###### Figure 11
 
-**Figure 10 -- Simplified view of money movement for non-disclosing send amount example**
+[Figure 11](#figure-11) shows a simplified view of the movement of money for the non-disclosing send amount example.
 
-To calculate the element **transferAmount** in the Payee FSP for a non-disclosing send amount quote, the equation in [Listing 8](#listing-8) should be used, where _Transfer Amount_ is **transferAmount** in [Table 18](#table-18), _Quote_ _Amount_ is **amount** in [Table 17](#table-17), and Payee FSP commission is **payeeFspCommission** in [Table 18](#table-18).
+![Figure 11](/assets/diagrams/images/figure11.svg)
+**Figure 11 -- Simplified view of money movement for non-disclosing send amount example**
+
+To calculate the element **transferAmount** in the Payee FSP for a non-disclosing send amount quote, the equation in [Listing 8](#listing-8) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), and Payee FSP commission is **payeeFspCommission** in [Table 23](#table-23).
 
 ###### Listing 8
 
@@ -740,31 +730,30 @@ The fees and commission payments related to an interoperable transaction when fe
 
 When disclosing of fees are used, the FSP commission that the Payee FSP sends should subsidize the transaction cost for the Payer. This means that any FSP commission sent from the Payee FSP will effectively pay either a part or all of the fees that the Payer FSP has added to the transaction. If the FSP commission amount from the Payee FSP is higher than the actual transaction fees for the Payer, the excess amount should be handled as a fee paid by Payee FSP to Payer FSP. [Section 5.1.2.2.1](#51221-excess-fsp-commission-example) contains an example of excess FSP commission.
 
-###### Figure 11
+###### Figure 12
 
-![Figure 11](/assets/diagrams/images/figure11.svg)
+![Figure 12](/assets/diagrams/images/figure12.svg)
 
-**Figure 11 -- Fees and commission related to interoperability when fees
+**Figure 12 -- Fees and commission related to interoperability when fees
 are disclosed**
 
 See [Section 5.1.3](#513-fee-types) for more information on the fee types sent in the Interoperability API.
 
 #### 5.1.2.1 Disclosing Receive Amount
 
-[Figure 12](#figure-12) shows an example of disclosing receive amount where the Payer would like the Payee to receive exactly 100 USD. For disclosing receive amount, the Payer FSP must internally rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this example, the Payer FSP would like to have 1 USD in fees from the Payer. The Payee FSP decides to give 1 USD in commission to subsidize the transaction, so that the transaction is free for the Payer.
+[Figure 13](#figure-13) shows an example of disclosing receive amount where the Payer would like the Payee to receive exactly 100 USD. For disclosing receive amount, the Payer FSP must internally rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this example, the Payer FSP would like to have 1 USD in fees from the Payer. The Payee FSP decides to give 1 USD in commission to subsidize the transaction, so that the transaction is free for the Payer.
 
-{% uml src="assets/diagrams/sequence/figure12.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure13.plantuml" %}
 {% enduml %}
+**Figure 13 -- Example of disclosing receive amount**
 
-**Figure 12 -- Example of disclosing receive amount**
+###### Figure 14
 
-###### Figure 13
+[Figure 14](#figure-14) shows a simplified view of the movement of money for the disclosing receive amount example.
 
-[Figure 13](#figure-13) shows a simplified view of the movement of money for the disclosing receive amount example.
+![Figure 14](/assets/diagrams/images/figure14.svg)
 
-![Figure 13](/assets/diagrams/images/figure13.svg)
-
-To calculate the element **transferAmount** in the Payee FSP for a disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 18](#table-18), _Quote_ _Amount_ is **amount** in [Table 17](#table-17), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 18](#table-18), and Payee FSP commission is payeeFspCommission in [Table 18](#table-18).
+To calculate the element **transferAmount** in the Payee FSP for a disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
 
 ###### Listing 9
 
@@ -776,22 +765,20 @@ Transfer amount = Quote Amount + Payee FSP Fee -- Payee FSP Commission
 
 #### 5.1.2.2 Disclosing Send Amount
 
-[Figure 14](#figure-14) shows an example of disclosing send amount, where the Payer would like to send 100 USD from the Payer's account to the Payee. For disclosing send amount, the Payer FSP must rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this example, the Payer FSP and the Payee FSP would like to have 1 USD each in fees from the Payer.
-
-###### Figure 14
-
-{% uml src="assets/diagrams/sequence/figure14.plantuml" %}
-{% enduml %}
-
-**Figure 14 -- Example of disclosing send amount**
+[Figure 15](#figure-15) shows an example of disclosing send amount, where the Payer would like to send 100 USD from the Payer's account to the Payee. For disclosing send amount, the Payer FSP must rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this example, the Payer FSP and the Payee FSP would like to have 1 USD each in fees from the Payer.
 
 ###### Figure 15
 
-[Figure 15](#figure-15) shows a simplified view of the movement of money for the disclosing send amount example.
+{% uml src="assets/diagrams/sequence/figure15.plantuml" %}
+{% enduml %}
+**Figure 15 -- Example of disclosing send amount**
 
-![Figure 15](/assets/diagrams/images/figure15.svg)
+###### Figure 16
 
-**Figure 15 -- Simplified view of money movement for disclosing send amount example**
+[Figure 16](#figure-16) shows a simplified view of the movement of money for the disclosing send amount example.
+![Figure 16](/assets/diagrams/images/figure16.svg)
+
+**Figure 16 -- Simplified view of money movement for disclosing send amount example**
 
 To calculate the element **transferAmount** in the Payee FSP for a disclosing send amount quote, the equation in [Listing 10](#listing-10) should be used, where _Transfer Amount_ is **transferAmount** in [Table 18](#table-18), _Quote_ _Amount_ is **amount** in [Table 17](#table-17), _Payer_ _Fee_ is **fees** in [Table 17](#table-17), and Payee FSP commission is **payeeFspCommission** in [Table 18](#table-18).
 
@@ -810,26 +797,24 @@ The reason for a Payee FSP fee to be absent in the equation, is that the Payer w
 
 #### 5.1.2.2.1 Excess FSP Commission Example
 
-[Figure 16](#figure-16) shows an example of excess FSP commission using disclosing send amount, where the Payer would like to send 100 USD from the Payer's account to the Payee. For disclosing send amount, the Payer FSP must rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this excess commission example, the Payer FSP would like to have 1 USD in fees from the Payer, and the Payee FSP gives 3 USD in FSP commission. Out of the 3 USD in FSP commission, 1 USD should cover the Payer fees, and 2 USD is for the Payer FSP to keep.
-
-###### Figure 16
-
-{% uml src="assets/diagrams/sequence/figure16.plantuml" %}
-{% enduml %}
-
-**Figure 16 -- Example of disclosing send amount**
+[Figure 17](#figure-17) shows an example of excess FSP commission using disclosing send amount, where the Payer would like to send 100 USD from the Payer's account to the Payee. For disclosing send amount, the Payer FSP must rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this excess commission example, the Payer FSP would like to have 1 USD in fees from the Payer, and the Payee FSP gives 3 USD in FSP commission. Out of the 3 USD in FSP commission, 1 USD should cover the Payer fees, and 2 USD is for the Payer FSP to keep.
 
 ###### Figure 17
 
-[Figure 17](#figure-17) shows a simplified view of the movement of money for the excess commission using disclosing send amount example.
+{% uml src="assets/diagrams/sequence/figure17.plantuml" %}
+{% enduml %}
+**Figure 17 -- Example of disclosing send amount**
 
-![Figure 17](/assets/diagrams/images/figure17.svg)
+###### Figure 18
 
-**Figure 17 -- Simplified view of money movement for excess commission using disclosing send amount example**
+[Figure 18](#figure-18) shows a simplified view of the movement of money for the excess commission using disclosing send amount example.
+
+![Figure 18](/assets/diagrams/images/figure18.svg)
+**Figure 18 -- Simplified view of money movement for excess commission using disclosing send amount example**
 
 #### 5.1.3 Fee Types
 
-As can be seen in [Figure 6](#figure-6) and [Figure 11](#figure-11), there are two different fee and commission types in the Quote object between the
+As can be seen in [Figure 7](#figure-67) and [Figure 12](#figure-12), there are two different fee and commission types in the Quote object between the
 
 FSPs:
 
@@ -843,7 +828,7 @@ This section contains useful equations for quoting that have not already been me
 
 #### 5.1.4.1 Payee Receive Amount Relation to Transfer Amount
 
-The amount that the Payee should receive, excluding any internal Payee FSP fees, bonus, or commission, can be calculated by the Payer FSP using the equation in [Listing 11](#listing-11), where _Transfer Amount_ is **transferAmount** in [Table 18](#table-18), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 18](#table-18), and Payee FSP commission is payeeFspCommission in [Table 18](#table-18).
+The amount that the Payee should receive, excluding any internal Payee FSP fees, bonus, or commission, can be calculated by the Payer FSP using the equation in [Listing 11](#listing-11), where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
 
 ###### Listing 11
 
@@ -895,234 +880,213 @@ This section contains one or more examples for each use case.
 
 #### 5.1.6.1 P2P Transfer
 
-A P2P Transfer is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 18](#figure-18) for an example. In this example, the Payer would like the Payee to receive 100 USD. The Payee FSP decides to give FSP commission to the Payer FSP, because the Payee FSP will receive funds into the system. The Payer FSP would also like to have 1 USD in fee from the Payer, so the total fee that the Payer FSP will earn is 2 USD. 99 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 1 USD.
+A P2P Transfer is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 19](#figure-19) for an example. In this example, the Payer would like the Payee to receive 100 USD. The Payee FSP decides to give FSP commission to the Payer FSP, because the Payee FSP will receive funds into the system. The Payer FSP would also like to have 1 USD in fee from the Payer, so the total fee that the Payer FSP will earn is 2 USD. 99 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 1 USD.
 
-###### Figure 18
+###### Figure 19
 
-{% uml src="assets/diagrams/sequence/figure18.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure19.plantuml" %}
 {% enduml %}
-
-**Figure 18 -- P2P Transfer example with receive amount**
+**Figure 19 -- P2P Transfer example with receive amount**
 
 #### 5.1.6.1.1 Simplified View of Money Movement
 
-###### Figure 19
+###### Figure 20
 
-See [Figure 19](#figure-19) for a highly simplified view of the movement of money for the P2P Transfer example.
+See [Figure 20](#figure-20) for a highly simplified view of the movement of money for the P2P Transfer example.
 
-![Figure 19](/assets/diagrams/images/figure19.svg)
-
-**Figure 19 -- Simplified view of the movement of money for the P2P Transfer example**
+![Figure 20](/assets/diagrams/images/figure20.svg)
+**Figure 20 -- Simplified view of the movement of money for the P2P Transfer example**
 
 #### 5.1.6.2 Agent-Initiated Cash-In (Send amount)
 
-[Figure 20](#figure-20) shows an example of an Agent-Initiated Cash-In where send amount is used. The fees are disclosed because the Payee (the customer) would like to know the fees in advance of accepting the Cash-In. In the example, the Payee would like to Cash-In a 100 USD bill using an Agent (the Payer) in the Payer FSP system. The Payer FSP would like to have 2 USD in fees to cover the agent commission. The Payee FSP decides to subsidize the transaction by 2 USD by giving 2 USD in FSP commission to cover the Payer FSP fees. 98 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 2 USD.
-
-###### Figure 20
-
-{% uml src="assets/diagrams/sequence/figure20.plantuml" %}
-{% enduml %}
-
-**Figure 20 -- Agent-Initiated Cash-In example with send amount**
-
-#### 5.1.6.2.1 Simplified View of Money Movement
-
-See [Figure 21](#figure-21) for a highly simplified view of the movement of money for the Agent-initiated Cash-In example with send amount.
+[Figure 21](#figure-21) shows an example of an Agent-Initiated Cash-In where send amount is used. The fees are disclosed because the Payee (the customer) would like to know the fees in advance of accepting the Cash-In. In the example, the Payee would like to Cash-In a 100 USD bill using an Agent (the Payer) in the Payer FSP system. The Payer FSP would like to have 2 USD in fees to cover the agent commission. The Payee FSP decides to subsidize the transaction by 2 USD by giving 2 USD in FSP commission to cover the Payer FSP fees. 98 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 2 USD.
 
 ###### Figure 21
 
-![Figure 21](/assets/diagrams/images/figure21.svg)
+{% uml src="assets/diagrams/sequence/figure21.plantuml" %}
+{% enduml %}
+**Figure 21 -- Agent-Initiated Cash-In example with send amount**
 
-**Figure 21 -- Simplified view of the movement of money for the Agent-initiated Cash-In with send amount example**
+#### 5.1.6.2.1 Simplified View of Money Movement
 
-#### 5.1.6.3 Agent-Initiated Cash-In (Receive amount)
-
-[Figure 22](#figure-22) shows an example of Agent-Initiated Cash-In where receive amount is used. The fees are disclosed as the Payee (the Consumer) would like to know the fees in advance of accepting the Cash-In. In the example, the Payee would like to Cash-In so that they receive 100 USD using an Agent (the Payer) in the Payer FSP system. The Payer FSP would like to have 2 USD in fees to cover the agent commission; the Payee FSP decides to subsidize the transaction by 1 USD by giving 1 USD in FSP commission to cover 50% of the Payer FSP fees. 99 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 1 USD.
+See [Figure 22](#figure-22) for a highly simplified view of the movement of money for the Agent-initiated Cash-In example with send amount.
 
 ###### Figure 22
 
-{% uml src="assets/diagrams/sequence/figure22.plantuml" %}
-{% enduml %}
+![Figure 22](/assets/diagrams/images/figure22.svg)
+**Figure 22 -- Simplified view of the movement of money for the Agent-initiated Cash-In with send amount example**
 
-**Figure 22 -- Agent-initiated Cash-In example with receive amount**
+#### 5.1.6.3 Agent-Initiated Cash-In (Receive amount)
+
+[Figure 23](#figure-23) shows an example of Agent-Initiated Cash-In where receive amount is used. The fees are disclosed as the Payee (the Consumer) would like to know the fees in advance of accepting the Cash-In. In the example, the Payee would like to Cash-In so that they receive 100 USD using an Agent (the Payer) in the Payer FSP system. The Payer FSP would like to have 2 USD in fees to cover the agent commission; the Payee FSP decides to subsidize the transaction by 1 USD by giving 1 USD in FSP commission to cover 50% of the Payer FSP fees. 99 USD is transferred from the Payer FSP to the Payee FSP after deducting the FSP commission amount of 1 USD.
+
+###### Figure 23
+
+{% uml src="assets/diagrams/sequence/figure23.plantuml" %}
+{% enduml %}
+**Figure 23 -- Agent-initiated Cash-In example with receive amount**
 
 #### 5.1.6.3.1 Simplified View of Money Movement
 
-###### Figure 19
+###### Figure 24
 
-See [Figure 23](#figure-23) for a highly simplified view of the movement of money for the Agent-initiated Cash-In example with receive amount.
+See [Figure 24](#figure-24) for a highly simplified view of the movement of money for the Agent-initiated Cash-In example with receive amount.
 
-![Figure 23](/assets/diagrams/images/figure23.svg)
-
-**Figure 23 -- Simplified view of the movement of money for the Agent-initiated Cash-In with receive amount example**
+![Figure 24](/assets/diagrams/images/figure24.svg)
+**Figure 24 -- Simplified view of the movement of money for the Agent-initiated Cash-In with receive amount example**
 
 #### 5.1.6.4 Customer-Initiated Merchant Payment
 
-A Customer-Initiated Merchant Payment is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 24](#figure-24) for an example. In the example, the Payer would like to buy goods or services worth 100 USD from a Merchant (the Payee) in the Payee FSP system. The Payee FSP would not like to charge any fees from the Payer, but 1 USD in an internal hidden fee from the Merchant. The Payer FSP wants 1 USD in fees from the Payer. 100 USD is transferred from the Payer FSP to the Payee FSP.
-
-###### Figure 24
-
-{% uml src="assets/diagrams/sequence/figure24.plantuml" %}
-{% enduml %}
-
-**Figure 24 -- Customer-Initiated Merchant Payment example**
-
-#### 5.1.6.4.1 Simplified View of Money Movement
+A Customer-Initiated Merchant Payment is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 25](#figure-25) for an example. In the example, the Payer would like to buy goods or services worth 100 USD from a Merchant (the Payee) in the Payee FSP system. The Payee FSP would not like to charge any fees from the Payer, but 1 USD in an internal hidden fee from the Merchant. The Payer FSP wants 1 USD in fees from the Payer. 100 USD is transferred from the Payer FSP to the Payee FSP.
 
 ###### Figure 25
 
-See [Figure 25](#figure-25) for a highly simplified view of the movement of money for the Customer-Initiated Merchant Payment example.
+{% uml src="assets/diagrams/sequence/figure25.plantuml" %}
+{% enduml %}
+**Figure 25 -- Customer-Initiated Merchant Payment example**
 
-![Figure 25](/assets/diagrams/images/figure25.svg)
+#### 5.1.6.4.1 Simplified View of Money Movement
 
-**Figure 25 -- Simplified view of the movement of money for the Customer-Initiated Merchant Payment example**
+###### Figure 26
+
+See [Figure 26](#figure-26) for a highly simplified view of the movement of money for the Customer-Initiated Merchant Payment example.
+
+![Figure 26](/assets/diagrams/images/figure26.svg)
+**Figure 26 -- Simplified view of the movement of money for the Customer-Initiated Merchant Payment example**
 
 #### 5.1.6.5 Customer-Initiated Cash-Out (Receive amount)
 
-A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 26](#figure-26) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 102 USD is transferred from the Payer FSP to the Payee FSP.
+A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 27](#figure-27) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 102 USD is transferred from the Payer FSP to the Payee FSP.
 
-{% uml src="assets/diagrams/sequence/figure26.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure27.plantuml" %}
 {% enduml %}
-
-**Figure 26 -- Customer-Initiated Cash-Out example (receive amount)**
+**Figure 27 -- Customer-Initiated Cash-Out example (receive amount)**
 
 #### 5.1.6.5.1 Simplified View of Money Movement
 
-###### Figure 27
+###### Figure 28
 
-See [Figure 27](#figure-27) for a highly simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example.
+See [Figure 28](#figure-28) for a highly simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example.
 
-![Figure 27](/assets/diagrams/images/figure27.svg)
-
-**Figure 27 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example**
+![Figure 28](/assets/diagrams/images/figure28.svg)
+**Figure 28 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example**
 
 #### 5.1.6.6 Customer-Initiated Cash-Out (Send amount)
 
 A Customer-Initiated Cash-Out is typically a receive amount, this
-example is shown in [Section 5.1.6.5](#5165-customer-initiated-cash-out). This section shows an example where send amount is used instead; see [Figure 28](#figure-28) for an example. In the example, the Payer would like to Cash-Out 100 USD from their account. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 99 USD is transferred from the Payer FSP to the Payee FSP.
-
-###### Figure 28
-
-{% uml src="assets/diagrams/sequence/figure28.plantuml" %}
-{% enduml %}
-
-**Figure 28 -- Customer-Initiated Cash-Out example (send amount)**
-
-#### 5.1.6.6.1 Simplified View of Money Movement
-
-See [Figure 29](#figure-29) for a highly simplified view of the movement of money for the Customer-Initiated Cash-Out with send amount example.
+example is shown in [Section 5.1.6.5](#5165-customer-initiated-cash-out). This section shows an example where send amount is used instead; see [Figure 29](#figure-29) for an example. In the example, the Payer would like to Cash-Out 100 USD from their account. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 99 USD is transferred from the Payer FSP to the Payee FSP.
 
 ###### Figure 29
 
-![Figure 29](/assets/diagrams/images/figure29.svg)
+{% uml src="assets/diagrams/sequence/figure29.plantuml" %}
+{% enduml %}
+**Figure 29 -- Customer-Initiated Cash-Out example (send amount)**
 
-**Figure 29 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with send amount example**
+#### 5.1.6.6.1 Simplified View of Money Movement
 
-#### 5.1.6.7 Agent-Initiated Cash-Out
-
-An Agent-Initiated Cash-Out is typically a receive amount, in which the Payer FSP does not disclose any fees to the Payee FSP. See [Figure 30](#Figure-30) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 102 USD is transferred from the Payer FSP to the Payee FSP.
+See [Figure 30](#figure-30) for a highly simplified view of the movement of money for the Customer-Initiated Cash-Out with send amount example.
 
 ###### Figure 30
 
-{% uml src="assets/diagrams/sequence/figure30.plantuml" %}
-{% enduml %}
+![Figure 30](/assets/diagrams/images/figure30.svg)
+**Figure 30 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with send amount example**
 
-**Figure 30 -- Agent-Initiated Cash-Out example**
+#### 5.1.6.7 Agent-Initiated Cash-Out
 
-#### 5.1.6.7.1 Simplified View of Money Movement
-
-See [Figure 31](#figure-31) for a highly simplified view of the movement of money for the Agent-Initiated Cash-Out example.
+An Agent-Initiated Cash-Out is typically a receive amount, in which the Payer FSP does not disclose any fees to the Payee FSP. See [Figure 31](#Figure-31) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 102 USD is transferred from the Payer FSP to the Payee FSP.
 
 ###### Figure 31
 
-![Figure 31](/assets/diagrams/images/figure31.svg)
+{% uml src="assets/diagrams/sequence/figure31.plantuml" %}
+{% enduml %}
+**Figure 31 -- Agent-Initiated Cash-Out example**
 
-**Figure 31 -- Simplified view of the movement of money for the Agent-Initiated Cash-Out example**
+#### 5.1.6.7.1 Simplified View of Money Movement
 
-#### 5.1.6.8 Merchant-Initiated Merchant Payment
-
-A Merchant-Initiated Merchant Payment is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 32](#figure-32) for an example. In the example, the Payer would like to buy goods or services worth 100 USD from a Merchant (the Payee) in the Payee FSP system. The Payee FSP does not want any fees and the Payer FSP would like to have 1 USD in fee. 100 USD is transferred from the Payer FSP to the Payee FSP.
+See [Figure 32](#figure-32) for a highly simplified view of the movement of money for the Agent-Initiated Cash-Out example.
 
 ###### Figure 32
 
-{% uml src="assets/diagrams/sequence/figure32.plantuml" %}
-{% enduml %}
+![Figure 32](/assets/diagrams/images/figure32.svg)
+**Figure 32 -- Simplified view of the movement of money for the Agent-Initiated Cash-Out example**
 
-**Figure 32 -- Merchant-Initiated Merchant Payment example**
+#### 5.1.6.8 Merchant-Initiated Merchant Payment
 
-#### 5.1.6.8.1 Simplified View of Money Movement
-
-See [Figure 33](#figure-33) for a highly simplified view of the movement of money for the Merchant-Initiated Merchant Payment example.
+A Merchant-Initiated Merchant Payment is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 33](#figure-33) for an example. In the example, the Payer would like to buy goods or services worth 100 USD from a Merchant (the Payee) in the Payee FSP system. The Payee FSP does not want any fees and the Payer FSP would like to have 1 USD in fee. 100 USD is transferred from the Payer FSP to the Payee FSP.
 
 ###### Figure 33
 
-![Figure 33](/assets/diagrams/images/figure33.svg)
+{% uml src="assets/diagrams/sequence/figure33.plantuml" %}
+{% enduml %}
+**Figure 33 -- Merchant-Initiated Merchant Payment example**
 
-**Figure 33 -- Simplified view of the movement of money for the Merchant-Initiated Merchant Payment example**
+#### 5.1.6.8.1 Simplified View of Money Movement
 
-#### 5.1.6.9 ATM-Initiated Cash-Out
-
-An ATM-Initiated Cash-Out is typically a receive amount, in which the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 34](#figure-34) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 1 USD in fees to cover any ATM fees and the Payer FSP would like to have 1 USD in fees. 101 USD is transferred from the Payer FSP to the Payee FSP.
+See [Figure 34](#figure-34) for a highly simplified view of the movement of money for the Merchant-Initiated Merchant Payment example.
 
 ###### Figure 34
 
-{% uml src="assets/diagrams/sequence/figure34.plantuml" %}
-{% enduml %}
+![Figure 34](/assets/diagrams/images/figure34.svg)
+**Figure 34 -- Simplified view of the movement of money for the Merchant-Initiated Merchant Payment example**
 
-**Figure 34 -- ATM-Initiated Cash-Out example**
+#### 5.1.6.9 ATM-Initiated Cash-Out
 
-#### 5.1.6.9.1 Simplified View of Money Movement
-
-See [Figure 35](#figure-35) for a highly simplified view of the movement of money for the ATM-Initiated Cash-Out example.
+An ATM-Initiated Cash-Out is typically a receive amount, in which the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 35](#figure-35) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 1 USD in fees to cover any ATM fees and the Payer FSP would like to have 1 USD in fees. 101 USD is transferred from the Payer FSP to the Payee FSP.
 
 ###### Figure 35
 
-![Figure 35](/assets/diagrams/images/figure35.svg)
+{% uml src="assets/diagrams/sequence/figure35.plantuml" %}
+{% enduml %}
+**Figure 35 -- ATM-Initiated Cash-Out example**
 
-**Figure 35 -- Simplified view of the movement of money for the ATM-Initiated Cash-Out example**
+#### 5.1.6.9.1 Simplified View of Money Movement
 
-#### 5.1.6.10 Merchant-Initiated Merchant Payment authorized on POS
-
-A Merchant-Initiated Merchant Payment authorized on a POS device is typically a receive amount, in which the Payer FSP does not disclose any fees to the Payee FSP. See [Figure 36](#figure-36) for an example. In the example, the Payer would like to buy goods or services worth 100 USD from a Merchant (the Payee) in the Payee FSP system. The Payee FSP decides to give 1 USD in FSP commission, and the Payer FSP decides to use the FSP commission as the transaction fee. 100 USD is transferred from the Payer FSP to the Payee FSP.
+See [Figure 36](#figure-36) for a highly simplified view of the movement of money for the ATM-Initiated Cash-Out example.
 
 ###### Figure 36
 
-{% uml src="assets/diagrams/sequence/figure36.plantuml" %}
-{% enduml %}
+![Figure 36](/assets/diagrams/images/figure36.svg)
+**Figure 36 -- Simplified view of the movement of money for the ATM-Initiated Cash-Out example**
 
-**Figure 36 -- Merchant-Initiated Merchant Payment authorized on POS example**
+#### 5.1.6.10 Merchant-Initiated Merchant Payment authorized on POS
 
-#### 5.1.6.10.1 Simplified View of Money Movement
-
-See [Figure 37](#figure-37) for a highly simplified view of the movement of money for the Merchant-Initiated Merchant Payment authorized on POS example.
+A Merchant-Initiated Merchant Payment authorized on a POS device is typically a receive amount, in which the Payer FSP does not disclose any fees to the Payee FSP. See [Figure 37](#figure-37) for an example. In the example, the Payer would like to buy goods or services worth 100 USD from a Merchant (the Payee) in the Payee FSP system. The Payee FSP decides to give 1 USD in FSP commission, and the Payer FSP decides to use the FSP commission as the transaction fee. 100 USD is transferred from the Payer FSP to the Payee FSP.
 
 ###### Figure 37
 
-![Figure 37](/assets/diagrams/images/figure37.svg)
+{% uml src="assets/diagrams/sequence/figure37.plantuml" %}
+{% enduml %}
+**Figure 37 -- Merchant-Initiated Merchant Payment authorized on POS example**
 
-**Figure 37 -- Simplified view of the movement of money for the
+#### 5.1.6.10.1 Simplified View of Money Movement
+
+See [Figure 38](#figure-38) for a highly simplified view of the movement of money for the Merchant-Initiated Merchant Payment authorized on POS example.
+
+###### Figure 38
+
+![Figure 38](/assets/diagrams/images/figure38.svg)
+
+**Figure 38 -- Simplified view of the movement of money for the
 Merchant-Initiated Merchant Payment authorized on POS example**
 
 #### 5.1.6.11 Refund
 
-[Figure 38](#figure-38) shows an example of a Refund transaction of the entire amount of the example in [Section 5.1.6.3](#5163-agent-initiated-cash-in-receive-amount).
-
-###### Figure 38
-
-{% uml src="assets/diagrams/sequence/figure38.plantuml" %}
-{% enduml %}
-
-**Figure 38 -- Refund example**
-
-#### 5.1.6.11.1 Simplified View of Money Movement
-
-See [Figure 39](#figure-39) for a highly simplified view of the movement of money for the Refund example.
+[Figure 39](#figure-39) shows an example of a Refund transaction of the entire amount of the example in [Section 5.1.6.3](#5163-agent-initiated-cash-in-receive-amount).
 
 ###### Figure 39
 
-![Figure 39](/assets/diagrams/images/figure39.svg)
+{% uml src="assets/diagrams/sequence/figure39.plantuml" %}
+{% enduml %}
+**Figure 39 -- Refund example**
 
-**Figure 39 -- Simplified view of the movement of money for the Refund example**
+#### 5.1.6.11.1 Simplified View of Money Movement
+
+See [Figure 40](#figure-40) for a highly simplified view of the movement of money for the Refund example.
+
+###### Figure 40
+
+![Figure 40](/assets/diagrams/images/figure40.svg)
+**Figure 40 -- Simplified view of the movement of money for the Refund example**
 
 ### 5.2 Party Addressing
 
@@ -1369,29 +1333,27 @@ Different models are used for account lookup, depending on whether an ALS exists
 
 #### 6.2.2.1 No Common Account Lookup System
 
-[Figure 40](#figure-49) shows how an account lookup can be performed if there is no common ALS in a scheme. The process is to ask the other FSPs (in sequence) if they "own" the Party with the provided identity and type pair until the Party can be found.
+[Figure 41](#figure-41) shows how an account lookup can be performed if there is no common ALS in a scheme. The process is to ask the other FSPs (in sequence) if they "own" the Party with the provided identity and type pair until the Party can be found.
 
 If this model is used, all FSPs should support being both client and server of the different HTTP **GET** services under the **/participants** resource. The HTTP **POST** or HTTP **DELETE** services under the **/participants** resource should not be used, as the FSPs are directly used for retrieving the information (instead of a common ALS).
-
-###### Figure 40
-
-{% uml src="assets/diagrams/sequence/figure40.plantuml" %}
-{% enduml %}
-
-**Figure 40 -- How to use the services provided by /participants if there is no common Account Lookup System**
-
-#### 6.2.2.2 Common Account Lookup System
-
-[Figure 41](#figure-41) shows how an account lookup can be performed if there is a common ALS in a scheme. The process is to ask the common Account Lookup service which FSP owns the Party with the provided identity. The common service is depicted as "Account Lookup" in the flows; this service could either be implemented by the switch or as a separate service, depending on the setup in the market.
-
-The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.2.2](#6222-post-participants) and [Section 6.2.2.3](#6223-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.2.4](#6224-delete-participantstypeid)) methods.
 
 ###### Figure 41
 
 {% uml src="assets/diagrams/sequence/figure41.plantuml" %}
 {% enduml %}
+**Figure 41 -- How to use the services provided by /participants if there is no common Account Lookup System**
 
-**Figure 41 -- How to use the services provided by /participants if there is a common Account Lookup System**
+#### 6.2.2.2 Common Account Lookup System
+
+[Figure 42](#figure-42) shows how an account lookup can be performed if there is a common ALS in a scheme. The process is to ask the common Account Lookup service which FSP owns the Party with the provided identity. The common service is depicted as "Account Lookup" in the flows; this service could either be implemented by the switch or as a separate service, depending on the setup in the market.
+
+The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.2.2](#6222-post-participants) and [Section 6.2.2.3](#6223-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.2.4](#6224-delete-participantstypeid)) methods.
+
+###### Figure 42
+
+{% uml src="assets/diagrams/sequence/figure42.plantuml" %}
+{% enduml %}
+**Figure 42 -- How to use the services provided by /participants if there is a common Account Lookup System**
 
 #### 6.2.3 Requests
 
@@ -1581,14 +1543,13 @@ The services provided by the resource **/parties** is used for finding out infor
 
 #### 6.3.2 Service Details
 
-[Figure 42](#figure-42) contains an example process for the **/parties** resource. Alternative deployments could also exist; for example, a deployment in which the Switch and the ALS are in the same server, or one in which the User's FSP asks FSP 1 directly for information regarding the Party.
+[Figure 43](#figure-43) contains an example process for the **/parties** resource. Alternative deployments could also exist; for example, a deployment in which the Switch and the ALS are in the same server, or one in which the User's FSP asks FSP 1 directly for information regarding the Party.
 
-###### Figure 42
+###### Figure 43
 
-{% uml src="assets/diagrams/sequence/figure42.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure43.plantuml" %}
 {% enduml %}
-
-**Figure 42 -- Example process for /parties resource**
+**Figure 43 -- Example process for /parties resource**
 
 #### 6.3.3 Requests
 
@@ -1677,29 +1638,27 @@ Alternatively, the Payer could make the decision manually.
 
 #### 6.4.2 Service Details
 
-[Figure 43](#figure-43) shows how the request transaction process works, using the **/transactionRequests** resource. The approval or rejection is not shown in the figure. A rejection is a callback **PUT /transactionRequests/**_{ID}_ with a **REJECTED** state, similar to the callback in the figure with the **RECEIVED** state, as described in [Section 6.4.1.1](#6411-payer-rejected-transaction-request). An approval by the Payer is not sent as a callback; instead a quote and transfer are sent containing a reference to the transaction request.
-
-###### Figure 43
-
-{% uml src="assets/diagrams/sequence/figure43.plantuml" %}
-{% enduml %}
-
-**Figure 43 -- How to use the /transactionRequests service**
-
-#### 6.4.2.1 Payer Rejected Transaction Request
-
-[Figure 44](#figure-44) shows the process by which a transaction request is rejected. Possible reasons for rejection include:
-
-- The Payer rejected the request manually.
-- An automatic limit was exceeded.
-- The Payer entered an OTP incorrectly more than the allowed number of times.
+[Figure 44](#figure-44) shows how the request transaction process works, using the **/transactionRequests** resource. The approval or rejection is not shown in the figure. A rejection is a callback **PUT /transactionRequests/**_{ID}_ with a **REJECTED** state, similar to the callback in the figure with the **RECEIVED** state, as described in [Section 6.4.1.1](#6411-payer-rejected-transaction-request). An approval by the Payer is not sent as a callback; instead a quote and transfer are sent containing a reference to the transaction request.
 
 ###### Figure 44
 
 {% uml src="assets/diagrams/sequence/figure44.plantuml" %}
 {% enduml %}
+**Figure 44 -- How to use the /transactionRequests service**
 
-**Figure 44 -- Example process in which a transaction request is rejected**
+#### 6.4.2.1 Payer Rejected Transaction Request
+
+[Figure 45](#figure-45) shows the process by which a transaction request is rejected. Possible reasons for rejection include:
+
+- The Payer rejected the request manually.
+- An automatic limit was exceeded.
+- The Payer entered an OTP incorrectly more than the allowed number of times.
+
+###### Figure 45
+
+{% uml src="assets/diagrams/sequence/figure45.plantuml" %}
+{% enduml %}
+**Figure 45 -- Example process in which a transaction request is rejected**
 
 #### 6.4.3 Requests
 
@@ -1794,13 +1753,12 @@ If the server is unable to find or create a transaction request, or another proc
 
 #### 6.4.6 States
 
-The possible states of a transaction request can be seen in [Figure 45](#figure-45).
+The possible states of a transaction request can be seen in [Figure 46](#figure-46).
 
 **Note:** A server does not need to keep transaction request objects that have been rejected in their database. This means that a client should expect that an error callback could be received for a rejected transaction request.
 
-![Figure 45](/assets/diagrams/images/figure45.svg)
-
-**Figure 45 -- Possible states of a transaction request**
+![Figure 46](/assets/diagrams/images/figure46.svg)
+**Figure 46 -- Possible states of a transaction request**
 
 ### 6.5 API Resource /quotes
 
@@ -1826,14 +1784,13 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 
 #### 6.5.2 Service Details
 
-[Figure 46](#figure-46) contains an example process for the API resource **/quotes**. The example shows a Payer Initiated Transaction, but it could also be initiated by the Payee, using the API Resource **/transactionRequests**, [Section 6.4](#64-api-resource-transactionrequests). The lookup process is in that case performed by the Payee FSP instead.
+[Figure 47](#figure-47) contains an example process for the API resource **/quotes**. The example shows a Payer Initiated Transaction, but it could also be initiated by the Payee, using the API Resource **/transactionRequests**, [Section 6.4](#64-api-resource-transactionrequests). The lookup process is in that case performed by the Payee FSP instead.
 
-###### Figure 46
+###### Figure 47
 
-{% uml src="assets/diagrams/sequence/figure46.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure47.plantuml" %}
 {% enduml %}
-
-**Figure 46 -- Example process for resource /quotes**
+**Figure 47 -- Example process for resource /quotes**
 
 #### 6.5.2.1 Quote Expiry Details
 
@@ -1993,15 +1950,14 @@ If the server is unable to find or create a quote, or some other processing erro
 
 #### 6.5.6 States
 
-###### Figure 47
+###### Figure 48
 
-[Figure 47](#figure-47) contains the UML (Unified Modeling Language) state machine for the possible states of a quote object.
+[Figure 48](#figure-48) contains the UML (Unified Modeling Language) state machine for the possible states of a quote object.
 
 **Note:** A server does not need to keep quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for an expired or rejected quote.
 
-![Figure 47](/assets/diagrams/images/figure47.svg)
-
-**Figure 47 -- Possible states of a quote**
+![Figure 48](/assets/diagrams/images/figure48.svg)
+**Figure 48 -- Possible states of a quote**
 
 ### 6.6 API Resource /authorizations
 
@@ -2020,36 +1976,33 @@ The API resource **/authorizations** is used to request the Payer to enter the a
 
 #### 6.6.2 Service Details
 
-[Figure 48](#figure-48) contains an example process for the API resource **/authorizations.** The Payee FSP first sends a transaction request (see [Section 6.4](#64-api-resource-transactionrequests)) that is authorized using OTP. The Payer FSP then performs the quoting process (see [Section 6.5](#65-api-resource-quotes)) before an authorization request is sent to the Payee FSP system for the Payer to approve by entering the OTP. If the OTP is correct, the transfer process should be initiated (see [Section 6.7](#67-api-resource-transfers)).
-
-###### Figure 48
-
-{% uml src="assets/diagrams/sequence/figure48.plantuml" %}
-{% enduml %}
-
-**Figure 48 -- Example process for resource /authorizations**
-
-#### 6.6.2.1 Resend Authorization Value
-
-If the notification containing the authorization value fails to reach the Payer, the Payer can choose to request a resend of the authorization value if the POS, ATM, or similar device supports such a request. See [Figure 49](#figure-49) for an example of a process where the Payer requests that the OTP be resent.
+[Figure 49](#figure-49) contains an example process for the API resource **/authorizations.** The Payee FSP first sends a transaction request (see [Section 6.4](#64-api-resource-transactionrequests)) that is authorized using OTP. The Payer FSP then performs the quoting process (see [Section 6.5](#65-api-resource-quotes)) before an authorization request is sent to the Payee FSP system for the Payer to approve by entering the OTP. If the OTP is correct, the transfer process should be initiated (see [Section 6.7](#67-api-resource-transfers)).
 
 ###### Figure 49
 
 {% uml src="assets/diagrams/sequence/figure49.plantuml" %}
 {% enduml %}
+**Figure 49 -- Example process for resource /authorizations**
 
-**Figure 49 -- Payer requests resend of authorization value (OTP)**
+#### 6.6.2.1 Resend Authorization Value
 
-#### 6.6.2.2 Retry Authorization Value
-
-The Payer FSP must decide the number of times a Payer can retry the authorization value in the POS, ATM, or similar device. This will be set in the **retriesLeft** query string (see [3.1.3](#313-uri-syntax) for more information regarding URI syntax) of the **GET** **/authorizations/**_{ID}_ service, see [Section 6.6.2.1](#6621-get-authorizationsid) for more information. If the Payer FSP sends retriesLeft=1, this means that it is the Payer's last try of the authorization value. See [Figure 50](#figure-50) for an example process where the Payer enters the incorrect OTP, and the **retriesLeft** value is subsequently decreased.
+If the notification containing the authorization value fails to reach the Payer, the Payer can choose to request a resend of the authorization value if the POS, ATM, or similar device supports such a request. See [Figure 50](#figure-50) for an example of a process where the Payer requests that the OTP be resent.
 
 ###### Figure 50
 
 {% uml src="assets/diagrams/sequence/figure50.plantuml" %}
 {% enduml %}
+**Figure 50 -- Payer requests resend of authorization value (OTP)**
 
-**Figure 50 -- Payer enters incorrect authorization value (OTP)**
+#### 6.6.2.2 Retry Authorization Value
+
+The Payer FSP must decide the number of times a Payer can retry the authorization value in the POS, ATM, or similar device. This will be set in the **retriesLeft** query string (see [3.1.3](#313-uri-syntax) for more information regarding URI syntax) of the **GET** **/authorizations/**_{ID}_ service, see [Section 6.6.2.1](#6621-get-authorizationsid) for more information. If the Payer FSP sends retriesLeft=1, this means that it is the Payer's last try of the authorization value. See [Figure 51](#figure-51) for an example process where the Payer enters the incorrect OTP, and the **retriesLeft** value is subsequently decreased.
+
+###### Figure 51
+
+{% uml src="assets/diagrams/sequence/figure51.plantuml" %}
+{% enduml %}
+**Figure 51 -- Payer enters incorrect authorization value (OTP)**
 
 #### 6.6.2.3 Failed OTP authorization
 
@@ -2159,14 +2112,13 @@ This section provides details regarding hop-by-hop transfers and end-to-end fina
 
 #### 6.7.2.1 Process
 
-[Figure 51](#figure-51) shows how the transaction process works using the **POST /transfers** service.
+[Figure 52](#figure-52) shows how the transaction process works using the **POST /transfers** service.
 
-###### Figure 51
+###### Figure 52
 
-{% uml src="assets/diagrams/sequence/figure51.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure52.plantuml" %}
 {% enduml %}
-
-**Figure 51 -- How to use the POST /transfers service**
+**Figure 52 -- How to use the POST /transfers service**
 
 #### 6.7.2.2 Transaction Irrevocability
 
@@ -2184,20 +2136,19 @@ The Payer FSP must always set a transfer expiry time to allow for use cases in w
 
 Short expiry times are often required in retail scenarios, in which a customer may be standing in front of a merchant; both parties need to know if the transaction was successful before the goods or services are given to the customer.
 
-In [Figure 51](#figure-51), an expiry has been set to 30 seconds from the current time in the request from the Payer FSP, and to 20 seconds from the same time in the request from the Switch to the Payee FSP. This strategy of using shorter timeouts for each entity in the chain from Payer FSP to Payee FSP should always be used to allow for extra communication time.
+In [Figure 52](#figure-52), an expiry has been set to 30 seconds from the current time in the request from the Payer FSP, and to 20 seconds from the same time in the request from the Switch to the Payee FSP. This strategy of using shorter timeouts for each entity in the chain from Payer FSP to Payee FSP should always be used to allow for extra communication time.
 
 **Note:** It is possible that a successful callback might be received in the Payer FSP after the expiry time; for example, due to congestion in the network. The Payer FSP should allow for some extra time after the actual expiry time before cancelling the financial transaction in the system. If a successful callback is received after the financial transaction has been cancelled, the transaction should be marked for reconciliation and handled separately in a reconciliation process.
 
 #### 6.7.2.5 Client Receiving Expired Transfer
 
-[Figure 52](#figure-52) shows an example of a possible error scenario connected to expiry and timeouts. For some reason, the callback from the Payee FSP takes longer time to send than the expiry time in the optional Switch. This leads to the Switch cancelling the reserved transfer, and an error callback for the transfer is sent to the Payer FSP. Now the Payer FSP and the Payee FSP have two different views of the result of the financial transaction; the transaction should be marked for reconciliation.
+[Figure 53](#figure-53) shows an example of a possible error scenario connected to expiry and timeouts. For some reason, the callback from the Payee FSP takes longer time to send than the expiry time in the optional Switch. This leads to the Switch cancelling the reserved transfer, and an error callback for the transfer is sent to the Payer FSP. Now the Payer FSP and the Payee FSP have two different views of the result of the financial transaction; the transaction should be marked for reconciliation.
 
-###### Figure 52
+###### Figure 53
 
-{% uml src="assets/diagrams/sequence/figure52.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure53.plantuml" %}
 {% enduml %}
-
-**Figure 52 -- Client receiving an expired transfer**
+**Figure 53 -- Client receiving an expired transfer**
 
 To limit these kinds of error scenarios, the clients (Payer FSP and optional Switch in [Figure 52](#figure-52)) participating in the ILP transfer should allow some extra time after actual expiry time during which the callback from the server can be received. The client(s) should also query the server after expiry, but before the end of the extra time, if any callback from the server has been lost due to communication failure. Reconciliation could still be necessary though, even with extra time allowed and querying the server for the transaction.
 
@@ -2210,23 +2161,20 @@ To request a commit notification from the Switch, the Payee FSP must mark the tr
 - If the transfer is reserved, the Switch must send a commit notification to the Payee FSP when the transfer is completed (committed or aborted).
 
 The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from the Switch to the Payee FSP. If the Payee FSP does not get a commit notification from the Switch within a reasonable time, the Payee FSP should resend the **PUT /transfers/**_{ID}_ callback to the Switch. The Payee FSP needs to receive the commit notification from the Switch before committing the transfer, or accept the risk that the transfer in the Switch might have failed. The Payee FSP is not allowed to rollback the transfer without receiving an aborted state (see Section 6.7.6) from the Switch, as the Payee FSP has sent the fulfilment (which is the commit trigger) to the Switch.
-Figure 54 shows an example where a commit notification is requested by the Payee FSP. In this example the commit was successful in the Switch.
-
+[Figure 54](#figure-54) shows an example where a commit notification is requested by the Payee FSP. In this example the commit was successful in the Switch.
 
 ###### Figure 54
 
 {% uml src="assets/diagrams/sequence/figure54.plantuml" %}
 {% enduml %}
-
 **Figure 54 -- Commit notification where commit of transfer was successful in Switch**
 
-Figure 55 shows an example in which the commit in the Switch failed due to some reason, for example the expiry time had expired in the Switch due to network issues. This is the same example as in Figure 53, but where no reconciliation is needed as the Payee FSP receives a commit notification before performing the actual transfer to the Payee.
+[Figure 55](#figure-55) shows an example in which the commit in the Switch failed due to some reason, for example the expiry time had expired in the Switch due to network issues. This is the same example as in Figure 53, but where no reconciliation is needed as the Payee FSP receives a commit notification before performing the actual transfer to the Payee.
 
 ###### Figure 55
 
 {% uml src="assets/diagrams/sequence/figure55.plantuml" %}
 {% enduml %}
-
 **Figure 55 -- Commit notification where commit of transfer in Switch failed**
 
 #### 6.7.2.7 Refunds
@@ -2365,13 +2313,12 @@ If the server is unable to find or create a transfer, or another processing erro
 
 **6.7.6 States**
 
-###### Figure 55
+###### Figure 56
 
-The possible states of a transfer can be seen in [Figure 55](#figure-55).
+The possible states of a transfer can be seen in [Figure 56](#figure-56).
 
-![Figure 55](/assets/diagrams/images/figure55.svg)
-
-**Figure 55 -- Possible states of a transfer**
+![Figure 56](/assets/diagrams/images/figure56.svg)
+**Figure 56 -- Possible states of a transfer**
 
 ### 6.8 API Resource /transactions
 
@@ -2393,14 +2340,13 @@ The actual financial transaction is performed using the services provided by the
 
 #### 6.8.2 Service Details
 
-[Figure 56](#figure-56) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{TransactionID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
+[Figure 57](#figure-57) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{TransactionID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
 
-###### Figure 56
+###### Figure 57
 
-{% uml src="assets/diagrams/sequence/figure56.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure57.plantuml" %}
 {% enduml %}
-
-**Figure 56 -- Example transaction process**
+**Figure 57 -- Example transaction process**
 
 #### 6.8.3 Requests
 
@@ -2465,15 +2411,14 @@ If the server is unable to find or create a transaction, or another processing e
 
 #### 6.8.6 States
 
-###### Figure 57
+###### Figure 58
 
-The possible states of a transaction can be seen in [Figure 57](#figure-57).
+The possible states of a transaction can be seen in [Figure 58](#figure-58).
 
 **Note:** For reconciliation purposes, a server must keep transaction objects that have been rejected in its database for a scheme-agreed time period. This means that a client should expect a proper callback about a transaction (if it has been received by the server) when requesting information regarding the same.
 
-![Figure 57](/assets/diagrams/images/figure57.svg)
-
-**Figure 57 -- Possible states of a transaction**
+![Figure 58](/assets/diagrams/images/figure58.svg)
+**Figure 58 -- Possible states of a transaction**
 
 ### 6.9 API Resource /bulkQuotes
 
@@ -2497,18 +2442,17 @@ Table 36 contains a description of each different version of the **/bulkQuotes**
 
 #### 6.9.2 Service Details
 
-[Figure 58](#figure-58) shows how the bulk quotes process works, using the **POST /bulkQuotes** service. When receiving the bulk of transactions from the Payer, the Payer FSP should:
+[Figure 59](#figure-59) shows how the bulk quotes process works, using the **POST /bulkQuotes** service. When receiving the bulk of transactions from the Payer, the Payer FSP should:
 
 1. Lookup the FSP in which each Payee is; for example, using the API Resource **/participants**, [Section 6.2](#62-api-resource-participants).
 
 2. Divide the bulk based on Payee FSP. The service **POST /bulkQuotes** is then used for each Payee FSP to get the bulk quotes from each Payee FSP. Each quote result will contain the ILP Packet and condition (see [Section 4.5](#45-ilp-packet) and [Section 4.4](#44-conditional-transfers)) needed to perform each transfer in the bulk transfer (see API Resource **/bulkTransfers**, [Section 6.10](#610-api-resource-bulktransfers)), which will perform the actual financial transaction from the Payer to each Payee.
 
-###### Figure 58
+###### Figure 59
 
-{% uml src="assets/diagrams/sequence/figure58.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure59.plantuml" %}
 {% enduml %}
-
-**Figure 58 -- Example bulk quote process**
+**Figure 59 -- Example bulk quote process**
 
 #### 6.9.3 Requests
 
@@ -2596,15 +2540,14 @@ If the server is unable to find or create a bulk quote, or another processing er
 
 #### 6.9.6 States
 
-###### Figure 59
+###### Figure 60
 
-The possible states of a bulk quote can be seen in [Figure 59](#figure-59).
+The possible states of a bulk quote can be seen in [Figure 60](#figure-60).
 
 **Note:** A server does not need to keep bulk quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for a rejected or expired bulk quote.
 
-![Figure 59](/assets/diagrams/images/figure59.svg)
-
-**Figure 59 -- Possible states of a bulk quote**
+![Figure 60](/assets/diagrams/images/figure60.svg)
+**Figure 60 -- Possible states of a bulk quote**
 
 ### 6.10 API Resource /bulkTransfers
 
@@ -2626,18 +2569,17 @@ Table 40 contains a description of each different version of the **/bulkTransfer
 
 #### 6.10.2 Service Details
 
-[Figure 60](#figure-60) shows how the bulk transfer process works, using the **POST /bulkTransfers** service. When receiving the bulk transactions from the Payer, the Payer FSP should perform the following:
+[Figure 61](#figure-61) shows how the bulk transfer process works, using the **POST /bulkTransfers** service. When receiving the bulk transactions from the Payer, the Payer FSP should perform the following:
 
 1. Lookup the FSP in which each Payee is; for example, using the API Resource **/participants**, [Section 6.2](#62-api-resource-participants).
 2. Perform the bulk quote process using the API Resource **/bulkQuotes**, [Section 6.9](#69-api-resource-bulkquotes). The bulk quote callback should contain the required ILP Packets and conditions needed to perform each transfer.
-3. Perform bulk transfer process in [Figure 60](#figure-60) using **POST /bulkTransfers**. This performs each hop-to-hop transfer and the end-to-end financial transaction. For more information regarding hop-to-hop transfers vs end-to-end financial transactions, see [Section 6.7](#67-api-resource-transfers).
+3. Perform bulk transfer process in [Figure 61](#figure-61) using **POST /bulkTransfers**. This performs each hop-to-hop transfer and the end-to-end financial transaction. For more information regarding hop-to-hop transfers vs end-to-end financial transactions, see [Section 6.7](#67-api-resource-transfers).
 
-###### Figure 60
+###### Figure 61
 
-{% uml src="assets/diagrams/sequence/figure60.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure61.plantuml" %}
 {% enduml %}
-
-**Figure 60 -- Example bulk transfer process**
+**Figure 61 -- Example bulk transfer process**
 
 #### 6.10.3 Requests
 
@@ -2727,15 +2669,14 @@ If the server is unable to find or create a bulk transfer, or another processing
 
 #### 6.10.6 States
 
-###### Figure 61
+###### Figure 62
 
-The possible states of a bulk transfer can be seen in [Figure 61](#figure-61).
+The possible states of a bulk transfer can be seen in [Figure 62](#figure-62).
 
 **Note:** A server must keep bulk transfer objects that have been rejected in their database during a market agreed time-period for reconciliation purposes. This means that a client should expect a proper callback about a bulk transfer (if it has been received by the server) when requesting information regarding the same.
 
-![Figure 61](/assets/diagrams/images/figure61.svg)
-
-**Figure 61 -- Possible states of a bulk transfer**
+![Figure 62](/assets/diagrams/images/figure62.svg)
+**Figure 62 -- Possible states of a bulk transfer**
 
 ## 7. API Supporting Data Models
 
