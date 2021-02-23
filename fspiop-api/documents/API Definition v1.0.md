@@ -22,7 +22,7 @@ specified types of information.
 |Version|Date|Change Description|
 |---|---|---|
 |**1.0**|2018-03-13|Initial version|
-|**1.1**|2020-05-19|1.	This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request PATCH /transfers/<ID>. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the transfers resource has been updated with the new PATCH request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for PATCH is described in Section 3.2.3.5. <br>c. Table 5 in Section 6.1.1 has been updated to include PATCH as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the transfers resource. <br>e.	Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new PATCH /transfers/<ID> request. <br><br>2.	In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a.	Updated Figure 6 as it contained a copy-paste error. <br>b.	Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3.	The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context <br>a. The description for the FSPIOP-Destination header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the FSPIOP-URI header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 83. This doesn’t imply any change as such. <br>a.	Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. For consistency, the data model for the POST /participants/<Type>/<ID> and POST /participants/<Type>/<ID>/<SubId> calls in Table 9 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7.	A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in PUT /transfers/<ID> callbacks.|
+|**1.1**|2020-05-19|1. This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request **PATCH /transfers/**_{ID}_. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the **transfers** resource has been updated with the new **PATCH** request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for **PATCH** is described in Section 3.2.3.5. <br>c. Table 5 in Section 6.1.1 has been updated to include **PATCH** as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the **transfers** resource. <br>e. Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new **PATCH /transfers**/_{ID}_ request. <br><br>2. In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a. Updated Figure 6 as it contained a copy-paste error. <br>b. Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3. The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context<br>a. The description for the **FSPIOP-Destination** header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the **FSPIOP-URI** header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 83. This doesn’t imply any change as such. <br>a. Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the **PartyIdInfo** complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7. A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in **PUT /transfers/**_{ID}_ callbacks.|
 
 ## 2. Introduction
 
@@ -780,7 +780,7 @@ Transfer amount = Quote Amount + Payee FSP Fee -- Payee FSP Commission
 
 **Figure 16 -- Simplified view of money movement for disclosing send amount example**
 
-To calculate the element **transferAmount** in the Payee FSP for a disclosing send amount quote, the equation in [Listing 10](#listing-10) should be used, where _Transfer Amount_ is **transferAmount** in [Table 18](#table-18), _Quote_ _Amount_ is **amount** in [Table 17](#table-17), _Payer_ _Fee_ is **fees** in [Table 17](#table-17), and Payee FSP commission is **payeeFspCommission** in [Table 18](#table-18).
+To calculate the element **transferAmount** in the Payee FSP for a disclosing send amount quote, the equation in [Listing 10](#listing-10) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payer_ _Fee_ is **fees** in [Table 22](#table-22), and Payee FSP commission is **payeeFspCommission** in [Table 23](#table-23).
 
 ###### Listing 10
 
@@ -838,7 +838,7 @@ Payee Receive Amount = Transfer Amount - Payee FSP Fee + Payee FSP Commission
 
 **Listing 11 -- Relation between transfer amount and Payee receive amount**
 
-The Payee receive amount including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 18](#table-18).
+The Payee receive amount including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 23](#table-23).
 
 #### 5.1.5 Tax Information
 
@@ -1272,22 +1272,21 @@ On a high level, the API can be used to perform the following actions:
 |URI|HTTP method GET|HTTP method PUT|HTTP method POST|HTTP method DELETE|HTTP method PATCH|
 |---|---|---|---|---|---|
 |**/participants**|Not supported|Not supported|Request that an ALS create FSP information regarding the parties provided in the body or, if the information already exists, request that the ALS update it|Not supported|Not Supported|
-|**/participants/_{ID}_ **|Not supported|Callback to inform a Peer FSP about a previously-created list of parties.|Not supported|Not Supported|Not Supported|
-|**/participants/_{Type}_/_{ID}_ Alternative: /participants/_{Type}_/_{ID}_/_{SubId}_ **|Get FSP information regarding a Party from either a Peer FSP or an ALS.|Callback to inform a Peer FSP about the requested or created FSP information.|Request an ALS to create FSP information regarding a Party or, if the information already exists, request that the ALS update it|Request that an ALS delete FSP information regarding a Party.|Not Supported|
-|**/parties/_{Type}_/_{ID}_ Alternative: /parties/_{Type}_/_{ID}_/_{SubId}_ **|Get information regarding a Party from a Peer FSP.|Callback to inform a Peer FSP about the requested information about the Party.|Not supported|Not support|Not Supported|
+|**/participants/**_{ID}_|Not supported|Callback to inform a Peer FSP about a previously-created list of parties.|Not supported|Not Supported|Not Supported|
+|**/participants/**_{Type}_/_{ID}_ Alternative: **/participants/**_{Type}_/_{ID}_/_{SubId}_|Get FSP information regarding a Party from either a Peer FSP or an ALS.|Callback to inform a Peer FSP about the requested or created FSP information.|Request an ALS to create FSP information regarding a Party or, if the information already exists, request that the ALS update it|Request that an ALS delete FSP information regarding a Party.|Not Supported|
+|**/parties/**_{Type}_/_{ID}_ Alternative: **/parties/**_{Type}_/_{ID}_/_{SubId}_|Get information regarding a Party from a Peer FSP.|Callback to inform a Peer FSP about the requested information about the Party.|Not supported|Not support|Not Supported|
 |**/transactionRequests**|Not supported|Not supported|Request a Peer FSP to ask a Payer for approval to transfer funds to a Payee. The Payer can either reject or approve the request.|Not supported|Not Supported|
-|**/transactionRequests/_{ID}_ **|Get information about a previously-sent transaction request.|Callback to inform a Peer FSP about a previously-sent transaction request.|Not supported|Not supported|Not Supported|
+|**/transactionRequests/**_{ID}_|Get information about a previously-sent transaction request.|Callback to inform a Peer FSP about a previously-sent transaction request.|Not supported|Not supported|Not Supported|
 |**/quotes**|Not supported|Not supported|Request that a Peer FSP create a new quote for performing a transaction.|Not supported|Not Supported|
-|**/quotes/_{ID}_ **|Get information about a previously-requested quote.|Callback to inform a Peer FSP about a previously- requested quote.|Not supported|Not supported|Not Supported|
-|**/authorizations/_{ID}_ **|Get authorization for a transaction from the Payer whom is interacting with the Payee FSP system.|Callback to inform Payer FSP regarding authorization information.|Not supported|Not supported|Not Supported|
+|**/quotes/**_{ID}_|Get information about a previously-requested quote.|Callback to inform a Peer FSP about a previously- requested quote.|Not supported|Not supported|Not Supported|
+|**/authorizations/**_{ID}_|Get authorization for a transaction from the Payer whom is interacting with the Payee FSP system.|Callback to inform Payer FSP regarding authorization information.|Not supported|Not supported|Not Supported|
 |**/transfers**|Not supported|Not supported|Request a Peer FSP to perform the transfer of funds related to a transaction.|Not supported|Not Supported|
-|**/transfers/_{ID}_ **|Get information about a previously-performed transfer.|Callback to inform a Peer FSP about a previously-performed transfer.|Not supported|Not supported|Commit notification to Payee FSP|
-|**/transactions/_{ID}_ **|Get information about a previously-performed transaction.|Callback to inform a Peer FSP about a previously-performed transaction.|Not supported|Not supported|Not Supported|
+|**/transfers/**_{ID}_|Get information about a previously-performed transfer.|Callback to inform a Peer FSP about a previously-performed transfer.|Not supported|Not supported|Commit notification to Payee FSP|
+|**/transactions/**_{ID}_|Get information about a previously-performed transaction.|Callback to inform a Peer FSP about a previously-performed transaction.|Not supported|Not supported|Not Supported|
 |**/bulkQuotes**|Not supported|Not supported|Request that a Peer FSP create a new quote for performing a bulk transaction.|Not supported|Not Supported|
-|**/bulkQuotes/_{ID}_ **|Get information about a previously-requested bulk transaction quote.|Callback to inform a Peer FSP about a previously-requested bulk transaction quote.|Not supported|Not supported|Not Supported|
+|**/bulkQuotes/**_{ID}_|Get information about a previously-requested bulk transaction quote.|Callback to inform a Peer FSP about a previously-requested bulk transaction quote.|Not supported|Not supported|Not Supported|
 |**/bulkTransfers**|Not supported|Not supported|Request that a Peer FSP create a bulk transfer.|Not supported|Not Supported|
-|**/bulkTransfers/_{ID}_ **|Get information about a previously-sent bulk transfer.|Callback to inform a Peer FSP about a previously-sent bulk transfer.|Not supported|Not supported|Not supported|
-
+|**/bulkTransfers/**_{ID}_|Get information about a previously-sent bulk transfer.|Callback to inform a Peer FSP about a previously-sent bulk transfer.|Not supported|Not supported|Not supported|
 **Table 5 – API-supported services**
 
 #### 6.1.2 Current Resource Versions
@@ -1780,7 +1779,7 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 |---|---|---|
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-**Table 17 – Version history for resource /quotes**
+**Table 21 – Version history for resource /quotes**
 
 #### 6.5.2 Service Details
 
@@ -1857,7 +1856,7 @@ Alternative URI: N/A
 
 Logical API service: **Retrieve Quote Information**
 
-The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a previously-created or requested quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 17](#table-17)) that was used for the creation of the quote.
+The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a previously-created or requested quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote.
 
 Callback and data model information for **GET /quotes/**_{ID}_:
 
@@ -1879,7 +1878,7 @@ Callback and data model information for **POST /quotes**:
 - Error Callback -- [**PUT /quotes/**_{ID}_**/error**](#6541-put-quotesiderror)
 - Data Model -- See [Table 22](#table-22)
 
-###### Table 17
+###### Table 22
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -1896,7 +1895,6 @@ Callback and data model information for **POST /quotes**:
 | **note** | 0..1 | Note | A memo that will be attached to the transaction. |
 | **expiration** | 0..1 | DateTime | Expiration is optional. It can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, and Merchant to know that their request has a time limit. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 22 -- POST /quotes data model**
 
 #### 6.5.4 Callbacks
@@ -2102,9 +2100,7 @@ Table 28 contains a description of each different version of the **/transfers** 
 | ---- | ---- | ---- |
 | **1.0** | 2018-03-13 | Initial version |
 | **1.1** | 2020-05-19 | The resource is updated to support commit notifications using HTTP Method **PATCH**. The new request **PATCH /transfers/{ID}** is described in Section 6.7.3.3. The process of using commit notifications is described in Section 6.7.2.6. <br><br> The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: [https://github.com/mojaloop/mojaloop-specification/issues/30](https://github.com/mojaloop/mojaloop-specification/issues/30). Following this, the data model as specified in Table 92 has been updated.|
-
 **Table 28 –- Version history for resource /transfers**
-
 
 #### 6.7.2 Service Details
 
@@ -2124,7 +2120,7 @@ This section provides details regarding hop-by-hop transfers and end-to-end fina
 
 The API is designed to support irrevocable financial transactions only; this means that a financial transaction cannot be changed, cancelled, or reversed after it has been created. This is to simplify and reduce costs for FSPs using the API. A large percentage of the operating costs of a typical financial system is due to reversals of transactions.
 
-As soon as a Payer FSP sends a financial transaction to a Payee FSP (that is, using **POST /transfers** including the end-to-end financial transaction), the transaction is irrevocable from the perspective of the Payer FSP. The transaction could still be rejected in the Payee FSP, but the Payer FSP can no longer reject or change the transaction. An exception to this would be if the transfer's expiry time is exceeded before the Payee FSP responds (see [Section 6.7.1.3](#6713-expired-quote) and [Section 6.7.1.5](#6715-client-receiving-expired-transfer) for more information). As soon as the financial transaction has been accepted by the Payee FSP, the transaction is irrevocable for all parties.
+As soon as a Payer FSP sends a financial transaction to a Payee FSP (that is, using **POST /transfers** including the end-to-end financial transaction), the transaction is irrevocable from the perspective of the Payer FSP. The transaction could still be rejected in the Payee FSP, but the Payer FSP can no longer reject or change the transaction. An exception to this would be if the transfer's expiry time is exceeded before the Payee FSP responds (see [Section 6.7.2.3](#6723-expired-quote) and [Section 6.7.2.5](#6725-client-receiving-expired-transfer) for more information). As soon as the financial transaction has been accepted by the Payee FSP, the transaction is irrevocable for all parties.
 
 #### 6.7.2.3 Expired Quote
 
@@ -2154,7 +2150,7 @@ To limit these kinds of error scenarios, the clients (Payer FSP and optional Swi
 
 #### 6.7.2.6 Commit Notification
 
-As an alternative option to avoid the error scenario described in [Section 6.7.2.5] for use cases where it is complicated to perform a refund, a Payee FSP can (if the scheme allows it) reserve the transfer and then wait for a subsequent commit notification from the Switch. To request a commit notification instead of committing directly is a business decision made by the Payee FSP (if the scheme allows it), based on the context of the transaction. For example, a Cash Out or a Merchant Payment transaction can be understood as a higher-risk transaction, because it is not possible to reverse a transaction if the customer is no longer present; a P2P Transfer can be understood as lower risk because it is easier to reverse by refunding the transaction to the customer.
+As an alternative option to avoid the error scenario described in [Section 6.7.2.5](#6725-client-receiving-expired-transfer) for use cases where it is complicated to perform a refund, a Payee FSP can (if the scheme allows it) reserve the transfer and then wait for a subsequent commit notification from the Switch. To request a commit notification instead of committing directly is a business decision made by the Payee FSP (if the scheme allows it), based on the context of the transaction. For example, a Cash Out or a Merchant Payment transaction can be understood as a higher-risk transaction, because it is not possible to reverse a transaction if the customer is no longer present; a P2P Transfer can be understood as lower risk because it is easier to reverse by refunding the transaction to the customer.
 To request a commit notification from the Switch, the Payee FSP must mark the transfer state (see Section 6.7.6) as reserved instead of committed in the **PUT /transfers/**_{ID}_ callback. Based on the transfer state, the Switch should then perform the following:
 
 - If the transfer is committed, the Switch should not send a commit notification as the Payee FSP has already accepted the risk that the transfer in some rare cases might fail. This is the default way of committing, shown in Section 6.7.2.1.
@@ -2183,7 +2179,7 @@ Instead of supporting reversals, the API supports refunds. To refund a transacti
 
 #### 6.7.2.8 Interledger Payment Request
 
-As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the Payer FSP must attach the ILP Packet, the condition, and an expiry to the transfer. The condition and the ILP Packet are the same as those sent by the Payee FSP in the callback of the quote; see [Section 6.5.1.2](#6512-interledger-payment-request) for more information.
+As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the Payer FSP must attach the ILP Packet, the condition, and an expiry to the transfer. The condition and the ILP Packet are the same as those sent by the Payee FSP in the callback of the quote; see [Section 6.5.2.2](#6522-interledger-payment-request) for more information.
 
 The end-to-end ILP payment is a chain of one or more conditional transfers that all depend on the same condition. The condition is provided by the Payer FSP when it initiates the transfer to the next ledger.
 
@@ -2193,7 +2189,7 @@ When the Payee FSP receives the final incoming transfer to the Payee account, it
 
 1. Validates that the Payee ILP Address in the ILP Packet corresponds to the Payee account that is the destination of the transfer.
 2. Validates that the amount in the ILP Packet is the same as the amount of the transfer and directs the local ledger to perform a reservation of the final transfer to the Payee account (less any hidden receiver fees, see [Section 5.1](#51-quoting)).
-3. If the reservation is successful, the Payee FSP generates the fulfilment using the same algorithm that was used when generating the condition sent in the callback of the quote (see [Section 6.5.1.2](#6512-interledger-payment-request)).
+3. If the reservation is successful, the Payee FSP generates the fulfilment using the same algorithm that was used when generating the condition sent in the callback of the quote (see [Section 6.5.2.2](#6522-interledger-payment-request)).
 4. The fulfilment is submitted to the Payee FSP ledger to instruct the ledger to commit the reservation in favor of the Payee. The ledger will validate that the SHA-256 hash of the fulfilment matches the condition attached to the transfer. If it does, it commits the reservation of the transfer. If not, it rejects the transfer and the Payee FSP rejects the payment and cancels the previously-performed reservation.
 
 The fulfilment is then passed back to the Payer FSP through the same ledgers in the callback of the transfer. As funds are committed on each ledger after a successful validation of the fulfilment, the entity that initiated the transfer will be notified that the funds it reserved have been committed and the fulfilment will be shared as part of that notification message.
@@ -2252,7 +2248,7 @@ Alternative URI: N/A
 
 Logical API service: **Commit Notification**
 
-The HTTP request **PATCH /transfers/_{ID}_** is use d by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The _{ID}_ in the URI should contain the transferId (see Table 29) that was used for the creation of the transfer. Please note that this request does not generate a callback. See Table 30 for data model.
+The HTTP request **PATCH /transfers/**_{ID}_ is use d by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The _{ID}_ in the URI should contain the transferId (see Table 29) that was used for the creation of the transfer. Please note that this request does not generate a callback. See Table 30 for data model.
 
 ###### Table 30
 
