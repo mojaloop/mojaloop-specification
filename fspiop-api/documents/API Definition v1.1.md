@@ -207,7 +207,7 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 |**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>12</sup> header indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
 |**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**<sup>13</sup> header field indicates the date when the request was sent.|
 |**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|The **X-Forwarded-For**<sup>14</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple **X-Forwarded-For** values as in the example shown here should be expected and supported by implementers of the API.<br>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 723915. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.</br>|
-|**FSPIOP- Source**|**FSP321**|1|The **FSPIOP-Source** header field is a non- HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing (see [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source)) and signature verification (see header field **FSPIOP-Signature**).|
+|**FSPIOP- Source**|**FSP321**|1|The **FSPIOP-Source** header field is a non- HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing (see [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source)) and signature verification (see header field **FSPIOP-Signature**).|
 |**FSPIOP- Destination**|**FSP123**|0..1|The **FSPIOP-Destination** header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field must be set by the original sender of the request if the destination is known (valid for all services except GET /parties) so that any entities between the client and the server do not need to parse the payload for routing purposes (see [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source) for more information regarding routing). If the destination is not known (valid for service GET /parties), the field should be left empty.|
 |**FSPIOP- Encryption**||0..1|The **FSPIOP-Encryption** header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.<br>For more information, see API Encryption.</br>|
 |**FSPIOP- Signature**||0..1|The **FSPIOP-Signature** header field is a non-HTTP standard field used by the API for applying an end-to-end request signature.<br>For more information, see API Signature.</br>|
@@ -584,13 +584,13 @@ When the fulfilment of a transfer is submitted to a ledger, the ledger must ensu
 
 ILP supports a variety of conditions for performing a conditional payment, but implementers of the API should use the SHA-256 hash of a 32-byte pre-image. The condition attached to the transfer is the SHA-256 hash and the fulfilment of that condition is the pre-image. Therefore, if the condition attached to a transfer is a SHA-256 hash, then when a fulfilment is submitted for that transaction, the ledger will validate it by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition.
 
-See [Section 6.5.1.2 Interledger Payment Request](#6512-interledger-payment-request) for concrete information on how to generate the fulfilment and the condition.
+See [Section 6.5.2.3 Interledger Payment Request](#6523-interledger-payment-request) for concrete information on how to generate the fulfilment and the condition.
 
 ### 4.5 ILP Packet
 
 The ILP Packet is the mechanism used to package end-to-end data that can be passed in a hop-by-hop service. It is included as a field in hop-by-hop service calls and should not be modified by any intermediaries. The integrity of the ILP Packet is tightly bound to the integrity of the funds transfer, as the commit trigger (the fulfilment) is generated using a hash of the ILP Packet.
 
-The packet has a strictly defined binary format, because it may be passed through systems that are designed for high performance and volume. These intermediary systems must read the ILP Address and the amount from the packet headers, but do not need to interpret the **data** field in the ILP Packet (see [Listing 6](#listing-6)). Since the intermediary systems should not need to interpret the **data** field, the format of the field is not strictly defined in the ILP Packet definition. It is simply defined as a variable length octet string. [Section 6.5.1.2 Interledger Payment Request](#6512-interledger-payment-request) contains concrete information on how the ILP Packet is populated in the API.
+The packet has a strictly defined binary format, because it may be passed through systems that are designed for high performance and volume. These intermediary systems must read the ILP Address and the amount from the packet headers, but do not need to interpret the **data** field in the ILP Packet (see [Listing 6](#listing-6)). Since the intermediary systems should not need to interpret the **data** field, the format of the field is not strictly defined in the ILP Packet definition. It is simply defined as a variable length octet string. [Section 6.5.2.3 Interledger Payment Request](#6523-interledger-payment-request) contains concrete information on how the ILP Packet is populated in the API.
 
 The ILP Packet is the common thread that connects all the individual ledger transfers that make up an end-to-end ILP payment. The packet is parsed by the Payee of the first transfer and used to determine where to make the next transfer, and for how much. It is attached to that transfer and parsed by the Payee of the next transfer, who again determines where to make the next transfer, and for how much. This process is repeated until the Payee of the transfer is the Payee in the end-to-end financial transaction, who fulfils the condition, and the transfers are committed in sequence starting with the last and ending with the first.
 
@@ -828,7 +828,7 @@ The reason for a Payee FSP fee to be absent in the equation, is that the Payer w
 
 #### 5.1.3 Fee Types
 
-As can be seen in [Figure 7](#figure-67) and [Figure 12](#figure-12), there are two different fee and commission types in the Quote object between the
+As can be seen in [Figure 7](#figure-7) and [Figure 12](#figure-12), there are two different fee and commission types in the Quote object between the
 
 FSPs:
 
@@ -1322,7 +1322,6 @@ On a high level, the API can be used to perform the following actions:
 |**/bulkQuotes/**_{ID}_|Get information about a previously-requested bulk transaction quote.|Callback to inform a Peer FSP about a previously-requested bulk transaction quote.|Not supported|Not supported|Not Supported|
 |**/bulkTransfers**|Not supported|Not supported|Request that a Peer FSP create a bulk transfer.|Not supported|Not Supported|
 |**/bulkTransfers/**_{ID}_|Get information about a previously-sent bulk transfer.|Callback to inform a Peer FSP about a previously-sent bulk transfer.|Not supported|Not supported|Not supported|
-
 **Table 5 – API-supported services**
 
 #### 6.1.2 Current Resource Versions
@@ -1339,9 +1338,7 @@ On a high level, the API can be used to perform the following actions:
 |/transactions|1.0|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
 /bulkQuotes|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
 |/bulkTransfers|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-
 **Table 6 – Current resource versions**
-
 
 ### 6.2 API Resource /participants
 
@@ -1360,7 +1357,6 @@ If a common service (for example, an ALS) is supported in the scheme, the servic
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.
 For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well.|
-
 **Table 7 – Version history for resource /participants**
 
 #### 6.2.2 Service Details
@@ -1384,7 +1380,7 @@ If this model is used, all FSPs should support being both client and server of t
 
 [Figure 42](#figure-42) shows how an account lookup can be performed if there is a common ALS in a scheme. The process is to ask the common Account Lookup service which FSP owns the Party with the provided identity. The common service is depicted as "Account Lookup" in the flows; this service could either be implemented by the switch or as a separate service, depending on the setup in the market.
 
-The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.2.2](#6222-post-participants) and [Section 6.2.2.3](#6223-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.2.4](#6224-delete-participantstypeid)) methods.
+The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.3.2](#6232-post-participants) and [Section 6.2.2.3](#6223-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.3.4](#6234-delete-participantstypeid)) methods.
 
 ###### Figure 42
 
@@ -1409,8 +1405,8 @@ This HTTP request should support a query string (see [Section 3.1.3](#313-uri-sy
 
 Callback and data model information for **GET /participants/**_{Type}_**/**_{ID}_ (alternative **GET /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
-- Callback - [**PUT /participants/**_{Type}_/_{ID}_](#6231-put-participantstypeid)
-- Error Callback - [**PUT /participants/**_{Type}_/_{ID}_**/error**](#6241-put-participantstypeiderror)
+- Callback - [**PUT /participants/**_{Type}_/_{ID}_](#6241-put-participantstypeid)
+- Error Callback - [**PUT /participants/**_{Type}_/_{ID}_**/error**](#6251-put-participantstypeiderror)
 - Data Model -- Empty body
 
 #### 6.2.3.2 POST /participants
@@ -1423,8 +1419,8 @@ The HTTP request **POST /participants** is used to create information on the ser
 
 Callback and data model information for **POST /participants**:
 
-- Callback -- [**PUT /participants/**_{ID}_](#6231-put-participantstypeid)
-- Error Callback -- [**PUT /participants/**_{ID}_ **/error**](#6241-put-participantstypeiderror)
+- Callback -- [**PUT /participants/**_{ID}_](#6241-put-participantstypeid)
+- Error Callback -- [**PUT /participants/**_{ID}_ **/error**](#6251-put-participantstypeiderror)
 - Data Model -- See [Table 8](#table-8)
 
 ###### Table 8
@@ -1447,8 +1443,8 @@ The HTTP request **POST /participants/**_{Type}_**/**_{ID}_ (or **POST /particip
 
 Callback and data model information for **POST /participants**/_{Type}_**/**_{ID}_ (alternative **POST** **/participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
-- Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid)
-- Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6241-put-participantstypeiderror)
+- Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6241-put-participantstypeid)
+- Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6251-put-participantstypeiderror)
 - Data Model -- See [Table 9](#table-9)
 
 ###### Table 9
@@ -1475,9 +1471,9 @@ This HTTP request should support a query string (see [Section 3.1.3](#313-uri-sy
 
 Callback and data model information for **DELETE /participants/**_{Type}_**/**_{ID}_ (alternative **GET** **/participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
-- Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid)
+- Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6241-put-participantstypeid)
 
-- Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6242-put-participantsiderror)
+- Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6251-put-participantstypeiderror)
 
 - Data Model -- Empty body
 
@@ -1605,8 +1601,8 @@ The HTTP request **GET /parties/**_{Type}_**/**_{ID}_ (or **GET /parties/**_{Typ
 
 Callback and data model information for **GET /parties/**_{Type}_**/**_{ID}_ (alternative **GET /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
-- Callback - [**PUT /parties/**_{Type}_**/**_{ID}_](#6331-put-partiestypeid)
-- Error Callback - [**PUT /parties/**_{Type}_**/**_{ID}_**/error**](#6341-put-partiestypeiderror)
+- Callback - [**PUT /parties/**_{Type}_**/**_{ID}_](#6341-put-partiestypeid)
+- Error Callback - [**PUT /parties/**_{Type}_**/**_{ID}_**/error**](#6351-put-partiestypeiderror)
 - Data Model -- Empty body
 
 #### 6.3.4 Callbacks
@@ -1673,12 +1669,11 @@ Alternatively, the Payer could make the decision manually.
 |---|---|---|
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-
 **Table 17 – Version history for resource /transactionRequests**
 
 #### 6.4.2 Service Details
 
-[Figure 44](#figure-44) shows how the request transaction process works, using the **/transactionRequests** resource. The approval or rejection is not shown in the figure. A rejection is a callback **PUT /transactionRequests/**_{ID}_ with a **REJECTED** state, similar to the callback in the figure with the **RECEIVED** state, as described in [Section 6.4.1.1](#6411-payer-rejected-transaction-request). An approval by the Payer is not sent as a callback; instead a quote and transfer are sent containing a reference to the transaction request.
+[Figure 44](#figure-44) shows how the request transaction process works, using the **/transactionRequests** resource. The approval or rejection is not shown in the figure. A rejection is a callback **PUT /transactionRequests/**_{ID}_ with a **REJECTED** state, similar to the callback in the figure with the **RECEIVED** state, as described in [Section 6.4.2.1](#6421-payer-rejected-transaction-request). An approval by the Payer is not sent as a callback; instead a quote and transfer are sent containing a reference to the transaction request.
 
 ###### Figure 44
 
@@ -1728,8 +1723,8 @@ The HTTP request **POST /transactionRequests** is used to request the creation o
 
 Callback and data model information for **POST /transactionRequests**:
 
-- Callback - [**PUT /transactionRequests/**_{ID}_](#6431-put-transactionrequestsid)
-- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6441-put-transactionrequestsiderror)
+- Callback - [**PUT /transactionRequests/**_{ID}_](#6441-put-transactionrequestsid)
+- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6451-put-transactionrequestsiderror)
 - Data Model -- See [Table 18](#table-18)
 
 ###### Table 18
@@ -1746,7 +1741,6 @@ Callback and data model information for **POST /transactionRequests**:
 | **authenticationType** | 0.11 | AuthenticationType | OTP or QR Code, otherwise empty. |
 | **expiration** | 0..1 | DateTime | Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 18 -- POST /transactionRequests data model**
 
 #### 6.4.4 Callbacks
@@ -1759,7 +1753,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Request Information**
 
-The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of a requested or created transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 18](#table-18)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6421-get-transactionrequestsid). See [Table 19](#table-19) for data model.
+The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of a requested or created transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 18](#table-18)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 19](#table-19) for data model.
 
 ###### Table 19
 
@@ -1768,7 +1762,6 @@ The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of
 | **transactionId** | 0..1 | CorrelationId | Identifies a related transaction (if a transaction has been created). |
 | **transactionRequestState** | 1 | TransactionRequestState | State of the transaction request. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 19 -- PUT /transactionRequests/_{ID}_ data model**
 
 #### 6.4.5 Error Callbacks
@@ -1781,14 +1774,13 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Request Information Error**
 
-If the server is unable to find or create a transaction request, or another processing error occurs, the error callback **PUT** **/transactionRequests/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 18](#table-18)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6421-get-transactionrequestsid). See [Table 20](#table-20) for data model.
+If the server is unable to find or create a transaction request, or another processing error occurs, the error callback **PUT** **/transactionRequests/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 18](#table-18)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 20](#table-20) for data model.
 
 ###### Table 20
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | ---| --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-
 **Table 20 -- PUT /transactionRequests/_{ID}_/error data model**
 
 #### 6.4.6 States
@@ -1904,7 +1896,7 @@ The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a p
 
 Callback and data model information for **GET /quotes/**_{ID}_:
 
-- Callback -- [**PUT /quotes/**_{ID}_](#6531-put-quotesid)
+- Callback -- [**PUT /quotes/**_{ID}_](#6541-put-quotesid)
 - Error Callback -- [**PUT /quotes/**_{ID}_**/_error_**](#6541-put-quotesiderror)
 - Data Model -- Empty body
 
@@ -1918,8 +1910,8 @@ The HTTP request **POST /quotes** is used to request the creation of a quote for
 
 Callback and data model information for **POST /quotes**:
 
-- Callback -- [**PUT /quotes/**_{ID}_](#6531-put-quotesid)
-- Error Callback -- [**PUT /quotes/**_{ID}_**/error**](#6541-put-quotesiderror)
+- Callback -- [**PUT /quotes/**_{ID}_](#6541-put-quotesid)
+- Error Callback -- [**PUT /quotes/**_{ID}_**/error**](#6551-put-quotesiderror)
 - Data Model -- See [Table 22](#table-22)
 
 ###### Table 22
@@ -1939,7 +1931,6 @@ Callback and data model information for **POST /quotes**:
 | **note** | 0..1 | Note | A memo that will be attached to the transaction. |
 | **expiration** | 0..1 | DateTime | Expiration is optional. It can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, and Merchant to know that their request has a time limit. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 22 -- POST /quotes data model**
 
 #### 6.5.4 Callbacks
@@ -1952,7 +1943,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Quote Information**
 
-The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested or created quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6521-get-quotesid). See [Table 23](#table-23) for data model.
+The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested or created quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 23](#table-23) for data model.
 
 ###### Table 23
 
@@ -1967,7 +1958,6 @@ The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested 
 | **ilpPacket** | 1 | IlpPacket | The ILP Packet that must be attached to the transfer by the Payer. |
 | **condition** | 1 | IlpCondition | The condition that must be attached to the transfer by the Payer. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment |
-
 **Table 23 -- PUT /quotes/_{ID}_ data model**
 
 #### 6.5.5 Error Callbacks
@@ -1981,14 +1971,13 @@ Alternative URI: N/A
 
 Logical API service: **Return Quote Information Error**
 
-If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/quotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6521-get-quotesid). See [Table 24](#table-24) for data model.
+If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/quotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 24](#table-24) for data model.
 
 ###### Table 24
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description.|
-
 **Table 24 -- PUT /quotes/_{ID}_/error data model**
 
 #### 6.5.6 States
@@ -2043,7 +2032,7 @@ If the notification containing the authorization value fails to reach the Payer,
 
 #### 6.6.2.2 Retry Authorization Value
 
-The Payer FSP must decide the number of times a Payer can retry the authorization value in the POS, ATM, or similar device. This will be set in the **retriesLeft** query string (see [3.1.3](#313-uri-syntax) for more information regarding URI syntax) of the **GET** **/authorizations/**_{ID}_ service, see [Section 6.6.2.1](#6621-get-authorizationsid) for more information. If the Payer FSP sends retriesLeft=1, this means that it is the Payer's last try of the authorization value. See [Figure 51](#figure-51) for an example process where the Payer enters the incorrect OTP, and the **retriesLeft** value is subsequently decreased.
+The Payer FSP must decide the number of times a Payer can retry the authorization value in the POS, ATM, or similar device. This will be set in the **retriesLeft** query string (see [3.1.3](#313-uri-syntax) for more information regarding URI syntax) of the **GET** **/authorizations/**_{ID}_ service, see [Section 6.6.3.1](#6631-get-authorizationsid) for more information. If the Payer FSP sends retriesLeft=1, this means that it is the Payer's last try of the authorization value. See [Figure 51](#figure-51) for an example process where the Payer enters the incorrect OTP, and the **retriesLeft** value is subsequently decreased.
 
 ###### Figure 51
 
@@ -2054,7 +2043,7 @@ The Payer FSP must decide the number of times a Payer can retry the authorizatio
 
 #### 6.6.2.3 Failed OTP authorization
 
-If the user fails to enter the correct OTP within the number of allowed retries, the process described in [Section 6.4.1.1](#6411-payer-rejected-transaction-request) is performed.
+If the user fails to enter the correct OTP within the number of allowed retries, the process described in [Section 6.4.2.1](#6421-payer-rejected-transaction-request) is performed.
 
 #### 6.6.3 Requests
 
@@ -2066,7 +2055,7 @@ Alternative URI: N/A
 
 Logical API service: **Perform Authorization**
 
-The HTTP request **GET /authorizations/**_{ID}_ is used to request the Payer to enter the applicable credentials in the Payee FSP system. The _{ID}_ in the URI should contain the **transactionRequestID** (see [Table 14](#table-14)), received from the **POST** **/transactionRequests** (see [Section 6.4.2.2](#6422-post-transactionrequests)) service earlier in the process.
+The HTTP request **GET /authorizations/**_{ID}_ is used to request the Payer to enter the applicable credentials in the Payee FSP system. The _{ID}_ in the URI should contain the **transactionRequestID** (see [Table 14](#table-14)), received from the **POST** **/transactionRequests** (see [Section 6.4.3.2](#6432-post-transactionrequests)) service earlier in the process.
 
 This request requires a query string (see [Section 3.1.3](#313-uri-syntax) for more information regarding URI syntax) to be included in the URI, with the following key-value pairs:
 
@@ -2081,8 +2070,8 @@ An example URI containing all the required key-value pairs in the query string i
 
 Callback and data model information for **GET /authorization/**_{ID}_:
 
-- Callback - [**PUT /authorizations/**_{ID}_](#6631-put-authorizationsid)
-- Error Callback - [**PUT /authorizations/**_{ID}_**/error**](#6641-put-authorizationsiderror)
+- Callback - [**PUT /authorizations/**_{ID}_](#6641-put-authorizationsid)
+- Error Callback - [**PUT /authorizations/**_{ID}_**/error**](#6651-put-authorizationsiderror)
 - Data Model -- Empty body
 
 #### 6.6.4 Callbacks
@@ -2095,7 +2084,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Authorization Result**
 
-The callback **PUT /authorizations/** _{ID}_ is used to inform the client of the result of a previously-requested authorization. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6621-get-authorizationsid). **See** [Table 26](#table-26) **for** data model.
+The callback **PUT /authorizations/** _{ID}_ is used to inform the client of the result of a previously-requested authorization. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6631-get-authorizationsid). **See** [Table 26](#table-26) **for** data model.
 
 ###### Table 26
 
@@ -2103,7 +2092,6 @@ The callback **PUT /authorizations/** _{ID}_ is used to inform the client of the
 | --- | --- | --- | --- |
 | **authenticationInfo** | 0..1 | AuthenticationInfo | OTP or QR Code if entered, otherwise empty. |
 | **responseType** | 1 | AuthorizationResponse | Enum containing response information; if the customer entered the authentication value, rejected the transaction, or requested a resend of the authentication value. |
-
 **Table 26 – PUT /authorizations/{ID} data model**
 
 #### 6.6.5 Error Callbacks
@@ -2116,14 +2104,13 @@ Alternative URI: N/A
 
 Logical API service: **Return Authorization Error**
 
-If the server is unable to find the transaction request, or another processing error occurs, the error callback **PUT** **/authorizations/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6621-get-authorizationsid). **See** [Table 27](#table-27) **for** data model.
+If the server is unable to find the transaction request, or another processing error occurs, the error callback **PUT** **/authorizations/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6631-get-authorizationsid). **See** [Table 27](#table-27) **for** data model.
 
 ###### Table 27
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description |
-
 **Table 27 -- PUT /authorizations/_{ID}_/error data model**
 
 #### 6.6.6 States
@@ -2205,7 +2192,7 @@ To limit these kinds of error scenarios, the clients (Payer FSP and optional Swi
 As an alternative option to avoid the error scenario described in [Section 6.7.2.5](#6725-client-receiving-expired-transfer) for use cases where it is complicated to perform a refund, a Payee FSP can (if the scheme allows it) reserve the transfer and then wait for a subsequent commit notification from the Switch. To request a commit notification instead of committing directly is a business decision made by the Payee FSP (if the scheme allows it), based on the context of the transaction. For example, a Cash Out or a Merchant Payment transaction can be understood as a higher-risk transaction, because it is not possible to reverse a transaction if the customer is no longer present; a P2P Transfer can be understood as lower risk because it is easier to reverse by refunding the transaction to the customer.
 To request a commit notification from the Switch, the Payee FSP must mark the transfer state (see Section 6.7.6) as reserved instead of committed in the **PUT /transfers/**_{ID}_ callback. Based on the transfer state, the Switch should then perform the following:
 
-- If the transfer is committed, the Switch should not send a commit notification as the Payee FSP has already accepted the risk that the transfer in some rare cases might fail. This is the default way of committing, shown in Section 6.7.2.1.
+- If the transfer is committed, the Switch should not send a commit notification as the Payee FSP has already accepted the risk that the transfer in some rare cases might fail. This is the default way of committing, shown in [Section 6.7.2.1](#6721-process).
 - If the transfer is reserved, the Switch must send a commit notification to the Payee FSP when the transfer is completed (committed or aborted).
 
 The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from the Switch to the Payee FSP. If the Payee FSP does not get a commit notification from the Switch within a reasonable time, the Payee FSP should resend the **PUT /transfers/**_{ID}_ callback to the Switch. The Payee FSP needs to receive the commit notification from the Switch before committing the transfer, or accept the risk that the transfer in the Switch might have failed. The Payee FSP is not allowed to rollback the transfer without receiving an aborted state (see Section 6.7.6) from the Switch, as the Payee FSP has sent the fulfilment (which is the commit trigger) to the Switch.
@@ -2218,7 +2205,7 @@ The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from 
 
 **Figure 54 -- Commit notification where commit of transfer was successful in Switch**
 
-[Figure 55](#figure-55) shows an example in which the commit in the Switch failed due to some reason, for example the expiry time had expired in the Switch due to network issues. This is the same example as in Figure 53, but where no reconciliation is needed as the Payee FSP receives a commit notification before performing the actual transfer to the Payee.
+[Figure 55](#figure-55) shows an example in which the commit in the Switch failed due to some reason, for example the expiry time had expired in the Switch due to network issues. This is the same example as in [Figure 53](#figure-53), but where no reconciliation is needed as the Payee FSP receives a commit notification before performing the actual transfer to the Payee.
 
 ###### Figure 55
 
@@ -2233,7 +2220,7 @@ Instead of supporting reversals, the API supports refunds. To refund a transacti
 
 #### 6.7.2.8 Interledger Payment Request
 
-As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the Payer FSP must attach the ILP Packet, the condition, and an expiry to the transfer. The condition and the ILP Packet are the same as those sent by the Payee FSP in the callback of the quote; see [Section 6.5.2.2](#6522-interledger-payment-request) for more information.
+As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the Payer FSP must attach the ILP Packet, the condition, and an expiry to the transfer. The condition and the ILP Packet are the same as those sent by the Payee FSP in the callback of the quote; see [Section 6.5.2.3](#6523-interledger-payment-request) for more information.
 
 The end-to-end ILP payment is a chain of one or more conditional transfers that all depend on the same condition. The condition is provided by the Payer FSP when it initiates the transfer to the next ledger.
 
@@ -2243,7 +2230,7 @@ When the Payee FSP receives the final incoming transfer to the Payee account, it
 
 1. Validates that the Payee ILP Address in the ILP Packet corresponds to the Payee account that is the destination of the transfer.
 2. Validates that the amount in the ILP Packet is the same as the amount of the transfer and directs the local ledger to perform a reservation of the final transfer to the Payee account (less any hidden receiver fees, see [Section 5.1](#51-quoting)).
-3. If the reservation is successful, the Payee FSP generates the fulfilment using the same algorithm that was used when generating the condition sent in the callback of the quote (see [Section 6.5.2.2](#6522-interledger-payment-request)).
+3. If the reservation is successful, the Payee FSP generates the fulfilment using the same algorithm that was used when generating the condition sent in the callback of the quote (see [Section 6.5.2.3](#6523-interledger-payment-request)).
 4. The fulfilment is submitted to the Payee FSP ledger to instruct the ledger to commit the reservation in favor of the Payee. The ledger will validate that the SHA-256 hash of the fulfilment matches the condition attached to the transfer. If it does, it commits the reservation of the transfer. If not, it rejects the transfer and the Payee FSP rejects the payment and cancels the previously-performed reservation.
 
 The fulfilment is then passed back to the Payer FSP through the same ledgers in the callback of the transfer. As funds are committed on each ledger after a successful validation of the fulfilment, the entity that initiated the transfer will be notified that the funds it reserved have been committed and the fulfilment will be shared as part of that notification message.
@@ -2278,8 +2265,8 @@ The HTTP request **POST /transfers** is used to request the creation of a transf
 
 Callback and data model information for **POST /transfers**:
 
-- Callback -- [**PUT /transfers/**_{ID}_](#6731-put-transfersid)
-- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror)
+- Callback -- [**PUT /transfers/**_{ID}_](#6741-put-transfersid)
+- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror)
 - Data Model -- See [Table 29](#table-29)
 
 ###### Table 29
@@ -2311,7 +2298,6 @@ The HTTP request **PATCH /transfers/**_{ID}_ is use d by a Switch to update the 
 | **completedTimestamp** | 1| DateTime | Time and date when the transaction was completed |
 | **transferState** | 1 | TransferState | State of the transfer |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 30 –- PATCH /transfers/_{ID}_ data model**
 
 #### 6.7.4 Callbacks
@@ -2324,7 +2310,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Transfer Information**
 
-The callback **PUT /transfers/**_{ID}_ is used to inform the client of a requested or created transfer. The _{ID}_ in the URI should contain the **transferId** (see [Table 29](#table-29)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET** **/transfers/**_{ID}_](#6721-get-transfersid). **See** [Table 31](#table-31) **for** data model.
+The callback **PUT /transfers/**_{ID}_ is used to inform the client of a requested or created transfer. The _{ID}_ in the URI should contain the **transferId** (see [Table 29](#table-29)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET** **/transfers/**_{ID}_](#6731-get-transfersid). **See** [Table 31](#table-31) **for** data model.
 
 **Note**: For **PUT /transfers/**_{ID}_ callbacks, the state ABORTED is not a valid enumeration option as **transferState** in Table 31. If a transfer is to be rejected, then the FSP making the callback should use an error callback, i.e., a callback on the /error endpoint. At the same time, it should be noted that a **transerState** value ‘ABORTED’ is valid for a callback to a **GET /transfers/**_{ID}_ call.
 
@@ -2336,7 +2322,6 @@ The callback **PUT /transfers/**_{ID}_ is used to inform the client of a request
 | **completedTimestamp** | 0..1 | DateTime | Time and date when the transaction was completed |
 | **transferState** | 1 | TransferState | State of the transfer |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment |
-
 **Table 31 -- PUT /transfers/_{ID}_ data model**
 
 #### 6.7.5 Error Callbacks
@@ -2351,14 +2336,13 @@ Logical API service: **Return Transfer Information Error**
 
 If the server is unable to find or create a transfer, or another processing error occurs, the error callback **PUT**
 
-**/transfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 29](#table-29)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6721-get-transfersid). See [Table 32](#table-32) for data model.
+**/transfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 29](#table-29)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6731-get-transfersid). See [Table 32](#table-32) for data model.
 
 ###### Table 32
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-
 **Table 32 -- PUT /transfers/_{ID}_/error data model**
 
 **6.7.6 States**
@@ -2414,8 +2398,8 @@ The HTTP request **GET /transactions/**_{ID}_ is used to get transaction informa
 
 Callback and data model information for **GET /transactions/**_{ID}_:
 
-- Callback -- [**PUT /transactions/**_{ID}_](#6831-put-transactionsid)
-- Error Callback -- [**PUT /transactions/**_{ID}_**/error**](#6841-put-transactionsiderror)
+- Callback -- [**PUT /transactions/**_{ID}_](#6841-put-transactionsid)
+- Error Callback -- [**PUT /transactions/**_{ID}_**/error**](#6851-put-transactionsiderror)
 - Data Model -- Empty body
 
 #### 6.8.4 Callbacks
@@ -2428,7 +2412,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Information**
 
-The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requested transaction. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6821-get-transactionsid). See [Table 34](#table-34) for data model.
+The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requested transaction. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6831-get-transactionsid). See [Table 34](#table-34) for data model.
 
 ###### Table 34
 
@@ -2438,7 +2422,6 @@ The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requ
 | **transactionState** | 1 | TransactionState | State of the transaction. |
 | **code** | 0..1 | Code | Optional redemption information provided to Payer after transaction has been completed. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 34 -- PUT /transactions/_{ID}_ data model**
 
 #### 6.8.5 Error Callbacks
@@ -2451,14 +2434,13 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Information Error**
 
-If the server is unable to find or create a transaction, or another processing error occurs, the error callback **PUT** **/transactions/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6821-get-transactionsid). See [Table 35](#table-35) for data model.
+If the server is unable to find or create a transaction, or another processing error occurs, the error callback **PUT** **/transactions/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6831-get-transactionsid). See [Table 35](#table-35) for data model.
 
 ###### Table 35
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-
 **Table 35 -- PUT /transactions/_{ID}_/error data model**
 
 #### 6.8.6 States
@@ -2520,12 +2502,12 @@ Logical API service: **Retrieve Bulk Quote Information**
 
 The HTTP request **GET /bulkQuotes/**_{ID}_ is used to get information regarding a previously-created or requested bulk quote.
 
-The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 27](#table-27)) that was used for the creation of the bulk quote.
+The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote.
 
 Callback and data model information for **GET /bulkQuotes/**_{ID}_:
 
-- Callback -- [**PUT /bulkQuotes/**_{ID}_](#6931-put-bulkquotesid)
-- Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6941-put-bulkquotesiderror)
+- Callback -- [**PUT /bulkQuotes/**_{ID}_](#6941-put-bulkquotesid)
+- Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6951-put-bulkquotesiderror)
 - Data Model -- Empty body
 
 #### 6.9.3.2 POST /bulkQuotes
@@ -2538,8 +2520,8 @@ The HTTP request **POST /bulkQuotes** is used to request the creation of a bulk 
 
 Callback and data model information for **POST /bulkQuotes**:
 
-- Callback -- [**PUT /bulkQuotes/**_{ID}_](#6931-put-bulkquotesid)
-- Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6941-put-bulkquotesiderror)
+- Callback -- [**PUT /bulkQuotes/**_{ID}_](#6941-put-bulkquotesid)
+- Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6951-put-bulkquotesiderror)
 - Data Model -- See [Table 37](#table-37)
 
 ###### Table 37
@@ -2561,7 +2543,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Quote Information**
 
-The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a requested or created bulk quote. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6921-get-bulkquotesid). See [Table 38](#table-38) for data model.
+The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a requested or created bulk quote. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 38](#table-38) for data model.
 
 ###### Table 38
 
@@ -2582,7 +2564,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Quote Information Error**
 
-If the server is unable to find or create a bulk quote, or another processing error occurs, the error callback **PUT** **/bulkQuotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6921-get-bulkquotesid). See [Table 39](#table-39) for data model.
+If the server is unable to find or create a bulk quote, or another processing error occurs, the error callback **PUT** **/bulkQuotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 39](#table-39) for data model.
 
 ###### Table 39
 
@@ -2650,8 +2632,8 @@ The HTTP request **GET /bulkTransfers/**_{ID}_ is used to get information regard
 
 Callback and data model information for **GET /bulkTransfers/**_{ID}_:
 
-- Callback -- [**PUT /bulkTransfers/**_{ID}_](#61031-put-bulktransfersid)
-- Error Callback -- [**PUT /bulkTransfers/**_{ID}_**/error**](#61041-put-bulktransfersiderror)
+- Callback -- [**PUT /bulkTransfers/**_{ID}_](#61041-put-bulktransfersid)
+- Error Callback -- [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror)
 - Data Model -- Empty body
 
 #### 6.10.3.2 POST /bulkTransfers
@@ -2662,8 +2644,8 @@ Logical API service: **Perform Bulk Transfer**
 
 The HTTP request **POST /bulkTransfers** is used to request the creation of a bulk transfer on the server.
 
-- Callback - [**PUT /bulkTransfers/**_{ID}_](#61031-put-bulktransfersid)
-- Error Callback - [**PUT /bulkTransfers/**_{ID}_**/error**](#61041-put-bulktransfersiderror)
+- Callback - [**PUT /bulkTransfers/**_{ID}_](#61041-put-bulktransfersid)
+- Error Callback - [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror)
 - Data Model -- See [Table 41](#table-41)
 
 ###### Table 41
@@ -2689,14 +2671,14 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Transfer Information**
 
-The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a requested or created bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61022-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61021-get-bulktransfersid). See [Table 42](#table-42) for data model.
+The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a requested or created bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 42](#table-42) for data model.
 
 ###### Table 42
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **completedTimestamp** | 0..1 | DateTime | Time and date when the bulk transaction was completed. |
-| **individualTransferResults** | 0..1000 | **Error! Reference source not found.** | List of **Error! Reference source not found.** elements. | 
+| **individualTransferResults** | 0..1000 | **Error! Reference source not found.** | List of **Error! Reference source not found.** elements. |
 | **bulkTransferState** | 1 | BulkTransferState | The state of the bulk transfer. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
 **Table 42 -- PUT /bulkTransfers/_{ID}_ data model**
@@ -2711,7 +2693,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Transfer Information Error**
 
-If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback **PUT** **/bulkTransfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61022-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61021-get-bulktransfersid). See [Table 43](#table-43) for data model.
+If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback **PUT** **/bulkTransfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 43](#table-43) for data model.
 
 ###### Table 43
 
@@ -3122,7 +3104,7 @@ The regular expression for restricting the **BinaryString32** type appears in [L
 
 ##### 7.2.18.2 Example
 
-An example of a **BinaryString32** appears below. Note that this is the same binary data as the example in [Section 7.2.17.2.1](#72172-example), but due to the underlying data being fixed size, the padding character '**=**' is excluded.
+An example of a **BinaryString32** appears below. Note that this is the same binary data as the example in [Section 7.2.17.2.1](#721721-example), but due to the underlying data being fixed size, the padding character '**=**' is excluded.
 
 **QmlsbCAmIE1lbGluZGEgR2F0ZXMgRm91bmRhdGlvbiE**
 
@@ -3739,7 +3721,7 @@ This section describes complex types used by the API.
 
 #### 7.4.17 Transaction
 
-[Table 96](#table-96) contains the data model for the complex type Transaction. The Transaction type is used to carry end-to-end data between the Payer FSP and the Payee FSP in the ILP Packet, see [Section 4.5](#45-ilp-packet). Both the **transactionId** and the **quoteId** in the data model is decided by the Payer FSP in the [**POST /quotes**](#6522-post-quotes), see [Table 22](#table-22).
+[Table 96](#table-96) contains the data model for the complex type Transaction. The Transaction type is used to carry end-to-end data between the Payer FSP and the Payee FSP in the ILP Packet, see [Section 4.5](#45-ilp-packet). Both the **transactionId** and the **quoteId** in the data model is decided by the Payer FSP in the [**POST /quotes**](#6532-post-quotes), see [Table 22](#table-22).
 
 ###### Table 96
 
@@ -4321,15 +4303,15 @@ The typical error case from the **/bulkTransfers** service is that the bulk tran
 
 The following list describes the steps in the sequence (see [Figure 70](#figure-70)).
 
-1. Each individual transfer in the bulk transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After each transfer has been successfully reserved, the request [**POST /bulkTransfers**](#61022-post-bulktransfers) is used on the Switch. The bulk transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
+1. Each individual transfer in the bulk transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After each transfer has been successfully reserved, the request [**POST /bulkTransfers**](#61032-post-bulktransfers) is used on the Switch. The bulk transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
-2. The Switch receives the request [**POST /bulkTransfers**](#61022-post-bulktransfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, each individual transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfers have been successfully reserved, the request [**POST /bulkTransfers**](#61022-post-bulktransfers) is used on the Payee FSP. The bulk transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
+2. The Switch receives the request [**POST /bulkTransfers**](#61032-post-bulktransfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, each individual transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfers have been successfully reserved, the request [**POST /bulkTransfers**](#61032-post-bulktransfers) is used on the Payee FSP. The bulk transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
 
-3. The Payee FSP receives [**POST /bulkTransfers**](#61022-post-bulktransfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal bulk transfer validations. The validation is assumed to fail due to some reason; for example, a validation failure that prevents the entire bulk transfer from being performed. The error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61041-put-bulktransfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the bulk transfer process.
+3. The Payee FSP receives [**POST /bulkTransfers**](#61032-post-bulktransfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal bulk transfer validations. The validation is assumed to fail due to some reason; for example, a validation failure that prevents the entire bulk transfer from being performed. The error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the bulk transfer process.
 
-4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61041-put-bulktransfersiderror) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61041-put-bulktransfersiderrorr) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
+4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderrorr) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
 
-5. The Payer FSP receives the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61041-put-bulktransfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels all the earlier reserved transfers, as it has received an error callback.
+5. The Payer FSP receives the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels all the earlier reserved transfers, as it has received an error callback.
 
 ### 9.4 Client Missing Response from Server - Using Resend of Request
 
@@ -4344,7 +4326,7 @@ The following list describes the steps in the sequence (see [Figure 70](#figure-
 
 #### 9.4.1 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in the sequence (see [Figure 71](#figure-70)).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 71](#figure-71)).
 
 1. The client would like the server to create a new service object. The HTTP request is lost somewhere on the way to the server.
 
@@ -4442,14 +4424,14 @@ Both FSPs are assumed to have a pre-funded Switch account in their respective FS
 
 ### 10.3 Provision Account Holder
 
-Before the Payee Henrik Karlsson can be found by the Payer FSP **BankNrOne**, Henrik Karlsson should be provisioned to the ALS, which is also the Switch in this simplified example, by Henrik's FSP (**MobileMoney**). This is performed through either one of the services [**POST /participants**](#6222-post-participants) (bulk version) or [**POST /participants/**_{Type}_**/**_{ID}_](#6223-post-participantstypeid) (single version). As the Payee in this example is only one (Henrik Karlsson), the single [**POST /participants/**_{Type}_**/**_{ID}_](#6223-post-participantstypeid) version is used by FSP **MobileMoney**. The provision could happen anytime, for example when Henrik Karlsson signed up for the financial account, or when the FSP **MobileMoney** connected to the Switch for the first time.
+Before the Payee Henrik Karlsson can be found by the Payer FSP **BankNrOne**, Henrik Karlsson should be provisioned to the ALS, which is also the Switch in this simplified example, by Henrik's FSP (**MobileMoney**). This is performed through either one of the services [**POST /participants**](#6232-post-participants) (bulk version) or [**POST /participants/**_{Type}_**/**_{ID}_](#6233-post-participantstypeid) (single version). As the Payee in this example is only one (Henrik Karlsson), the single [**POST /participants/**_{Type}_**/**_{ID}_](#6233-post-participantstypeid) version is used by FSP **MobileMoney**. The provision could happen anytime, for example when Henrik Karlsson signed up for the financial account, or when the FSP **MobileMoney** connected to the Switch for the first time.
 
 #### 10.3.1 FSP MobileMoney Provisions Henrik Karlsson -- Step 1 in End-to-End Flow
 
 [Listing 29](#listing-29) shows the HTTP request where the FSP **MobileMoney** provisions FSP information for account holder Henrik Karlsson, identified by **MSISDN** and **123456789** (see [Section 5.2](#52-party-addressing) for more information about [Party Addressing](#52-party-addressing)). The JSON element **fspId** is set to the FSP identifier (MobileMoney), and JSON element **currency** is set to the currency of the account (USD).
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request,
-and [Section 6.2.2.3](#6223-post-participantstypeid) for more information about the service [**POST /participants/**_{Type}_**/**_{ID}_](#6223-post-participantstypeid). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+and [Section 6.2.3.3](#6233-post-participantstypeid) for more information about the service [**POST /participants/**_{Type}_**/**_{ID}_](#6233-post-participantstypeid). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 29 
 
@@ -4492,9 +4474,9 @@ After the Switch has verified the request correctly, the information that the ac
 
 #### 10.3.3 Switch Sends Successful Callback -- Step 3 in End-to-End Flow
 
-When the Switch has successfully stored the information that the account holder identified by **MSISDN** and **123456789** is located in FSP **MobileMoney**, the Switch must send a callback using the service [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid) to notify the FSP **MobileMoney** about the outcome of the request in [Listing 29](#listing-29). [Listing 31](#listing-31) shows the HTTP request for the callback.
+When the Switch has successfully stored the information that the account holder identified by **MSISDN** and **123456789** is located in FSP **MobileMoney**, the Switch must send a callback using the service [**PUT /participants/**_{Type}_**/**_{ID}_](#6241-put-participantstypeid) to notify the FSP **MobileMoney** about the outcome of the request in [Listing 29](#listing-29). [Listing 31](#listing-31) shows the HTTP request for the callback.
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request. In the callback, the **Accept** header should not be used as this is a callback to an earlier requested service. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 29](#listing-29), as detailed in [Section 3.2.3.5](#6231-put-participantstypeid). See [Section 6.2.3.1](#6231-put-participantstypeid) for more information about the callback [**PUT /participants/**_{Type}_**/**_{ID}_](#6231-put-participantstypeid).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request. In the callback, the **Accept** header should not be used as this is a callback to an earlier requested service. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 29](#listing-29), as detailed in [Section 6.2.4.1](#6241-put-participantstypeid). See [Section 6.2.4.1](#6241-put-participantstypeid) for more information about the callback [**PUT /participants/**_{Type}_**/**_{ID}_](#6241-put-participantstypeid).
 
 ###### Listing 31 
 
@@ -4541,7 +4523,7 @@ In Step 5 in the end-to-end flow, **BankNrOne** receives the request from Mats H
 
 [Listing 33](#listing-33) shows the HTTP request where the FSP **BankNrOne** asks the Switch for Party information regarding the account identified by **MSISDN** and **123456789**.
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.2.1](#6321-get-partiestypeid) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_](#6321-get-partiestypeid). **More** information regarding routing of requests using **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source) in this request, the FSP **BankNrOne** does not know in which FSP the other account holder resides. Thus, the **FSPIOP-Destination** is not present. Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.3.1](#6331-get-partiestypeid) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_](#6331-get-partiestypeid). **More** information regarding routing of requests using **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source) in this request, the FSP **BankNrOne** does not know in which FSP the other account holder resides. Thus, the **FSPIOP-Destination** is not present. Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 33
 
@@ -4572,7 +4554,7 @@ Content-Type: application/vnd.interoperability.parties+json;version=1.0
 
 When the Switch has received the HTTP request in [Listing 33](#listing-33) and sent the synchronous response in [Listing 34](#listing-34), the Switch can proceed with checking its database if it has information regarding in which FSP the account holder identified by **MSISDN** and **123456789** is located. As that information was provisioned as detailed in [Section 10.3](#103-provision-account-holder), the Switch knows that the account is in FSP **MobileMoney**. Therefore, the Switch sends the HTTP request in [Listing 35](#listing-35).
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.2.1](#6321-get-partiestypeid) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_](#6321-get-partiestypeid). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source); in this request the Switch has added the header **FSPIOP-Destination** because the Switch knew to where the request should be routed. Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.3.1](#6331-get-partiestypeid) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_](#6331-get-partiestypeid). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source); in this request the Switch has added the header **FSPIOP-Destination** because the Switch knew to where the request should be routed. Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 35
 
@@ -4605,11 +4587,11 @@ Content-Type: application/vnd.interoperability.parties+json;version=1.0
 When the FSP **MobileMoney** has received the HTTP request in [Listing 35](#listing-35) and sent the synchronous response in [Listing 36](#listing-36), the FSP **MobileMoney** can proceed with checking its database for more information regarding the account identified by **MSISDN** and **123456789**. As the account exists and is owned by Henrik Karlsson, the FSP **MobileMoney** sends the callback in [Listing 37](#listing-37). The FSP **MobileMoney** does not want to share some details, for example birth date, with the other FSP (**BankNrOne**), so some optional elements are not sent.
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request,
-and [Section 6.3.3.1](#6331-put-partiestypeid) for more information about the callback [**PUT /parties/**_{Type}_**/**_{ID}_](#6331-put-partiestypeid). **In** the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 35](#listing-35), as detailed in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source).
+and [Section 6.3.4.1](#6341-put-partiestypeid) for more information about the callback [**PUT /parties/**_{Type}_**/**_{ID}_](#6341-put-partiestypeid). **In** the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 35](#listing-35), as detailed in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source).
 
 ###### Listing 37
 
-````    
+````
 PUT /parties/MSISDN/123456789 HTTP/1.1
 Content-Type: application/vnd.interoperability.parties+json;version=1.0
 Content-Length: 347
@@ -4656,11 +4638,11 @@ The HTTP request and response are not repeated in this section, as they are the 
 
 #### 10.4.6 Send Quote Request from FSP BankNrOne -- Step 9 in End-to-End Flow
 
-After receiving Party information in the callback [**PUT /parties/**_{Type}_**/**_{ID}_](#6331-put-partiestypeid), the FSP **BankNrOne** now knows that the account identified by **MSISDN** and **123456789** exists and that it is in the FSP **MobileMoney**. It also knows the name of the account holder. Depending on implementation, the name of the intended Payee (Henrik Karlsson) could be shown to Mats Hagman already in this step before sending the quote. In this example, a quote request is sent before showing the name and any fees.
+After receiving Party information in the callback [**PUT /parties/**_{Type}_**/**_{ID}_](#6341-put-partiestypeid), the FSP **BankNrOne** now knows that the account identified by **MSISDN** and **123456789** exists and that it is in the FSP **MobileMoney**. It also knows the name of the account holder. Depending on implementation, the name of the intended Payee (Henrik Karlsson) could be shown to Mats Hagman already in this step before sending the quote. In this example, a quote request is sent before showing the name and any fees.
 
 The FSP **BankNrOne** sends the HTTP request in [Listing 39](#listing-39) to request the quote. **BankNrOne** does not want to disclose its fees (see [Section 5.1](#51-quoting) for more information about quoting), which means that it does not include the **fees** element in the request. The **amountType** element is set to RECEIVE as Mats wants Henrik to receive 100 USD. The **transactionType** is set according to [Section 5.3](#53-mapping-of-use-cases-to-transaction-types). Information about Mats is sent in the **payer** element. **BankNrOne** has also generated two UUIDs for the quote ID (7c23e80c-d078-4077-8263-2c047876fcf6) and the transaction ID (85feac2f-39b2-491b-817e-4a03203d4f14). These IDs must be unique, as described in [Section 3.1.1](#311-architectural-style).
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.2.2](#6522-post-quotes) for more information about the service [**POST /quotes**](#6522-post-quotes). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.3.2](#6532-post-quotes) for more information about the service [**POST /quotes**](#6532-post-quotes). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 39
 
@@ -4737,13 +4719,13 @@ When the FSP **MobileMoney** has received the HTTP request in [Listing 39](#list
 
 In this example, the FSP **MobileMoney** decides to give 1 USD in FSP commission as the FSP **MobileMoney** will receive money, which should later generate more income for the FSP (future possible fees). Since the Payee Henrik Karlsson should receive 100 USD and the FSP commission is determined to 1 USD, the FSP **BankNrOne** only needs to transfer 99 USD to the FSP **MobileMoney** (see [Section 5.1.1.1](#5111-non-disclosing-receive-amount) for the equation). The 99 USD is entered in the transferAmount element in the callback, which is the amount that should later be transferred between the FSPs.
 
-To send the callback, the FSP **MobileMoney** then needs to create an ILP Packet (see [Section 4.5](#45-ilp-packet) for more information) that is base64url-encoded, as the **ilpPacket** element in the [**PUT /quotes/**_{ID}_](#6531-put-quotesid) callback is defined as a BinaryString (see [Section 7.2.17](#7217-binarystring)). How to populate the ILP Packet is explained in [Section 6.5.1.2](#6512-interledger-payment-request). Henrik's ILP address in the FSP **MobileMoney** has been set to **g.se.mobilemoney.msisdn.123456789** (see [Section 4.3](#43-ilp-addressing) for more information about ILP addressing). As the transfer amount is 99 USD and the currency USD's exponent is 2, the amount to be populated in the ILP Packet is 9900 (99 \* 10\^2 = 9900). The remaining element in the ILP Packet is the **data** element. As described in [Section 6.5.1.2](#6512-interledger-payment-request), this element should contain the Transaction data model (see [Section 7.4.17](#7417-transaction)). With the information from the quote request, the Transaction in this example becomes as shown in [Listing 41](#listing-41). Base64url-encoding the entire ILP Packet with the **amount**, **account**, and the **data** element then results in the **ilpPacket** element in the [**PUT /quotes/**_{ID}_](l#6531-put-quotesid) callback.
+To send the callback, the FSP **MobileMoney** then needs to create an ILP Packet (see [Section 4.5](#45-ilp-packet) for more information) that is base64url-encoded, as the **ilpPacket** element in the [**PUT /quotes/**_{ID}_](#6541-put-quotesid) callback is defined as a BinaryString (see [Section 7.2.17](#7217-binarystring)). How to populate the ILP Packet is explained in [Section 6.5.2.3](#6523-interledger-payment-request). Henrik's ILP address in the FSP **MobileMoney** has been set to **g.se.mobilemoney.msisdn.123456789** (see [Section 4.3](#43-ilp-addressing) for more information about ILP addressing). As the transfer amount is 99 USD and the currency USD's exponent is 2, the amount to be populated in the ILP Packet is 9900 (99 \* 10\^2 = 9900). The remaining element in the ILP Packet is the **data** element. As described in [Section 6.5.2.3](#6523-interledger-payment-request), this element should contain the Transaction data model (see [Section 7.4.17](#7417-transaction)). With the information from the quote request, the Transaction in this example becomes as shown in [Listing 41](#listing-41). Base64url-encoding the entire ILP Packet with the **amount**, **account**, and the **data** element then results in the **ilpPacket** element in the [**PUT /quotes/**_{ID}_](l#6541-put-quotesid) callback.
 
 When the ILP Packet has been created, the fulfilment and the condition can be generated as defined in the algorithm in [Listing 12](#listing-12). Using a generated example secret shown in [Listing 42](#listing-42) (shown as base64url-encoded), the fulfilment becomes as in [Listing 43](#listing-43) (shown as base64url-encoded) after executing the HMAC SHA-256 algorithm on the ILP Packet using the generated secret as key. The FSP **MobileMoney** is assumed to save the fulfilment in the database, so that it does not have to be regenerated later. The condition is then the result of executing the SHA-256 hash algorithm on the fulfilment, which becomes as in [Listing 44](#listing-44) (shown as base64url-encoded).
 
 The complete callback to the quote request becomes as shown in [Listing 45](#listing-45).
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.3.1](#6531-put-quotesid) for more information about the callback [**PUT /quotes/**_{ID}_](#6531-put-quotesid). **The** _{ID}_ in the URI should be taken from the quote ID in the quote request, which in the example is 7c23e80c-d078-4077-8263-2c047876fcf6. In the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 39](#listing-39), as detailed in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.4.1](#6541-put-quotesid) for more information about the callback [**PUT /quotes/**_{ID}_](#6541-put-quotesid). **The** _{ID}_ in the URI should be taken from the quote ID in the quote request, which in the example is 7c23e80c-d078-4077-8263-2c047876fcf6. In the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 39](#listing-39), as detailed in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source).
 
 ###### Listing 41
 
@@ -4897,7 +4879,7 @@ In this example, Mats Hagman accepts to perform the transaction. How the accepta
 
 When Mats Hagman has accepted the transaction, FSP **BankNrOne** reserves the internal transfers needed to perform the transaction. This means that 100 USD will be reserved from Mats Hagman's account, where 1 USD will end up as income for the FSP and 99 USD will be transferred to the prefunded Switch account. After the reservations are successfully performed, the FSP **BankNrOne** sends a [**POST /transfers**](#6722-post-transfers) to the Switch as in [Listing 47](#listing-47). The same ilpPacket and condition elements are sent as was received in the quote callback and the **amount** is the same as the received **transferAmount**, see [Listing 45](#listing-45).
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6722-post-transfers) for more information about the service [**POST /transfers**](#6722-post-transfers). More information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6722-post-transfers) for more information about the service [**POST /transfers**](#6722-post-transfers). More information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 47
 
@@ -4960,7 +4942,7 @@ Content-Type: application/vnd.interoperability.transfers+json;version=1.0
 
 #### 10.4.13 Send Transfer Request from Switch -- Step 16 in End-to-End Flow
 
-When the Switch has received the transfer request in [Listing 47](#listing-47) and sent the synchronous response in [Listing 48](#listing-48), it should reserve the transfer from **BankNrOne**'s account in the Switch to **MobileMoney**'s account in the Switch. After the reservation is successful, the Switch relays nearly the same request as in [Listing 47](#listing-47) to the FSP **MobileMoney**; expect that the **expiration** element should be decreased as mentioned in [Section 6.7.1.4](#6714-timeout-and-expiry). [Listing 49](#listing-49) shows the HTTP request with the **expiration** decreased by 30 seconds compared to [Listing 47](#listing-47). The FSP **MobileMoney** should then respond synchronously with the same response as in [Listing 48](#listing-48).
+When the Switch has received the transfer request in [Listing 47](#listing-47) and sent the synchronous response in [Listing 48](#listing-48), it should reserve the transfer from **BankNrOne**'s account in the Switch to **MobileMoney**'s account in the Switch. After the reservation is successful, the Switch relays nearly the same request as in [Listing 47](#listing-47) to the FSP **MobileMoney**; expect that the **expiration** element should be decreased as mentioned in [Section 6.7.2.4](#6724-timeout-and-expiry). [Listing 49](#listing-49) shows the HTTP request with the **expiration** decreased by 30 seconds compared to [Listing 47](#listing-47). The FSP **MobileMoney** should then respond synchronously with the same response as in [Listing 48](#listing-48).
 
 ###### Listing 49
 
@@ -5021,7 +5003,7 @@ say that he has received 100 USD from Mats Hagman.
 
 How the notification is sent is out of scope for this API.
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.3.1](#6731-put-transfersid) for more information about the callback [**PUT /transfers/**_{ID}_](#6731-put-transfersid). **The** _{ID}_ in the URI should be taken from the transfer ID in the transfer request, which in the example is 11436b17-c690-4a30-8505-42a2c4eafb9d. In the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 47](#listing-47), as detailed in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.4.1](#6741-put-transfersid) for more information about the callback [**PUT /transfers/**_{ID}_](#6741-put-transfersid). **The** _{ID}_ in the URI should be taken from the transfer ID in the transfer request, which in the example is 11436b17-c690-4a30-8505-42a2c4eafb9d. In the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 47](#listing-47), as detailed in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source).
 
 ###### Listing 50
 
