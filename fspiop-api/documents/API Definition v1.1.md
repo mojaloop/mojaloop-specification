@@ -259,6 +259,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 {% uml src="assets/diagrams/sequence/figure1.plantuml" %}
 {% enduml %}
+
 **Figure 1 -- HTTP POST call flow**
 
 #### 3.2.3.2 HTTP GET Call Flow
@@ -269,6 +270,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 {% uml src="assets/diagrams/sequence/figure2.plantuml" %}
 {% enduml %}
+
 **Figure 2 -- HTTP GET call flow**
 
 #### 3.2.3.3 HTTP DELETE Call Flow
@@ -279,6 +281,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 {% uml src="assets/diagrams/sequence/figure3.plantuml" %}
 {% enduml %}
+
 **Figure 3 -- HTTP DELETE call flow**
 
 **Note:** It is also possible that requests to the ALS be routed through a Switch, or that the ALS and the Switch are the same server.
@@ -310,6 +313,7 @@ The non-standard HTTP header fields **FSPIOP-Destination** and **FSPIOP-Source**
 
 {% uml src="assets/diagrams/sequence/figure5.plantuml" %}
 {% enduml %}
+
 **Figure 5 -- Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source**
 
 For some services when a Switch is used, the destination FSP might be unknown. An example of this scenario is when an FSP sends a **GET /parties** to the Switch without knowing which Peer FSP that owns the Party (see [Section 6.3.2](#632-service-details) describing the scenario). **FSPIOP-Destination** will in that case be empty (or set to the Switch's ID) from the FSP, but will subsequently be set by the Switch to the correct Peer FSP. See [Figure 6](#figure-6) for an example describing the usage of **FSPIOP-Destination** and **FSPIOP-Source**.
@@ -318,6 +322,7 @@ For some services when a Switch is used, the destination FSP might be unknown. A
 
 {% uml src="assets/diagrams/sequence/figure6.plantuml" %}
 {% enduml %}
+
 **Figure 6 -- Example scenario where FSPIOP-Destination is unknown to FSP**
 
 #### 3.2.4 HTTP Response Status Codes
@@ -662,6 +667,7 @@ For send amount (see [Section 5.1.1.2](#5112-non-disclosing-send-amount) for mor
 ###### Figure 7
 
 ![Figure 7](/assets/diagrams/images/figure7.svg)
+
 **Figure 7 -- Fees and commission related to interoperability when fees are not disclosed**
 
 See [Section 5.1.3](#513-fee-types) for more information on the fee types sent in the Interoperability API.
@@ -676,11 +682,13 @@ In this example, the Payee FSP decides to give commission to the Payer FSP since
 
 {% uml src="assets/diagrams/sequence/figure8.plantuml" %}
 {% enduml %}
+
 **Figure 8 -- Example of non-disclosing receive amount**
 
 ###### Figure 9
 
 ![Figure 9](/assets/diagrams/images/figure9.svg)
+
 **Figure 9 -- Simplified view of money movement for non-disclosing receive amount example**
 
 To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
@@ -703,6 +711,7 @@ In the example, the Payer FSP and the Payee FSP would like to have 1 USD each in
 
 {% uml src="assets/diagrams/sequence/figure10.plantuml" %}
 {% enduml %}
+
 **Figure 10 -- Example of non-disclosing send amount**
 
 ###### Figure 11
@@ -710,6 +719,7 @@ In the example, the Payer FSP and the Payee FSP would like to have 1 USD each in
 [Figure 11](#figure-11) shows a simplified view of the movement of money for the non-disclosing send amount example.
 
 ![Figure 11](/assets/diagrams/images/figure11.svg)
+
 **Figure 11 -- Simplified view of money movement for non-disclosing send amount example**
 
 To calculate the element **transferAmount** in the Payee FSP for a non-disclosing send amount quote, the equation in [Listing 8](#listing-8) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), and Payee FSP commission is **payeeFspCommission** in [Table 23](#table-23).
@@ -745,6 +755,7 @@ See [Section 5.1.3](#513-fee-types) for more information on the fee types sent i
 
 {% uml src="assets/diagrams/sequence/figure13.plantuml" %}
 {% enduml %}
+
 **Figure 13 -- Example of disclosing receive amount**
 
 ###### Figure 14
@@ -771,6 +782,7 @@ Transfer amount = Quote Amount + Payee FSP Fee -- Payee FSP Commission
 
 {% uml src="assets/diagrams/sequence/figure15.plantuml" %}
 {% enduml %}
+
 **Figure 15 -- Example of disclosing send amount**
 
 ###### Figure 16
@@ -803,6 +815,7 @@ The reason for a Payee FSP fee to be absent in the equation, is that the Payer w
 
 {% uml src="assets/diagrams/sequence/figure17.plantuml" %}
 {% enduml %}
+
 **Figure 17 -- Example of disclosing send amount**
 
 ###### Figure 18
@@ -810,6 +823,7 @@ The reason for a Payee FSP fee to be absent in the equation, is that the Payer w
 [Figure 18](#figure-18) shows a simplified view of the movement of money for the excess commission using disclosing send amount example.
 
 ![Figure 18](/assets/diagrams/images/figure18.svg)
+
 **Figure 18 -- Simplified view of money movement for excess commission using disclosing send amount example**
 
 #### 5.1.3 Fee Types
@@ -886,6 +900,7 @@ A P2P Transfer is typically a receive amount, where the Payer FSP is not disclos
 
 {% uml src="assets/diagrams/sequence/figure19.plantuml" %}
 {% enduml %}
+
 **Figure 19 -- P2P Transfer example with receive amount**
 
 #### 5.1.6.1.1 Simplified View of Money Movement
@@ -895,6 +910,7 @@ A P2P Transfer is typically a receive amount, where the Payer FSP is not disclos
 See [Figure 20](#figure-20) for a highly simplified view of the movement of money for the P2P Transfer example.
 
 ![Figure 20](/assets/diagrams/images/figure20.svg)
+
 **Figure 20 -- Simplified view of the movement of money for the P2P Transfer example**
 
 #### 5.1.6.2 Agent-Initiated Cash-In (Send amount)
@@ -905,6 +921,7 @@ See [Figure 20](#figure-20) for a highly simplified view of the movement of mone
 
 {% uml src="assets/diagrams/sequence/figure21.plantuml" %}
 {% enduml %}
+
 **Figure 21 -- Agent-Initiated Cash-In example with send amount**
 
 #### 5.1.6.2.1 Simplified View of Money Movement
@@ -914,6 +931,7 @@ See [Figure 22](#figure-22) for a highly simplified view of the movement of mone
 ###### Figure 22
 
 ![Figure 22](/assets/diagrams/images/figure22.svg)
+
 **Figure 22 -- Simplified view of the movement of money for the Agent-initiated Cash-In with send amount example**
 
 #### 5.1.6.3 Agent-Initiated Cash-In (Receive amount)
@@ -924,6 +942,7 @@ See [Figure 22](#figure-22) for a highly simplified view of the movement of mone
 
 {% uml src="assets/diagrams/sequence/figure23.plantuml" %}
 {% enduml %}
+
 **Figure 23 -- Agent-initiated Cash-In example with receive amount**
 
 #### 5.1.6.3.1 Simplified View of Money Movement
@@ -933,6 +952,7 @@ See [Figure 22](#figure-22) for a highly simplified view of the movement of mone
 See [Figure 24](#figure-24) for a highly simplified view of the movement of money for the Agent-initiated Cash-In example with receive amount.
 
 ![Figure 24](/assets/diagrams/images/figure24.svg)
+
 **Figure 24 -- Simplified view of the movement of money for the Agent-initiated Cash-In with receive amount example**
 
 #### 5.1.6.4 Customer-Initiated Merchant Payment
@@ -943,6 +963,7 @@ A Customer-Initiated Merchant Payment is typically a receive amount, where the P
 
 {% uml src="assets/diagrams/sequence/figure25.plantuml" %}
 {% enduml %}
+
 **Figure 25 -- Customer-Initiated Merchant Payment example**
 
 #### 5.1.6.4.1 Simplified View of Money Movement
@@ -952,6 +973,7 @@ A Customer-Initiated Merchant Payment is typically a receive amount, where the P
 See [Figure 26](#figure-26) for a highly simplified view of the movement of money for the Customer-Initiated Merchant Payment example.
 
 ![Figure 26](/assets/diagrams/images/figure26.svg)
+
 **Figure 26 -- Simplified view of the movement of money for the Customer-Initiated Merchant Payment example**
 
 #### 5.1.6.5 Customer-Initiated Cash-Out (Receive amount)
@@ -960,6 +982,7 @@ A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP
 
 {% uml src="assets/diagrams/sequence/figure27.plantuml" %}
 {% enduml %}
+
 **Figure 27 -- Customer-Initiated Cash-Out example (receive amount)**
 
 #### 5.1.6.5.1 Simplified View of Money Movement
@@ -969,6 +992,7 @@ A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP
 See [Figure 28](#figure-28) for a highly simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example.
 
 ![Figure 28](/assets/diagrams/images/figure28.svg)
+
 **Figure 28 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example**
 
 #### 5.1.6.6 Customer-Initiated Cash-Out (Send amount)
@@ -980,6 +1004,7 @@ example is shown in [Section 5.1.6.5](#5165-customer-initiated-cash-out). This s
 
 {% uml src="assets/diagrams/sequence/figure29.plantuml" %}
 {% enduml %}
+
 **Figure 29 -- Customer-Initiated Cash-Out example (send amount)**
 
 #### 5.1.6.6.1 Simplified View of Money Movement
@@ -989,6 +1014,7 @@ See [Figure 30](#figure-30) for a highly simplified view of the movement of mone
 ###### Figure 30
 
 ![Figure 30](/assets/diagrams/images/figure30.svg)
+
 **Figure 30 -- Simplified view of the movement of money for the Customer-Initiated Cash-Out with send amount example**
 
 #### 5.1.6.7 Agent-Initiated Cash-Out
@@ -999,6 +1025,7 @@ An Agent-Initiated Cash-Out is typically a receive amount, in which the Payer FS
 
 {% uml src="assets/diagrams/sequence/figure31.plantuml" %}
 {% enduml %}
+
 **Figure 31 -- Agent-Initiated Cash-Out example**
 
 #### 5.1.6.7.1 Simplified View of Money Movement
@@ -1008,6 +1035,7 @@ See [Figure 32](#figure-32) for a highly simplified view of the movement of mone
 ###### Figure 32
 
 ![Figure 32](/assets/diagrams/images/figure32.svg)
+
 **Figure 32 -- Simplified view of the movement of money for the Agent-Initiated Cash-Out example**
 
 #### 5.1.6.8 Merchant-Initiated Merchant Payment
@@ -1018,6 +1046,7 @@ A Merchant-Initiated Merchant Payment is typically a receive amount, where the P
 
 {% uml src="assets/diagrams/sequence/figure33.plantuml" %}
 {% enduml %}
+
 **Figure 33 -- Merchant-Initiated Merchant Payment example**
 
 #### 5.1.6.8.1 Simplified View of Money Movement
@@ -1027,6 +1056,7 @@ See [Figure 34](#figure-34) for a highly simplified view of the movement of mone
 ###### Figure 34
 
 ![Figure 34](/assets/diagrams/images/figure34.svg)
+
 **Figure 34 -- Simplified view of the movement of money for the Merchant-Initiated Merchant Payment example**
 
 #### 5.1.6.9 ATM-Initiated Cash-Out
@@ -1037,6 +1067,7 @@ An ATM-Initiated Cash-Out is typically a receive amount, in which the Payer FSP 
 
 {% uml src="assets/diagrams/sequence/figure35.plantuml" %}
 {% enduml %}
+
 **Figure 35 -- ATM-Initiated Cash-Out example**
 
 #### 5.1.6.9.1 Simplified View of Money Movement
@@ -1046,6 +1077,7 @@ See [Figure 36](#figure-36) for a highly simplified view of the movement of mone
 ###### Figure 36
 
 ![Figure 36](/assets/diagrams/images/figure36.svg)
+
 **Figure 36 -- Simplified view of the movement of money for the ATM-Initiated Cash-Out example**
 
 #### 5.1.6.10 Merchant-Initiated Merchant Payment authorized on POS
@@ -1056,6 +1088,7 @@ A Merchant-Initiated Merchant Payment authorized on a POS device is typically a 
 
 {% uml src="assets/diagrams/sequence/figure37.plantuml" %}
 {% enduml %}
+
 **Figure 37 -- Merchant-Initiated Merchant Payment authorized on POS example**
 
 #### 5.1.6.10.1 Simplified View of Money Movement
@@ -1077,6 +1110,7 @@ Merchant-Initiated Merchant Payment authorized on POS example**
 
 {% uml src="assets/diagrams/sequence/figure39.plantuml" %}
 {% enduml %}
+
 **Figure 39 -- Refund example**
 
 #### 5.1.6.11.1 Simplified View of Money Movement
@@ -1086,6 +1120,7 @@ See [Figure 40](#figure-40) for a highly simplified view of the movement of mone
 ###### Figure 40
 
 ![Figure 40](/assets/diagrams/images/figure40.svg)
+
 **Figure 40 -- Simplified view of the movement of money for the Refund example**
 
 ### 5.2 Party Addressing
@@ -1287,6 +1322,7 @@ On a high level, the API can be used to perform the following actions:
 |**/bulkQuotes/**_{ID}_|Get information about a previously-requested bulk transaction quote.|Callback to inform a Peer FSP about a previously-requested bulk transaction quote.|Not supported|Not supported|Not Supported|
 |**/bulkTransfers**|Not supported|Not supported|Request that a Peer FSP create a bulk transfer.|Not supported|Not Supported|
 |**/bulkTransfers/**_{ID}_|Get information about a previously-sent bulk transfer.|Callback to inform a Peer FSP about a previously-sent bulk transfer.|Not supported|Not supported|Not supported|
+
 **Table 5 – API-supported services**
 
 #### 6.1.2 Current Resource Versions
@@ -1324,6 +1360,7 @@ If a common service (for example, an ALS) is supported in the scheme, the servic
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.
 For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well.|
+
 **Table 7 – Version history for resource /participants**
 
 #### 6.2.2 Service Details
@@ -1340,6 +1377,7 @@ If this model is used, all FSPs should support being both client and server of t
 
 {% uml src="assets/diagrams/sequence/figure41.plantuml" %}
 {% enduml %}
+
 **Figure 41 -- How to use the services provided by /participants if there is no common Account Lookup System**
 
 #### 6.2.2.2 Common Account Lookup System
@@ -1352,6 +1390,7 @@ The FSPs do not need to support the server side of the different HTTP **GET** se
 
 {% uml src="assets/diagrams/sequence/figure42.plantuml" %}
 {% enduml %}
+
 **Figure 42 -- How to use the services provided by /participants if there is a common Account Lookup System**
 
 #### 6.2.3 Requests
@@ -1538,6 +1577,7 @@ The services provided by the resource **/parties** is used for finding out infor
 |---|---|---|
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+
 **Table 14 – Version history for resource /parties**
 
 #### 6.3.2 Service Details
@@ -1548,6 +1588,7 @@ The services provided by the resource **/parties** is used for finding out infor
 
 {% uml src="assets/diagrams/sequence/figure43.plantuml" %}
 {% enduml %}
+
 **Figure 43 -- Example process for /parties resource**
 
 #### 6.3.3 Requests
@@ -1585,7 +1626,6 @@ The callback **PUT /parties/**_{Type}_**/**_{ID}_ (or **PUT /parties/**_{Type}_*
 | **Name** | **Cardinal** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **party** | 1 | Party | Information regarding the requested Party. |
-
 
 **Table 15 -- PUT /parties/_{Type}_/_{ID}_ (alternative PUT /parties/_{Type}_/_{ID}_/_{SubId}_) data model**
 
@@ -1633,6 +1673,7 @@ Alternatively, the Payer could make the decision manually.
 |---|---|---|
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+
 **Table 17 – Version history for resource /transactionRequests**
 
 #### 6.4.2 Service Details
@@ -1757,6 +1798,7 @@ The possible states of a transaction request can be seen in [Figure 46](#figure-
 **Note:** A server does not need to keep transaction request objects that have been rejected in their database. This means that a client should expect that an error callback could be received for a rejected transaction request.
 
 ![Figure 46](/assets/diagrams/images/figure46.svg)
+
 **Figure 46 -- Possible states of a transaction request**
 
 ### 6.5 API Resource /quotes
@@ -1779,6 +1821,7 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 |---|---|---|
 |1.0|2018-03-13|Initial version|
 |1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+
 **Table 21 – Version history for resource /quotes**
 
 #### 6.5.2 Service Details
@@ -1789,6 +1832,7 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 
 {% uml src="assets/diagrams/sequence/figure47.plantuml" %}
 {% enduml %}
+
 **Figure 47 -- Example process for resource /quotes**
 
 #### 6.5.2.1 Quote Expiry Details
@@ -1895,6 +1939,7 @@ Callback and data model information for **POST /quotes**:
 | **note** | 0..1 | Note | A memo that will be attached to the transaction. |
 | **expiration** | 0..1 | DateTime | Expiration is optional. It can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, and Merchant to know that their request has a time limit. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
+
 **Table 22 -- POST /quotes data model**
 
 #### 6.5.4 Callbacks
@@ -1955,6 +2000,7 @@ If the server is unable to find or create a quote, or some other processing erro
 **Note:** A server does not need to keep quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for an expired or rejected quote.
 
 ![Figure 48](/assets/diagrams/images/figure48.svg)
+
 **Figure 48 -- Possible states of a quote**
 
 ### 6.6 API Resource /authorizations
@@ -1970,6 +2016,7 @@ The API resource **/authorizations** is used to request the Payer to enter the a
 |Version|Date|Description|
 |---|---|---|
 |1.0|2018-03-13|Initial version|
+
 **Table 25 – Version history for resource /authorizations**
 
 #### 6.6.2 Service Details
@@ -1980,6 +2027,7 @@ The API resource **/authorizations** is used to request the Payer to enter the a
 
 {% uml src="assets/diagrams/sequence/figure49.plantuml" %}
 {% enduml %}
+
 **Figure 49 -- Example process for resource /authorizations**
 
 #### 6.6.2.1 Resend Authorization Value
@@ -1990,6 +2038,7 @@ If the notification containing the authorization value fails to reach the Payer,
 
 {% uml src="assets/diagrams/sequence/figure50.plantuml" %}
 {% enduml %}
+
 **Figure 50 -- Payer requests resend of authorization value (OTP)**
 
 #### 6.6.2.2 Retry Authorization Value
@@ -2000,6 +2049,7 @@ The Payer FSP must decide the number of times a Payer can retry the authorizatio
 
 {% uml src="assets/diagrams/sequence/figure51.plantuml" %}
 {% enduml %}
+
 **Figure 51 -- Payer enters incorrect authorization value (OTP)**
 
 #### 6.6.2.3 Failed OTP authorization
@@ -2114,6 +2164,7 @@ This section provides details regarding hop-by-hop transfers and end-to-end fina
 
 {% uml src="assets/diagrams/sequence/figure52.plantuml" %}
 {% enduml %}
+
 **Figure 52 -- How to use the POST /transfers service**
 
 #### 6.7.2.2 Transaction Irrevocability
@@ -2144,6 +2195,7 @@ In [Figure 52](#figure-52), an expiry has been set to 30 seconds from the curren
 
 {% uml src="assets/diagrams/sequence/figure53.plantuml" %}
 {% enduml %}
+
 **Figure 53 -- Client receiving an expired transfer**
 
 To limit these kinds of error scenarios, the clients (Payer FSP and optional Switch in [Figure 52](#figure-52)) participating in the ILP transfer should allow some extra time after actual expiry time during which the callback from the server can be received. The client(s) should also query the server after expiry, but before the end of the extra time, if any callback from the server has been lost due to communication failure. Reconciliation could still be necessary though, even with extra time allowed and querying the server for the transaction.
@@ -2163,6 +2215,7 @@ The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from 
 
 {% uml src="assets/diagrams/sequence/figure54.plantuml" %}
 {% enduml %}
+
 **Figure 54 -- Commit notification where commit of transfer was successful in Switch**
 
 [Figure 55](#figure-55) shows an example in which the commit in the Switch failed due to some reason, for example the expiry time had expired in the Switch due to network issues. This is the same example as in Figure 53, but where no reconciliation is needed as the Payee FSP receives a commit notification before performing the actual transfer to the Payee.
@@ -2171,6 +2224,7 @@ The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from 
 
 {% uml src="assets/diagrams/sequence/figure55.plantuml" %}
 {% enduml %}
+
 **Figure 55 -- Commit notification where commit of transfer in Switch failed**
 
 #### 6.7.2.7 Refunds
@@ -2314,6 +2368,7 @@ If the server is unable to find or create a transfer, or another processing erro
 The possible states of a transfer can be seen in [Figure 56](#figure-56).
 
 ![Figure 56](/assets/diagrams/images/figure56.svg)
+
 **Figure 56 -- Possible states of a transfer**
 
 ### 6.8 API Resource /transactions
@@ -2342,6 +2397,7 @@ The actual financial transaction is performed using the services provided by the
 
 {% uml src="assets/diagrams/sequence/figure57.plantuml" %}
 {% enduml %}
+
 **Figure 57 -- Example transaction process**
 
 #### 6.8.3 Requests
@@ -2414,6 +2470,7 @@ The possible states of a transaction can be seen in [Figure 58](#figure-58).
 **Note:** For reconciliation purposes, a server must keep transaction objects that have been rejected in its database for a scheme-agreed time period. This means that a client should expect a proper callback about a transaction (if it has been received by the server) when requesting information regarding the same.
 
 ![Figure 58](/assets/diagrams/images/figure58.svg)
+
 **Figure 58 -- Possible states of a transaction**
 
 ### 6.9 API Resource /bulkQuotes
@@ -2448,6 +2505,7 @@ Table 36 contains a description of each different version of the **/bulkQuotes**
 
 {% uml src="assets/diagrams/sequence/figure59.plantuml" %}
 {% enduml %}
+
 **Figure 59 -- Example bulk quote process**
 
 #### 6.9.3 Requests
@@ -2531,7 +2589,6 @@ If the server is unable to find or create a bulk quote, or another processing er
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-
 **Table 39 -- PUT /bulkQuotes/_{ID}_/error data model**
 
 #### 6.9.6 States
@@ -2543,6 +2600,7 @@ The possible states of a bulk quote can be seen in [Figure 60](#figure-60).
 **Note:** A server does not need to keep bulk quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for a rejected or expired bulk quote.
 
 ![Figure 60](/assets/diagrams/images/figure60.svg)
+
 **Figure 60 -- Possible states of a bulk quote**
 
 ### 6.10 API Resource /bulkTransfers
@@ -2575,6 +2633,7 @@ Table 40 contains a description of each different version of the **/bulkTransfer
 
 {% uml src="assets/diagrams/sequence/figure61.plantuml" %}
 {% enduml %}
+
 **Figure 61 -- Example bulk transfer process**
 
 #### 6.10.3 Requests
@@ -2640,7 +2699,6 @@ The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a req
 | **individualTransferResults** | 0..1000 | **Error! Reference source not found.** | List of **Error! Reference source not found.** elements. | 
 | **bulkTransferState** | 1 | BulkTransferState | The state of the bulk transfer. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 **Table 42 -- PUT /bulkTransfers/_{ID}_ data model**
 
 #### 6.10.5 Error Callbacks
@@ -2660,7 +2718,6 @@ If the server is unable to find or create a bulk transfer, or another processing
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-
 **Table 43 -- PUT /bulkTransfers/_{ID}_/error data model**
 
 #### 6.10.6 States
@@ -2672,6 +2729,7 @@ The possible states of a bulk transfer can be seen in [Figure 62](#figure-62).
 **Note:** A server must keep bulk transfer objects that have been rejected in their database during a market agreed time-period for reconciliation purposes. This means that a client should expect a proper callback about a bulk transfer (if it has been received by the server) when requesting information regarding the same.
 
 ![Figure 62](/assets/diagrams/images/figure62.svg)
+
 **Figure 62 -- Possible states of a bulk transfer**
 
 ## 7. API Supporting Data Models
@@ -3904,6 +3962,7 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 Each error code in the API is a four-digit number, for example, **1234**, where the first number (**1** in the example) represents the high-level error category, the second number (**2** in the example) represents the low-level error category, and the last two numbers (**34** in the example) represents the specific error. [Figure 63](#figure-63) shows the structure of an error code. The following sections contain information about defined error codes for each high-level error category.
 
 ![Figure 63](/assets/diagrams/images/figure63.svg)
+
 **Figure 63 -- Error code structure**
 
 Each defined high- and low-level category combination contains a generic error (_x_**0**_xx_), which can be used if there is no specific error, or if the server would not like to return information which is considered private.
@@ -4123,6 +4182,7 @@ The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction 
 
 {% uml src="assets/diagrams/sequence/figure64.plantuml" %}
 {% enduml %}
+
 **Figure 64 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
 
 ### 8.2 Payee Initiated Transaction
@@ -4133,6 +4193,7 @@ The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction 
 
 {% uml src="assets/diagrams/sequence/figure65.plantuml" %}
 {% enduml %}
+
 **Figure 65 -- Payee Initiated Transaction pattern using the asynchronous REST binding**
 
 ### 8.3 Payee Initiated Transaction using OTP
@@ -4143,6 +4204,7 @@ The _Payee Initiated Transaction using OTP_ pattern is introduced in _Generic Tr
 
 {% uml src="assets/diagrams/sequence/figure66.plantuml" %}
 {% enduml %}
+
 **Figure 66 -- Payee Initiated Transaction using OTP pattern using the asynchronous REST binding**
 
 ### 8.4 Bulk Transactions
@@ -4153,6 +4215,7 @@ The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. 
 
 {% uml src="assets/diagrams/sequence/figure67.plantuml" %}
 {% enduml %}
+
 **Figure 67 -- Bulk Transactions pattern using the asynchronous REST binding**
 
 ## 9. API Error Handling
@@ -4218,6 +4281,7 @@ The typical error from the **/transfers** service is that either the hop-to-hop 
 
 {% uml src="assets/diagrams/sequence/figure69.plantuml" %}
 {% enduml %}
+
 **Figure 69 -- Handling of error callback from POST /transfers**
 
 ##### 9.3.6.1 Internal Processing Steps
@@ -4250,6 +4314,7 @@ The typical error case from the **/bulkTransfers** service is that the bulk tran
 
 {% uml src="assets/diagrams/sequence/figure70.plantuml" %}
 {% enduml %}
+
 **Figure 70 -- Handling of error callback from API Service /bulkTransfers**
 
 ##### 9.3.9.1 Internal Processing Steps
@@ -4274,6 +4339,7 @@ The following list describes the steps in the sequence (see [Figure 70](#figure-
 
 {% uml src="assets/diagrams/sequence/figure71.plantuml" %}
 {% enduml %}
+
 **Figure 71 -- Error handling from client using resend of request**
 
 #### 9.4.1 Internal Processing Steps
@@ -4306,6 +4372,7 @@ A server using the API is not responsible for making sure that a callback is pro
 
 {% uml src="assets/diagrams/sequence/figure72.plantuml" %}
 {% enduml %}
+
 **Figure 72 -- Error handling from client using GET request**
 
 #### 9.5.2 Internal Processing Steps
@@ -4341,6 +4408,7 @@ This section explains the setup of the example.
 The nodes in the end-to-end example in this section are simplified by having only two FSPs, where one FSP is a bank (identifier **BankNrOne**) and the other FSP is a mobile money operator (identifier **MobileMoney**), and one Switch (identifier **Switch**). The Switch also acts as the Account Lookup System (ALS) in this simplified setup (see [Figure 73](#figure-73)).
 
 ![Figure 73](/assets/diagrams/images/figure73.svg)
+
 **Figure 73 -- Nodes in end-to-end example**
 
 #### 10.1.2 Account Holders
@@ -4369,6 +4437,7 @@ Both FSPs are assumed to have a pre-funded Switch account in their respective FS
 
 {% uml src="assets/diagrams/sequence/figure74.plantuml" %}
 {% enduml %}
+
 **Figure 74 -- End-to-end flow, from provision of account holder FSP information to a successful transaction**
 
 ### 10.3 Provision Account Holder
