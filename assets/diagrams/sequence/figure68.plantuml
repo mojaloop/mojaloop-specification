@@ -38,44 +38,27 @@ skinparam ArrowColor Black
 hide footbox
 
 ' declare title
-' title Handling of error callback from POST /transfers
+' title Error on server during processing of request
 
 ' Actor Keys:
-' participant - FSP(Payer/Payee) and Switch
+' participant - Client and Server
 
 
 ' declare actors
-participant "Payer\nFSP" as PayerFSP
-participant "Optional\nSwitch" as Switch
-participant "Payee\nFSP" as PayeeFSP
+participant "Client" as client
+participant "Server" as server
 
 ' start flow
 autonumber 1 1 "<b>[0]"
-activate PayerFSP
-PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
-PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details)
-activate Switch
+client ->> server: **POST /service**
+activate client
+activate server
+client <<-- server: **HTTP 202** (Accepted)
 autonumber stop
-PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
+server -> server: Some processing error\noccurs, i.e. the request\ncan not be handled as\nrequested.
 autonumber resume
-Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details)
-activate PayeeFSP
-autonumber stop
-Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Some processing error occurs,\ne.g. a limit breach
-autonumber resume
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>**/error**
-autonumber stop
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate PayeeFSP
-Switch -> Switch: Cancel transfer from\nPayer FSP to Payee FSP
-autonumber resume
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>**/error**\n(Error information)
-autonumber stop
-PayerFSP -->> Switch: **HTTP 200** (OK)
-deactivate Switch
-PayerFSP -> PayerFSP: Cancel transfer from Payer\naccount to Payee FSP account
-PayerFSP -[hidden]> Switch
-deactivate PayerFSP
+client <<- server: **PUT /service/**<i><ID></i>**/error**
+client -->> server: **HTTP 200** (OK)
+deactivate server
+deactivate client
 @enduml

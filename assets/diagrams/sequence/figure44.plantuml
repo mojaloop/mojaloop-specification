@@ -102,7 +102,7 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Example process in which a transaction request is rejected
+' title How to use the /transactionRequests service
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
@@ -115,17 +115,23 @@ participant "Payee\nFSP" as payeefsp
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-activate payerfsp
-payerfsp -> payerfsp: Transaction request and\nquoting (process not shown)
-payerfsp -> payerfsp: User rejection, OTP not correct,\nor automatic rejection
-payerfsp ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Rejected state)
+payeefsp <- Payee: I would like to receive\nfunds from +123456789
+activate payeefsp
+payeefsp <- payeefsp: Lookup +123456789\n(process not shown her)
+Switch <<- payeefsp: **POST /transactionRequests**\n(Payee information,\ntransaction details)
 activate Switch
+Switch -->> payeefsp: **HTTP 202** (Accepted)
+payerfsp <<- Switch: **POST /transactionRequests**\n(Payee information,\ntransaction details)
+activate payerfsp
+payerfsp -->> Switch: **HTTP 202** (Accepted)
+payeefsp -> payeefsp: Perform optional validation
+payerfsp ->> Switch: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
 payerfsp <<-- Switch: **HTTP 200** (OK)
 deactivate payerfsp
-Switch ->> payeefsp: **PUT /transactionRequests/**<i><ID></i>\n(Rejected state)
-activate payeefsp
+Switch ->> payeefsp: **PUT /transactionRequests/**<i><ID></i>\n(Received status)
 Switch <<-- payeefsp: **HTTP 200** (OK)
 deactivate Switch
-payeefsp -> Payee: Transaction failed due\nto user rejection
+payeefsp -> payeefsp: Wait for either quote and\ntransfer, or rejected\ntransaction request by Payer
+payeefsp <[hidden]- payeefsp
 deactivate payeefsp
 @enduml

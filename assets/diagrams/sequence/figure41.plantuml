@@ -105,24 +105,35 @@ hide footbox
 ' title How to use the services provided by /participants if there is no common Account Lookup System
 
 ' Actor Keys:
-' participant - FSP(User's) and Account Lookup Service
+' participant - FSP(User's) and FSP
 ' actor - User
 
 ' declare actors
 actor "<$actor>\nUser" as user
 participant "User's\nFSP" as userfsp
-participant "Account\nLookup" as ALS
+participant "\nFSP 1" as fsp1
+participant "\nFSP 2" as fsp2
 
 ' start flow
 user ->> userfsp: I would like to pay or receive\nfunds to/from +123456789
 activate userfsp
-userfsp -> userfsp: +123456789 is not\nwithin this system
-userfsp ->> ALS: **GET /participants/MSISDN/123456789**
-activate ALS
-userfsp <<-- ALS: **HTTP 202** (Accepted)
-ALS -> ALS: Lookup which FSP MSISDN\n+123456789 belongs to.
-userfsp <<- ALS: **PUT /participants/MSISDN/123456789**\n(FSP ID)
-userfsp -->> ALS: **HTTP 200** (OK)
-deactivate ALS
+userfsp -> userfsp: +123456789 is not\nwithin this system,\nask FSP 1
+userfsp ->> fsp1: **GET /participants/MSISDN/123456789**
+activate fsp1
+userfsp <<-- fsp1: **HTTP 202** (Accepted)
+fsp1 -> fsp1: +123456789 is not\nwithin this system
+userfsp <<- fsp1: **PUT /participants/MSISDN/123456789/error**
+userfsp -->> fsp1: **HTTP 200** (OK)
+deactivate fsp1
+userfsp -> userfsp: Not in FSP 1, ask FSP 2
+userfsp ->> fsp2: **GET /participants/MSISDN/123456789**
+activate fsp2
+userfsp <<-- fsp2: **HTTP 202** (Accepted)
+fsp2 -> fsp2: +123456789 is\nwithin this system
+userfsp <<- fsp2: **PUT /participants/MSISDN/123456789/error**
+userfsp -->> fsp2: **HTTP 200** (OK)
+deactivate fsp2
+userfsp -> userfsp: +123456789 found\nin FSP 2
+userfsp -[hidden]>fsp2
 deactivate userfsp
 @enduml

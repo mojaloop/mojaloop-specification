@@ -62,7 +62,7 @@ deactivate PEERFSP
 FSP <<- Switch: **PUT /service/**//<ID>//\n(Service object information)
 FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-FSP -> FSP: Handle service object information
+FSP -> FSP: Handle service\nobject information
 FSP -[hidden]> Switch
 deactivate FSP
 @enduml

@@ -102,7 +102,7 @@ skinparam participant {
 hide footbox
 
 ' declare title
-' title Client receiving an expired transfer
+' title How to use the POST /transfers service
 
 ' Actor Keys:
 ' participant - FSP(Payer/Payee) and Switch
@@ -128,25 +128,28 @@ PayerFSP -[hidden]> Switch
 deactivate PayerFSP
 PayerFSP -[hidden]> Switch
 activate PayerFSP
-PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch
-PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
+PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
-Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=20 seconds)
+Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, conditions, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Perform transfer from\nSwitch account to\nPayee account
-PayeeFSP -> Payee: Transaction notification
-Switch -> Switch: Expiry time reached,\ncancel reservation
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>**/error**)
+PayeeFSP -> PayeeFSP: Perform transfer from Switch\naccount to Payee account,\ngenerate fulfilment
 Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayerFSP -->> Switch: **HTTP 200** (OK)
+PayeeFSP -> Payee: Transaction notification
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-Switch -> Switch: Mark transfer for\nreconciliation as Payee\nFSP has completed and\nPayer FSP has cancelled
-PayerFSP -> PayerFSP: Cancel transfer from Payer\naccount to Switch
+Switch -> Switch: Commit transfer from\nPayer FSP to Payee FSP
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
+PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
-Payer <- PayerFSP: Transaction failure notification
+PayerFSP -> PayerFSP: Commit transfer from Payer\naccount to Payee FSP account
+Payer <- PayerFSP: Transaction notification
 deactivate PayerFSP
 @enduml

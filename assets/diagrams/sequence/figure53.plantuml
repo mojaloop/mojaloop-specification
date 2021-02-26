@@ -116,32 +116,41 @@ participant "Payee\nFSP" as PayeeFSP
 actor "<$actor>\nPayee" as Payee
 
 ' start flow
-Payer -> PayerFSP: Payer signals to FSP they\nwish to proceed with the\ntransaction
+Payer ->> PayerFSP: I would like to pay 100 USD\nto +123456789
 activate PayerFSP
-PayerFSP -> PayerFSP: Reserve transfer from\nPayer to Suspense,\nExpiry=**T**+<i>x</i>
-PayerFSP ->> Switch: **POST /transfers**\n(From=Payer FSP, To=Payee FSP,\nExpiry=**T**+<i>y</i> (where <i>y</i><<i>x</i>))
+PayerFSP -> PayerFSP: Lookup +123456789\n(process not shown here)
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP -> PayerFSP: Quote (process\nnot shown here)
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP -> PayerFSP: Reserve transfer from Payer\naccount to Switch account
+PayerFSP -[hidden]> Switch
+deactivate PayerFSP
+PayerFSP -[hidden]> Switch
+activate PayerFSP
+PayerFSP ->> Switch: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=30 seconds)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
-Switch -> Switch: Reserve transfer from\nPayer to Suspense,\nExpiry=**T**+<i>y</i>
-Switch ->> PayeeFSP: **POST /transfers**\n(From=Payer FSP, To=Payee FSP,\nExpiry=**T**+<i>z</i> (where <i>z</i><<i>y</i>))
+Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
+Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=20 seconds)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Reserve transfer from\nSuspense to Payee,\nExpiry=**T**+<i>z</i>
-PayeeFSP -> PayeeFSP: Validate transaction,\ngenerate fulfilment,\ndo not commit for example\ndue to close to expiry
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-Switch -> Switch: Validate fulfilment,\ncommit transfer
-PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
-PayerFSP -->> Switch: **HTTP 200** (OK)
-Switch <<- PayeeFSP: **GET /transfers/**<i><ID></i>
-Switch -->> PayeeFSP: **HTTP 202** (Accepted)
-Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Transfer State)
-Switch -->> PayeeFSP: **HTTP 200** (OK)
-deactivate Switch
-PayerFSP -> PayerFSP: Validate fulfilment,\ncommit transfer
-Payer <- PayerFSP: Transaction notification
-deactivate PayerFSP
-PayeeFSP -> PayeeFSP: Commit transfer
+PayeeFSP -> PayeeFSP: Perform transfer from\nSwitch account to\nPayee account
 PayeeFSP -> Payee: Transaction notification
+Switch -> Switch: Expiry time reached,\ncancel reservation
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>/**error**
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment)
+PayerFSP -->> Switch: **HTTP 200** (OK)
+Switch -->> PayeeFSP: **HTTP 200** (OK)
+Switch -> Switch: Mark transfer for\nReconciliation as Payee\nFSP has completed and\nPayer FSP has cancelled
 deactivate PayeeFSP
+PayerFSP -> PayerFSP: Cancel transfer from Payer\naccount to Switch
+deactivate Switch
+Payer <- PayerFSP: Transaction failure notification
+deactivate PayerFSP
 @enduml

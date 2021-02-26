@@ -37,40 +37,32 @@ skinparam ArrowColor Black
 hide footbox
 
 ' declare title
-' title Example scenario where FSPIOP-Destination is unknown by FSP
+' title Using the customized HTTP header fields FSPIOP-Destination and FSPIOP-Source
 
 ' Actor Keys:
-' participant - FSP, Peer FSP, Optional Switch and Account Lookup
+' participant - FSP, Peer FSP and Optional Switch
 
 ' declare actors
 participant "\nFSP" as FSP
 participant "Optional\nSwitch" as Switch
-participant "Account\nLookup" as ALS
 participant "Peer\nFSP" as PEERFSP
 
 ' start flow
-FSP ->> Switch: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP)
+FSP ->> Switch: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
 activate FSP
 activate Switch
 FSP <<-- Switch: **HTTP 202** (Accepted)
-Switch ->> ALS: **GET /participants/msisdn/123456789**\n(**FSPIOP-Source=**Switch,\n**FSPIOP-Destination=**Account Lookup)
-activate ALS
-Switch <<-- ALS: **HTTP 202** (Accepted)
-ALS -> ALS: Replace **FSPIOP-Source**\nwith **FSPIOP-Source**\nand vice versa for\nrouting of callback
-Switch <<- ALS: **PUT /participants/msisdn/123456789**\n(**FSPIOP-Source=**Account Lookup,\n**FSPIOP-Destination=**Switch)
-Switch -->> ALS: **HTTP 200** (OK)
-deactivate ALS
-Switch -> Switch: Set **FSPIOP-Destination**\nin original messages according\nto results of **PUT /participants**
-Switch ->> PEERFSP: **GET /parties/msisdn/123456789**\n(**FSPIOP-Source=**FSP, **FSPIOP-Destination=**Peer FSP)
+Switch -> Switch: Route message according\nto **FSPIOP-Destination**
+Switch ->> PEERFSP: **POST /service**\n(**FSPIOP-Source=**FSP,\n**FSPIOP-Destination=**Peer FSP)
 activate PEERFSP
 Switch <<-- PEERFSP: **HTTP 202** (Accepted)
-PEERFSP -> PEERFSP: Optionally validate message\nsignature using stored certificate\nfor FSP in **FSPIOP-Source**
-PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination** and\nvice versa for routing of callback
-Switch <<- PEERFSP: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP, **FSPIOP-Destination=**FSP)
+PEERFSP -> PEERFSP: Optionally validate messages signature\nusing stored certificate for\nFSP in **FSPIOP-Source**
+PEERFSP -> PEERFSP: Replace **FSPIOP-Source**\nwith **FSPIOP-Destination**\nand visa versa for routing of callback
+Switch <<- PEERFSP: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
 Switch -->> PEERFSP: **HTTP 200** (OK)
+Switch -> Switch: Route message according\nto **FSPIOP-Destination**
 deactivate PEERFSP
-Switch -> Switch: Route messages according\nto **FSPIOP-Destination**
-FSP <<- Switch: **PUT /parties/msisdn/123456789**\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
+FSP <<- Switch: **PUT /service/**//<ID>//\n(**FSPIOP-Source=**Peer FSP,\n**FSPIOP-Destination=**FSP)
 FSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 deactivate FSP
