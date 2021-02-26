@@ -60,6 +60,7 @@ The following conventions are used in this document to identify the specified ty
 |Version|Date|Change Description|
 |---|---|---|
 |**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|This version contains the below changes: 1. Sections 3.1, 3.2 and 3.3 have been updated based on ”Solution Proposal 12 - Clarify usage of FSPIOP-Destination”. 2. ExtensionList elements in Section 4 have been updated based on the issue [Interpretation of the Data Model for the ExtensionList element](https://github.com/mojaloop/mojaloop-specification/issues/51), to fix the data model of the extensionList Object.|
 
 ## 2. Introduction
 
@@ -123,9 +124,8 @@ The API uses a customized HTTP header parameter **FSPIOP-Signature** to represen
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| protectedHeader | 1 | String(1..32768) | <br>This element indicates the HTTP header parameters that are protected by the signature. Its value must be BASE64URL(UTF8(JWS Protected Header)).</br> <br>According to JWS specification, the **alg** header parameter must be present to identify the cryptographic algorithm used to secure the JWS.</br> <br>A customized parameter **FSPIOP-URI** that represents the URI path and query parameters of HTTP request message of the APIs must be present.</br> <br>A customized parameter **FSPIOP-HTTP-Method** that holds the HTTP method used in the HTTP message must be present.</br> <br>A customized parameter **FSPIOP-Source** that represents the system which sent the API request must be present.</br> <br>The customized HTTP header parameter **FSPIOP-Destination** is mandatory in **protectedHeader** if it is present in the HTTP header of the request.</br> |
+| protectedHeader | 1 | String(1..32768) | <br>This element indicates the HTTP header parameters that are protected by the signature. Its value must be BASE64URL(UTF8(JWS Protected Header)).</br> <br>According to JWS specification, the **alg** header parameter must be present to identify the cryptographic algorithm used to secure the JWS.</br> <br>A customized parameter **FSPIOP-URI** that represents the URI path and query parameters of HTTP request message of the APIs must be present.</br> <br>A customized parameter **FSPIOP-HTTP-Method** that holds the HTTP method used in the HTTP message must be present.</br> <br>A customized parameter **FSPIOP-Source** that represents the system which sent the API request must be present.</br> <br>The customized HTTP header parameter **FSPIOP-Destination** is mandatory in protectedHeader if the destination FSP is known by the message-initiator. Otherwise this header must not be protected as it can be changed by intermediate systems. See API Definition for more information regarding which services that the header FSPIOP-Destination is optional for.</br> |
 | signature | 1 | String(1..512) | This element indicates the signature. Its value is part of JWS serialization; that is, BASE64URL(JWS Signature). |
-
 **Table 1 – Data model of HTTP header field FSPIOP-Signature**
 
 ### 3.2 Generating a Signature
@@ -137,18 +137,18 @@ To create the signature for an API message, the following steps are performed. T
 2. Compute the encoded payload value BASE64URL(JWS Payload).
   
 3. Create the JSON object or objects containing the desired JWS Protected Header.
-   
+
     A. The **alg** JWS Protected Header parameter must be present. In the API, the available algorithms for the signature are **RS256, RS384, RS512**. A key of size 2048 bits or larger must be used with these algorithms.
-    
+
     B. Other parameters registered in the IANA JSON _Web Signature and Encryption Header Parameters_<sup>[3](https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters)</sup> are optional.
-    
+
     C. The customized parameter **FSPIOP-URI** must be included in JWS Protected Header to protect the URI path and query parameters of the APIs.
-    
+
     D. The customized parameter **FSPIOP-HTTP-Method** must be included in JWS Protected Header to protect the HTTP request operation method.
-    
+
     E. The parameter **FSPIOP-Source** must be present, and its value comes from the corresponding HTTP header parameter **FSPIOP-Source**.
 
-    F. The parameter **FSPIOP-Destination** must be present if it is present in the HTTP header of the request, and its value comes from the corresponding HTTP header parameter **FSPIOP-Destination**.
+    F. The parameter **FSPIOP-Destination** must be present if the destination FSP is known by the message-initiator, and its value must then be the same as the HTTP header parameter **FSPIOP-Destination**.
 
     G. Other HTTP Header parameters of the APIs are recommended to be included in JWS Protected Header, but they are optional in this JWS Protected Header.
 
@@ -173,7 +173,7 @@ When validating the signature of an API request, the following steps are perform
 3. Verify the parameters in the JWS Protected Header.
 
     a) The parameter **alg** must be present and its value must be one of **RS256, RS384, RS512**.
-    
+
     b) Other parameters registered in the IANA JSON _Web Signature and Encryption Header Parameters_ are optional.
 
     c) The parameter **FSPIOP-URI** must be present and Its value must be the same as the input URL value of the request.
@@ -182,7 +182,7 @@ When validating the signature of an API request, the following steps are perform
 
     e) The parameter **FSPIOP-Source** must be present, and its value must be the same as the corresponding HTTP header parameter **FSPIOP-Source**.
 
-    f) The parameter **FSPIOP-Destination** must be present if it is present in the HTTP header of the request, and its value must be same as the corresponding HTTP header parameter **FSPIOP-Destination**.
+    f) If the parameter **FSPIOP-Destination** is present in the JWS Protected Header, then its value must be same as the corresponding HTTP header parameter **FSPIOP-Destination**.
 
     g) If there are other HTTP header parameters present in JWS Protected Header, then their values must be validated with the corresponding HTTP header values.
 
@@ -243,10 +243,14 @@ Content-Type:application/vnd.interoperability.quotes+json;version=1.0
         "partyIdType": "MSISDN",
         "partyIdentifier": "15295558888" }
     },
-    "fees": { "amount": "1.5", "currency": "USD" },"extensionList": [
-        { "value": "value1", "key": "key1" },
-        { "value": "value2", "key": "key2" },
-        { "value": "value3", "key": "key3" } ],
+    "fees": { "amount": "1.5", "currency": "USD" },
+    "extensionList": {
+        "extension": [
+            { "value": "value1", "key": "key1" },
+            { "value": "value2", "key": "key2" },
+            { "value": "value3", "key": "key3" }
+        ]
+    },
     "note": "this is a sample for POST /quotes",
     "geoCode": {
         "longitude": "125.520001", "latitude": "57.323889" },
@@ -326,10 +330,13 @@ FSPIOP-Signature: {"signature": "dz2ntyS0_rDyA0pLeWluG--tBcYYrlvG99ffkXcEBuve5Qz
         "partyIdType": "MSISDN",
         "partyIdentifier": "15295558888" } },
     "fees": { "amount": "1.5", "currency": "USD" },
-    "extensionList": [
-        { "value": "value1", "key": "key1" },
-        { "value": "value2", "key": "key2" },
-        { "value": "value3", "key": "key3" } ],
+    "extensionList": {
+        "extension": [
+            { "value": "value1", "key": "key1" },
+            { "value": "value2", "key": "key2" },
+            { "value": "value3", "key": "key3" }
+        ]
+    },
     "note": "this is a sample for POST /quotes",
     "geoCode": { "longitude": "125.520001", "latitude": "57.323889" },
     "amountType": "RECEIVE"
@@ -343,12 +350,15 @@ After the Payee FSP receives the **POST /quotes** API message from Payer FSP, th
 #### 4.2.1 Parse FSPIOP-Signature
 
 1. Parse the HTTP header parameter **FSPIOP-Signature** to get the components **protectedHeader** and signature. In this case, the value of **protectedHeader** is:
+
 ```text
 eyJhbGciOiJSUzI1NiIsIkZTUElPUC1EZXN0aW5hdGlvbiI6IjU2NzgiLCJGU1BJT1AtVVJJIjo
 iL3F1b3RlcyIsIkZTUElPUC1IVFRQLU1ldGhvZCI6IlBPU1QiLCJEYXRlIjoiVHVlLCAyMyBNYX
 kgMjAxNyAyMToxMjozMSBHTVQiLCJGU1BJT1AtU291cmNlIjoiMTIzNCJ9
 ```
+
 2. Use BASE64URL to decode the encoded representation of the JWS Protected Header. Verify that the resulting octet sequence is a UTF-8-encoded representation of a completely valid JSON object conforming to JSON Data Interchange Format, defined in RFC7159. In this case, the decoded JSON object is:
+
 ```json
 {
     "alg":"RS256",
@@ -359,6 +369,7 @@ kgMjAxNyAyMToxMjozMSBHTVQiLCJGU1BJT1AtU291cmNlIjoiMTIzNCJ9
     "FSPIOP-Source":"1234"
 }
 ```
+
 3. Verify that the **alg** parameter is valid for the API. That means it must be in the list of **RS256, RS384, RS512**. In this case, the value of **alg** is **RS256**, which is valid.
 
 4. Verify that the value of the parameter **FSPIOP-URI** is same as the input URL of this API message.
@@ -380,6 +391,7 @@ The validation is passed.
 #### 4.2.2 Verify JWS Signature
 
 1. In this case, the JWS Payload is the full HTTP body of the API message, that is (line breaks and indentation within values for display purposes only):
+
 ```json
 {
     "amount": { "amount": "150", "currency": "USD" },
@@ -404,19 +416,25 @@ The validation is passed.
             "partyIdType": "MSISDN",
             "partyIdentifier": "15295558888" } },
     "fees": { "amount": "1.5", "currency": "USD" },
-    "extensionList": [
-        { "value": "value1", "key": "key1" },
-        { "value": "value2", "key": "key2" },
-        { "value": "value3", "key": "key3" } ],
+    "extensionList": {
+        "extension": [
+            { "value": "value1", "key": "key1" },
+            { "value": "value2", "key": "key2" },
+            { "value": "value3", "key": "key3" }
+        ]
+    },
     "note": "this is a sample for POST /quotes",
     "geoCode": { "longitude": "125.520001", "latitude": "57.323889" },
     "amountType": "RECEIVE"
-  }
+}
   ```
+
 2. Compute the encoded payload value BASE64URL(JWS Payload). Get the encoded value as:
+
 ```text
 eyJwYXllZSI6eyJwYXJ0eUlkSW5mbyI6eyJwYXJ0eUlkVHlwZSI6Ik1TSVNETiIsInBhcnR5SWRlbnRpZmllciI6IjE1Mjk1NTU4ODg4IiwiZnNwSWQiOiI1Njc4In19LCJhbW91bnRUeXBlIjoiUkVDRUlWRSIsInRyYW5zYWN0aW9uVHlwZSI6eyJzY2VuYXJpbyI6IlRSQU5TRkVSIiwiaW5pdGlhdG9yIjoiUEFZRVIiLCJzdWJTY2VuYXJpbyI6IlAyUCBUcmFuc2ZlciBhY3Jvc3MgTU0gc3lzdGVtcyIsImluaXRpYXRvclR5cGUiOiJDT05TVU1FUiJ9LCJub3RlIjoidGhpcyBpcyBhIHNhbXBsZSBmb3IgUE9TVCAvcXVvdGVzIiwiYW1vdW50Ijp7ImFtb3VudCI6IjE1MCIsImN1cnJlbmN5IjoiVVNEIn0sImZlZXMiOnsiYW1vdW50IjoiMS41IiwiY3VycmVuY3kiOiJVU0QifSwiZXh0ZW5zaW9uTGlzdCI6W3sidmFsdWUiOiJ2YWx1ZTEiLCJrZXkiOiJrZXkxIn0seyJ2YWx1ZSI6InZhbHVlMiIsImtleSI6ImtleTIifSx7InZhbHVlIjoidmFsdWUzIiwia2V5Ijoia2V5MyJ9XSwiZ2VvQ29kZSI6eyJsYXRpdHVkZSI6IjU3LjMyMzg4OSIsImxvbmdpdHVkZSI6IjEyNS41MjAwMDEifSwiZXhwaXJhdGlvbiI6IjIwMTctMDUtMjRUMDg6NDA6MDAuMDAwLTA0OjAwIiwicGF5ZXIiOnsicGVyc29uYWxJbmZvIjp7ImNvbXBsZXhOYW1lIjp7ImZpcnN0TmFtZSI6IkJpbGwiLCJtaWRkbGVOYW1lIjoiQmVuIiwiTGFzdE5hbWUiOiJMZWUifSwiZGF0ZU9mQmlydGgiOiIxOTg2LTAyLTE0In0sInBhcnR5SWRJbmZvIjp7InBhcnR5SWRUeXBlIjoiTVNJU0ROIiwicGFydHlTdWJJZE9yVHlwZSI6IlJlZ2lzdGVyZWRDdXN0b21lciIsInBhcnR5SWRlbnRpZmllciI6IjE2MTM1NTUxMjEyIiwiZnNwSWQiOiIxMjM0In0sIm5hbWUiOiJCaWxsIExlZSJ9LCJxdW90ZUlkIjoiNTllMzMxZmEtMzQ1Zi00NTU0LWFhYzgtZmNkODgzM2Y3ZDUwIiwidHJhbnNhY3Rpb25JZCI6IjM2NjI5YTUxLTM5M2EtNGUzYy1iMzQ3LWMyY2I1N2UxZTFmYyJ9
 ```
+
 3. Validate the JWS Signature against the JWS Signing Input (that is, the JWS Protected Header, JWS Payload) with the specified algorithm **RS256** (specified in the JWS Protected Header), and the public key. Record whether the validation succeeded or not.
 
 ## 5. References
