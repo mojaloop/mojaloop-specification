@@ -4470,7 +4470,7 @@ FSPIOP-Destination: Switch
 
 **Listing 29 -- Provision FSP information for account holder Henrik Karlsson**
 
-[Listing 30](#listing-30) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 29](#listing-29).
+[Listing 30](#listing-30) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 29](#listing-29).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4482,11 +4482,11 @@ Content-Type:
 application/vnd.interoperability.participants+json;version=1.0
 ```
 
-**Listing 30 -- Asynchronous response on provision request**
+**Listing 30 -- Synchronous response on provision request**
 
 #### 10.3.2 Switch Handles Provision -- Step 2 in End-to-End Flow
 
-When the Switch has received the HTTP request in [Listing 29](#listing-29) and sent the asynchronous response in [Listing 30](#listing-30), the Switch should verify the body of the request in [Listing 29](#listing-29). An example verification is to check that the **fspId** element is the same as the **FSPIOP-Source** , as it should be the FSP of the account holder who provisions the information. A scheme could also have restrictions on which currencies are allowed, which means that the Switch should then check that the currency in the **currency** element is allowed.
+When the Switch has received the HTTP request in [Listing 29](#listing-29) and sent the synchronous response in [Listing 30](#listing-30), the Switch should verify the body of the request in [Listing 29](#listing-29). An example verification is to check that the **fspId** element is the same as the **FSPIOP-Source** , as it should be the FSP of the account holder who provisions the information. A scheme could also have restrictions on which currencies are allowed, which means that the Switch should then check that the currency in the **currency** element is allowed.
 
 After the Switch has verified the request correctly, the information that the account holder identified by **MSISDN** and **123456789** is located in FSP **MobileMoney** should be stored in the Switch's database.
 
@@ -4513,7 +4513,7 @@ FSPIOP-Destination: Switch
 
 **Listing 31 -- Callback for the earlier requested provision service**
 
-[Listing 32](#listing-32) shows the asynchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 31](#listing-31).
+[Listing 32](#listing-32) shows the synchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 31](#listing-31).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4525,7 +4525,7 @@ Content-Type:
 application/vnd.interoperability.participants+json;version=1.0
 ```
 
-**Listing 32 -- Asynchronous response for the callback**
+**Listing 32 -- Synchronous response for the callback**
 
 ### 10.4 P2P Transfer
 
@@ -4555,7 +4555,7 @@ FSPIOP-Source: BankNrOne
 
 **Listing 33 -- Get Party information for account identified by MSISDN and 123456789 from FSP BankNrOne**
 
-[Listing 34](#listing-34) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 33](#listing-33).
+[Listing 34](#listing-34) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 33](#listing-33).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4566,11 +4566,11 @@ HTTP/1.1 202 Accepted
 Content-Type: application/vnd.interoperability.parties+json;version=1.0
 ```
 
-**Listing 34 -- Asynchronous response on the request for Party information**
+**Listing 34 -- Synchronous response on the request for Party information**
 
 #### 10.4.3 Request Party Information from FSP -- Step 6 in End-to-End Flow
 
-When the Switch has received the HTTP request in [Listing 33](#listing-33) and sent the asynchronous response in [Listing 34](#listing-34), the Switch can proceed with checking its database if it has information regarding in which FSP the account holder identified by **MSISDN** and **123456789** is located. As that information was provisioned as detailed in [Section 10.3](#103-provision-account-holder), the Switch knows that the account is in FSP **MobileMoney**. Therefore, the Switch sends the HTTP request in [Listing 35](#listing-35).
+When the Switch has received the HTTP request in [Listing 33](#listing-33) and sent the synchronous response in [Listing 34](#listing-34), the Switch can proceed with checking its database if it has information regarding in which FSP the account holder identified by **MSISDN** and **123456789** is located. As that information was provisioned as detailed in [Section 10.3](#103-provision-account-holder), the Switch knows that the account is in FSP **MobileMoney**. Therefore, the Switch sends the HTTP request in [Listing 35](#listing-35).
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.3.2.1](#6321-get-partiestypeid) for more information about the service [**GET /parties/**_{Type}_**/**_{ID}_](#6321-get-partiestypeid). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source); in this request the Switch has added the header **FSPIOP-Destination** because the Switch knew to where the request should be routed. Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
@@ -4587,7 +4587,7 @@ FSPIOP-Destination: MobileMoney
 
 **Listing 35 -- Get Party information for account identified by MSISDN and 123456789 from Switch**
 
-[Listing 36](#listing-36) shows the asynchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 35](#listing-35).
+[Listing 36](#listing-36) shows the synchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 35](#listing-35).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4598,11 +4598,11 @@ HTTP/1.1 202 Accepted
 Content-Type: application/vnd.interoperability.parties+json;version=1.0
 ```
 
-**Listing 36 -- Asynchronous response on request for Party information**
+**Listing 36 -- Synchronous response on request for Party information**
 
 #### 10.4.4 Lookup Party Information in FSP MobileMoney -- Step 7 in End-to-End Flow
 
-When the FSP **MobileMoney** has received the HTTP request in [Listing 35](#listing-35) and sent the asynchronous response in [Listing 36](#listing-36), the FSP **MobileMoney** can proceed with checking its database for more information regarding the account identified by **MSISDN** and **123456789**. As the account exists and is owned by Henrik Karlsson, the FSP **MobileMoney** sends the callback in [Listing 37](#listing-37). The FSP **MobileMoney** does not want to share some details, for example birth date, with the other FSP (**BankNrOne**), so some optional elements are not sent.
+When the FSP **MobileMoney** has received the HTTP request in [Listing 35](#listing-35) and sent the synchronous response in [Listing 36](#listing-36), the FSP **MobileMoney** can proceed with checking its database for more information regarding the account identified by **MSISDN** and **123456789**. As the account exists and is owned by Henrik Karlsson, the FSP **MobileMoney** sends the callback in [Listing 37](#listing-37). The FSP **MobileMoney** does not want to share some details, for example birth date, with the other FSP (**BankNrOne**), so some optional elements are not sent.
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request,
 and [Section 6.3.3.1](#6331-put-partiestypeid) for more information about the callback [**PUT /parties/**_{Type}_**/**_{ID}_](#6331-put-partiestypeid). **In** the callback, the **Accept** header should not be sent. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 35](#listing-35), as detailed in [Section 3.2.3.5](#3235-call-flow-routing-using-fspiop-destination-and-fspiop-source).
@@ -4635,7 +4635,7 @@ FSPIOP-Destination: BankNrOne
 
 **Listing 37 -- Callback to the request for Party information**
 
-[Listing 38](#listing-38) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 37](#listing-37).
+[Listing 38](#listing-38) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 37](#listing-37).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4646,11 +4646,11 @@ HTTP/1.1 200 OK
 Content-Type: application/vnd.interoperability.parties+json;version=1.0
 ```
 
-**Listing 38 -- Asynchronous response for the Party information callback**
+**Listing 38 -- Synchronous response for the Party information callback**
 
 #### 10.4.5 Send Callback to FSP BankNrOne -- Step 8 in End-to-End Flow
 
-When the Switch has received the callback in [Listing 37](#listing-37) and sent the asynchronous response in [Listing 38](#listing-38), it should relay the exact same callback as in [Listing 37](#listing-37) to the FSP **BankNrOne**, and **BankNrOne** should then respond asynchronously with the exact same response as in [Listing 38](#listing-38).
+When the Switch has received the callback in [Listing 37](#listing-37) and sent the synchronous response in [Listing 38](#listing-38), it should relay the exact same callback as in [Listing 37](#listing-37) to the FSP **BankNrOne**, and **BankNrOne** should then respond synchronously with the exact same response as in [Listing 38](#listing-38).
 
 The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **BankNrOne** (HTTP request in [Listing 37](#listing-37)) and from **BankNrOne** to the Switch (HTTP response in [Listing 38](#listing-38)) instead.
 
@@ -4712,7 +4712,7 @@ FSPIOP-Destination: MobileMoney
 
 **Listing 39 -- Request quote for transaction of 100 USD**
 
-[Listing 40](#listing-40) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 39](#listing-39).
+[Listing 40](#listing-40) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 39](#listing-39).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4723,17 +4723,17 @@ HTTP/1.1 202 Accepted
 Content-Type: application/vnd.interoperability.quotes+json;version=1.0
 ```
 
-**Listing 40 -- Asynchronous response on quote request**
+**Listing 40 -- Synchronous response on quote request**
 
 #### 10.4.7 Send Quote Request from Switch -- Step 10 in End-to-End Flow**
 
-When the Switch has received the quote request in [Listing 39](#listing-39) and sent the asynchronous response in [Listing 40](#listing-40), it should relay the same request as in [Listing 39](#listing-39) to the FSP **MobileMoney**, and **MobileMoney** should then respond asynchronously with the same response as in [Listing 40](#listing-40).
+When the Switch has received the quote request in [Listing 39](#listing-39) and sent the synchronous response in [Listing 40](#listing-40), it should relay the same request as in [Listing 39](#listing-39) to the FSP **MobileMoney**, and **MobileMoney** should then respond synchronously with the same response as in [Listing 40](#listing-40).
 
 The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **MobileMoney** (HTTP request in [Listing 39](#listing-39)) and from **MobileMoney** to the Switch (HTTP response in [Listing 40](#listing-40)) instead.
 
 #### 10.4.8 Determine fees and FSP commission in FSP MobileMoney -- Step 11 in End-to-End Flow
 
-When the FSP **MobileMoney** has received the HTTP request in [Listing 39](#listing-40) and sent the asynchronous response in [Listing 40](#listing-40), the FSP **MobileMoney** should validate the request and then proceed to determine the applicable fees and/or FSP commission for performing the transaction in the quote request.
+When the FSP **MobileMoney** has received the HTTP request in [Listing 39](#listing-40) and sent the synchronous response in [Listing 40](#listing-40), the FSP **MobileMoney** should validate the request and then proceed to determine the applicable fees and/or FSP commission for performing the transaction in the quote request.
 
 In this example, the FSP **MobileMoney** decides to give 1 USD in FSP commission as the FSP **MobileMoney** will receive money, which should later generate more income for the FSP (future possible fees). Since the Payee Henrik Karlsson should receive 100 USD and the FSP commission is determined to 1 USD, the FSP **BankNrOne** only needs to transfer 99 USD to the FSP **MobileMoney** (see [Section 5.1.1.1](#5111-non-disclosing-receive-amount) for the equation). The 99 USD is entered in the transferAmount element in the callback, which is the amount that should later be transferred between the FSPs.
 
@@ -4864,7 +4864,7 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 **Note:** The element **ilpPacket** in [Listing 45](#listing-45) should be on a single line in a real implementation; it is shown with line breaks in this example in order to show the entire value.
 
-[Listing 46](#listing-46) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 45](#listing-45).
+[Listing 46](#listing-46) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 45](#listing-45).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4875,17 +4875,17 @@ HTTP/1.1 200 OK
 Content-Type: application/vnd.interoperability.quotes+json;version=1.0
 ```
 
-**Listing 46 -- Asynchronous response on the quote callback**
+**Listing 46 -- Synchronous response on the quote callback**
 
 #### 10.4.9 Send Callback to FSP BankNrOne -- Step 12 in End-to-End Flow
 
-When the Switch has received the quote callback in [Listing 45](#listing-45) and sent the asynchronous response in [Listing 46](#listing-46), it should relay the exact same callback as in [Listing 45](#listing-45) to the FSP **BankNrOne**, and **BankNrOne** should then respond asynchronously with the exact same response as in [Listing 46](#listing-46).
+When the Switch has received the quote callback in [Listing 45](#listing-45) and sent the synchronous response in [Listing 46](#listing-46), it should relay the exact same callback as in [Listing 45](#listing-45) to the FSP **BankNrOne**, and **BankNrOne** should then respond synchronously with the exact same response as in [Listing 46](#listing-46).
 
 The HTTP request and response are not repeated in this section, as they are the same as in the last section, but sent from the Switch to **BankNrOne** (HTTP request in [Listing 45](#listing-45)) and from **BankNrOne** to the Switch (HTTP response in [Listing 46](#listing-46)) instead.
 
 #### 10.4.10 Determine fees in FSP BankNrOne -- Step 13 in End-to-End Flow
 
-When the FSP **BankNrOne** has received the quote callback in [Listing 45](#listing-45) and sent the asynchronous response in [Listing 46](#listing-46), the FSP **BankNrOne** can proceed with determining the fees for the Payer Mats Hagman. In this example, the fee for the Payer is set to 0 USD, but the FSP commission from the FSP **MobileMoney** is kept as an income for the FSP **BankNrOne**. This means that for the Payee Henrik Karlsson to receive 100 USD, the Payer Mats Hagman must transfer 100 USD from his account. 99 USD will then be transferred between the FSPs **BankNrOne** and **MobileMoney**.
+When the FSP **BankNrOne** has received the quote callback in [Listing 45](#listing-45) and sent the synchronous response in [Listing 46](#listing-46), the FSP **BankNrOne** can proceed with determining the fees for the Payer Mats Hagman. In this example, the fee for the Payer is set to 0 USD, but the FSP commission from the FSP **MobileMoney** is kept as an income for the FSP **BankNrOne**. This means that for the Payee Henrik Karlsson to receive 100 USD, the Payer Mats Hagman must transfer 100 USD from his account. 99 USD will then be transferred between the FSPs **BankNrOne** and **MobileMoney**.
 
 The FSP **BankNrOne** then notifies Mats Hagman that the transaction to transfer 100 USD to Henrik Karlsson will cost 0 USD in fees. How Mats Hagman is notified is out of scope of this API.
 
@@ -4945,7 +4945,7 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 **Note:** The element **ilpPacket** in [Listing 47](#listing-47) should be on a single line in a real implementation, it is shown with line breaks in this example for being able to show the entire value.
 
-[Listing 48](#listing-48) shows the asynchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 47](#listing-47).
+[Listing 48](#listing-48) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 47](#listing-47).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -4956,11 +4956,11 @@ HTTP/1.1 202 Accepted
 Content-Type: application/vnd.interoperability.transfers+json;version=1.0
 ```
 
-**Listing 48 -- Asynchronous response on transfer request**
+**Listing 48 -- Synchronous response on transfer request**
 
 #### 10.4.13 Send Transfer Request from Switch -- Step 16 in End-to-End Flow
 
-When the Switch has received the transfer request in [Listing 47](#listing-47) and sent the asynchronous response in [Listing 48](#listing-48), it should reserve the transfer from **BankNrOne**'s account in the Switch to **MobileMoney**'s account in the Switch. After the reservation is successful, the Switch relays nearly the same request as in [Listing 47](#listing-47) to the FSP **MobileMoney**; expect that the **expiration** element should be decreased as mentioned in [Section 6.7.1.4](#6714-timeout-and-expiry). [Listing 49](#listing-49) shows the HTTP request with the **expiration** decreased by 30 seconds compared to [Listing 47](#listing-47). The FSP **MobileMoney** should then respond asynchronously with the same response as in [Listing 48](#listing-48).
+When the Switch has received the transfer request in [Listing 47](#listing-47) and sent the synchronous response in [Listing 48](#listing-48), it should reserve the transfer from **BankNrOne**'s account in the Switch to **MobileMoney**'s account in the Switch. After the reservation is successful, the Switch relays nearly the same request as in [Listing 47](#listing-47) to the FSP **MobileMoney**; expect that the **expiration** element should be decreased as mentioned in [Section 6.7.1.4](#6714-timeout-and-expiry). [Listing 49](#listing-49) shows the HTTP request with the **expiration** decreased by 30 seconds compared to [Listing 47](#listing-47). The FSP **MobileMoney** should then respond synchronously with the same response as in [Listing 48](#listing-48).
 
 ###### Listing 49
 
@@ -5041,7 +5041,7 @@ FSPIOP-Destination: BankNrOne
 
 **Listing 50 -- Callback for the transfer request**
 
-[Listing 51](#listing-50) shows the asynchronous HTTP response in which the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 50](#listing-50).
+[Listing 51](#listing-51) shows the synchronous HTTP response in which the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 50](#listing-50).
 
 See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
 
@@ -5052,7 +5052,7 @@ HTTP/1.1 200 OK
 Content-Type: application/vnd.interoperability.transfers+json;version=1.0
 ```
 
-**Listing 51 -- Asynchronous response on the transfers callback**
+**Listing 51 -- Synchronous response on the transfers callback**
 
 #### 10.4.15 Payee Receives Transaction Notification -- Step 18 in End-to-End Flow
 
@@ -5060,7 +5060,7 @@ The Payee Henrik Karlsson receives the transaction notification, and is thereby 
 
 #### 10.4.16 Perform Transfer in Switch -- Step 19 in End-to-End Flow
 
-When the Switch has received the transfer callback in [Listing 50](#listing-50) and sent the asynchronous response in [Listing 51](#listing-51), it should validate the fulfilment, perform the earlier reserved transfer and relay the exact same callback as in [Listing 50](#listing-50) to the FSP **BankNrOne**, and **BankNrOne** should then respond asynchronously with the same response as in [Listing 51](#listing-51).
+When the Switch has received the transfer callback in [Listing 50](#listing-50) and sent the synchronous response in [Listing 51](#listing-51), it should validate the fulfilment, perform the earlier reserved transfer and relay the exact same callback as in [Listing 50](#listing-50) to the FSP **BankNrOne**, and **BankNrOne** should then respond synchronously with the same response as in [Listing 51](#listing-51).
 
 The validation of the fulfilment is done by calculating the SHA-256 hash of the fulfilment and ensuring that the hash is equal to the condition from the transfer request.
 
@@ -5068,7 +5068,7 @@ The HTTP request and response are not repeated in this section, as they are the 
 
 #### 10.4.17 Perform Transfer in FSP BankNrOne -- Step 20 in End-to-End Flow
 
-When the FSP **BankNrOne** has received the transfer callback in [Listing 50](#listing-50) and sent the asynchronous response in [Listing 51](#listing-51), the FSP **BankNrOne** should validate the fulfilment (see [Section 10.4.16](#10416-perform-transfer-in-switch----step-19-in-end-to-end-flow)) and then perform the earlier reserved transfer.
+When the FSP **BankNrOne** has received the transfer callback in [Listing 50](#listing-50) and sent the synchronous response in [Listing 51](#listing-51), the FSP **BankNrOne** should validate the fulfilment (see [Section 10.4.16](#10416-perform-transfer-in-switch----step-19-in-end-to-end-flow)) and then perform the earlier reserved transfer.
 
 After the reserved transfer has been performed, the Payer Mats Hagman should be notified of the successful transaction. How the notification is sent is outside the scope of this API.
 
