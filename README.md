@@ -28,10 +28,10 @@ The Open API for FSP Interoperability Specification includes the following docum
 Information is shared in accordance with **Creative Commons Licensing**.
 
 ## Logical Data Model
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Logical%20Data%20Model.md) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented at a high-level.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Generic%20Transaction%20Patterns.md) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
 
 ## Generic Transaction Patterns
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Generic%20Transaction%20Patterns.md) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Logical%20Data%20Model.md) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented at a high-level.
 
 ## Use Cases
 The purpose of [this document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Use%20Cases.md) is to define a set of use cases that can be implemented using the API. The use cases referenced within this document provide an overview of transaction processing flows and business rules of each transaction step as well as relevant error conditions. The primary purpose of the API is to support the movement of financial transactions between one Financial Services Provider (FSP) and another.
