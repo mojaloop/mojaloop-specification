@@ -3,8 +3,7 @@ name: Change Request
 about: This template can be used for making Change Requests
 title: 'Change Request: <Change Request Title>'
 labels: Change Proposal
-assignees: ehenrka, elnyry, hill-chen-hw, jmssebunnya, matthewbohan, MichaelJBRichards,
-  Mutashobya, ritviksinha, rjpwip
+assignees: ehenrka, elnyry-sam-k, MichaelJBRichards, mdebarros, lewisdaly
 
 ---
 
