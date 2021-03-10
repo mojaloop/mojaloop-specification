@@ -4,7 +4,7 @@ about: This template can be used to make a Solution Proposal corresponding to an
   Change Request
 title: 'Solution Proposal: <Change Request Title>'
 labels: Solution Proposal
-assignees: ''
+assignees: ehenrka, elnyry-sam-k, MichaelJBRichards, mdebarros, lewisdaly
 
 ---
 
