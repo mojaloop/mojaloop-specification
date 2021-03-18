@@ -707,7 +707,8 @@
                 }
             },
             "put": {
-                "summary": "Update a settlement model",
+                "summary": "Update a settlement model (activate/deactivate a settlement model)",
+                "description": "The `PUT /settlementModels/{name}` request is used to update details of the settlement model that is specified in the `{name}` path parameter. Currently, updating only the `isActive` flag is supported.",
                 "tags": [
                     "settlementModels"
                 ],
@@ -1350,17 +1351,29 @@
                     },
                     "settlementGranularity": {
                         "type": "string",
-                        "description": "Settlement granularity.",
+                        "enum": [
+                        	"GROSS",
+                        	"NET"
+                        ],
+                        "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
                         "example": "NET"
                     },
                     "settlementInterchange": {
                         "type": "string",
-                        "description": "Settlement interchange.",
+                        "enum": [
+                        	"BILATERAL",
+                        	"MULTILATERAL"
+                        ],
+                        "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
                         "example": "MULTILATERAL"
                     },
                     "settlementDelay": {
                         "type": "string",
-                        "description": "Settlement delay.",
+                        "enum": [
+                        	"IMMEDIATE",
+                        	"DEFERRED"
+                        ],
+                        "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
                         "example": "DEFERRED"
                     },
                     "currency": {
@@ -1419,19 +1432,31 @@
                         },
                         "settlementGranularity": {
                             "type": "string",
-                            "description": "Settlement granularity.",
+                            "enum": [
+                            	"GROSS",
+                            	"NET"
+                            ],
+                            "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
                             "example": "NET"
                         },
-                        "settlementInterchange": {
-                            "type": "string",
-                            "description": "Settlement interchange.",
-                            "example": "MULTILATERAL"
-                        },
-                        "settlementDelay": {
-                            "type": "string",
-                            "description": "Settlement delay.",
-                            "example": "DEFERRED"
-                        },
+	                    "settlementInterchange": {
+	                        "type": "string",
+	                        "enum": [
+	                        	"BILATERAL",
+	                        	"MULTILATERAL"
+	                        ],
+	                        "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
+	                        "example": "MULTILATERAL"
+	                    },
+	                    "settlementDelay": {
+	                        "type": "string",
+	                        "enum": [
+	                        	"IMMEDIATE",
+	                        	"DEFERRED"
+	                        ],
+	                        "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
+	                        "example": "DEFERRED"
+	                    },
                         "currency": {
                             "$ref": "#/components/schemas/Currency"
                         },
@@ -1702,7 +1727,7 @@
                     },
                     "alarmPercentage": {
                         "type": "number",
-                        "description": "An alarm notification is triggered when a pre-sepcified percentage of the limit is reached. Specifying an alarmPercentage is optional. If not specified, it will default to 10 percent.",
+                        "description": "An alarm notification is triggered when a pre-specified percentage of the limit is reached. Specifying an alarmPercentage is optional. If not specified, it will default to 10 percent.",
                         "example": 10
                     }
                 },
@@ -1960,7 +1985,7 @@
                 "type": "string",
                 "minLength": 1,
                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                "description": "Quote Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the enjoi module has been fixed."
+                "description": "Quote Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the joi module has been fixed."
             },
             "RecordFundsOut": {
                 "type": "object",
@@ -2026,27 +2051,30 @@
                     },
                     "settlementGranularity": {
                         "type": "string",
-                        "description": "Granularity type for the settlement model GROSS or NET",
                         "enum": [
-                            "GROSS",
-                            "NET"
-                        ]
+                        	"GROSS",
+                        	"NET"
+                        ],
+                        "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
+                        "example": "NET"
                     },
                     "settlementInterchange": {
                         "type": "string",
-                        "description": "Interchange type for the settlement model BILATERAL or MULTILATERAL",
                         "enum": [
-                            "BILATERAL",
-                            "MULTILATERAL"
-                        ]
+                        	"BILATERAL",
+                        	"MULTILATERAL"
+                        ],
+                        "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
+                        "example": "MULTILATERAL"
                     },
                     "settlementDelay": {
                         "type": "string",
-                        "description": "Delay type for the settlement model IMMEDIATE or DEFERRED",
                         "enum": [
-                            "DEFERRED",
-                            "IMMEDIATE"
-                        ]
+                        	"IMMEDIATE",
+                        	"DEFERRED"
+                        ],
+                        "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
+                        "example": "DEFERRED"
                     },
                     "currency": {
                         "$ref": "#/components/schemas/Currency"
@@ -2086,7 +2114,7 @@
                 "type": "string",
                 "minLength": 1,
                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                "description": "Transaction Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the enjoi module has been fixed."
+                "description": "Transaction Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the joi module has been fixed."
             },
             "TransactionType": {
                 "title": "TransactionType",
