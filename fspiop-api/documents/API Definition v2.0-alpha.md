@@ -23,6 +23,7 @@ specified types of information.
 |---|---|---|
 |**1.0**|2018-03-13|Initial version|
 |**1.1**|2020-05-19|1. This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request **PATCH /transfers/**_{ID}_. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the **transfers** resource has been updated with the new **PATCH** request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for **PATCH** is described in Section 3.2.3.5. <br>c. Table 5 in Section 6.1.1 has been updated to include **PATCH** as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the **transfers** resource. <br>e. Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new **PATCH /transfers**/_{ID}_ request. <br><br>2. In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a. Updated Figure 6 as it contained a copy-paste error. <br>b. Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3. The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context<br>a. The description for the **FSPIOP-Destination** header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the **FSPIOP-URI** header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 83. This doesn’t imply any change as such. <br>a. Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the **PartyIdInfo** complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7. A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in **PUT /transfers/**_{ID}_ callbacks.|
+|**2.0**|2021-03-19|1. The element named **initiatorType** has been removed from the complex type **TransactionType** (see [Section 7.4.18](#7418-transactiontype)). This information is now supposed to be carried as part of the complex type **Party** (see [7.4.11 Party](#7411-party)) instead, to be able to have more detail of the transaction by allowing to state the type of both the Payer and Payee. Section [5.3 Mapping of Use Cases to Transaction Types](#53-mapping-of-use-cases-to-transaction-types), has been updated to reflect this change.
 
 ## 2. Introduction
 
@@ -1170,7 +1171,7 @@ Because the _Party ID_ and the _Party Sub ID or Type_ are used as part of the UR
 
 ### 5.3 Mapping of Use Cases to Transaction Types
 
-This section contains information about how to map the currently supported non-bulk use cases in the API to the complex type **TransactionType** (see [Section 7.4.18](#7418-transactiontype)), using the elements TransactionScenario (see [Section 7.3.32](#7332-transactionscenario)), and TransactionInitiator, (see [Section 7.3.29](#7329-transactioninitiator)).
+This section contains information about how to map the currently supported non-bulk use cases in the API to the complex type **TransactionType** (see [Section 7.4.18](#7418-transactiontype)), using the elements TransactionScenario (see [Section 7.3.32](#7332-transactionscenario)), TransactionInitiator, (see [Section 7.3.29](#7329-transactioninitiator)) and type of the Payer and Payer (see [7.4.11 Party](#7411-party), specifically [**PartyType**](#7330-partytype)).
 
 For more information regarding these use cases, see _API Use Cases_.
 
@@ -1180,7 +1181,8 @@ To perform a P2P Transfer, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **TRANSFER**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYER**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **CONSUMER**.
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **CONSUMER**
 
 #### 5.3.2 Agent-Initiated Cash In
 
@@ -1188,7 +1190,8 @@ To perform an Agent-Initiated Cash In, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **DEPOSIT**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYER**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **AGENT**.
+- **Payer**.[**PartyType**](#7330-partytype) to **AGENT**
+- **Payee**.[**PartyType**](#7330-partytype) to **CONSUMER**
 
 #### 5.3.3 Agent-Initiated Cash Out
 
@@ -1196,7 +1199,8 @@ To perform an Agent-Initiated Cash Out, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **WITHDRAWAL**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYEE**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **AGENT**
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **AGENT**
 
 #### 5.3.4 Agent-Initiated Cash Out Authorized on POS
 
@@ -1204,8 +1208,8 @@ To perform an Agent-Initiated Cash Out on POS, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **WITHDRAWAL**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYEE**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **AGENT**
-
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **DEVICE**
 
 #### 5.3.5 Customer-Initiated Cash Out
 
@@ -1213,7 +1217,8 @@ To perform a Customer-Initiated Cash Out, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **WITHDRAWAL**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYER**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **CONSUMER**
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **AGENT**
 
 #### 5.3.6 Customer-Initiated Merchant Payment
 
@@ -1222,7 +1227,8 @@ follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **PAYMENT**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYER**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **CONSUMER**.
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **BUSINESS**
 
 #### 5.3.7 Merchant-Initiated Merchant Payment
 
@@ -1231,7 +1237,8 @@ follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **PAYMENT**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYEE**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **BUSINESS**
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **BUSINESS**
 
 #### 5.3.8 Merchant-Initiated Merchant Payment Authorized on POS
 
@@ -1240,7 +1247,8 @@ follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **PAYMENT**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYEE**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **DEVICE**
+- - **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **DEVICE**
 
 #### 5.3.9 ATM-Initiated Cash Out
 
@@ -1248,7 +1256,8 @@ To perform an ATM-Initiated Cash Out, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **WITHDRAWAL**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYEE**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) to **DEVICE**
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payee**.[**PartyType**](#7330-partytype) to **DEVICE**
 
 #### 5.3.10 Refund
 
@@ -1256,7 +1265,8 @@ To perform a Refund, set elements as follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **REFUND**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYER**
-- [**TransactionInitiatorType**](#7330-transactioninitiatortype) depends on the initiator of the Refund.
+- **Payer**.[**PartyType**](#7330-partytype) depends on the initiator of the Refund.
+- **Payee**.[**PartyType**](#7330-partytype) depends on the recipient of the Refund.
 
 Additionally, the **Refund** complex type, see [Section 7.4.16](#7416-refund), must be populated with the transaction ID of the original transaction that is to be refunded.
 
@@ -1327,17 +1337,17 @@ On a high level, the API can be used to perform the following actions:
 #### 6.1.2 Current Resource Versions
 [Table 6](#table-6) contains the version for each resource that this document version describes.
 
-|Resource|urrent Version|Last Updated|
+|Resource|Current Version|Last Update|
 |---|---|---|
 |/participants|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/parties|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/transactionRequests|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/quotes|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/authorizations|1.0|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/transfers|1.1|Added possible commit notification using PATCH /transfers/<ID>. The process of using commit notifications is described in Section 6.7.2.6. The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/transactions|1.0|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-/bulkQuotes|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/bulkTransfers|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+|/parties|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/transactionRequests|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/quotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/authorizations|1.0|Initial version
+|/transfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/transactions|1.0|Initial version
+/bulkQuotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/bulkTransfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
 **Table 6 – Current resource versions**
 
 ### 6.2 API Resource /participants
@@ -1354,9 +1364,8 @@ If a common service (for example, an ALS) is supported in the scheme, the servic
 
 |Version|Date|Description|
 |---|---|---|
-|1.0|2018-03-13|Initial version|
-|1.1|2020-05-19|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.
-For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well.|
+| **1.0** | 2018-03-13 | Initial version |
+| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.<br>For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well. |
 **Table 7 – Version history for resource /participants**
 
 #### 6.2.2 Service Details
@@ -1571,8 +1580,9 @@ The services provided by the resource **/parties** is used for finding out infor
 
 |Version|Date|Description|
 |---|---|---|
-|1.0|2018-03-13|Initial version|
-|1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+| **1.0** | 2018-03-13 | Initial version |
+| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. |
+| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
 
 **Table 14 – Version history for resource /parties**
 
@@ -1667,8 +1677,9 @@ Alternatively, the Payer could make the decision manually.
 
 |Version|Date|Description|
 |---|---|---|
-|1.0|2018-03-13|Initial version|
-|1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+| **1.0** | 2018-03-13 | Initial version |
+| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. |
+| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
 **Table 17 – Version history for resource /transactionRequests**
 
 #### 6.4.2 Service Details
@@ -1811,8 +1822,9 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 
 |Version|Date|Description|
 |---|---|---|
-|1.0|2018-03-13|Initial version|
-|1.1|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+| **1.0** | 2018-03-13 | Initial version |
+| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. |
+| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
 
 **Table 21 – Version history for resource /quotes**
 
@@ -2137,6 +2149,7 @@ Table 28 contains a description of each different version of the **/transfers** 
 | ---- | ---- | ---- |
 | **1.0** | 2018-03-13 | Initial version |
 | **1.1** | 2020-05-19 | The resource is updated to support commit notifications using HTTP Method **PATCH**. The new request **PATCH /transfers/{ID}** is described in Section 6.7.3.3. The process of using commit notifications is described in Section 6.7.2.6. <br><br> The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: [https://github.com/mojaloop/mojaloop-specification/issues/30](https://github.com/mojaloop/mojaloop-specification/issues/30). Following this, the data model as specified in Table 92 has been updated.|
+| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
 **Table 28 –- Version history for resource /transfers**
 
 #### 6.7.2 Service Details
@@ -2473,6 +2486,7 @@ Table 36 contains a description of each different version of the **/bulkQuotes**
 | ---- | ---- | ---- |
 | **1.0** | 2018-03-13 | Initial version |
 | **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
 **Table 36 –- Version history for resource /bulkQuotes**
 
 #### 6.9.2 Service Details
@@ -2601,6 +2615,7 @@ Table 40 contains a description of each different version of the **/bulkTransfer
 | ---- | ---- | ---- |
 | **1.0** | 2018-03-13 | Initial version |
 | **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
+| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
 **Table 40 –- Version history for resource /bulkTransfers**
 
 #### 6.10.2 Service Details
@@ -3429,18 +3444,18 @@ This section defines elements types used by the API.
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **TransactionInitiator** | 1 | Enum of String(1..32) | |
-**Table 73 -- Element Transaction Initiator**
+**Table 73 -- Element TransactionInitiator**
 
-#### 7.3.30 TransactionInitiatorType
+#### 7.3.30 PartyType
 
-[Table 74](#table-74) contains the data model for the element **TransactionInitiatorType**.
+[Table 74](#table-74) contains the data model for the element **PartyType**.
 
 ###### Table 74
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionInitiatorType** | 1 | Enum of String(1..32) | See [Section 7.5.9](#759-transactioninitiatortype) (TransactionInitiatorType) for more information on allowed values. |
-**Table 74 -- Element Transaction InitiatorType**
+| **PartyType** | 1 | Enum of String(1..32) | See [Section 7.5.9](#759-partytype) (PartyType) for more information on allowed values. |
+**Table 74 -- Element PartyType**
 
 #### 7.3.31 TransactionRequestState
 
@@ -3653,6 +3668,7 @@ This section describes complex types used by the API.
 | **merchantClassificationCode** | 0..1 | MerchantClassificationCode | Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments. |
 | **name** | 0..1 | PartyName | Display name of the Party, could be a real name or a nick name. |
 | **personalInfo** | 0..1 | PartyPersonalInfo | Personal information used to verify identity of Party such as first, middle, last name and date of birth. |
+| **type** | 0..1 | PartyType | The type of the Party, for example Consumer, Business, or Agent. |
 **Table 90 -- Complex type Party**
 
 #### 7.4.12 PartyComplexName
@@ -3748,7 +3764,6 @@ This section describes complex types used by the API.
 | **scenario** | 1 | TransactionScenario | Deposit, withdrawal, refund, ... |
 | **subScenario** | 0..1 | TransactionSubScenario | Possible sub-scenario, defined locally within the scheme. |
 | **initiator** | 1 | TransactionInitiator | Who is initiating the transaction: Payer or Payee |
-| **initiatorType** | 1 | TransactionInitiatorType | Consumer, agent, business, ... |
 | **refundInfo** | 0..1 | Refund | Extra information specific to a refund scenario. Should only be populated if scenario is REFUND. |
 | **balanceOfPayments** | 0..1 | BalanceOfPayments | Balance of Payments code. |
 **Table 97 -- Complex type TransactionType**
@@ -3866,19 +3881,19 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **PAYEE** | Recipient of the funds is initiating the transaction by sending a transaction request. The Payer must approve the transaction, either automatically by a pre-generated OTP or by pre-approval of the Payee, or manually by approving on their own Device. |
 **Table 104 -- Enumeration TransactionInitiator**
 
-#### 7.5.9 TransactionInitiatorType
+#### 7.5.9 PartyType
 
-[Table 105](#table-105) contains the allowed values for the enumeration **TransactionInitiatorType**.
+[Table 105](#table-105) contains the allowed values for the enumeration **PartyType**.
 
 ###### Table 105
 
 | **Name** | **Description** |
 | --- | --- |
-| **CONSUMER ** | Consumer is the initiator of the transaction. |
-| **AGENT** | Agent is the initiator of the transaction. |
-| **BUSINESS** | Business is the initiator of the transaction. |
-| **DEVICE** | Device is the initiator of the transaction. |
-**Table 105 -- Enumeration TransactionInitiatorType**
+| **CONSUMER** | The Party is of type Consumer. |
+| **AGENT** | The Party is of type Agent. |
+| **BUSINESS** | The Party is of type Business. |
+| **DEVICE** | The Party is of type. |
+**Table 105 -- Enumeration PartyType**
 
 #### 7.5.10 TransactionRequestState
 
@@ -4610,7 +4625,8 @@ FSPIOP-Destination: BankNrOne
                 "firstName": "Henrik",
                 "lastName": "Karlsson"
             }
-        }
+        },
+        "partyType": "CONSUMER"
     }
 }
 ````
@@ -4662,7 +4678,8 @@ FSPIOP-Destination: MobileMoney
             "partyIdType": "MSISDN",
             "partyIdentifier": "123456789",
             "fspId": "MobileMoney"
-        }
+        },
+        "partyType": "CONSUMER"
     },
     "payer": {
         "personalInfo": {
@@ -4675,7 +4692,8 @@ FSPIOP-Destination: MobileMoney
             "partyIdType": "IBAN",
             "partyIdentifier": "SE4550000000058398257466",
             "fspId": "BankNrOne"
-        }
+        },
+        "partyType": "CONSUMER"
     },
     "amountType": "RECEIVE",
     "amount": {
@@ -4685,7 +4703,6 @@ FSPIOP-Destination: MobileMoney
     "transactionType": {
         "scenario": "TRANSFER",
         "initiator": "PAYER",
-        "initiatorType": "CONSUMER"
     },
     "note": "From Mats",
     "expiration": "2017-11-15T22:17:28.985-01:00"
@@ -4744,7 +4761,8 @@ See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Se
                 "firstName": "Henrik",
                 "lastName": "Karlsson"
             }
-        }
+        },
+        "partyType": "CONSUMER"
     },
     "payer": {
         "personalInfo": {
@@ -4757,7 +4775,8 @@ See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Se
             "partyIdType": "IBAN",
             "partyIdentifier": "SE4550000000058398257466",
             "fspId": "BankNrOne"
-        }
+        },
+        "partyType": "CONSUMER"
     },
     "amount": {
         "amount": "99",
@@ -4766,7 +4785,6 @@ See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Se
     "transactionType": {
         "scenario": "TRANSFER",
         "initiator": "PAYER",
-        "initiatorType": "CONSUMER"
     },
     "note": "From Mats"
 }
