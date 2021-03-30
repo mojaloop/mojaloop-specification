@@ -127,7 +127,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ParticipantIsActive"
+                                "$ref": "#/components/schemas/IsActiveBoolean"
                             }
                         }
                     }
@@ -186,7 +186,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PostParticipantsNameEndpointsRequest"
+                                "$ref": "#/components/schemas/ParticipantsNameEndpointsObject"
                             }
                         }
                     }
@@ -271,7 +271,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PutParticipantsNameLimitsRequest"
+                                "$ref": "#/components/schemas/ParticipantsNameLimitsObject"
                             }
                         }
                     }
@@ -495,7 +495,7 @@
             },
             "put": {
                 "summary": "Update participant accounts",
-                "description": "The PUT /participants/{name}/accounts/{id} request is used to update account details of a participant. Currently, updating only the isActive flag is supported.",
+                "description": "The PUT /participants/{name}/accounts/{id} request is used to update account details of a participant. Currently, updating only the `isActive` flag is supported.",
                 "operationId": "putParticipantsNameAccountsId",
                 "parameters": [
                     {
@@ -509,7 +509,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AccountIsActive"
+                                "$ref": "#/components/schemas/IsActiveBoolean"
                             }
                         }
                     }
@@ -722,7 +722,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/GetSettlementModelsNameResponse"
+                                "$ref": "#/components/schemas/IsActiveBoolean"
                             }
                         }
                     }
@@ -733,7 +733,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "string"
+                                    "$ref": "#/components/schemas/SettlementModelsObject"
                                 }
                             }
                         }
@@ -781,23 +781,17 @@
                     "$ref": "#/components/schemas/IndividualAccount"
                 }
             },
-            "AccountIsActive": {
-                "type": "object",
-                "properties": {
-                    "isActive": {
-                        "type": "boolean",
-                        "description": "Participant account isActive boolean"
-                    }
-                },
-                "required": [
-                    "isActive"
-                ]
-            },
             "Amount": {
                 "title": "Amount",
                 "type": "string",
                 "pattern": "^([0]|([1-9][0-9]{0,17}))([.][0-9]{0,3}[1-9])?$",
                 "description": "The API data type Amount is a JSON String in a canonical format that is restricted by a regular expression for interoperability reasons. This pattern does not allow any trailing zeroes at all, but allows an amount without a minor currency unit. It also only allows four digits in the minor currency unit; a negative value is not allowed. Using more than 18 digits in the major currency unit is not allowed."
+            },
+            "AutoPositionReset": {
+                "title": "AutoPositionReset",
+                "type": "boolean",
+                "description": "Automatic position reset setting, which determines whether to execute the settlement transfer or not.",
+                "example": true
             },
             "Currency": {
                 "title": "CurrencyEnum",
@@ -971,18 +965,6 @@
                 ],
                 "example": "AED"
             },
-            "CurrencyIsActive": {
-                "type": "object",
-                "properties": {
-                    "isActive": {
-                        "type": "boolean",
-                        "description": "Participant currency isActive boolean"
-                    }
-                },
-                "required": [
-                    "isActive"
-                ]
-            },
             "DateTime": {
                 "title": "DateTime",
                 "type": "string",
@@ -1015,19 +997,6 @@
                 "required": [
                     "errorCode",
                     "errorDescription"
-                ]
-            },
-            "ErrorInformationObject": {
-                "title": "ErrorInformationObject",
-                "type": "object",
-                "description": "Data model for the complex type object that contains ErrorInformation.",
-                "properties": {
-                    "errorInformation": {
-                        "$ref": "#/components/schemas/ErrorInformation"
-                    }
-                },
-                "required": [
-                    "errorInformation"
                 ]
             },
             "ErrorInformationResponse": {
@@ -1129,8 +1098,8 @@
                             "$ref": "#/components/schemas/Currency"
                         },
                         "isActive": {
-                            "description": "A flag to indicate whether or not the ledger account is active. Possible values are 1 and 0.",
-                            "type": "integer",
+                            "description": "A flag to indicate whether or not the ledger account is active.",
+                            "$ref": "#/components/schemas/IsActive",
                             "example": 1
                         },
                         "value": {
@@ -1165,22 +1134,7 @@
                 "description": "GET /participants/{name}/endpoints response JSON array.",
                 "items": {
                     "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "Type of endpoint",
-                            "example": "FSPIOP_CALLBACK_URL_PARTIES_GET"
-                        },
-                        "value": {
-                            "type": "string",
-                            "description": "Endpoint value",
-                            "example": "http://dev1-sim-payerfsp.mojaloop.live/sim/payerfsp/inbound/parties/{{partyIdType}}/{{partyIdentifier}}"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "value"
-                    ]
+                    "$ref": "#/components/schemas/ParticipantsNameEndpointsObject"
                 }
             },
             "GetParticipantsNameLimitsResponse": {
@@ -1189,18 +1143,7 @@
                 "description": "GET /participants/{name}/limits response JSON array.",
                 "items": {
                     "type": "object",
-                    "properties": {
-                        "currency": {
-                            "$ref": "#/components/schemas/Currency"
-                        },
-                        "limit": {
-                            "$ref": "#/components/schemas/ParticipantLimit"
-                        }
-                    },
-                    "required": [
-                        "currency",
-                        "limit"
-                    ]
+                    "$ref": "#/components/schemas/ParticipantsNameLimitsObject"
                 }
             },
             "GetParticipantsNamePositionsResponse": {
@@ -1232,51 +1175,8 @@
             },
             "GetParticipantsNameResponse": {
                 "title": "GetParticipantsNameResponse",
-                "type": "object",
                 "description": "GET /participants/{name} response JSON object.",
-                "properties": {
-                    "name": {
-                        "description": "The name of the participant.",
-                        "type": "string",
-                        "example": "payerfsp"
-                    },
-                    "id": {
-                        "description": "The identifier of the participant in the form of a fully qualified domain name combined with the participant's `fspId`.",
-                        "type": "string",
-                        "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
-                    },
-                    "created": {
-                        "description": "The date and time when the participant was created.",
-                        "$ref": "#/components/schemas/DateTime"
-                    },
-                    "isActive": {
-                        "description": "A flag to indicate whether or not the participant is active. Possible values are 1 and 0.",
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "links": {
-                        "description": "List of links for a Hypermedia-Driven RESTful Web Service.",
-                        "type": "object",
-                        "properties": {
-                            "self": {
-                                "description": "Fully qualified domain name combined with the `fspId` of the participant.",
-                                "type": "string",
-                                "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
-                            }
-                        }
-                    },
-                    "accounts": {
-                        "$ref": "#/components/schemas/Accounts"
-                    }
-                },
-                "required": [
-                    "name",
-                    "id",
-                    "created",
-                    "isActive",
-                    "links",
-                    "accounts"
-                ]
+                "$ref": "#/components/schemas/Participant"
             },
             "GetParticipantsResponse": {
                 "title": "GetParticipantsResponse",
@@ -1284,129 +1184,13 @@
                 "description": "GET /participants response JSON array.",
                 "items": {
                     "type": "object",
-                    "properties": {
-                        "name": {
-                            "description": "The name of the participant.",
-                            "type": "string",
-                            "example": "payerfsp"
-                        },
-                        "id": {
-                            "description": "The identifier of the participant in the form of a fully qualified domain name combined with the participant's `fspId`.",
-                            "type": "string",
-                            "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
-                        },
-                        "created": {
-                            "description": "The date and time when the participant was created.",
-                            "$ref": "#/components/schemas/DateTime"
-                        },
-                        "isActive": {
-                            "description": "A flag to indicate whether or not the participant is active. Possible values are 1 and 0.",
-                            "type": "integer",
-                            "example": 1
-                        },
-                        "links": {
-                            "description": "List of links for a Hypermedia-Driven RESTful Web Service.",
-                            "type": "object",
-                            "properties": {
-                                "self": {
-                                    "description": "Fully qualified domain name combined with the `fspId` of the participant.",
-                                    "type": "string",
-                                    "example": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
-                                }
-                            }
-                        },
-                        "accounts": {
-                            "$ref": "#/components/schemas/Accounts"
-                        }
-                    },
-                    "required": [
-                        "name",
-                        "id",
-                        "created",
-                        "isActive",
-                        "links",
-                        "accounts"
-                    ]
+                    "$ref": "#/components/schemas/Participant"
                 }
             },
             "GetSettlementModelsNameResponse": {
                 "title": "GetSettlementModelsNameResponse",
-                "type": "object",
                 "description": "GET /settlementModels/{name} response JSON object.",
-                "properties": {
-                    "settlementModelId": {
-                        "type": "integer",
-                        "description": "Settlement model identifier.",
-                        "example": 1
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Settlement model name.",
-                        "example": "DEFERREDNET"
-                    },
-                    "isActive": {
-                        "description": "A flag to indicate whether or not the settlement model is active. Possible values are 1 and 0.",
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "settlementGranularity": {
-                        "type": "string",
-                        "enum": [
-                        	"GROSS",
-                        	"NET"
-                        ],
-                        "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
-                        "example": "NET"
-                    },
-                    "settlementInterchange": {
-                        "type": "string",
-                        "enum": [
-                        	"BILATERAL",
-                        	"MULTILATERAL"
-                        ],
-                        "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
-                        "example": "MULTILATERAL"
-                    },
-                    "settlementDelay": {
-                        "type": "string",
-                        "enum": [
-                        	"IMMEDIATE",
-                        	"DEFERRED"
-                        ],
-                        "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
-                        "example": "DEFERRED"
-                    },
-                    "currency": {
-                        "$ref": "#/components/schemas/Currency"
-                    },
-                    "requireLiquidityCheck": {
-                        "type": "boolean",
-                        "description": "A flag to indicate whether or not the settlement model requires liquidity check.",
-                        "example": true
-                    },
-                    "ledgerAccountTypeId": {
-                        "type": "string",
-                        "description": "Type of ledger account.",
-                        "example": "POSITION"
-                    },
-                    "autoPositionReset": {
-                        "type": "boolean",
-                        "description": "A flag to indicate whether or not the settlement model requires the automatic reset of the position.",
-                        "example": true
-                    }
-                },
-                "required": [
-                    "settlementModelId",
-                    "name",
-                    "isActive",
-                    "settlementGranularity",
-                    "settlementInterchange",
-                    "settlementDelay",
-                    "currency",
-                    "requireLiquidityCheck",
-                    "ledgerAccountTypeId",
-                    "autoPositionReset"
-                ]                
+                "$ref": "#/components/schemas/SettlementModelsObject"
             },
             "GetSettlementModelsResponse": {
                 "title": "GetSettlementModelsResponse",
@@ -1414,81 +1198,8 @@
                 "description": "GET /settlementModels response JSON array.",
                 "items": {
                     "type": "object",
-                    "properties": {
-                        "settlementModelId": {
-                            "type": "integer",
-                            "description": "Settlement model identifier.",
-                            "example": 1
-                        },
-                        "name": {
-                            "type": "string",
-                            "description": "Settlement model name.",
-                            "example": "DEFERREDNET"
-                        },
-                        "isActive": {
-                            "description": "A flag to indicate whether or not the settlement model is active. Possible values are 1 and 0.",
-                            "type": "integer",
-                            "example": 1
-                        },
-                        "settlementGranularity": {
-                            "type": "string",
-                            "enum": [
-                            	"GROSS",
-                            	"NET"
-                            ],
-                            "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
-                            "example": "NET"
-                        },
-	                    "settlementInterchange": {
-	                        "type": "string",
-	                        "enum": [
-	                        	"BILATERAL",
-	                        	"MULTILATERAL"
-	                        ],
-	                        "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
-	                        "example": "MULTILATERAL"
-	                    },
-	                    "settlementDelay": {
-	                        "type": "string",
-	                        "enum": [
-	                        	"IMMEDIATE",
-	                        	"DEFERRED"
-	                        ],
-	                        "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
-	                        "example": "DEFERRED"
-	                    },
-                        "currency": {
-                            "$ref": "#/components/schemas/Currency"
-                        },
-                        "requireLiquidityCheck": {
-                            "type": "boolean",
-                            "description": "A flag to indicate whether or not the settlement model requires liquidity check.",
-                            "example": true
-                        },
-                        "ledgerAccountTypeId": {
-                            "type": "string",
-                            "description": "Type of ledger account.",
-                            "example": "POSITION"
-                        },
-                        "autoPositionReset": {
-                            "type": "boolean",
-                            "description": "A flag to indicate whether or not the settlement model requires the automatic reset of the position.",
-                            "example": true
-                        }
-                    },
-                    "required": [
-                        "settlementModelId",
-                        "name",
-                        "isActive",
-                        "settlementGranularity",
-                        "settlementInterchange",
-                        "settlementDelay",
-                        "currency",
-                        "requireLiquidityCheck",
-                        "ledgerAccountTypeId",
-                        "autoPositionReset"
-                    ]
-                }                
+                    "$ref": "#/components/schemas/SettlementModelsObject"
+                    }                
             },
             "GetTransactionResponse": {
                 "title": "GetTransactionResponse",
@@ -1548,8 +1259,8 @@
                         "description": "Currency of the ledger account."
                     },
                     "isActive": {
-                        "description": "A flag to indicate whether or not the ledger account is active. Possible values are 1 and 0.",
-                        "type": "integer",
+                        "description": "A flag to indicate whether or not the ledger account is active.",
+                        "$ref": "#/components/schemas/IsActive",
                         "example": 1
                     },
                     "createdDate": {
@@ -1569,6 +1280,24 @@
                     "isActive",
                     "createdDate",
                     "createdBy"
+                ]
+            },
+            "IsActive": {
+                "title": "IsActive",
+                "type": "integer",
+                "description": "Indicates whether or not a ledger account / participant is active. Possible values are 1 and 0."
+            },
+            "IsActiveBoolean": {
+                "title": "IsActiveBoolean",
+                "type": "object",
+                "properties": {
+                    "isActive": {
+                        "type": "boolean",
+                        "description": "Indicates whether or not an account / participant / settlement model is active."
+                    }
+                },
+                "required": [
+                    "isActive"
                 ]
             },
             "Limit": {
@@ -1633,8 +1362,8 @@
                         "$ref": "#/components/schemas/DateTime"
                     },
                     "isActive": {
-                        "description": "A flag to indicate whether or not the participant is active. Possible values are 1 and 0.",
-                        "type": "integer",
+                        "description": "A flag to indicate whether or not the participant is active.",
+                        "$ref": "#/components/schemas/IsActive",
                         "example": 1
                     },
                     "links": {
@@ -1699,18 +1428,6 @@
                     "amount"
                 ]
             },
-            "ParticipantIsActive": {
-                "type": "object",
-                "properties": {
-                    "isActive": {
-                        "type": "boolean",
-                        "description": "Participant isActive boolean"
-                    }
-                },
-                "required": [
-                    "isActive"
-                ]
-            },
             "ParticipantLimit": {
                 "type": "object",
                 "description": "Participant limit",
@@ -1735,6 +1452,40 @@
                     "type",
                     "value",
                     "alarmPercentage"
+                ]
+            },
+            "ParticipantsNameEndpointsObject": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Endpoint type",
+                        "example": "FSPIOP_CALLBACK_URL_PARTIES_GET"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Endpoint value",
+                        "example": "http://dev1-sim-payerfsp.mojaloop.live/sim/payerfsp/inbound/parties/{{partyIdType}}/{{partyIdentifier}}"
+                    }
+                },
+                "required": [
+                    "type",
+                    "value"
+                ]
+            },
+            "ParticipantsNameLimitsObject": {
+                "type": "object",
+                "properties": {
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "limit": {
+                        "$ref": "#/components/schemas/ParticipantLimit"
+                    }
+                },
+                "required": [
+                    "currency",
+                    "limit"
                 ]
             },
             "Party": {
@@ -1904,25 +1655,6 @@
                 "description": "POST /participants/{name}/accounts response JSON object.",
                 "$ref": "#/components/schemas/Participant"
             },
-            "PostParticipantsNameEndpointsRequest": {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Endpoint type",
-                        "example": "FSPIOP_CALLBACK_URL_PARTIES_GET"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "Endpoint value",
-                        "example": "http://dev1-sim-payerfsp.mojaloop.live/sim/payerfsp/inbound/parties/{{partyIdType}}/{{partyIdentifier}}"
-                    }
-                },
-                "required": [
-                    "type",
-                    "value"
-                ]
-            },
             "PostParticipantsRequest": {
                 "type": "object",
                 "properties": {
@@ -1950,21 +1682,6 @@
                 "description": "POST /participants response JSON object.",
                 "$ref": "#/components/schemas/Participant"
             },
-            "PutParticipantsNameLimitsRequest": {
-                "type": "object",
-                "properties": {
-                    "currency": {
-                        "$ref": "#/components/schemas/Currency"
-                    },
-                    "limit": {
-                        "$ref": "#/components/schemas/ParticipantLimit"
-                    }
-                },
-                "required": [
-                    "currency",
-                    "limit"
-                ]
-            },
             "PutParticipantsNameLimitsResponse": {
                 "type": "object",
                 "properties": {
@@ -1985,7 +1702,7 @@
                 "type": "string",
                 "minLength": 1,
                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                "description": "Quote Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the joi module has been fixed."
+                "description": "Quote Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings."
             },
             "RecordFundsOut": {
                 "type": "object",
@@ -2027,6 +1744,42 @@
                     "originalTransactionId"
                 ]
             },
+            "RequireLiquidityCheck": {
+                "title": "RequireLiquidityCheck",
+                "type": "boolean",
+                "description": "Liquidity check boolean.",
+                "example": true
+            },
+            "SettlementDelay": {
+                "title": "SettlementDelay",
+                "type": "string",
+                "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
+                "enum": [
+                    "IMMEDIATE",
+                    "DEFERRED"
+                ],
+                "example": "DEFERRED"
+            },
+            "SettlementGranularity": {
+                "title": "SettlementGranularity",
+                "type": "string",
+                "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
+                "enum": [
+                    "GROSS",
+                    "NET"
+                ],
+                "example": "NET"
+            },
+            "SettlementInterchange": {
+                "title": "SettlementInterchange",
+                "type": "string",
+                "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
+                "enum": [
+                    "BILATERAL",
+                    "MULTILATERAL"
+                ],
+                "example": "MULTILATERAL"
+            },
             "SettlementModel": {
                 "type": "object",
                 "required": [
@@ -2037,7 +1790,8 @@
                     "settlementDelay",
                     "currency",
                     "settlementGranularity",
-                    "settlementInterchange"
+                    "settlementInterchange",
+                    "settlementAccountType"
                 ],
                 "properties": {
                     "name": {
@@ -2050,71 +1804,105 @@
                         }
                     },
                     "settlementGranularity": {
-                        "type": "string",
-                        "enum": [
-                        	"GROSS",
-                        	"NET"
-                        ],
-                        "description": "Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: GROSS - Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. NET - A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.",
-                        "example": "NET"
+                        "$ref": "#/components/schemas/SettlementGranularity"
                     },
                     "settlementInterchange": {
-                        "type": "string",
-                        "enum": [
-                        	"BILATERAL",
-                        	"MULTILATERAL"
-                        ],
-                        "description": "Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: BILATERAL - Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. MULTILATERAL - Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.",
-                        "example": "MULTILATERAL"
+                        "$ref": "#/components/schemas/SettlementInterchange"
                     },
                     "settlementDelay": {
-                        "type": "string",
-                        "enum": [
-                        	"IMMEDIATE",
-                        	"DEFERRED"
-                        ],
-                        "description": "Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: IMMEDIATE - Settlement happens immediately after a transfer has completed. DEFERRED - Settlement is managed by the Hub operator on-demand or via a schedule.",
-                        "example": "DEFERRED"
+                        "$ref": "#/components/schemas/SettlementDelay"
                     },
                     "currency": {
                         "$ref": "#/components/schemas/Currency"
                     },
                     "requireLiquidityCheck": {
-                        "type": "boolean",
-                        "description": "Liquidity check boolean"
+                        "$ref": "#/components/schemas/RequireLiquidityCheck"
                     },
                     "ledgerAccountType": {
                         "type": "string",
-                        "description": "Account type for the settlement model POSITION, SETTLEMENT or INTERCHANGE_FEE",
+                        "description": "Account type for the settlement model: POSITION, SETTLEMENT, or INTERCHANGE_FEE.",
                         "enum": [
                             "INTERCHANGE_FEE",
-                            "POSITION"
+                            "POSITION",
+                            "SETTLEMENT"
                         ]
                     },
+                    "settlementAccountType": {
+                        "type": "string",
+                        "description": "A special type of ledger account into which settlements should be settled: SETTLEMENT or INTERCHANGE_FEE_SETTLEMENT.",
+                        "enum": [
+                            "INTERCHANGE_FEE_SETTLEMENT",
+                            "SETTLEMENT"
+                        ]
+                    },                        
                     "autoPositionReset": {
-                        "type": "boolean",
-                        "description": "Automatic position reset setting, which determines whether to execute the settlement transfer or not"
+                        "$ref": "#/components/schemas/AutoPositionReset"
                     }
                 }
             },
-            "SettlementModelIsActive": {
+            "SettlementModelsObject": {
+                "title": "SettlementModelsObject",
                 "type": "object",
-                "required": [
-                    "isActive"
-                ],
+                "description": "Settlement model JSON object.",
                 "properties": {
+                    "settlementModelId": {
+                        "type": "integer",
+                        "description": "Settlement model identifier.",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Settlement model name.",
+                        "example": "DEFERREDNET"
+                    },
                     "isActive": {
                         "type": "boolean",
-                        "description": "settlementModel isActive boolean"
+                        "description": "A flag to indicate whether or not the settlement model is active.",
+                        "example": true
+                    },
+                    "settlementGranularity": {
+                        "$ref": "#/components/schemas/SettlementGranularity"
+                    },
+                    "settlementInterchange": {
+                        "$ref": "#/components/schemas/SettlementInterchange"
+                    },
+                    "settlementDelay": {
+                        "$ref": "#/components/schemas/SettlementDelay"
+                    },
+                    "currency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "requireLiquidityCheck": {
+                        "$ref": "#/components/schemas/RequireLiquidityCheck"
+                    },
+                    "ledgerAccountTypeId": {
+                        "type": "string",
+                        "description": "Type of ledger account.",
+                        "example": "POSITION"
+                    },
+                    "autoPositionReset": {
+                        "$ref": "#/components/schemas/AutoPositionReset"
                     }
-                }
+                },
+                "required": [
+                    "settlementModelId",
+                    "name",
+                    "isActive",
+                    "settlementGranularity",
+                    "settlementInterchange",
+                    "settlementDelay",
+                    "currency",
+                    "requireLiquidityCheck",
+                    "ledgerAccountTypeId",
+                    "autoPositionReset"
+                ]                
             },
             "TransactionId": {
                 "title": "TransactionId",
                 "type": "string",
                 "minLength": 1,
                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                "description": "Transaction Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings, this should be removed once the joi module has been fixed."
+                "description": "Transaction Identifier. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 4122, that is restricted by a regular expression for interoperability reasons. An UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘). A minLength of 1 has been specified due to the regex not being validated on empty strings."
             },
             "TransactionType": {
                 "title": "TransactionType",
