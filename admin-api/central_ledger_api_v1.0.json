@@ -1830,7 +1830,7 @@
                     "settlementAccountType": {
                         "type": "string",
                         "description": "A special type of ledger account into which settlements should be settled: SETTLEMENT or INTERCHANGE_FEE_SETTLEMENT.",
-                        "enum": [
+                        "examples": [
                             "INTERCHANGE_FEE_SETTLEMENT",
                             "SETTLEMENT"
                         ]
