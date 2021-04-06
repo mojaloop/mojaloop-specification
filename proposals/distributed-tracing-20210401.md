@@ -37,7 +37,7 @@ This section contains basic information regarding the solution proposal.
 
 | Version | Date | Author | Change Description |
 |---|---|---|---|
-| 1.0 | 2021-04-01 | Miguel de Barros | Initial version of template. Sent out for review. |
+| 1.0 | 2021-04-01 | Miguel de Barros | Initial version. Sent out for review. |
 
 ## **2. Change Request**
 ___
