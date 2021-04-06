@@ -1,7 +1,7 @@
 ---
 showToc: true
 ---
-# Distributed Tracing Support
+# Distributed Tracing Support for OpenAPI Interoperability
 
 ## _Tracing for the OpenAPI Interoperability Specification_
 
