@@ -158,6 +158,7 @@ Unmodified header propagation is typically implemented in pass-through services 
 
 This example will result in a single end-to-end trace graph being created from `FSP1` to `FSP2` being routed through a `Mojaloop Switch` for a  **POST /transfers** linking the resulting **PUT /transfers** callback from `FSP2` to `FSP1` via the `Mojaloop Switch`.
 
+<br/>
 4.1.1. `FSP1` sends a **POST /transfers** to a `Mojaloop Switch` which includes the following generated trace information:<br/><br/>
 
 > traceparent: `00`-`0af7651916cd43dd8448eb211c80319c`-`b7ad6b7169203331`-`01`<br/>
@@ -187,9 +188,10 @@ This example will result in a single end-to-end trace graph being created from `
 #### 4.2. POST /transfers request being sent by non-trace-participating FSP1 to non-trace-participating FSP2 through a Mojaloop Switch
 
 This will example will result in two disparate end-to-end trace graphs being created which are NOT linked as follows:
-4.2.a. `FSP1` to `FSP2` being routed through a `Mojaloop Switch` for a  **POST /transfers**
-4.2.b. `FSP2` to `FSP1` being routed through a `Mojaloop Switch` for a  **PUT /transfers** callback
+> 4.2.a. `FSP1` to `FSP2` being routed through a `Mojaloop Switch` for a  **POST /transfers**<br/>
+> 4.2.b. `FSP2` to `FSP1` being routed through a `Mojaloop Switch` for a  **PUT /transfers** callback<br/>
 
+<br/>
 4.2.1. `FSP1` sends a POST /transfers to a `Mojaloop Switch` which includes no trace information.
 
 4.2.2. The `Mojaloop Switch` receives the POST /transfers and responds with a HTTP 202 accepted. The `Mojaloop Switch` generates a new trace as none was found in the request headers before forwarding the the POST /transfers to `FSP2`:<br/><br/>
