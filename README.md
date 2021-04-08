@@ -10,7 +10,8 @@ The Open API for FSP Interoperability Specification includes the following docum
 * [Use Cases](#use-cases)
   
 #### Asynchronous REST Binding Documents
-* [API Definition](#api-definition) 
+* [API Definition](#api-definition)
+* [Central Ledger API](#central-ledger-api) 
 * [JSON Binding Rules](#json-binding-rules) 
 * [Scheme Rules](#scheme-rules)  
   
@@ -28,10 +29,10 @@ The Open API for FSP Interoperability Specification includes the following docum
 Information is shared in accordance with **Creative Commons Licensing**.
 
 ## Logical Data Model
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Generic%20Transaction%20Patterns.md) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Logical%20Data%20Model.md) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented at a high-level.
 
 ## Generic Transaction Patterns
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Logical%20Data%20Model.md) introduces the four generic transaction patterns that are supported in a logical version of the API. Additionally, all logical services that are part of the API are presented at a high-level.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Generic%20Transaction%20Patterns.md) specifies the logical data model used by the API. Section 2 in the document lists elements used by each service. Section 3 in the document describes the data model in terms of basic elements, simple data types and complex data types.
 
 ## Use Cases
 The purpose of [this document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Use%20Cases.md) is to define a set of use cases that can be implemented using the API. The use cases referenced within this document provide an overview of transaction processing flows and business rules of each transaction step as well as relevant error conditions. The primary purpose of the API is to support the movement of financial transactions between one Financial Services Provider (FSP) and another.
@@ -43,7 +44,7 @@ It should be noted that the API is only responsible for message exchange between
 Reconciliation, clearing and settlement after real time transactions is out of scope for the API. Additionally, account lookup is supported by the API, but it relies on the implementation in a local market in which a third party or Switch would provide such services. Therefore, the need for effective on-boarding processes and appropriate scheme rules must be considered when implementing use cases.
 
 ## API Definition
-The [**API Definition**](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/API%20Definition%20v1.1.md) document introduces and describes **the FSP Interoperabiliy API**. The purpose of the API is to enable interoperable financial transactions between a Payer (a payer of electronic funds in a payment transaction) located in one FSP (an entity that provides a digital financial service to an end user) and a Payee (a recipient of electronic funds in a payment transaction) located in another FSP. The API does not specify any front-end services between a Payer or Payee and its own FSP; all services defined in the API are between FSPs. FSPs are connected either (a) directly to each other or (b) by a Switch placed between the FSPs to route financial transactions to the correct FSP. 
+The [**API Definition**](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/API%20Definition%20v1.0.md) document introduces and describes **the FSP Interoperabiliy API**. The purpose of the API is to enable interoperable financial transactions between a Payer (a payer of electronic funds in a payment transaction) located in one FSP (an entity that provides a digital financial service to an end user) and a Payee (a recipient of electronic funds in a payment transaction) located in another FSP. The API does not specify any front-end services between a Payer or Payee and its own FSP; all services defined in the API are between FSPs. FSPs are connected either (a) directly to each other or (b) by a Switch placed between the FSPs to route financial transactions to the correct FSP. 
 The transfer of funds from a Payer to a Payee should be performed in near real-time. As soon as a financial transaction has been agreed to by both parties, it is deemed irrevocable. This means that a completed transaction cannot be reversed in the API. To reverse a transaction, a new negated refund transaction should be created from the Payee of the original transaction.  
 
 The API is designed to be sufficiently generic to support both a wide number of use cases and extensibility of those use cases, However, it should contain sufficient detail to enable implementation in an unambiguous fashion.  
@@ -52,6 +53,18 @@ Version 1.0 of the API is designed to be used within a country or region; intern
 This document:
 - Defines an asynchronous REST binding of the logical API introduced in Generic Transaction Patterns.
 - Adds to and builds on the information provided in Open API for FSP Interoperability Specification. The contents of the Specification are listed in Section **Open API for FSP Interoperability Specification**.
+
+## Central Ledger API
+
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/admin-api/admin-api-specification-v1.0.md) introduces and describes the **Central Ledger API**. The purpose of the API is to enable Hub Operators to manage admin processes around:
+
+- creating/activating/deactivating participants in the Hub
+- adding and updating participant endpoint information
+- managing participant accounts, limits, and positions
+- creating Hub accounts
+- performing Funds In and Funds Out operations
+- creating/updating/viewing settlement models
+- retrieving transfer details
 
 ## Scheme Rules
 [This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Scheme%20Rules.md) defines scheme rules for Open API for FSP Interoperability (hereafter cited as the API) in three categories.
@@ -84,7 +97,7 @@ The API should be implemented in an environment that consists of either:
 For more information about the environment, see Chapter 3, Network Topology. Chapters 4 and 5 identify management strategies for the CA and for the platform. Communication between platforms is performed using a REST (REpresentational State Transfer)-based HTTP protocol (for more information, see API Definition). Because this protocol does not provide a means for ensuring either integrity or confidentiality between platforms, extra security layers must be added to protect sensitive information from alteration or exposure to unauthorized parties.
 
 ## Signature
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Signature%20v1.1.md) details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Signature.md) details security methods to be implemented for **the API** to ensure confidentiality of API messages between an API client and the API server.
 
 In information security, confidentiality means that information is not made available or disclosed to unauthorized individuals, entities, or processes (Excerpt [ISO27000](http://www.27000.org/ ) ). For the API, confidentiality means that some sensitive fields in the payload of an API message cannot be accessed or identified in an unauthorized or undetected manner by the intermediaries involved in the API communication. That is, if some fields of an API message are encrypted by the API client, then only the expected API recipient can decrypt those fields.
 
@@ -93,7 +106,7 @@ JSON Web Encryption (JWE [RFC7516](https://tools.ietf.org/html/rfc7516) )must be
 To support encryption for multiple fields of an API message, JWE is extended in this document to adapt to the requirements of the API.
 
 ## Encryption
-[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Encryption%20v1.1.md) details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
+[This document](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/Encryption.md) details the security methods to be implemented for **the API** to ensure integrity and non-repudiation between the API client and the API server.
 
 In information security, data integrity means maintaining and assuring the accuracy and completeness of data over its entire life-cycle. For the API, data integrity means that an API message cannot be modified in an unauthorized or undetected manner by parties involved in the API communication.
 
