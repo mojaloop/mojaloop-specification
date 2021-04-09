@@ -178,7 +178,7 @@ BankNrOne sends a **GET /parties** request to the Switch, and includes the follo
 | ---|---|--- |
 | _version_ | `00` | Indicates Standard version as per [Table 3](#table-3-–-supported-version-formats) is being used. |
 | _trace-id_ | `91e502e28cd723686e9940bd3f378f85` | Unique trace identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
-| _parent-id_ | `b0f903d000944947` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `b0f903d000944947` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | `01 `| Indicates that BankNrOne has recorded the trace. |
 
 The _tracestate_ is also include with the following information:
@@ -216,7 +216,7 @@ The _traceparent_ is mutated as follows:
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch continuing the trace. |
-| _parent-id_ | `b0f903d000944947` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `b0f903d000944947` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that Switch has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
@@ -256,7 +256,7 @@ The _traceparent_ is mutated as follows:
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as MobileMoney is continuing the trace. |
-| _parent-id_ | `619d4c9d431ca708` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `619d4c9d431ca708` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
@@ -313,7 +313,7 @@ The _traceparent_ is mutated as follows:
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `e5687db76842fe36` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `e5687db76842fe36` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
@@ -374,7 +374,7 @@ BankNrOne sends a **POST /quotes** request to the Switch, and includes the follo
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `0c3e9f44f921ca06` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `0c3e9f44f921ca06` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
@@ -453,7 +453,7 @@ The _traceparent_ is mutated as follows:
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `379cc3faa566cf90` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `379cc3faa566cf90` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
@@ -531,7 +531,7 @@ The _traceparent_ is mutated as follows:
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_  91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `06a441483c4f238e` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `06a441483c4f238e` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
@@ -606,7 +606,7 @@ The _traceparent_ is mutated as follows:
 | ---|---|--- |
 | _version_ | 00 | Unchanged. |
 | _trace-id_  91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `765457baab44a0fd` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `765457baab44a0fd` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
 
 The _tracestate_ is mutated as follows:
