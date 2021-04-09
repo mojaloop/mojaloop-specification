@@ -149,65 +149,95 @@ Unmodified header propagation is typically implemented in pass-through services 
 
 #### 4.1. POST /transfers request being sent by FSP1 to FSP2 through a Mojaloop Switch
 
-This example will result in a single end-to-end trace graph being created from `FSP1` to `FSP2` being routed through a `Mojaloop Switch` for a  **POST /transfers** linking the resulting **PUT /transfers** callback from `FSP2` to `FSP1` via the `Mojaloop Switch`.
+This example will result in a single end-to-end trace graph being created from **FSP1** (_vendor-name_ identified by `fsp1`) to **FSP2** (_vendor-name_ identified by `fsp2`) being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers** linking the resulting **PUT /transfers** callback from **FSP2** to **FSP1** via the **Mojaloop Switch**.
+
+**Note:** The values highlighted as such **`value`** will indicate it being newly generated (on the first step) or modified on subsequent steps.
 
 <br/>
-4.1.1. `FSP1` sends a **POST /transfers** to a `Mojaloop Switch` which includes the following generated trace information:<br/><br/>
+4.1.1. **FSP1** sends a **POST /transfers** to a **Mojaloop Switch** which includes the following generated trace information:<br/><br/>
 
-> traceparent: `00`-`0af7651916cd43dd8448eb211c80319c`-`b7ad6b7169203331`-`01`<br/>
-> tracestate: `fsp1`=`t61rcWkgMzE`<br/>
-
-<br/>
-4.1.2. The `Mojaloop Switch` receives the **POST /transfers** and responds with a `HTTP 202` accepted. The `Mojaloop Switch` continuous the trace by mutating the trace information as follows, before forwarding the the **POST /transfers** to `FSP2`:<br/><br/>
-
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-`00f067aa0ba902b7`-01<br/>
-> tracestate: `moja`=`00f067aa0ba902b7`,fsp1=t61rcWkgMzE<br/>
+> traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`b7ad6b7169203331`**-**`01`**<br/>
+> tracestate: **`fsp1`**=**`t61rcWkgMzE`**<br/>
 
 <br/>
-4.1.3. `FSP2` receives the request  and responds with a `HTTP 202` accepted. The funds are committed and `FSP2` sends a **PUT /transfers** callback including the following mutated trace information to the `Mojaloop Switch`:<br/><br/>
+4.1.2. The Mojaloop Switch receives the **POST /transfers** and responds with a `HTTP 202` accepted. The **Mojaloop Switch** continuous the trace by mutating the trace information as follows, before forwarding the the **POST /transfers** to **FSP2**:<br/><br/>
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-`b9c7c989f97918e1`-01<br/>
-> tracestate: `fsp2`=`ucfJifl5GOE`,moja=00f067aa0ba902b7,fsp1=t61rcWkgMzE<br/>
-
-<br/>
-4.1.4. The `Mojaloop Switch` receives the **PUT /transfers** and responds with a `HTTP 200`. The `Mojaloop Switch` will reconstuct the trace from a combination of the _traceparent_ and _tracestate_ headers, generating a new _parent-id_ from the span-id contained in the list-member `moja`=`00f067aa0ba902b7`. The trace information will be mutated as follows, before forwarding the the **PUT /transfers** back to `FSP1`:<br/><br/>
-
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-`53ce929d0e0e4736`-01<br/>
-> tracestate: `moja`=`53ce929d0e0e4736`,fsp2=ucfJifl5GOE,fsp1=t61rcWkgMzE<br/>
+> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`00f067aa0ba902b7`**-01<br/>
+> tracestate: **`moja`**=**`00f067aa0ba902b7`**,fsp1=t61rcWkgMzE<br/>
 
 <br/>
-4.1.5. `FSP1` receives the fulfil response responding with an `HTTP 200`, and completes the transfer.
+4.1.3. **FSP2** receives the request  and responds with a `HTTP 202` accepted. The funds are committed and **FSP2** sends a **PUT /transfers** callback including the following mutated trace information to the **Mojaloop Switch**:<br/><br/>
 
-#### 4.2. POST /transfers request being sent by non-trace-participating FSP1 to non-trace-participating FSP2 through a Mojaloop Switch
-
-This will example will result in two disparate end-to-end trace graphs being created which are NOT linked as follows:
-> 4.2.a. `FSP1` to `FSP2` being routed through a `Mojaloop Switch` for a  **POST /transfers**<br/>
-> 4.2.b. `FSP2` to `FSP1` being routed through a `Mojaloop Switch` for a  **PUT /transfers** callback<br/>
-
-**Note:** As per section [3.4. Forwarding a Trace](#34-forwarding-a-trace), this scenario should not occur as `FSP2` should have forwarded the trace headers as part of the **PUT /transfers** callback to the `Mojaloop Switch`.
+> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`b9c7c989f97918e1`**-01<br/>
+> tracestate: **`fsp2`**=**`ucfJifl5GOE`**,moja=00f067aa0ba902b7,fsp1=t61rcWkgMzE<br/>
 
 <br/>
-4.2.1. `FSP1` sends a POST /transfers to a `Mojaloop Switch` which includes no trace information.
+4.1.4. The **Mojaloop Switch** receives the **PUT /transfers** and responds with a `HTTP 200`. The **Mojaloop Switch** will reconstruct the trace from a combination of the _traceparent_ and _tracestate_ headers, generating a new _parent-id_ from the span-id contained in the list-member `moja`=`00f067aa0ba902b7`. The trace information will be mutated as follows, before forwarding the the **PUT /transfers** back to **FSP1**:<br/><br/>
 
-4.2.2. The `Mojaloop Switch` receives the POST /transfers and responds with a HTTP 202 accepted. The `Mojaloop Switch` generates a new trace as none was found in the request headers before forwarding the the POST /transfers to `FSP2`:<br/><br/>
-
-> traceparent: `00`-`0af7651916cd43dd8448eb211c80319c`-`00f067aa0ba902b7`-`01`<br/>
-> tracestate: `moja`=`00f067aa0ba902b7`<br/>
+> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`53ce929d0e0e4736`**-01<br/>
+> tracestate: **`moja`**=**`53ce929d0e0e4736`**,fsp2=ucfJifl5GOE,fsp1=t61rcWkgMzE<br/>
 
 <br/>
-4.2.3. `FSP2` receives the request, commits the funds and responds with a PUT /transfers callback forwarding the unmutated trace information:<br/><br/>
+4.1.5. **FSP1** receives the fulfil response responding with an `HTTP 200`, and completes the transfer.
+
+#### 4.2. Transfer request being sent or processed by FSPs (FSP1 and FSP2) who support forwarding unmodified trace headers on callback request
+
+This will example will result in a single end-to-end trace graph including the **POST /transfers** and **PUT /transfers** leg of the transfer process being joined centrally by the **Mojaloop Switch**:
+> 4.2.a. **FSP1** to **FSP2** being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
+> 4.2.b. **FSP2** to **FSP1** being routed through a **Mojaloop Switch** for a  **PUT /transfers** callback<br/>
+
+**Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
+
+<br/>
+4.2.1. **FSP1** sends a POST /transfers to a **Mojaloop Switch** which includes no trace information.
+
+4.2.2. The **Mojaloop Switch** receives the POST /transfers and responds with a HTTP 202 accepted. The **Mojaloop Switch** generates a new trace as none was found in the request headers before forwarding the the POST /transfers to **FSP2**:<br/><br/>
+
+> traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`00f067aa0ba902b7`**-**`01`**<br/>
+> tracestate: **`moja`**=**`00f067aa0ba902b7`**<br/>
+
+<br/>
+4.2.3. **FSP2** receives the request, commits the funds and responds with a PUT /transfers callback forwarding the unmutated trace information:<br/><br/>
 
 > traceparent: 00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01 <br/>
 > tracestate: moja=00f067aa0ba902b7
 
 <br/>
-4.2.4. The `Mojaloop Switch` receives the PUT /transfers and responds with a HTTP 200. The `Mojaloop Switch` will reconstruct the trace context with the switch from a combination of the _traceparent_ and _tracestate_ headers, generating a new _parent-id_ from the span-id contained in the list-member `moja`=`00f067aa0ba902b7`. The trace information will be mutated as follows, before forwarding the the PUT /transfers back to `FSP1`:<br/><br/>
+4.2.4. The **Mojaloop Switch** receives the **PUT /transfers** and responds with a HTTP 200. The **Mojaloop Switch** will reconstruct the trace context internally from a combination of the _traceparent_ and _tracestate_ headers. The switch then generates a new _parent-id_ from the span-id contained in the list-member `moja`=`00f067aa0ba902b7`. The trace information will be forwarded including the above mutations as PUT /transfers back to **FSP1**:<br/><br/>
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-`53ce929d0e0e4736`-01 <br/>
-> tracestate: `moja`=`53ce929d0e0e4736`<br/>
+> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`53ce929d0e0e4736`**-01 <br/>
+> tracestate: **`moja`**=**`53ce929d0e0e4736`**<br/>
 
 <br/>
-4.2.5. `FSP1` receives the **PUT /transfers** callback and responds with an `HTTP 200`.  `FSP1` then completes the transfer. The trace information is ignored as `FSP1` is not participating in the distributed trace.
+4.2.5. **FSP1** receives the **PUT /transfers** callback and responds with an `HTTP 200`.  **FSP1** then completes the transfer.
+
+#### 4.3. Transfer request being sent or processed by non participating FSPs (FSP1, and FSP2) through a Mojaloop Switch
+
+This will example will result in two disparate end-to-end trace graphs being created which are NOT linked as follows:
+> 4.3.a. **FSP1** to **FSP2** being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
+> 4.3.b. **FSP2** to **FSP1** being routed through a **Mojaloop Switch** for a  **PUT /transfers** callback<br/>
+
+**Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
+
+<br/>
+4.3.1. **FSP1** sends a POST /transfers to a **Mojaloop Switch** which includes no trace information.
+
+4.3.2. The **Mojaloop Switch** receives the POST /transfers and responds with a HTTP 202 accepted. The **Mojaloop Switch** generates a new trace as none was found in the request headers before forwarding the the POST /transfers to **FSP2**:<br/><br/>
+
+> traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`00f067aa0ba902b7`**-**`01`**<br/>
+> tracestate: **`moja`**=**`00f067aa0ba902b7`**<br/>
+
+<br/>
+4.3.3. **FSP2** receives the request, commits the funds and responds with a PUT /transfers callback. The trace information is ignored as **FSP2** is not participating in the distributed trace.<br/>
+
+<br/>
+4.3.4. The **Mojaloop Switch** receives the **PUT /transfers** and responds with a `HTTP 200`. The **Mojaloop Switch** will generate a new disparate trace as no trace information was received. The switch then generates new values for _trace-id_, _parent-id_ similar to 4.3.2. above. The trace information will be including in the **PUT /transfers** callback to **FSP1**:<br/><br/>
+
+> traceparent: **`00`**-**`4bf92f3577b34da6a3ce929d0e0e4736`**-**`53ce929d0e0e4736`**-**`01`** <br/>
+> tracestate: **`moja`**=**`53ce929d0e0e4736`**<br/>
+
+<br/>
+4.3.5. **FSP1** receives the **PUT /transfers** callback and responds with an `HTTP 200`.  **FSP1** then completes the transfer. The trace information is ignored as **FSP1** is not participating in the distributed trace.
 
 ## 5. References
 
