@@ -109,7 +109,7 @@ Table 1 – Data model of HTTP header fields for Tracing
 | Name | Cardinality | Type | Description | Reference |
 | --- | --- | --- | --- | --- |
 | list-member-keyvalue | 1 | String(3...512) | Key-value pair joined by `=`, describing _vendor_ specific tracing information.<br/>Format: _{vendor-name}_=_{vendor-value}_<br/>Example: `vendorname1=opaqueValue1`  | Section _[3.3.1.3 list-members](https://www.w3.org/TR/trace-context-1/#list)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#list) |
-| vendor-name | 1 | String(1..256) | Vendor (list-member) identifier which is printable lowercase ASCII which only includes `a-z`, `0-9`, underscores (`_`), dashes (`-`), asterisks (`*`), and forward slashes (`/`). | Section _[3.3.1.3.1 Key](https://www.w3.org/TR/trace-context-1/#key)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#key) |
+| vendor-name | 1 | String(1..256) | Vendor (list-member) identifier which is printable lowercase ASCII which only includes `a-z`, `0-9`, underscores (`_`), dashes (`-`), asterisks (`*`), and forward slashes (`/`). The _FSP_ or _Hub_ identifier should be used here. | Section _[3.3.1.3.1 Key](https://www.w3.org/TR/trace-context-1/#key)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#key) |
 | vendor-value | 1 | String(1..256) |  Opaque printable lowercase ASCII string excluding comma (`,`), equals (`=`), tabs, newlines, and carriage returns. | Section _[3.3.1.3.2 Value](https://www.w3.org/TR/trace-context-1/#value)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#value) |
 
 ### 3.2 Creating a Trace
