@@ -134,7 +134,7 @@ To create the a trace, the following steps are performed:
 
 ### 3.3 Continuing a Trace
 
-To create the a trace, the following steps are performed:
+To create a trace, the following steps are performed:
 
 3.3.1. Mutate the _traceparent_ ([Table 1](#table-1)) header with the following values:
    > 3.3.1.1. _version_ ([Table 2](#table-2)) is unchanged.<br/>
