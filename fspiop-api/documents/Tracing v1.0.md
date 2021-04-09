@@ -119,7 +119,7 @@ This section introduces Distributed Tracing from a Mojaloop context, including t
 
 **Table 4 – Data model for _tracestate_ list member values**
 
-### 3.2 Generating a Trace
+### 3.2 Creating a Trace
 
 To create the a trace, the following steps are performed:
 
