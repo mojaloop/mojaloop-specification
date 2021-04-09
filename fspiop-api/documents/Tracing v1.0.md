@@ -77,7 +77,6 @@ This document details the Distributed Tracing standards to be supported for the 
 
 Distributed Tracing is a method to monitor a request end-to-end from the source to the destination, including any participating actors/components that process or forward the request. This helps to pinpoint where failures and poor performance of a specific request have occurred. As such this method is well suited to a modern microservice architecture which includes distributed application components. In addition it also supports the inclusion of both API consumers which can be both internal and external (referred to as _vendors_). Vendors may participate either by continuing the trace, or forwarding the received tracing information without modification.
 
-
 ## 3. Tracing Specification
 
 This section introduces Distributed Tracing from a Mojaloop context, including the header format, and the mechanisms used to generate, continue and forward traces.
@@ -102,7 +101,7 @@ Table 1 – Data model of HTTP header fields for Tracing
 | version | 1 | 2HEXDIGLC | Version indicator for trace-format. Refer to [Table 3](#table-3-–-supported-version-formats) for supported versions. | Section _[3.2.2.1 version](https://www.w3.org/TR/trace-context-1/#version)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#version)</sup> |
 | version-format | 1 | String(52) | A _dash_ (`-`) delimitated string included tracing information such as: trace-id, parent-id, trace-flags, etc. | Refer to [Table 3](#table-3-–-supported-version-formats) |
 | trace-id | 1 | 32HEXDIGLC | ID representing the entire trace, i.e. the end-to-end trace identifier. | Section _[3.2.2.3 trace-id](https://www.w3.org/TR/trace-context-1/#trace-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#trace-id)</sup> |
-| parent-id | 1 | 16HEXDIGLC | ID representing the span-id.  | Section _[3.2.2.4 parent-id](https://www.w3.org/TR/trace-context-1/#parent-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#parent-id)</sup> |
+| parent-id | 1 | 16HEXDIGLC | ID representing a _span_, the primary building block of a distributed trace, representing an individual unit of work done in a distributed system.  | Section _[3.2.2.4 parent-id](https://www.w3.org/TR/trace-context-1/#parent-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#parent-id)</sup> |
 | trace-flags | 1 | 2HEXDIGLC | Control flags related to the trace. | Section _[3.2.2.5 trace-flags](https://www.w3.org/TR/trace-context-1/#trace-flags)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#trace-flags)</sup> |
 
 #### **Table 3 – Supported version-formats**
