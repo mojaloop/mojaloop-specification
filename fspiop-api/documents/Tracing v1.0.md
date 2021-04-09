@@ -31,7 +31,7 @@ showToc: true
 
 4. [Examples](#4-examples)
 
-    4.1 [Transfer request with participating FSPs](#41-transfer-request-with-participating-fsps)
+    4.1 [P2P Transfer with participating FSPs](#41-p2p-transfer-with-participating-fsps)
 
     4.2 [Transfer request with FSPs supporting trace header forwarding](#42-transfer-request-with-fsps-supporting-trace-header-forwarding)
 
@@ -45,6 +45,7 @@ showToc: true
 [Table 2 – Data model for Tracing values](#table-2-–-data-model-for-tracing-values)<br/>
 [Table 3 – Supported version-formats](#table-3-–-supported-version-formats)<br/>
 [Table 4 – Data model for _tracestate_ list member values](#table-4-–-data-model-for-tracestate-list-member-values)<br/>
+[Table 5 – P2P Transfer Participants](#table-5-–-p2p-transfer-participants)<br/>
 
 ## 1. Preface
 
