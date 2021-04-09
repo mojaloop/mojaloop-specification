@@ -65,7 +65,7 @@ The following conventions are used in this document to identify the specified ty
 
 ## 2. Introduction
 
-This document details the Distributed Tracing standards to be supported for Open APIs for Interoperability (hereafter cited as the API) to ensure _tracing_ and _observability_ within the API system, and to/from API consumers.
+This document details the Distributed Tracing standards to be supported for the Mojaloop API Suite (hereafter cited as the API) to ensure _tracing_ and _observability_ within the API system, and to/from API consumers.
 
 Distributed Tracing is a method to monitor a request end-to-end from the source to the destination, including any participating actors/components that process or forward the request. This helps to pinpoint where failures and poor performance of a specific request have occurred. As such this method is well suited to a modern micro-service architecture which includes distributed application components. In addition it also supports the inclusion of both API consumers which can be both internal and external (referred to as _vendors_). Vendors may participate either by continuing the trace, or forwarding the received tracing information without modification.
 
