@@ -123,7 +123,7 @@ To create the a trace, the following steps are performed:
    > 3.2.2.4 Set _trace-flags_ ([Table 2](#table-2-–-data-model-for-tracing-values)) to `01` to indicate if the trace was sampled by the source, otherwise to `00`.<br/>
 
 3.2.2. Generate the _tracestate_ header, value below is for example purposes only as it is vendor specific: 
-   > 3.2.2.1. Add a _list-member-keyvalue_ ([Table 4](#table-4-–-data-model-for-tracestate-list-member-values)) with value `{vendor-name}=BASE64Encoded({parent-id})`, where _vendor-name_ ([Table 4](#table-4-–-data-model-for-tracestate-list-member-values)) is the FSP or Hub identifier and _vendor-value_ ([Table 4](#table-4-–-data-model-for-tracestate-list-member-values)) being `BASE64Encoded({parent-id})` with the operation to base 64 encode the _parent-id_ ([Table 2](#table-2-–-data-model-for-tracing-values)). Base64 encoding the list member value is optional but required if its contents is not printable ASCII<sup>[1](https://www.w3.org/TR/trace-context-1/#value)</sup>.
+   > 3.2.2.1. Add a _list-member-keyvalue_ ([Table 4](#table-4-–-data-model-for-tracestate-list-member-values)) with value `{vendor-name}=BASE64Encoded({parent-id})`, where _vendor-name_ ([Table 4](#table-4-–-data-model-for-tracestate-list-member-values)) is the FSP or Hub identifier and _vendor-value_ ([Table 4](#table-4-–-data-model-for-tracestate-list-member-values)) being `BASE64Encoded({parent-id})` with the operation to base64 encode the _parent-id_ ([Table 2](#table-2-–-data-model-for-tracing-values)). Base64 encoding the list member value is optional but required if its contents is not printable ASCII<sup>[1](https://www.w3.org/TR/trace-context-1/#value)</sup>.
 
 ### 3.3 Continuing a Trace
 
