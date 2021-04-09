@@ -200,7 +200,7 @@ This will example will result in two disparate end-to-end trace graphs being cre
 > tracestate: `moja`=`00f067aa0ba902b7`<br/>
 
 <br/>
-4.2.3. `FSP2` receives the request, commits the funds and responds with a PUT /transfers callback forwarding the unmutated trace information:<br/><br/>
+4.2.3. `FSP2` receives the request and responds with a HTTP 202 accepted. `FSP2` then commits the funds and sends  a **PUT /transfers** callback forwarding the unmutated (as `FSP2` is not participating in the distributed trace) trace information:<br/><br/>
 
 > traceparent: 00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01 <br/>
 > tracestate: moja=00f067aa0ba902b7
