@@ -212,7 +212,7 @@ This will example will result in two disparate end-to-end trace graphs being cre
 > tracestate: `moja`=`53ce929d0e0e4736`<br/>
 
 <br/>
-4.2.5. `FSP1` receives the fulfil response responding with an `HTTP 200`, and completes the transfer ignoring the trace information.
+4.2.5. `FSP1` receives the **PUT /transfers** callback and responds with an `HTTP 200`.  `FSP1` then completes the transfer. The trace information is ignored as `FSP1` is not participating in the distributed trace.
 
 ## 5. References
 
