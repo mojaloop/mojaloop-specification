@@ -31,6 +31,12 @@ showToc: true
 
 4. [Examples](#4-examples)
 
+    4.1 [Transfer request with participating FSPs](#41-transfer-request-with-participating-fsps)
+
+    4.2 [Transfer request with FSPs supporting trace header forwarding](#42-transfer-request-with-fsps-supporting-trace-header-forwarding)
+
+    4.3 [Transfer request with non-participant FSPs ignoring trace headers](#43-transfer-request-with-non-participant-fsps-ignoring-trace-headers)
+
 5. [References](#5-references)
 
 **Table of Tables**
@@ -77,7 +83,7 @@ This section introduces Distributed Tracing from a Mojaloop context, including t
 
 ### 3.1 Tracing Data Model
 
-The [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing) describes the trace headers fields that are optionally included in each Interoperability API request. Tables [2](#table-2-–-data-model-for-tracing-values), [3](#table-3-–-supported-version-formats), and [4](#table-4-–-data-model-for-tracestate-list-member-values) describes the associated values and properties that is contained by each of the respective trace header fields shown in [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing).
+The [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing) describes the trace headers fields that are optionally included in each API request. Tables [2](#table-2-–-data-model-for-tracing-values), [3](#table-3-–-supported-version-formats), and [4](#table-4-–-data-model-for-tracestate-list-member-values) describes the associated values and properties that is contained by each of the respective trace header fields shown in [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing).
 
 #### **Table 1 – Data model of HTTP header fields for Tracing**
 
@@ -147,7 +153,7 @@ Unmodified header propagation is typically implemented in pass-through services 
 
 ### 4. Examples
 
-#### 4.1. POST /transfers request being sent by FSP1 to FSP2 through a Mojaloop Switch
+#### 4.1. Transfer request with participating FSPs
 
 This example will result in a single end-to-end trace graph being created from **FSP1** (_vendor-name_ identified by `fsp1`) to **FSP2** (_vendor-name_ identified by `fsp2`) being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers** linking the resulting **PUT /transfers** callback from **FSP2** to **FSP1** via the **Mojaloop Switch**.
 
@@ -180,7 +186,7 @@ This example will result in a single end-to-end trace graph being created from *
 <br/>
 4.1.5. **FSP1** receives the fulfil response responding with an `HTTP 200`, and completes the transfer.
 
-#### 4.2. Transfer request being sent or processed by FSPs (FSP1 and FSP2) who support forwarding unmodified trace headers on callback request
+#### 4.2. Transfer request with FSPs supporting trace header forwarding
 
 This will example will result in a single end-to-end trace graph including the **POST /transfers** and **PUT /transfers** leg of the transfer process being joined centrally by the **Mojaloop Switch**:
 > 4.2.a. **FSP1** to **FSP2** being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
@@ -211,7 +217,7 @@ This will example will result in a single end-to-end trace graph including the *
 <br/>
 4.2.5. **FSP1** receives the **PUT /transfers** callback and responds with an `HTTP 200`.  **FSP1** then completes the transfer.
 
-#### 4.3. Transfer request being sent or processed by non participating FSPs (FSP1, and FSP2) through a Mojaloop Switch
+#### 4.3. Transfer request with non-participant FSPs ignoring trace headers
 
 This will example will result in two disparate end-to-end trace graphs being created which are NOT linked as follows:
 > 4.3.a. **FSP1** to **FSP2** being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
