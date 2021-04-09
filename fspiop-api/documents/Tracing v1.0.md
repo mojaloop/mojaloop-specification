@@ -141,7 +141,7 @@ To create a trace, the following steps are performed:
 
 ### 3.4. Forwarding a Trace
 
-Vendors receiving trace request headers ([Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing)) do not need to participate but they MUST forward it in outgoing requests unmodified.
+Vendors receiving trace request headers ([Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing)) do not need to participate as they are optional, but it is preferable <sup>[1](https://www.w3.org/TR/trace-context-1/#design-overview)</sup> that the trace request headers are forwarded in the outgoing request unmodified to guarantee traces are not broken.
 
 Unmodified header propagation is typically implemented in pass-through services like proxies. As such, this behavior <sup>[1](https://www.w3.org/TR/trace-context-1/#mutating-the-traceparent-field)</sup> may also be implemented in a service which currently does not collect distributed tracing information.
 
