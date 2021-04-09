@@ -116,7 +116,7 @@ Table 1 – Data model of HTTP header fields for Tracing
 | --- | --- | --- | --- | --- |
 | list-member-keyvalue | 1 | String(3...512) | Key-value pair joined by `=`, describing _vendor_ specific tracing information.<br/>Format: _{vendor-name}_=_{vendor-value}_<br/>Example: `vendorname1=opaqueValue1`  | Section _[3.3.1.3 list-members](https://www.w3.org/TR/trace-context-1/#list)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#list) |
 | vendor-name | 1 | String(1..256) | Vendor (list-member) identifier which is printable lowercase ASCII which only includes `a-z`, `0-9`, underscores (`_`), dashes (`-`), asterisks (`*`), and forward slashes (`/`). The _FSP_ or _Hub_ identifier should be used here. | Section _[3.3.1.3.1 Key](https://www.w3.org/TR/trace-context-1/#key)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#key) |
-| vendor-value | 1 | String(1..256) |  Opaque printable lowercase ASCII string excluding comma (`,`), equals (`=`), tabs, newlines, and carriage returns. | Section _[3.3.1.3.2 Value](https://www.w3.org/TR/trace-context-1/#value)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#value) |
+| vendor-value | 1 | String(1..256) |  Opaque printable ASCII string excluding comma (`,`), equals (`=`), tabs, newlines, and carriage returns. | Section _[3.3.1.3.2 Value](https://www.w3.org/TR/trace-context-1/#value)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#value) |
 
 ### 3.2 Creating a Trace
 
@@ -153,69 +153,709 @@ Unmodified header propagation is typically implemented in pass-through services 
 
 ### 4. Examples
 
-#### 4.1. Transfer request with participating FSPs
+#### 4.1. P2P Transfer with participating FSPs
 
-This example will result in a single end-to-end trace graph being created from **FSP1** (_vendor-name_ identified by `fsp1`) to **FSP2** (_vendor-name_ identified by `fsp2`) being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers** linking the resulting **PUT /transfers** callback from **FSP2** to **FSP1** via the **Mojaloop Switch**.
+The following example will expand on the [FSPIOP API P2P Transfer](./API%20Definition%20v1.1.html#5161-p2p-transfer)<sup>[1](./API%20Definition%20v1.1.html#5161-p2p-transfer)</sup> by including distributed tracing.
 
-**Note:** The values highlighted as such **`value`** will indicate it being newly generated (on the first step) or modified on subsequent steps.
+Each participant will be assigned a _vendor-name_ will be used throughout this example as per [Table 5](#table-5-–-p2p-transfer-participants).
 
-<br/>
-4.1.1. **FSP1** sends a **POST /transfers** to a **Mojaloop Switch** which includes the following generated trace information:<br/><br/>
+##### **Table 5 – P2P Transfer Participants**
 
-> traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`b7ad6b7169203331`**-**`01`**<br/>
-> tracestate: **`fsp1`**=**`t61rcWkgMzE`**<br/>
+Participant | Identifier | _vendor-name_
+------|-----------|----------
+Payer FSP | BankNrOne | banknrone
+Payee FSP | MobileMoney | mobilemoney
+Mojaloop Payment Switch | Switch | moja
 
-<br/>
-4.1.2. The Mojaloop Switch receives the **POST /transfers** and responds with a `HTTP 202` accepted. The **Mojaloop Switch** continuous the trace by mutating the trace information as follows, before forwarding the the **POST /transfers** to **FSP2**:<br/><br/>
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`00f067aa0ba902b7`**-01<br/>
-> tracestate: **`moja`**=**`00f067aa0ba902b7`**,fsp1=t61rcWkgMzE<br/>
+##### 4.1.1. Request Party Information
 
-<br/>
-4.1.3. **FSP2** receives the request  and responds with a `HTTP 202` accepted. The funds are committed and **FSP2** sends a **PUT /transfers** callback including the following mutated trace information to the **Mojaloop Switch**:<br/><br/>
+4.1.1.1. Request Party Information from BankNrOne to Switch
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`b9c7c989f97918e1`**-01<br/>
-> tracestate: **`fsp2`**=**`ucfJifl5GOE`**,moja=00f067aa0ba902b7,fsp1=t61rcWkgMzE<br/>
+BankNrOne sends a **GET /parties** request to the Switch, and includes the following generated _traceparent_ information:
 
-<br/>
-4.1.4. The **Mojaloop Switch** receives the **PUT /transfers** and responds with a `HTTP 200`. The **Mojaloop Switch** will reconstruct the trace from a combination of the _traceparent_ and _tracestate_ headers, generating a new _parent-id_ from the span-id contained in the list-member `moja`=`00f067aa0ba902b7`. The trace information will be mutated as follows, before forwarding the the **PUT /transfers** back to **FSP1**:<br/><br/>
+| variable | value | description |
+| ---|---|--- |
+| _version_ | `00` | Indicates Standard version as per [Table 3](#table-3-–-supported-version-formats) is being used. |
+| _trace-id_ | `91e502e28cd723686e9940bd3f378f85` | Unique trace identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _parent-id_ | `b0f903d000944947` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | `01 `| Indicates that BankNrOne has recorded the trace. |
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`53ce929d0e0e4736`**-01<br/>
-> tracestate: **`moja`**=**`53ce929d0e0e4736`**,fsp2=ucfJifl5GOE,fsp1=t61rcWkgMzE<br/>
+The _tracestate_ is also include with the following information:
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `banknrone` | `b0f903d000944947` | Mapped from _parent-id_. |
 
-<br/>
-4.1.5. **FSP1** receives the fulfil response responding with an `HTTP 200`, and completes the transfer.
+The following trace headers will be include in the request:
 
-#### 4.2. Transfer request with FSPs supporting trace header forwarding
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
-This will example will result in a single end-to-end trace graph including the **POST /transfers** and **PUT /transfers** leg of the transfer process being joined centrally by the **Mojaloop Switch**:
-> 4.2.a. **FSP1** to **FSP2** being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
-> 4.2.b. **FSP2** to **FSP1** being routed through a **Mojaloop Switch** for a  **PUT /transfers** callback<br/>
-
-**Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
-
-<br/>
-4.2.1. **FSP1** sends a POST /transfers to a **Mojaloop Switch** which includes no trace information.
-
-4.2.2. The **Mojaloop Switch** receives the POST /transfers and responds with a HTTP 202 accepted. The **Mojaloop Switch** generates a new trace as none was found in the request headers before forwarding the the POST /transfers to **FSP2**:<br/><br/>
-
-> traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`00f067aa0ba902b7`**-**`01`**<br/>
-> tracestate: **`moja`**=**`00f067aa0ba902b7`**<br/>
+> traceparent: **`00`**-**`91e502e28cd723686e9940bd3f378f85`**-**`b0f903d000944947`**-**`01`**<br/>
+> tracestate: **`banknrone`**=**`b0f903d000944947`**<br/>
 
 <br/>
-4.2.3. **FSP2** receives the request, commits the funds and responds with a PUT /transfers callback forwarding the unmutated trace information:<br/><br/>
+The request sample including trace headers:
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01 <br/>
-> tracestate: moja=00f067aa0ba902b7
+```http
+GET /parties/MSISDN/123456789 HTTP/1.1
+Accept: application/vnd.interoperability.parties+json;version=1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Date: Tue, 15 Nov 2017 10:13:37 GMT
+FSPIOP-Source: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-b0f903d000944947-01
+tracestate: banknrone=b0f903d000944947
+```
+
+4.1.1.2. Request Party Information from Switch to MobileMoney
+
+Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
+
+The _traceparent_ is mutated as follows:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch continuing the trace. |
+| _parent-id_ | `b0f903d000944947` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that Switch has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 1 | `moja` | `f86425c1a005e5e2` | Mapped from _parent-id_. |
+| 2 | banknrone | b0f903d000944947 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`f86425c1a005e5e2`**-01<br/>
+> tracestate: **`moja`**=**`f86425c1a005e5e2`**,banknrone=b0f903d000944947<br/>
 
 <br/>
-4.2.4. The **Mojaloop Switch** receives the **PUT /transfers** and responds with a HTTP 200. The **Mojaloop Switch** will reconstruct the trace context internally from a combination of the _traceparent_ and _tracestate_ headers. The switch then generates a new _parent-id_ from the span-id contained in the list-member `moja`=`00f067aa0ba902b7`. The trace information will be forwarded including the above mutations as PUT /transfers back to **FSP1**:<br/><br/>
+The request sample including trace headers:
 
-> traceparent: 00-0af7651916cd43dd8448eb211c80319c-**`53ce929d0e0e4736`**-01 <br/>
-> tracestate: **`moja`**=**`53ce929d0e0e4736`**<br/>
+```http
+GET /parties/MSISDN/123456789 HTTP/1.1
+Accept: application/vnd.interoperability.parties+json;version=1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Date: Tue, 15 Nov 2017 10:13:37 GMT
+FSPIOP-Source: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-f86425c1a005e5e2-01
+tracestate: moja=f86425c1a005e5e2,banknrone=b0f903d000944947
+```
+
+4.1.1.3. Party Information Callback from MobileMoney to Switch
+
+MobileMoney receives the request, and mutates the trace information before responding with the **PUT /parties** callback to the Switch.
+
+The _traceparent_ is mutated as follows:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as MobileMoney is continuing the trace. |
+| _parent-id_ | `619d4c9d431ca708` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `mobilemoney` | `619d4c9d431ca708` | Mapped from _parent-id_. |
+| 1 | moja | f86425c1a005e5e2 | Unchanged. |
+| 2 | banknrone | b0f903d000944947 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`619d4c9d431ca708`**-01<br/>
+> tracestate: **`mobilemoney`**=**`619d4c9d431ca708`**,moja=f86425c1a005e5e2,banknrone=b0f903d000944947<br/>
 
 <br/>
-4.2.5. **FSP1** receives the **PUT /transfers** callback and responds with an `HTTP 200`.  **FSP1** then completes the transfer.
+The request sample including trace headers:
+
+```http
+PUT /parties/MSISDN/123456789 HTTP/1.1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Content-Length: 347
+Date: Tue, 15 Nov 2017 10:13:39 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-619d4c9d431ca708-01
+tracestate: mobilemoney=619d4c9d431ca708,moja=f86425c1a005e5e2,banknrone=b0f903d000944947
+{
+    "party": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "123456789",
+            "fspId": "MobileMoney"
+        },
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Henrik",
+                "lastName": "Karlsson"
+            }
+        }
+    }
+}
+```
+
+4.1.1.4. Party Information Callback from Switch to BankNrOne
+
+The Switch receives the callback request, and mutates the trace information before forwarding with the **PUT /parties** callback to the BankNrOne.
+
+The _traceparent_ is mutated as follows:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
+| _parent-id_ | `e5687db76842fe36` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `moja` | `e5687db76842fe36` | Mapped from _parent-id_. |
+| 1 | mobilemoney | 619d4c9d431ca708 | Unchanged. |
+| 2 | banknrone | b0f903d000944947 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`e5687db76842fe36`**-01<br/>
+> tracestate: **`moja`**=**`e5687db76842fe36`**,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+PUT /parties/MSISDN/123456789 HTTP/1.1
+Content-Type: application/vnd.interoperability.parties+json;version=1.0
+Content-Length: 347
+Date: Tue, 15 Nov 2017 10:13:39 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-20131b86d4a0f18a-01
+tracestate: mobilemoney=20131b86d4a0f18a,moja=f86425c1a005e5e2,banknrone=b0f903d000944947
+{
+    "party": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "123456789",
+            "fspId": "MobileMoney"
+        },
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Henrik",
+                "lastName": "Karlsson"
+            }
+        }
+    }
+}
+```
+
+4.1.1.5. Party Information processed by BankNrOne
+
+The BankNrOne receives the callback request containing the necessary participant and party information to be able to request a quote.
+
+##### 4.1.2 Request Quote
+
+4.1.2.1. Request Quote from BankNrOne to Switch
+
+BankNrOne sends a **POST /quotes** request to the Switch, and includes the following generated _traceparent_ information:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
+| _parent-id_ | `0c3e9f44f921ca06` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `banknrone` | `0c3e9f44f921ca06` | Mapped from _parent-id_. |
+| 1 | moja | e5687db76842fe36 | Unchanged. |
+| 2 | mobilemoney | 619d4c9d431ca708 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`0c3e9f44f921ca06`**-01<br/>
+> tracestate: **`banknrone`**=**`0c3e9f44f921ca06`**,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=1
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+Content-Length: 975
+Date: Tue, 15 Nov 2017 10:13:40 GMT
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-0c3e9f44f921ca06-01
+tracestate: banknrone=0c3e9f44f921ca06,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708
+{
+    "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+    "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+    "payee": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "123456789",
+            "fspId": "MobileMoney"
+        }
+    },
+    "payer": {
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Mats",
+                "lastName": "Hagman"
+            }
+        },
+        "partyIdInfo": {
+            "partyIdType": "IBAN",
+            "partyIdentifier": "SE4550000000058398257466",
+            "fspId": "BankNrOne"
+        }
+    },
+    "amountType": "RECEIVE",
+    "amount": {
+        "amount": "100",
+        "currency": "USD"
+    },
+    "transactionType": {
+        "scenario": "TRANSFER",
+        "initiator": "PAYER",
+        "initiatorType": "CONSUMER"
+    },
+    "note": "From Mats",
+    "expiration": "2017-11-15T22:17:28.985-01:00"
+}
+```
+
+4.1.2.2. Request Quote from Switch to MobileMoney
+
+Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
+
+The _traceparent_ is mutated as follows:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
+| _parent-id_ | `379cc3faa566cf90` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `moja` | `379cc3faa566cf90` | Mapped from _parent-id_. |
+| 1 | banknrone | 0c3e9f44f921ca06 | Unchanged. |
+| 2 | mobilemoney | 619d4c9d431ca708 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`379cc3faa566cf90`**-01<br/>
+> tracestate: **`moja`**=**`379cc3faa566cf90`**,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+POST /quotes HTTP/1.1
+Accept: application/vnd.interoperability.quotes+json;version=1
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+Content-Length: 975
+Date: Tue, 15 Nov 2017 10:13:40 GMT
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-379cc3faa566cf90-01
+tracestate: moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708
+{
+    "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+    "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+    "payee": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "123456789",
+            "fspId": "MobileMoney"
+        }
+    },
+    "payer": {
+        "personalInfo": {
+            "complexName": {
+                "firstName": "Mats",
+                "lastName": "Hagman"
+            }
+        },
+        "partyIdInfo": {
+            "partyIdType": "IBAN",
+            "partyIdentifier": "SE4550000000058398257466",
+            "fspId": "BankNrOne"
+        }
+    },
+    "amountType": "RECEIVE",
+    "amount": {
+        "amount": "100",
+        "currency": "USD"
+    },
+    "transactionType": {
+        "scenario": "TRANSFER",
+        "initiator": "PAYER",
+        "initiatorType": "CONSUMER"
+    },
+    "note": "From Mats",
+    "expiration": "2017-11-15T22:17:28.985-01:00"
+}
+```
+
+4.1.2.3. Quote response callback from MobileMoney to Switch
+
+MobileMoney receives the request, and mutates the trace information before responding with the **PUT /quotes** callback to the Switch.
+
+The _traceparent_ is mutated as follows:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_  91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
+| _parent-id_ | `06a441483c4f238e` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `mobilemoney` | `06a441483c4f238e` | Mapped from _parent-id_. |
+| 1 | moja | 379cc3faa566cf90 | Unchanged. |
+| 2 | banknrone | 0c3e9f44f921ca06 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`06a441483c4f238e`**-01<br/>
+> tracestate: **`mobilemoney`**=**`06a441483c4f238e`**,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6 HTTP/1.1
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+Content-Length: 1802
+Date: Tue, 15 Nov 2017 10:13:41 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-06a441483c4f238e-01
+tracestate: mobilemoney=06a441483c4f238e,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06
+{
+    "transferAmount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "payeeReceiveAmount": {
+        "amount": "100",
+        "currency": "USD"
+    },
+    "expiration": "2017-11-15T14:17:09.663+01:00",
+    "ilpPacket": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY-
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI-
+CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25
+lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
+    "condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs"
+}
+```
+
+4.1.2.4. Quote response callback from Switch to BankNrOne
+
+Switch receives the request, and mutates the trace information before forwarding the **PUT /quotes** callback to BankNrOne.
+
+The _traceparent_ is mutated as follows:
+
+| variable | value | description |
+| ---|---|--- |
+| _version_ | 00 | Unchanged. |
+| _trace-id_  91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
+| _parent-id_ | `765457baab44a0fd` | Unique span identifier randomly generated. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
+| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
+
+The _tracestate_ is mutated as follows:
+
+| index | _list-member_ |value | description|
+| --- | --- | --- | --- |
+| 0 | `moja` | `765457baab44a0fd` | Mapped from _parent-id_. |
+| 1 | mobilemoney | 06a441483c4f238e | Unchanged. |
+| 2 | banknrone | 0c3e9f44f921ca06 | Unchanged. |
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`765457baab44a0fd`**-01<br/>
+> tracestate: **`moja`**=**`765457baab44a0fd`**,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6 HTTP/1.1
+Content-Type: application/vnd.interoperability.quotes+json;version=1.0
+Content-Length: 1802
+Date: Tue, 15 Nov 2017 10:13:41 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-765457baab44a0fd-01
+tracestate: moja=765457baab44a0fd,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06
+{
+    "transferAmount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "payeeReceiveAmount": {
+        "amount": "100",
+        "currency": "USD"
+    },
+    "expiration": "2017-11-15T14:17:09.663+01:00",
+    "ilpPacket": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY-
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI-
+CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25
+lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
+    "condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs"
+}
+```
+
+4.1.2.5. Quote processed by BankNrOne
+
+The BankNrOne receives the callback request with the necessary information to request a transfer.
+
+##### 4.1.3 Request Transfer
+
+4.1.3.1. Request Transfer from BankNrOne to Switch
+
+**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`82f942e2566117c0`**-01<br/>
+> tracestate: **`banknrone`**=**`82f942e2566117c0`**,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+POST /transfers HTTP/1.1
+Accept: application/vnd.interoperability.transfers+json;version=1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 1820
+Date: Tue, 15 Nov 2017 10:14:01
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-82f942e2566117c0-01
+tracestate: banknrone=82f942e2566117c0,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e
+{
+    "transferId":"11436b17-c690-4a30-8505-42a2c4eafb9d",
+    "payerFsp":"BankNrOne",
+    "payeeFsp": "MobileMoney",
+    "amount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "expiration": "2017-11-15T11:17:01.663+01:00",
+    "ilpPacket": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY- 
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI- CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25 lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
+"condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs" 
+}
+```
+
+4.1.3.2. Request Transfer from Switch to MobileMoney
+
+**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`bb68d98a0840aa99`**-01<br/>
+> tracestate: **`moja`**=**`bb68d98a0840aa99`**,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+POST /transfers HTTP/1.1
+Accept: application/vnd.interoperability.transfers+json;version=1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 1820
+Date: Tue, 15 Nov 2017 10:14:01
+FSPIOP-Source: BankNrOne
+FSPIOP-Destination: MobileMoney
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-bb68d98a0840aa99-01
+tracestate: moja=bb68d98a0840aa99,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e
+{
+    "transferId":"11436b17-c690-4a30-8505-42a2c4eafb9d",
+    "payerFsp":"BankNrOne",
+    "payeeFsp": "MobileMoney",
+    "amount": {
+        "amount": "99",
+        "currency": "USD"
+    },
+    "expiration": "2017-11-15T11:17:01.663+01:00",
+    "ilpPacket": "AQAAAAAAACasIWcuc2UubW9iaWxlbW9uZXkubXNpc2RuLjEyMzQ1Njc4OY- 
+IEIXsNCiAgICAidHJhbnNhY3Rpb25JZCI6ICI4NWZlY-
+WMyZi0zOWIyLTQ5MWItODE3ZS00YTAzMjAzZDRmMTQiLA0KICAgICJxdW90ZUlkIjogIjdjMjNlOD-
+BjLWQwNzgtNDA3Ny04MjYzLTJjMDQ3ODc2ZmNmNiIsDQogICAgInBheWVlIjogew0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiTVNJU0ROIiwNCiAgI-
+CAgICAgICAgICJwYXJ0eUlkZW50aWZpZXIiOiAiMTIzNDU2Nzg5IiwNCiAgICAgICAgI-
+CAgICJmc3BJZCI6ICJNb2JpbGVNb25leSINCiAgICAgICAgfSwNCiAgICAgI-
+CAgInBlcnNvbmFsSW5mbyI6IHsNCiAgICAgICAgICAgICJjb21wbGV4TmFtZSI6IHsNCiAgICAgICAgI-
+CAgICAgICAiZmlyc3ROYW1lIjogIkhlbnJpayIsDQogICAgICAgICAgICAgICAgImxhc3ROYW1lIjogIk-
+thcmxzc29uIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9DQogICAgfSwNCiAgICAicGF5ZXIi-
+OiB7DQogICAgICAgICJwZXJzb25hbEluZm8iOiB7DQogICAgICAgICAgICAiY29tcGxleE5hbWUi-
+OiB7DQogICAgICAgICAgICAgICAgImZpcnN0TmFtZSI6ICJNYXRzIiwNCiAgICAgICAgICAgICAgI-
+CAibGFzdE5hbWUiOiAiSGFnbWFuIg0KICAgICAgICAgICAgfQ0KICAgICAgICB9LA0KICAgICAgI-
+CAicGFydHlJZEluZm8iOiB7DQogICAgICAgICAgICAicGFydHlJZFR5cGUiOiAiSUJBTiIsDQogICAgI- CAgICAgICAicGFydHlJZGVudGlmaWVyI-
+jogIlNFNDU1MDAwMDAwMDA1ODM5ODI1NzQ2NiIsDQogICAgICAgICAgICAiZnNwSWQiOiAiQmFua05yT25 lIg0KICAgICAgICB9DQogICAgfSwNCiAgICAiYW1vdW50Ijogew0KICAgICAgICAiYW1vdW50IjogIjEw-
+MCIsDQogICAgICAgICJjdXJyZW5jeSI6ICJVU0QiDQogICAgfSwNCiAgICAidHJhbnNhY3Rpb25UeXBlI-
+jogew0KICAgICAgICAic2NlbmFyaW8iOiAiVFJBTlNGRVIiLA0KICAgICAgICAiaW5pdGlhdG9yI-
+jogIlBBWUVSIiwNCiAgICAgICAgImluaXRpYXRvclR5cGUiOiAiQ09OU1VNRVIiDQogICAgfSwNCiAgI-
+CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
+"condition": "fH9pAYDQbmoZLPbvv3CSW2RfjU4jvM4ApG_fqGnR7Xs" 
+}
+```
+
+4.1.3.3. Transfer response callback from MobileMoney to Switch
+
+**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`da6dbe3af96ed639`**-01<br/>
+> tracestate: **`mobilemoney`**=**`da6dbe3af96ed639`**,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d HTTP/1.1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 166
+Date: Tue, 15 Nov 2017 10:14:02 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-da6dbe3af96ed639-01
+tracestate: mobilemoney=da6dbe3af96ed639,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0
+{
+    "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
+    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "transferState": "COMMITTED"
+}
+```
+
+4.1.3.4. Transfer response callback from Switch to BankNrOne
+
+**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+
+The following trace headers will be include in the request:
+
+**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+
+> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`a6467a7068235c33`**-01<br/>
+> tracestate: **`moja`**=**`a6467a7068235c33`**,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0<br/>
+
+<br/>
+The request sample including trace headers:
+
+```http
+PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d HTTP/1.1
+Content-Type: application/vnd.interoperability.transfers+json;version=1.0
+Content-Length: 166
+Date: Tue, 15 Nov 2017 10:14:02 GMT
+FSPIOP-Source: MobileMoney
+FSPIOP-Destination: BankNrOne
+traceparent: 00-91e502e28cd723686e9940bd3f378f85-a6467a7068235c33-01
+tracestate: moja=a6467a7068235c33, mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0
+{
+    "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
+    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "transferState": "COMMITTED"
+}
+```
+
+4.1.3.5. Transfer processed by BankNrOne
+
+The BankNrOne receives the callback request with the fulfillment, and completes the transfer.
+
+##### 4.1.4 Distributed Trace Graph
+
+TO BE DONE
 
 #### 4.3. Transfer request with non-participant FSPs ignoring trace headers
 
@@ -250,3 +890,5 @@ This will example will result in two disparate end-to-end trace graphs being cre
 <sup>1</sup> [https://www.w3.org/TR/trace-context-1](https://www.w3.org/TR/trace-context-1) – Trace Context - Level 1 - W3C Recommendation 06 February 2020
 
 <sup>2</sup> [https://w3c.github.io/trace-context](https://w3c.github.io/trace-context) – Trace Context - W3C Editor's Draft
+
+<sup>3</sup> [FSPIOP - API Definition](./API%20Definition%20v1.1.md) – Open API for FSP Interoperability Specification
