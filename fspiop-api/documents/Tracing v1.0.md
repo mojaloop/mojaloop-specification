@@ -335,6 +335,10 @@ tracestate: mobilemoney=619d4c9d431ca708,moja=f86425c1a005e5e2,banknrone=b0f903d
 
 The Switch receives the callback request, and mutates the trace information before forwarding with the **PUT /parties** callback to the BankNrOne.
 
+The Switch will use the list-member value `moja`=`f86425c1a005e5e2` found in the _tracestate_' as the _parent-id_ for this span. This will be used by the Switch's internal trace system to link the current span to the previous processed span, thereby allowing the Switch to have its own internal distributed trace graph. This internal distributed graph may span over several internal components, such as the Account-lookup-service and the Oracle-service for participant discovery.
+
+The benefit of this being that this internal distributed graph is private (i.e. neither BankNrOne nor MobileMoney have access to it) to the Switch. Additionally, the Switch would also use this information for precise operational monitoring and issue resolution within its internal systems.
+
 The _traceparent_ is mutated as follows:
 
 | variable | value | description |
@@ -391,6 +395,10 @@ tracestate: mobilemoney=20131b86d4a0f18a,moja=f86425c1a005e5e2,banknrone=b0f903d
 4.1.1.5. Party Information processed by BankNrOne
 
 The BankNrOne receives the callback request containing the necessary participant and party information to be able to request a quote.
+
+Similarly, BankNrOne will use the list-member value `banknrone`=`b0f903d000944947` found in the _tracestate_' as the _parent-id_ for this span. This will be used by the BankNrOne's internal trace system to link the current span to the initial span where the trace was first created.
+
+This allows BankNrOne to realize the same benefits as the Switch with regard to operational monitoring and issue resolution. However, if we take into consideration that all participant's internal distributed graphs are inter-linked (thanks to a common propagated _trace-id_); we can realise that it is now easier to resolve issues end-to-end.
 
 ##### 4.1.2 Request Quote
 
@@ -844,7 +852,7 @@ The two disparate end-to-end trace graphs will trace the following requests:
 > 4.2.a. **BankNrOne** to **MobileMoney** being routed through a **Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
 > 4.2.b. **MobileMoney** to **BankNrOne** being routed through a **Switch** for a  **PUT /transfers** callback<br/>
 
-This is reflected in the [distributed tracing graph](#422-distributed-trace-graph) for this example.
+The result being that the Switch is the only participant that stores the tracing information. This is reflected in the [distributed tracing graph](#422-distributed-trace-graph) for this example.
 
 **Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
 
