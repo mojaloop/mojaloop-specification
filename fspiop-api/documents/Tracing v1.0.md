@@ -100,8 +100,8 @@ Table 1 – Data model of HTTP header fields for Tracing
 | --- | --- | --- | --- | --- |
 | version | 1 | 2HEXDIGLC | Version indicator for trace-format. Refer to [Table 3](#table-3-–-supported-version-formats) for supported versions. | Section _[3.2.2.1 version](https://www.w3.org/TR/trace-context-1/#version)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#version)</sup> |
 | version-format | 1 | String(52) | A _dash_ (`-`) delimitated string included tracing information such as: trace-id, parent-id, trace-flags, etc. | Refer to [Table 3](#table-3-–-supported-version-formats) |
-| trace-id | 1 | 32HEXDIGLC | ID representing the entire trace, i.e. the end-to-end trace identifier. | Section _[3.2.2.3 trace-id](https://www.w3.org/TR/trace-context-1/#trace-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#trace-id)</sup> |
-| parent-id | 1 | 16HEXDIGLC | ID representing a _span_, the primary building block of a distributed trace, representing an individual unit of work done in a distributed system.  | Section _[3.2.2.4 parent-id](https://www.w3.org/TR/trace-context-1/#parent-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#parent-id)</sup> |
+| trace-id | 1 | 32HEXDIGLC | [Randomly generated ID](https://www.w3.org/TR/trace-context-1/#considerations-for-trace-id-field-generation)<sup>[1](https://www.w3.org/TR/trace-context-1/#considerations-for-trace-id-field-generation)</sup> representing the entire trace, i.e. the end-to-end trace identifier. | Section _[3.2.2.3 trace-id](https://www.w3.org/TR/trace-context-1/#trace-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#trace-id)</sup> |
+| parent-id | 1 | 16HEXDIGLC | ID representing a _span_, the primary building block of a distributed trace, representing an individual unit of work done in a distributed system. It is recommended to follow the same [consideration for ID generation](https://www.w3.org/TR/trace-context-1/#considerations-for-trace-id-field-generation)<sup>[1](https://www.w3.org/TR/trace-context-1/#considerations-for-trace-id-field-generation)</sup> as the _trace-id_ field.  | Section _[3.2.2.4 parent-id](https://www.w3.org/TR/trace-context-1/#parent-id)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#parent-id)</sup> |
 | trace-flags | 1 | 2HEXDIGLC | Control flags related to the trace. | Section _[3.2.2.5 trace-flags](https://www.w3.org/TR/trace-context-1/#trace-flags)_ <sup>[1](https://www.w3.org/TR/trace-context-1/#trace-flags)</sup> |
 
 #### **Table 3 – Supported version-formats**
@@ -152,6 +152,34 @@ Vendors receiving trace request headers ([Table 1](#table-1-–-data-model-of-ht
 Unmodified header propagation is typically implemented in pass-through services like proxies. As such, this behavior <sup>[1](https://www.w3.org/TR/trace-context-1/#mutating-the-traceparent-field)</sup> may also be implemented in a service which currently does not collect distributed tracing information.
 
 ### 4. Examples
+
+Several scenarios will be covered in this sections showing how FSPs and a Mojaloop Switch would handle the generation and propagation of Trace headers depending on their respective participation.
+
+For all examples, the following _Node.js_ code was used to randomly generated unique _trace-id_ and _parent-id_ values:
+
+```javascript
+'use strict'
+
+const crypto = require('crypto')
+
+const Crypto = {
+  randomBytes (byteSize, encoding = 'hex') {
+    return crypto.randomBytes(byteSize).toString(encoding)
+  }
+}
+```
+
+Usage for _trace-id_ using default `hex` output encoding:
+
+```javascript
+console.log('trace-id='+Crypto.randomBytes(16))
+
+```
+
+Usage for _parent-id_ using default `hex` output encoding:
+```javascript
+console.log('parent-id='+Crypto.randomBytes(16))
+```
 
 #### 4.1. P2P Transfer with participating FSPs
 
@@ -368,22 +396,9 @@ The BankNrOne receives the callback request containing the necessary participant
 
 4.1.2.1. Request Quote from BankNrOne to Switch
 
-BankNrOne sends a **POST /quotes** request to the Switch, and includes the following generated _traceparent_ information:
+BankNrOne sends a **POST /quotes** request to the Switch while continuing the trace `91e502e28cd723686e9940bd3f378f85`.
 
-| variable | value | description |
-| ---|---|--- |
-| _version_ | 00 | Unchanged. |
-| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `0c3e9f44f921ca06` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
-| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
-
-The _tracestate_ is mutated as follows:
-
-| index | _list-member_ |value | description|
-| --- | --- | --- | --- |
-| 0 | `banknrone` | `0c3e9f44f921ca06` | Mapped from _parent-id_. |
-| 1 | moja | e5687db76842fe36 | Unchanged. |
-| 2 | mobilemoney | 619d4c9d431ca708 | Unchanged. |
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -447,21 +462,7 @@ tracestate: banknrone=0c3e9f44f921ca06,moja=e5687db76842fe36,mobilemoney=619d4c9
 
 Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
 
-The _traceparent_ is mutated as follows:
-
-| variable | value | description |
-| ---|---|--- |
-| _version_ | 00 | Unchanged. |
-| _trace-id_ | 91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `379cc3faa566cf90` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
-| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
-
-The _tracestate_ is mutated as follows:
-| index | _list-member_ |value | description|
-| --- | --- | --- | --- |
-| 0 | `moja` | `379cc3faa566cf90` | Mapped from _parent-id_. |
-| 1 | banknrone | 0c3e9f44f921ca06 | Unchanged. |
-| 2 | mobilemoney | 619d4c9d431ca708 | Unchanged. |
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -525,22 +526,7 @@ tracestate: moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9
 
 MobileMoney receives the request, and mutates the trace information before responding with the **PUT /quotes** callback to the Switch.
 
-The _traceparent_ is mutated as follows:
-
-| variable | value | description |
-| ---|---|--- |
-| _version_ | 00 | Unchanged. |
-| _trace-id_  91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `06a441483c4f238e` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
-| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
-
-The _tracestate_ is mutated as follows:
-
-| index | _list-member_ |value | description|
-| --- | --- | --- | --- |
-| 0 | `mobilemoney` | `06a441483c4f238e` | Mapped from _parent-id_. |
-| 1 | moja | 379cc3faa566cf90 | Unchanged. |
-| 2 | banknrone | 0c3e9f44f921ca06 | Unchanged. |
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -600,22 +586,7 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 Switch receives the request, and mutates the trace information before forwarding the **PUT /quotes** callback to BankNrOne.
 
-The _traceparent_ is mutated as follows:
-
-| variable | value | description |
-| ---|---|--- |
-| _version_ | 00 | Unchanged. |
-| _trace-id_  91e502e28cd723686e9940bd3f378f85 | Unchanged as the Switch is continuing the trace. |
-| _parent-id_ | `765457baab44a0fd` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
-| _trace-flags_ | 01 | Indicates that MobileMoney has recorded the trace. |
-
-The _tracestate_ is mutated as follows:
-
-| index | _list-member_ |value | description|
-| --- | --- | --- | --- |
-| 0 | `moja` | `765457baab44a0fd` | Mapped from _parent-id_. |
-| 1 | mobilemoney | 06a441483c4f238e | Unchanged. |
-| 2 | banknrone | 0c3e9f44f921ca06 | Unchanged. |
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -679,7 +650,9 @@ The BankNrOne receives the callback request with the necessary information to re
 
 4.1.3.1. Request Transfer from BankNrOne to Switch
 
-**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+BankNrOne sends a **POST /transfers** request to the Switch while continuing the trace `91e502e28cd723686e9940bd3f378f85`.
+
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -735,7 +708,9 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 4.1.3.2. Request Transfer from Switch to MobileMoney
 
-**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
+
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -791,7 +766,9 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 4.1.3.3. Transfer response callback from MobileMoney to Switch
 
-**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+MobileMoney receives the request, and mutates the trace information before responding with the **PUT /transfers** callback to the Switch.
+
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -821,7 +798,9 @@ tracestate: mobilemoney=da6dbe3af96ed639,moja=bb68d98a0840aa99,banknrone=82f942e
 
 4.1.3.4. Transfer response callback from Switch to BankNrOne
 
-**Note:** Following section is similar to [4.2.1. Request Party Information](#421-request-party-information) & [4.2.2. Request Quote](#422-request-quote), refer to those section for more detail.
+Switch receives the request, and mutates the trace information before forwarding the **PUT /transfers** callback to BankNrOne.
+
+**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
@@ -855,35 +834,49 @@ The BankNrOne receives the callback request with the fulfillment, and completes 
 
 ##### 4.1.4 Distributed Trace Graph
 
-TO BE DONE
+![Sample graph](assets/Tracing-v1.0-Example-4.1.P2P-Transfer-with-participating-FSPs.svg)
 
-#### 4.3. Transfer request with non-participant FSPs ignoring trace headers
+#### 4.2. Transfer request with non-participant FSPs ignoring trace headers
 
-This will example will result in two disparate end-to-end trace graphs being created which are NOT linked as follows:
-> 4.3.a. **FSP1** to **FSP2** being routed through a **Mojaloop Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
-> 4.3.b. **FSP2** to **FSP1** being routed through a **Mojaloop Switch** for a  **PUT /transfers** callback<br/>
+This will example will result in two disparate end-to-end trace graphs being created which are NOT linked. Similarly we will use the same participants from the previous example as per [Table 5](#table-5-–-p2p-transfer-participants).
+
+The two disparate end-to-end trace graphs will trace the following requests:
+> 4.2.a. **BankNrOne** to **MobileMoney** being routed through a **Switch** (_vendor-name_ identified by `moja`) for a  **POST /transfers**<br/>
+> 4.2.b. **MobileMoney** to **BankNrOne** being routed through a **Switch** for a  **PUT /transfers** callback<br/>
+
+This is reflected in the [distributed tracing graph](#422-distributed-trace-graph) for this example.
 
 **Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
 
 <br/>
-4.3.1. **FSP1** sends a POST /transfers to a **Mojaloop Switch** which includes no trace information.
 
-4.3.2. The **Mojaloop Switch** receives the POST /transfers and responds with a HTTP 202 accepted. The **Mojaloop Switch** generates a new trace as none was found in the request headers before forwarding the the POST /transfers to **FSP2**:<br/><br/>
+##### 4.2.1 Request Transfer
+
+4.2.1.1. **BankNrOne** sends a POST /transfers to a **Switch** which includes no trace information.
+
+4.2.1.2. The **Switch** receives the POST /transfers and responds with a HTTP 202 accepted. The **Switch** generates a new trace as none was found in the request headers before forwarding the the POST /transfers to **MobileMoney**:<br/><br/>
 
 > traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`00f067aa0ba902b7`**-**`01`**<br/>
 > tracestate: **`moja`**=**`00f067aa0ba902b7`**<br/>
 
 <br/>
-4.3.3. **FSP2** receives the request, commits the funds and responds with a PUT /transfers callback. The trace information is ignored as **FSP2** is not participating in the distributed trace.<br/>
+
+4.2.1.3. **MobileMoney** receives the request, commits the funds and responds with a PUT /transfers callback. The trace information is ignored as **MobileMoney** is not participating in the distributed trace.<br/>
 
 <br/>
-4.3.4. The **Mojaloop Switch** receives the **PUT /transfers** and responds with a `HTTP 200`. The **Mojaloop Switch** will generate a new disparate trace as no trace information was received. The switch then generates new values for _trace-id_, _parent-id_ similar to 4.3.2. above. The trace information will be including in the **PUT /transfers** callback to **FSP1**:<br/><br/>
+
+4.2.1.4. The **Switch** receives the **PUT /transfers** and responds with a `HTTP 200`. The **Switch** will generate a new disparate trace as no trace information was received. The switch then generates new values for _trace-id_, _parent-id_ similar to 4.3.2. above. The trace information will be including in the **PUT /transfers** callback to **BankNrOne**:<br/><br/>
 
 > traceparent: **`00`**-**`4bf92f3577b34da6a3ce929d0e0e4736`**-**`53ce929d0e0e4736`**-**`01`** <br/>
 > tracestate: **`moja`**=**`53ce929d0e0e4736`**<br/>
 
 <br/>
-4.3.5. **FSP1** receives the **PUT /transfers** callback and responds with an `HTTP 200`.  **FSP1** then completes the transfer. The trace information is ignored as **FSP1** is not participating in the distributed trace.
+
+4.2.1.5. **BankNrOne** receives the **PUT /transfers** callback and responds with an `HTTP 200`.  **BankNrOne** then completes the transfer. The trace information is ignored as **BankNrOne** is not participating in the distributed trace.
+
+##### 4.2.2 Distributed Trace Graph
+
+![Sample graph](assets/Tracing-v1.0-Example-4.2.Transfer-request-with-non-participant-FSPs-ignoring-trace-headers.svg)
 
 ## 5. References
 

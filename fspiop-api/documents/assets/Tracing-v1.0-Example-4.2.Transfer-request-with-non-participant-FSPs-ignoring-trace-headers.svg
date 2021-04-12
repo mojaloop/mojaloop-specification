@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="880px" preserveAspectRatio="none" style="width:1116px;height:880px;" version="1.1" viewBox="0 0 1116 880" width="1116px" zoomAndPan="magnify"><defs><filter height="300%" id="fyaut4eodl1uh" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacing" textLength="823" x="144.5" y="29.4023">Tracing v1.0 - Example 4.2. Transfer request with non-participant FSPs ignoring trace headers</text><rect fill="#E0FFFF" height="833.1641" style="stroke:#A80036;stroke-width:1.0;" width="103" x="26" y="41.1992"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="38" x="58.5" y="53.7676">Payer</text><rect fill="#FFFFE0" height="833.1641" style="stroke:#A80036;stroke-width:1.0;" width="126" x="433.5" y="41.1992"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="61" x="466" y="53.7676">Mojaloop</text><rect fill="#E0FFFF" height="833.1641" style="stroke:#A80036;stroke-width:1.0;" width="121" x="850" y="41.1992"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="40" x="890.5" y="53.7676">Payee</text><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="150.5527" style="stroke:#A80036;stroke-width:1.0;" width="10" x="491.5" y="286.0391"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="150.5527" style="stroke:#A80036;stroke-width:1.0;" width="10" x="491.5" y="546.5234"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="246.4844" style="stroke:#000000;stroke-width:2.0;" width="1080.5" x="20" y="247.418"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="143.5527" style="stroke:#000000;stroke-width:2.0;" width="665.5" x="427.5" y="301.0391"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="246.4844" style="stroke:#000000;stroke-width:2.0;" width="1092" x="10" y="507.9023"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="143.5527" style="stroke:#000000;stroke-width:2.0;" width="1072" x="20" y="561.5234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="77" x2="77" y1="160.4863" y2="771.3867"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="496.5" x2="496.5" y1="160.4863" y2="771.3867"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="910" x2="910" y1="160.4863" y2="771.3867"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77" x="36" y="141.0449">BankNrOne</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="34" y="157.5332">(banknrone)</text><ellipse cx="77.5" cy="70.5098" fill="#FEFECE" filter="url(#fyaut4eodl1uh)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M77.5,78.5098 L77.5,105.5098 M64.5,86.5098 L90.5,86.5098 M77.5,105.5098 L64.5,120.5098 M77.5,105.5098 L90.5,120.5098 " fill="none" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77" x="36" y="783.9219">BankNrOne</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="34" y="800.4102">(banknrone)</text><ellipse cx="77.5" cy="813.3633" fill="#FEFECE" filter="url(#fyaut4eodl1uh)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M77.5,821.3633 L77.5,848.3633 M64.5,829.3633 L90.5,829.3633 M77.5,848.3633 L64.5,863.3633 M77.5,848.3633 L90.5,863.3633 " fill="none" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="437.5" y="141.0449">Mojaloop Switch</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="473.5" y="157.5332">(moja)</text><ellipse cx="496.5" cy="70.5098" fill="#FEFECE" filter="url(#fyaut4eodl1uh)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M496.5,78.5098 L496.5,105.5098 M483.5,86.5098 L509.5,86.5098 M496.5,105.5098 L483.5,120.5098 M496.5,105.5098 L509.5,120.5098 " fill="none" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="437.5" y="783.9219">Mojaloop Switch</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="473.5" y="800.4102">(moja)</text><ellipse cx="496.5" cy="813.3633" fill="#FEFECE" filter="url(#fyaut4eodl1uh)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M496.5,821.3633 L496.5,848.3633 M483.5,829.3633 L509.5,829.3633 M496.5,848.3633 L483.5,863.3633 M496.5,848.3633 L509.5,863.3633 " fill="none" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="862" y="141.0449">MobileMoney</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103" x="858" y="157.5332">(mobilemoney)</text><ellipse cx="910.5" cy="70.5098" fill="#FEFECE" filter="url(#fyaut4eodl1uh)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M910.5,78.5098 L910.5,105.5098 M897.5,86.5098 L923.5,86.5098 M910.5,105.5098 L897.5,120.5098 M910.5,105.5098 L923.5,120.5098 " fill="none" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="862" y="783.9219">MobileMoney</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103" x="858" y="800.4102">(mobilemoney)</text><ellipse cx="910.5" cy="813.3633" fill="#FEFECE" filter="url(#fyaut4eodl1uh)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M910.5,821.3633 L910.5,848.3633 M897.5,829.3633 L923.5,829.3633 M910.5,848.3633 L897.5,863.3633 M910.5,848.3633 L923.5,863.3633 " fill="none" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="150.5527" style="stroke:#A80036;stroke-width:1.0;" width="10" x="491.5" y="286.0391"/><rect fill="#FFFFFF" filter="url(#fyaut4eodl1uh)" height="150.5527" style="stroke:#A80036;stroke-width:1.0;" width="10" x="491.5" y="546.5234"/><path d="M82,175.4863 L82,230.4863 L491,230.4863 L491,185.4863 L481,175.4863 L82,175.4863 " fill="#D3D3D3" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M481,175.4863 L481,185.4863 L491,185.4863 L481,175.4863 " fill="#D3D3D3" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="25" x="88" y="193.0547">Key</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="15" x="88" y="208.3652">.....</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="365" x="111" y="208.3652">indicates a request or callback with missing trace headers</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="98" x="88" y="223.6758">activated lines</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="164" x="194" y="223.6758">indicate trace participants</text><path d="M20,247.418 L182,247.418 L182,254.418 L172,264.418 L20,264.418 L20,247.418 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="246.4844" style="stroke:#000000;stroke-width:2.0;" width="1080.5" x="20" y="247.418"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="117" x="35" y="260.9863">Request Transfer</text><polygon fill="#A80036" points="479.5,282.0391,489.5,286.0391,479.5,290.0391,483.5,286.0391" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="77.5" x2="485.5" y1="286.0391" y2="286.0391"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="84.5" y="281.2969">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="99" x="97.5" y="281.2969">POST /transfers</text><path d="M427.5,301.0391 L532.5,301.0391 L532.5,308.0391 L522.5,318.0391 L427.5,318.0391 L427.5,301.0391 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="143.5527" style="stroke:#000000;stroke-width:2.0;" width="665.5" x="427.5" y="301.0391"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="60" x="442.5" y="314.6074">Trace #1</text><line style="stroke:#A80036;stroke-width:1.0;" x1="501.5" x2="543.5" y1="339.6602" y2="339.6602"/><line style="stroke:#A80036;stroke-width:1.0;" x1="543.5" x2="543.5" y1="339.6602" y2="352.6602"/><line style="stroke:#A80036;stroke-width:1.0;" x1="502.5" x2="543.5" y1="352.6602" y2="352.6602"/><polygon fill="#A80036" points="512.5,348.6602,502.5,352.6602,512.5,356.6602,508.5,352.6602" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="508.5" y="334.918">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="521.5" y="334.918">Generate new trace</text><path d="M506,365.6602 L506,405.6602 L1079,405.6602 L1079,375.6602 L1069,365.6602 L506,365.6602 " fill="#FFFF00" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1069,365.6602 L1069,375.6602 L1079,375.6602 L1069,365.6602 " fill="#FFFF00" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="512" y="383.2285">traceparent:</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="591" y="383.2285">00</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="609" y="383.2285">-</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="276" x="617" y="383.2285">0af7651916cd43dd8448eb211c80319c</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="893" y="383.2285">-</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="137" x="901" y="383.2285">00f067aa0ba902b7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1038" y="383.2285">-</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1046" y="383.2285">01</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66" x="512" y="398.5391">tracestate:</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="33" x="582" y="398.5391">moja</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="10" x="615" y="398.5391">=</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="137" x="625" y="398.5391">00f067aa0ba902b7</text><polygon fill="#A80036" points="898.5,432.5918,908.5,436.5918,898.5,440.5918,902.5,436.5918" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="496.5" x2="904.5" y1="436.5918" y2="436.5918"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="503.5" y="431.8496">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="99" x="516.5" y="431.8496">POST /transfers</text><line style="stroke:#A80036;stroke-width:1.0;" x1="910.5" x2="952.5" y1="472.9023" y2="472.9023"/><line style="stroke:#A80036;stroke-width:1.0;" x1="952.5" x2="952.5" y1="472.9023" y2="485.9023"/><line style="stroke:#A80036;stroke-width:1.0;" x1="911.5" x2="952.5" y1="485.9023" y2="485.9023"/><polygon fill="#A80036" points="921.5,481.9023,911.5,485.9023,921.5,489.9023,917.5,485.9023" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="917.5" y="468.1602">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158" x="930.5" y="468.1602">Process Transfer Request</text><path d="M10,507.9023 L174,507.9023 L174,514.9023 L164,524.9023 L10,524.9023 L10,507.9023 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="246.4844" style="stroke:#000000;stroke-width:2.0;" width="1092" x="10" y="507.9023"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="119" x="25" y="521.4707">Transfer Callback</text><polygon fill="#A80036" points="512.5,542.5234,502.5,546.5234,512.5,550.5234,508.5,546.5234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="506.5" x2="909.5" y1="546.5234" y2="546.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="518.5" y="541.7813">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="377" x="531.5" y="541.7813">PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d</text><path d="M20,561.5234 L125,561.5234 L125,568.5234 L115,578.5234 L20,578.5234 L20,561.5234 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="143.5527" style="stroke:#000000;stroke-width:2.0;" width="1072" x="20" y="561.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="60" x="35" y="575.0918">Trace #2</text><line style="stroke:#A80036;stroke-width:1.0;" x1="501.5" x2="543.5" y1="600.1445" y2="600.1445"/><line style="stroke:#A80036;stroke-width:1.0;" x1="543.5" x2="543.5" y1="600.1445" y2="613.1445"/><line style="stroke:#A80036;stroke-width:1.0;" x1="502.5" x2="543.5" y1="613.1445" y2="613.1445"/><polygon fill="#A80036" points="512.5,609.1445,502.5,613.1445,512.5,617.1445,508.5,613.1445" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="508.5" y="595.4023">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="119" x="521.5" y="595.4023">Generate new trace</text><path d="M506,626.1445 L506,666.1445 L1078,666.1445 L1078,636.1445 L1068,626.1445 L506,626.1445 " fill="#FFFF00" filter="url(#fyaut4eodl1uh)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1068,626.1445 L1068,636.1445 L1078,636.1445 L1068,626.1445 " fill="#FFFF00" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="75" x="512" y="643.7129">traceparent:</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="591" y="643.7129">00</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="609" y="643.7129">-</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="273" x="617" y="643.7129">4bf92f3577b34da6a3ce929d0e0e4736</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="890" y="643.7129">-</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="898" y="643.7129">53ce929d0e0e4736</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="1037" y="643.7129">-</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1045" y="643.7129">01</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="66" x="512" y="659.0234">tracestate:</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="33" x="582" y="659.0234">moja</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="10" x="615" y="659.0234">=</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="625" y="659.0234">53ce929d0e0e4736</text><polygon fill="#A80036" points="88.5,693.0762,78.5,697.0762,88.5,701.0762,84.5,697.0762" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="82.5" x2="495.5" y1="697.0762" y2="697.0762"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="94.5" y="692.334">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="377" x="107.5" y="692.334">PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d</text><line style="stroke:#A80036;stroke-width:1.0;" x1="77.5" x2="119.5" y1="733.3867" y2="733.3867"/><line style="stroke:#A80036;stroke-width:1.0;" x1="119.5" x2="119.5" y1="733.3867" y2="746.3867"/><line style="stroke:#A80036;stroke-width:1.0;" x1="78.5" x2="119.5" y1="746.3867" y2="746.3867"/><polygon fill="#A80036" points="88.5,742.3867,78.5,746.3867,88.5,750.3867,84.5,746.3867" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="84.5" y="728.6445">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="165" x="97.5" y="728.6445">Process Transfer response</text><!--MD5=[a00ef84e69d0b8dab3c1b8ecac10a974]
+@startuml
+' declate title
+title Tracing v1.0 - Example 4.2. Transfer request with non-participant FSPs ignoring trace headers
+
+autonumber
+
+' Actor Keys:
+'   actor - Payer DFSP, Payee DFSP
+'   boundary - APIs/Interfaces, etc
+'   collections - Kafka Topics
+'   control - Kafka Consumers
+'   entity - Database Access Objects
+'   database - Database Persistance Store
+
+' declare actors
+' actor "Payer DFSP\nParticipant" as PAYER_DFSP
+actor "BankNrOne\n (banknrone)" as PAYER
+actor "Mojaloop Switch\n (moja)" as MOJA
+actor "MobileMoney\n (mobilemoney)" as PAYEE
+
+' box "Financial Service Provider (Payer)" #lightGray
+' 	participant PAYER_DFSP
+' end box
+
+' box "ML API Adapter Service" #LightBlue
+' 	participant NOTIFY_HANDLER
+' end box
+
+box "Payer" #LightCyan
+    actor PAYER
+end box
+
+box "Mojaloop" #LightYellow
+    actor MOJA
+end box
+
+box "Payee" #LightCyan
+    actor PAYEE
+end box
+
+' start flow
+' activate PAYER
+note right of PAYER #lightgrey
+    **Key**
+    **.....**  indicates a request or callback with missing trace headers
+    **activated lines**  indicate trace participants
+end note
+group Request Transfer
+    PAYER - -> MOJA: POST /transfers
+    ' deactivate PAYER
+    group Trace #1
+        activate MOJA
+        MOJA -> MOJA: Generate new trace
+        note right of MOJA #yellow
+            traceparent: **00**-**0af7651916cd43dd8448eb211c80319c**-**00f067aa0ba902b7**-**01**
+            tracestate: **moja**=**00f067aa0ba902b7**
+        end note
+
+        MOJA -> PAYEE: POST /transfers
+        deactivate MOJA
+    end
+            ' activate PAYEE
+            PAYEE -> PAYEE: Process Transfer Request
+            ' deactivate PAYEE
+end
+
+group Transfer Callback
+            ' activate PAYEE
+            PAYEE - -> MOJA: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+            ' deactivate PAYEE
+        group Trace #2
+                    activate MOJA
+                    MOJA -> MOJA: Generate new trace
+                    note right of MOJA #yellow
+                        traceparent: **00**-**4bf92f3577b34da6a3ce929d0e0e4736**-**53ce929d0e0e4736**-**01**
+                        tracestate: **moja**=**53ce929d0e0e4736**
+                    end note
+
+                MOJA -> PAYER: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+                deactivate MOJA
+        end
+
+        ' activate PAYER
+        PAYER -> PAYER: Process Transfer response
+end
+' deactivate PAYER
+@enduml
+
+@startuml
+title Tracing v1.0 - Example 4.2. Transfer request with non-participant FSPs ignoring trace headers
+
+autonumber
+
+
+actor "BankNrOne\n (banknrone)" as PAYER
+actor "Mojaloop Switch\n (moja)" as MOJA
+actor "MobileMoney\n (mobilemoney)" as PAYEE
+
+
+
+box "Payer" #LightCyan
+    actor PAYER
+end box
+
+box "Mojaloop" #LightYellow
+    actor MOJA
+end box
+
+box "Payee" #LightCyan
+    actor PAYEE
+end box
+
+note right of PAYER #lightgrey
+    **Key**
+    **.....**  indicates a request or callback with missing trace headers
+    **activated lines**  indicate trace participants
+end note
+group Request Transfer
+    PAYER - -> MOJA: POST /transfers
+    group Trace #1
+        activate MOJA
+        MOJA -> MOJA: Generate new trace
+        note right of MOJA #yellow
+            traceparent: **00**-**0af7651916cd43dd8448eb211c80319c**-**00f067aa0ba902b7**-**01**
+            tracestate: **moja**=**00f067aa0ba902b7**
+        end note
+
+        MOJA -> PAYEE: POST /transfers
+        deactivate MOJA
+    end
+            PAYEE -> PAYEE: Process Transfer Request
+end
+
+group Transfer Callback
+            PAYEE - -> MOJA: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+        group Trace #2
+                    activate MOJA
+                    MOJA -> MOJA: Generate new trace
+                    note right of MOJA #yellow
+                        traceparent: **00**-**4bf92f3577b34da6a3ce929d0e0e4736**-**53ce929d0e0e4736**-**01**
+                        tracestate: **moja**=**53ce929d0e0e4736**
+                    end note
+
+                MOJA -> PAYER: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+                deactivate MOJA
+        end
+
+        PAYER -> PAYER: Process Transfer response
+end
+@enduml
+
+PlantUML version 1.2021.00(Sun Jan 10 12:25:05 SAST 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: GB
+--></g></svg>
