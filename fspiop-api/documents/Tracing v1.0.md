@@ -178,7 +178,7 @@ console.log('trace-id='+Crypto.randomBytes(16))
 
 Usage for _parent-id_ using default `hex` output encoding:
 ```javascript
-console.log('parent-id='+Crypto.randomBytes(16))
+console.log('parent-id='+Crypto.randomBytes(8))
 ```
 
 #### 4.1. P2P Transfer with participating FSPs
