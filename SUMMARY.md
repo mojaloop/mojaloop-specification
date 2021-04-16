@@ -6,7 +6,7 @@
   * [Logical data Model](fspiop-api/documents/Logical Data Model.md)
   * [Generic Transaction Patterns](fspiop-api/documents/Generic Transaction Patterns.md)
   * [Use Cases](fspiop-api/documents/Use Cases.md)
-  * [API Definition v1.1](fspiop-api/documents/API Definition v1.1.md)
+  * [API Definition v1.1](fspiop-api/documents/API-Definition_v1.1.md)
   * [Central Ledger API v1.0](admin-api/admin-api-specification-v1.0.md)
   * [Scheme Rules](fspiop-api/documents/Scheme Rules.md)
   * [JSON Binding Rules](fspiop-api/documents/JSON Binding Rules.md)

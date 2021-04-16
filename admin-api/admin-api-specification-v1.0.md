@@ -630,7 +630,7 @@ The following data is returned in the case of a successful operation:
 
 ## Format
 
-For details on the formats used for element data types used by the API, see section [7.1 Format Introduction](../fspiop-api/documents/API Definition v1.1.md#71-format-introduction) in the Mojaloop FSPIOP API Definition.
+For details on the formats used for element data types used by the API, see section [7.1 Format Introduction](../fspiop-api/documents/API-Definition_v1.1.md#71-format-introduction) in the Mojaloop FSPIOP API Definition.
 
 ## Element data type formats
 
@@ -638,7 +638,7 @@ This section defines element data types used by the API.
 
 ### Amount
 
-For details, see section [7.2.13 Amount](../fspiop-api/documents/API Definition v1.1.md#7213-amount) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.2.13 Amount](../fspiop-api/documents/API-Definition_v1.1.md#7213-amount) in the Mojaloop FSPIOP API Definition.
 
 ### Boolean
 
@@ -646,15 +646,15 @@ A `"true"` or `"false"` value.
 
 ### DateTime
 
-For details, see section [7.2.14 DateTime](../fspiop-api/documents/API Definition v1.1.md#7214-datetime) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.2.14 DateTime](../fspiop-api/documents/API-Definition_v1.1.md#7214-datetime) in the Mojaloop FSPIOP API Definition.
 
 ### Enum
 
-For details, see section [7.2.2 Enum](../fspiop-api/documents/API Definition v1.1.md#722-enum) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.2.2 Enum](../fspiop-api/documents/API-Definition_v1.1.md#722-enum) in the Mojaloop FSPIOP API Definition.
 
 ### Integer
 
-For details, see section [7.2.5 Integer](../fspiop-api/documents/API Definition v1.1.md#725-integer) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.2.5 Integer](../fspiop-api/documents/API-Definition_v1.1.md#725-integer) in the Mojaloop FSPIOP API Definition.
 
 ### Number
 
@@ -662,11 +662,11 @@ The API data type **Number** is a an arbitrary-precision, base-10 decimal number
 
 ### String
 
-For details, see section [7.2.1 String](../fspiop-api/documents/API Definition v1.1.md#721-string) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.2.1 String](../fspiop-api/documents/API-Definition_v1.1.md#721-string) in the Mojaloop FSPIOP API Definition.
 
 ### UUID
 
-For details, see section [7.2.16 UUID](../fspiop-api/documents/API Definition v1.1.md#7216-uuid) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.2.16 UUID](../fspiop-api/documents/API-Definition_v1.1.md#7216-uuid) in the Mojaloop FSPIOP API Definition.
 
 ## Element definitions
 
@@ -698,15 +698,15 @@ Data model for the element **IsActiveBoolean**.
 
 ### CurrencyEnum
 
-For details, see section [7.3.9 Currency](../fspiop-api/documents/API Definition v1.1.md#739-currency) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.3.9 Currency](../fspiop-api/documents/API-Definition_v1.1.md#739-currency) in the Mojaloop FSPIOP API Definition.
 
 ### PartyIdentifier
 
-For details, see section [7.3.24 PartyIdentifier](../fspiop-api/documents/API Definition v1.1.md#7324-partyidentifier) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.3.24 PartyIdentifier](../fspiop-api/documents/API-Definition_v1.1.md#7324-partyidentifier) in the Mojaloop FSPIOP API Definition.
 
 ### PartyIdTypeEnum
 
-For details, see section [7.3.25 PartyIdType](../fspiop-api/documents/API Definition v1.1.md#7325-partyidtype) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.3.25 PartyIdType](../fspiop-api/documents/API-Definition_v1.1.md#7325-partyidtype) in the Mojaloop FSPIOP API Definition.
 
 ### RequireLiquidityCheck
 
@@ -756,7 +756,7 @@ The list of ledger accounts configured for the participant. For details on the a
 
 ### ErrorInformation
 
-For details, see section [7.4.2 ErrorInformation](../fspiop-api/documents/API Definition v1.1.md#742-errorinformation) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.2 ErrorInformation](../fspiop-api/documents/API-Definition_v1.1.md#742-errorinformation) in the Mojaloop FSPIOP API Definition.
 
 ### ErrorInformationResponse
 
@@ -764,11 +764,11 @@ Data model for the complex type object that contains an optional element [ErrorI
 
 ### Extension
 
-For details, see section [7.4.3 Extension](../fspiop-api/documents/API Definition v1.1.md#743-extension) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.3 Extension](../fspiop-api/documents/API-Definition_v1.1.md#743-extension) in the Mojaloop FSPIOP API Definition.
 
 ### ExtensionList
 
-For details, see section [7.4.4 ExtensionList](../fspiop-api/documents/API Definition v1.1.md#744-extensionlist) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.4 ExtensionList](../fspiop-api/documents/API-Definition_v1.1.md#744-extensionlist) in the Mojaloop FSPIOP API Definition.
 
 ### IndividualAccount
 
@@ -794,7 +794,7 @@ Data model for the complex type **Limit**.
 
 ### Money
 
-For details, see section [7.4.10 Money](../fspiop-api/documents/API Definition v1.1.md#7410-money) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.10 Money](../fspiop-api/documents/API-Definition_v1.1.md#7410-money) in the Mojaloop FSPIOP API Definition.
 
 ### Participant
 
@@ -852,19 +852,19 @@ Data model for the complex type **ParticipantsNameLimitsObject**.
 
 ### Party
 
-For details, see section [7.4.11 Party](../fspiop-api/documents/API Definition v1.1.md#7411-party) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.11 Party](../fspiop-api/documents/API-Definition_v1.1.md#7411-party) in the Mojaloop FSPIOP API Definition.
 
 ### PartyComplexName
 
-For details, see section [7.4.12 PartyComplexName](../fspiop-api/documents/API Definition v1.1.md#7412-partycomplexname) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.12 PartyComplexName](../fspiop-api/documents/API-Definition_v1.1.md#7412-partycomplexname) in the Mojaloop FSPIOP API Definition.
 
 ### PartyIdInfo
 
-For details, see section [7.4.13 PartyIdInfo](../fspiop-api/documents/API Definition v1.1.md#7413-partyidinfo) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.13 PartyIdInfo](../fspiop-api/documents/API-Definition_v1.1.md#7413-partyidinfo) in the Mojaloop FSPIOP API Definition.
 
 ### PartyPersonalInfo
 
-For details, see section [7.4.14 PartyPersonalInfo](../fspiop-api/documents/API Definition v1.1.md#7414-partypersonalinfo) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.14 PartyPersonalInfo](../fspiop-api/documents/API-Definition_v1.1.md#7414-partypersonalinfo) in the Mojaloop FSPIOP API Definition.
 
 ### RecordFundsOut
 
@@ -903,4 +903,4 @@ Data model for the complex type **SettlementModelsObject**.
 
 ### TransactionType
 
-For details, see section [7.4.18 TransactionType](../fspiop-api/documents/API Definition v1.1.md#7418-transactiontype) in the Mojaloop FSPIOP API Definition.
+For details, see section [7.4.18 TransactionType](../fspiop-api/documents/API-Definition_v1.1.md#7418-transactiontype) in the Mojaloop FSPIOP API Definition.
