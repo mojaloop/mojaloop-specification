@@ -209,7 +209,7 @@ BankNrOne sends a **GET /parties** request to the Switch, and includes the follo
 | _parent-id_ | `b0f903d000944947` | Updated to represent the current span. Refer to [Table 2](#table-2-–-data-model-for-tracing-values). |
 | _trace-flags_ | `01 `| Indicates that BankNrOne has recorded the trace. |
 
-The _tracestate_ is also include with the following information:
+The _tracestate_ is also included with the following information:
 | index | _list-member_ |value | description|
 | --- | --- | --- | --- |
 | 0 | `banknrone` | `b0f903d000944947` | Mapped from _parent-id_. |
@@ -251,12 +251,10 @@ The _tracestate_ is mutated as follows:
 
 | index | _list-member_ |value | description|
 | --- | --- | --- | --- |
-| 1 | `moja` | `f86425c1a005e5e2` | Mapped from _parent-id_. |
-| 2 | banknrone | b0f903d000944947 | Unchanged. |
+| 0 | `moja` | `f86425c1a005e5e2` | Mapped from _parent-id_. |
+| 1 | banknrone | b0f903d000944947 | Unchanged. |
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`f86425c1a005e5e2`**-01<br/>
 > tracestate: **`moja`**=**`f86425c1a005e5e2`**,banknrone=b0f903d000944947<br/>
@@ -296,8 +294,6 @@ The _tracestate_ is mutated as follows:
 | 2 | banknrone | b0f903d000944947 | Unchanged. |
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`619d4c9d431ca708`**-01<br/>
 > tracestate: **`mobilemoney`**=**`619d4c9d431ca708`**,moja=f86425c1a005e5e2,banknrone=b0f903d000944947<br/>
@@ -358,8 +354,6 @@ The _tracestate_ is mutated as follows:
 
 The following trace headers will be include in the request:
 
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
-
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`e5687db76842fe36`**-01<br/>
 > tracestate: **`moja`**=**`e5687db76842fe36`**,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947<br/>
 
@@ -406,11 +400,9 @@ This allows BankNrOne to realize the same benefits as the Switch with regard to 
 
 BankNrOne sends a **POST /quotes** request to the Switch while continuing the trace `91e502e28cd723686e9940bd3f378f85`.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`0c3e9f44f921ca06`**-01<br/>
 > tracestate: **`banknrone`**=**`0c3e9f44f921ca06`**,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708<br/>
@@ -470,11 +462,9 @@ tracestate: banknrone=0c3e9f44f921ca06,moja=e5687db76842fe36,mobilemoney=619d4c9
 
 Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`379cc3faa566cf90`**-01<br/>
 > tracestate: **`moja`**=**`379cc3faa566cf90`**,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708<br/>
@@ -534,11 +524,9 @@ tracestate: moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9
 
 MobileMoney receives the request, and mutates the trace information before responding with the **PUT /quotes** callback to the Switch.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`06a441483c4f238e`**-01<br/>
 > tracestate: **`mobilemoney`**=**`06a441483c4f238e`**,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06<br/>
@@ -594,11 +582,9 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 Switch receives the request, and mutates the trace information before forwarding the **PUT /quotes** callback to BankNrOne.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`765457baab44a0fd`**-01<br/>
 > tracestate: **`moja`**=**`765457baab44a0fd`**,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06<br/>
@@ -660,11 +646,9 @@ The BankNrOne receives the callback request with the necessary information to re
 
 BankNrOne sends a **POST /transfers** request to the Switch while continuing the trace `91e502e28cd723686e9940bd3f378f85`.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`82f942e2566117c0`**-01<br/>
 > tracestate: **`banknrone`**=**`82f942e2566117c0`**,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e<br/>
@@ -718,11 +702,9 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`bb68d98a0840aa99`**-01<br/>
 > tracestate: **`moja`**=**`bb68d98a0840aa99`**,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e<br/>
@@ -776,11 +758,9 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 MobileMoney receives the request, and mutates the trace information before responding with the **PUT /transfers** callback to the Switch.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`da6dbe3af96ed639`**-01<br/>
 > tracestate: **`mobilemoney`**=**`da6dbe3af96ed639`**,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0<br/>
@@ -808,11 +788,9 @@ tracestate: mobilemoney=da6dbe3af96ed639,moja=bb68d98a0840aa99,banknrone=82f942e
 
 Switch receives the request, and mutates the trace information before forwarding the **PUT /transfers** callback to BankNrOne.
 
-**Note:** See previous section [4.2.1. Request Party Information](#421-request-party-information) for more detail.
+**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
-
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
 > traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`a6467a7068235c33`**-01<br/>
 > tracestate: **`moja`**=**`a6467a7068235c33`**,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0<br/>
