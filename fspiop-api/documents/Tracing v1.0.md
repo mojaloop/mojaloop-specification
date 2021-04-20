@@ -120,7 +120,7 @@ Table 1 – Data model of HTTP header fields for Tracing
 
 ### 3.2 Creating a Trace
 
-To create the a trace, the following steps are performed:
+To create a trace, the following steps are performed:
 
 3.2.1. Generate the _traceparent_ ([Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing)) header with the following values:
    > 3.2.1.1. Set the _version_ ([Table 2](#table-2-–-data-model-for-tracing-values)) to `00`.<br/>
