@@ -133,7 +133,7 @@ To create the a trace, the following steps are performed:
 
 ### 3.3 Continuing a Trace
 
-To create a trace, the following steps are performed:
+To continue a trace, the following steps are performed:
 
 3.3.1. Mutate the _traceparent_ ([Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing)) header with the following values:
    > 3.3.1.1. _version_ ([Table 2](#table-2-–-data-model-for-tracing-values)) is unchanged.<br/>

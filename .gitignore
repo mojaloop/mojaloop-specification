@@ -22,3 +22,6 @@ _book
 *.log
 
 *.jar
+
+# Ignore PlantUML plugin outputs for VSCode
+**/out
