@@ -83,7 +83,7 @@ This section introduces Distributed Tracing from a Mojaloop context, including t
 
 ### 3.1 Tracing Data Model
 
-The [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing) describes the trace headers fields that are optionally included in each API request. Tables [2](#table-2-–-data-model-for-tracing-values), [3](#table-3-–-supported-version-formats), and [4](#table-4-–-data-model-for-tracestate-list-member-values) describes the associated values and properties that is contained by each of the respective trace header fields shown in [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing).
+[Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing) describes the trace headers fields that are optionally included in each API request. Tables [2](#table-2-–-data-model-for-tracing-values), [3](#table-3-–-supported-version-formats), and [4](#table-4-–-data-model-for-tracestate-list-member-values) describes the associated values and properties that is contained by each of the respective trace header fields shown in [Table 1](#table-1-–-data-model-of-http-header-fields-for-Tracing).
 
 #### **Table 1 – Data model of HTTP header fields for Tracing**
 
