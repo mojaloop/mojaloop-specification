@@ -26,7 +26,7 @@ Either the Hub itself or a Digital Financial Service Provider (DFSP) that is a p
 The DFSP callback URL where the Hub routes API callbacks. The URL specified is the endpoint set up in the outbound API gateway.
 
 **Limit**
-Also called "Net Debit Cap (NDC)". The NDC is a limit or a cap placed on a DFSP's funds available for transacting. It represents the maximum amount of money that the DFSP can owe to other DFSPs. The Position is continuously checked against the Net Debit Cap and when the Position amount exceeds the NDC amount, transfers are blocked.
+Currently, only one type of limit is supported, it is called "Net Debit Cap (NDC)". In the future, it is possible to add support for further types of limits. The NDC is a limit or a cap placed on a DFSP's funds available for transacting. It represents the maximum amount of money that the DFSP can owe to other DFSPs. The Position is continuously checked against the Net Debit Cap and when the Position amount exceeds the NDC amount, transfers are blocked.
 
 **Account**
 Also called "ledger". The Hub maintains a number of internal accounts to keep track of the movement of money (both e-money and real money) between DFSPs.
