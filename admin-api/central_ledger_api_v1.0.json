@@ -1788,7 +1788,6 @@
                     "name",
                     "requireLiquidityCheck",
                     "settlementDelay",
-                    "currency",
                     "settlementGranularity",
                     "settlementInterchange",
                     "settlementAccountType"
