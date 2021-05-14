@@ -216,10 +216,10 @@ The _tracestate_ is also included with the following information:
 
 The following trace headers will be include in the request:
 
-**Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
+> **Note:** The fields highlighted below as **`value`** will indicate a newly generated or modified value depending on context. Non-highlighted fields will indicate an unchanged value.
 
-> traceparent: **`00`**-**`91e502e28cd723686e9940bd3f378f85`**-**`b0f903d000944947`**-**`01`**<br/>
-> tracestate: **`banknrone`**=**`b0f903d000944947`**<br/>
+- `traceparent`: **`00`**-**`91e502e28cd723686e9940bd3f378f85`**-**`b0f903d000944947`**-**`01`**<br/>
+- `tracestate`: **`banknrone`**=**`b0f903d000944947`**<br/>
 
 <br/>
 The request sample including trace headers:
@@ -256,8 +256,8 @@ The _tracestate_ is mutated as follows:
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`f86425c1a005e5e2`**-01<br/>
-> tracestate: **`moja`**=**`f86425c1a005e5e2`**,banknrone=b0f903d000944947<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`f86425c1a005e5e2`**-`01`<br/>
+- `tracestate`: **`moja`**=**`f86425c1a005e5e2`**,`banknrone`=`b0f903d000944947`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -295,8 +295,8 @@ The _tracestate_ is mutated as follows:
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`619d4c9d431ca708`**-01<br/>
-> tracestate: **`mobilemoney`**=**`619d4c9d431ca708`**,moja=f86425c1a005e5e2,banknrone=b0f903d000944947<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`619d4c9d431ca708`**-`01`<br/>
+- `tracestate`: **`mobilemoney`**=**`619d4c9d431ca708`**,`moja`=`f86425c1a005e5e2`,`banknrone`=`b0f903d000944947`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -354,8 +354,8 @@ The _tracestate_ is mutated as follows:
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`e5687db76842fe36`**-01<br/>
-> tracestate: **`moja`**=**`e5687db76842fe36`**,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`e5687db76842fe36`**-`01`<br/>
+- `tracestate`: **`moja`**=**`e5687db76842fe36`**,`mobilemoney`=`619d4c9d431ca708`,`banknrone`=`b0f903d000944947`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -400,12 +400,12 @@ This allows BankNrOne to realize the same benefits as the Switch with regard to 
 
 BankNrOne sends a **POST /quotes** request to the Switch while continuing the trace `91e502e28cd723686e9940bd3f378f85`.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`0c3e9f44f921ca06`**-01<br/>
-> tracestate: **`banknrone`**=**`0c3e9f44f921ca06`**,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`0c3e9f44f921ca06`**-`01`<br/>
+- `tracestate`: **`banknrone`**=**`0c3e9f44f921ca06`**,`moja`=`e5687db76842fe36`,`mobilemoney`=`619d4c9d431ca708`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -462,12 +462,12 @@ tracestate: banknrone=0c3e9f44f921ca06,moja=e5687db76842fe36,mobilemoney=619d4c9
 
 Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`379cc3faa566cf90`**-01<br/>
-> tracestate: **`moja`**=**`379cc3faa566cf90`**,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`379cc3faa566cf90`**-`01`<br/>
+- `tracestate`: **`moja`**=**`379cc3faa566cf90`**,`banknrone`=`0c3e9f44f921ca06`,`mobilemoney`=`619d4c9d431ca708`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -524,12 +524,12 @@ tracestate: moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9
 
 MobileMoney receives the request, and mutates the trace information before responding with the **PUT /quotes** callback to the Switch.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`06a441483c4f238e`**-01<br/>
-> tracestate: **`mobilemoney`**=**`06a441483c4f238e`**,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`06a441483c4f238e`**-`01`<br/>
+- `tracestate`: **`mobilemoney`**=**`06a441483c4f238e`**,`moja`=`379cc3faa566cf90`,`banknrone`=`0c3e9f44f921ca06`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -582,12 +582,12 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 Switch receives the request, and mutates the trace information before forwarding the **PUT /quotes** callback to BankNrOne.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`765457baab44a0fd`**-01<br/>
-> tracestate: **`moja`**=**`765457baab44a0fd`**,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`765457baab44a0fd`**-`01`<br/>
+- `tracestate`: **`moja`**=**`765457baab44a0fd`**,`mobilemoney`=`06a441483c4f238e`,`banknrone`=`0c3e9f44f921ca06`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -646,12 +646,12 @@ The BankNrOne receives the callback request with the necessary information to re
 
 BankNrOne sends a **POST /transfers** request to the Switch while continuing the trace `91e502e28cd723686e9940bd3f378f85`.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`82f942e2566117c0`**-01<br/>
-> tracestate: **`banknrone`**=**`82f942e2566117c0`**,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`82f942e2566117c0`**-`01`<br/>
+- `tracestate`: **`banknrone`**=**`82f942e2566117c0`**,`moja`=`765457baab44a0fd`,`mobilemoney`=`06a441483c4f238e`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -702,12 +702,12 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 Switch receives the request, and mutates the trace information before forwarding the request to MobileMoney.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`bb68d98a0840aa99`**-01<br/>
-> tracestate: **`moja`**=**`bb68d98a0840aa99`**,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`bb68d98a0840aa99`**-`01`<br/>
+- `tracestate`: **`moja`**=**`bb68d98a0840aa99`**,`banknrone`=`82f942e2566117c0`,`mobilemoney`=`06a441483c4f238e`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -758,12 +758,12 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 MobileMoney receives the request, and mutates the trace information before responding with the **PUT /transfers** callback to the Switch.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`da6dbe3af96ed639`**-01<br/>
-> tracestate: **`mobilemoney`**=**`da6dbe3af96ed639`**,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`da6dbe3af96ed639`**-`01`<br/>
+- `tracestate`: **`mobilemoney`**=**`da6dbe3af96ed639`**,`moja`=`bb68d98a0840aa99`,`banknrone`=`82f942e2566117c0`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -788,12 +788,12 @@ tracestate: mobilemoney=da6dbe3af96ed639,moja=bb68d98a0840aa99,banknrone=82f942e
 
 Switch receives the request, and mutates the trace information before forwarding the **PUT /transfers** callback to BankNrOne.
 
-**Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
+> **Note:** See previous section [4.1.1. Request Party Information](#411-request-party-information) for more detail.
 
 The following trace headers will be include in the request:
 
-> traceparent: 00-91e502e28cd723686e9940bd3f378f85-**`a6467a7068235c33`**-01<br/>
-> tracestate: **`moja`**=**`a6467a7068235c33`**,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0<br/>
+- `traceparent`: `00`-`91e502e28cd723686e9940bd3f378f85`-**`a6467a7068235c33`**-`01`<br/>
+- `tracestate`: **`moja`**=**`a6467a7068235c33`**,`mobilemoney`=`da6dbe3af96ed639`,`banknrone`=`82f942e2566117c0`<br/>
 
 <br/>
 The request sample including trace headers:
@@ -832,7 +832,7 @@ The two disparate end-to-end trace graphs will trace the following requests:
 
 The result being that the Switch is the only participant that stores the tracing information. This is reflected in the [distributed tracing graph](#422-distributed-trace-graph) for this example.
 
-**Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
+> **Note:** The values highlighted as such "`value`" will indicate it being newly generated (on the first step) or modified on subsequent steps.
 
 <br/>
 
@@ -842,8 +842,8 @@ The result being that the Switch is the only participant that stores the tracing
 
 4.2.1.2. The **Switch** receives the POST /transfers and responds with a HTTP 202 accepted. The **Switch** generates a new trace as none was found in the request headers before forwarding the the POST /transfers to **MobileMoney**:<br/><br/>
 
-> traceparent: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`00f067aa0ba902b7`**-**`01`**<br/>
-> tracestate: **`moja`**=**`00f067aa0ba902b7`**<br/>
+- `traceparent`: **`00`**-**`0af7651916cd43dd8448eb211c80319c`**-**`00f067aa0ba902b7`**-**`01`**<br/>
+- `tracestate`: **`moja`**=**`00f067aa0ba902b7`**<br/>
 
 <br/>
 
@@ -853,8 +853,8 @@ The result being that the Switch is the only participant that stores the tracing
 
 4.2.1.4. The **Switch** receives the **PUT /transfers** and responds with a `HTTP 200`. The **Switch** will generate a new disparate trace as no trace information was received. The switch then generates new values for _trace-id_, _parent-id_ similar to 4.3.2. above. The trace information will be including in the **PUT /transfers** callback to **BankNrOne**:<br/><br/>
 
-> traceparent: **`00`**-**`4bf92f3577b34da6a3ce929d0e0e4736`**-**`53ce929d0e0e4736`**-**`01`** <br/>
-> tracestate: **`moja`**=**`53ce929d0e0e4736`**<br/>
+- `traceparent`: **`00`**-**`4bf92f3577b34da6a3ce929d0e0e4736`**-**`53ce929d0e0e4736`**-**`01`** <br/>
+- `tracestate`: **`moja`**=**`53ce929d0e0e4736`**<br/>
 
 <br/>
 
