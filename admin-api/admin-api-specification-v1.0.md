@@ -19,29 +19,50 @@ This document provides detailed information about the Central Ledger API. The Ce
 
 To provide context for the admin operations that the Central Ledger API enables, this section gives a brief definition of some basic concepts.
 
-**Participant**
+### Participant
+
 Either the Hub itself or a Digital Financial Service Provider (DFSP) that is a participant in a Mojaloop scheme.
 
-**Endpoint**
+### Endpoint
+
 The DFSP callback URL where the Hub routes API callbacks. The URL specified is the endpoint set up in the outbound API gateway.
 
-**Limit**
-Currently, only one type of limit is supported, it is called "Net Debit Cap (NDC)". In the future, it is possible to add support for further types of limits. The NDC is a limit or a cap placed on a DFSP's funds available for transacting. It represents the maximum amount of money that the DFSP can owe to other DFSPs. The Position is continuously checked against the Net Debit Cap and if a transfer would cause the Position amount to exceed the NDC amount, the transfer is blocked.
+### Limit
 
-**Account**
+Currently, only one type of limit is supported, it is called "Net Debit Cap (NDC)". In the future, it is possible to add support for further types of limits. 
+
+The Net Debit Cap represents the liquidity cover available for a specific account (the Position account). It is the total amount of good funds which the scheme attests are available to guarantee that a participant is able to settle the liabilities it incurs on the Position account as a consequence of transferring funds. This amount of good funds is represented as the balance of an account (the Settlement account), which is tied to the Position account by a settlement model. The source of the funds in this account can be either funds recorded by the scheme's administrators as having been deposited to or withdrawn from the Settlement account, or funds which are automatically credited to or debited from the account by the scheme if the account is the Settlement account for an immediate gross settlement model.
+
+It should also be possible for a participant to specify that an amount, or a proportion, of the funds available in a Settlement account should be excluded from the Net Debit Cap calculation. In cases where a participant is a long-term net beneficiary of funds via settlement, or where participants keep extra funds in their Settlement account to cover periods when it may not be possible to deposit funds to those accounts, it may wish to exclude part of the balance of its Settlement account from use as cover for transfers.
+
+### Account
+
 Also called "ledger". The Hub maintains a number of internal accounts to keep track of the movement of money (both e-money and real money) between DFSPs.
 
-**Position**
-The Position of a DFSP reflects – at a given point in time – the sum total of the transfer amounts sent and received by the DFSP. For the Payer DFSP, this sum total includes transfer amounts that are pending and have not been finalised (committed) yet (that is, transfers with the `"RESERVED"` state will be taken into account). For the Payee DFSP, the sum total includes only `"COMMITTED"` amounts. The Position is calculated in real time by the Hub. The Position is continuously checked against the Net Debit Cap and if a transfer would cause the Position amount to exceed the NDC amount, the transfer is blocked.
+### Position
 
-**Funds In and Funds Out**
+The Position represents the net of:
+- transfers on that account which have cleared but have not yet settled, and 
+- transfers on that account where: 
+  - the DFSP is the debtor party, and 
+  - the transfer has been accepted for processing by the Hub, but has not yet cleared.
+
+The Position for a given account is always verifiably up to date.
+
+When a transfer is requested, the Hub will check that the DFSP has liquidity cover available on that account to cover the amount of the transfer. If it does not, the transfer will be rejected.
+
+We currently allow liabilities to the participant which have been created as a consequence of transfers on the account where the participant is the beneficiary to reduce the participant's Position as if the liabilities had already been settled.
+
+### Funds In and Funds Out
+
 Funds In and Funds Out operations are used to track (in the Hub accounts) money movements related to deposits and withdrawals, as well as settlements.
 
 Funds In operations record either the deposit of money into a DFSP's settlement bank account or the settlement amount for a receiving DFSP.
 
 Funds Out operations record either the withdrawal of money from a DFSP's settlement bank account or the settlement amount for a sending DFSP.
 
-**Settlement model**
+### Settlement model
+
 Refers to how settlement happens within a scheme. Settlement is the process of transferring funds from one DSFP to another, so that the payer's DFSP reimburses the payee's DFSP for funds given to the payee during a transaction. A settlement model specifies if participants settle with each other separately or settle with the scheme, whether transfers are settled one by one or as a batch, whether transfers are settled immediately or with a delay, and so on.
 
 # HTTP details
@@ -89,12 +110,9 @@ This section introduces and details all services that the API supports for each 
 
 On a high level, the API can be used to perform the following actions:
 
-- View, create, update participant-related details, such as limit (Net Debit Cap), position, or endpoints configured.
-  - Use the services provided by the API resource **`/participants`**.
-- View, create, update settlement-model-related details, such as granularity, delay, liquidity check, and so on.
-  - Use the services provided by the API resource **`/settlementModels`**.
-- View transaction details for a particular transfer.
-  - Use the services provided by the API resource **`/transactions`**.
+- **`/participants`**: View, create, update participant-related details, such as limit (Net Debit Cap), position, or endpoints configured.
+- **`/settlementModels`**: View, create, update settlement-model-related details, such as granularity, delay, liquidity check, and so on.
+- **`/transactions`**: View transaction details for a particular transfer.
 
 ### Supported API services
 
@@ -122,13 +140,89 @@ The services provided by the resource `/participants` are primarily used by the 
 
 ### `GET /participants`
 
-The `GET /participants` request is used to retrieve information about all participants.
+Retrieves information about all participants.
 
-#### Data model
+#### Example request
 
-The `GET /participants` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants'
+```
 
-The following data is returned for each participant in the case of a successful operation:
+#### Example response
+
+> **NOTE:** In the example below, `dev1-central-ledger.mojaloop.live` indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "name": "greenbankfsp",
+    "id": "dev1-central-ledger.mojaloop.live/participants/greenbankfsp",
+    "created": "\"2021-03-04T14:20:17.000Z\"",
+    "isActive": 1,
+    "links": {
+      "self": "dev1-central-ledger.mojaloop.live/participants/greenbankfsp"
+    },
+    "accounts": [
+      {
+        "id": 15,
+        "ledgerAccountType": "POSITION",
+        "currency": "USD",
+        "isActive": 1,
+        "createdDate": null,
+        "createdBy": "unknown"
+      },
+      {
+        "id": 16,
+        "ledgerAccountType": "SETTLEMENT",
+        "currency": "USD",
+        "isActive": 1,
+        "createdDate": null,
+        "createdBy": "unknown"
+      },
+      {
+        "id": 21,
+        "ledgerAccountType": "INTERCHANGE_FEE_SETTLEMENT",
+        "currency": "USD",
+        "isActive": 1,
+        "createdDate": null,
+        "createdBy": "unknown"
+      }
+    ]
+  },
+  {
+    "name": "Hub",
+    "id": "dev1-central-ledger.mojaloop.live/participants/Hub",
+    "created": "\"2021-03-04T13:37:25.000Z\"",
+    "isActive": 1,
+    "links": {
+      "self": "dev1-central-ledger.mojaloop.live/participants/Hub"
+    },
+    "accounts": [
+      {
+        "id": 1,
+        "ledgerAccountType": "HUB_MULTILATERAL_SETTLEMENT",
+        "currency": "USD",
+        "isActive": 1,
+        "createdDate": null,
+        "createdBy": "unknown"
+      },
+      {
+        "id": 2,
+        "ledgerAccountType": "HUB_RECONCILIATION",
+        "currency": "USD",
+        "isActive": 1,
+        "createdDate": null,
+        "createdBy": "unknown"
+      }
+    ]
+  }
+]
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -141,18 +235,61 @@ The following data is returned for each participant in the case of a successful 
 
 ### `POST /participants`
 
-The `POST /participants` request is used to create a participant in the Hub.
+Creates a participant in the Hub.
 
-#### Data model
+#### Example request
 
-The `POST /participants` request sends the following data in the request body:
+```
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"name": "payerfsp", "currency": "USD"}' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 | `currency`  |  yes | [CurrencyEnum](#currencyenum) | The currency that the participant will transact in. |
 
-The following data is returned for the newly created participant in the case of a successful operation:
+#### Example response
+
+> **NOTE:** In the example below, `dev1-central-ledger.mojaloop.live` indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "payerfsp",
+  "id": "dev1-central-ledger.mojaloop.live/participants/payerfsp",
+  "created": "\"2021-01-12T10:56:30.000Z\"",
+  "isActive": 0,
+  "links": {
+    "self": "dev1-central-ledger.mojaloop.live/participants/hub"
+  },
+  "accounts": [
+    {
+      "id": 30,
+      "ledgerAccountType": "POSITION",
+      "currency": "USD",
+      "isActive": 0,
+      "createdDate": null,
+      "createdBy": "unknown"
+    },
+    {
+      "id": 31,
+      "ledgerAccountType": "SETTLEMENT",
+      "currency": "USD",
+      "isActive": 0,
+      "createdDate": null,
+      "createdBy": "unknown"
+    }
+  ]
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -165,7 +302,7 @@ The following data is returned for the newly created participant in the case of 
 
 ### `GET /participants/limits`
 
-The `GET /participants/limits` request is used to view limits information for all participants.
+Retrieves limits information for all participants.
 
 #### Query parameters
 
@@ -174,11 +311,45 @@ The `GET /participants/limits` request is used to view limits information for al
 | `currency`  |  no | [CurrencyEnum](#currencyenum) | The currency of the limit. |
 | `limit`  |  no | [String](#string) | Limit type. |
 
-#### Data model
+#### Example request
 
-The `GET /participants/limits` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants/limits'
+```
 
-The following data is returned for each participant in the case of a successful operation. Each limit in the list is applied to the specified participant name and currency in each object.
+#### Example response
+
+> **NOTE:** In the example below, `dev1-central-ledger.mojaloop.live` indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "name": "payerfsp",
+    "currency": "USD",
+    "limit": {
+      "type": "NET_DEBIT_CAP",
+      "value": 10000,
+      "alarmPercentage": 10
+    }
+  },
+  {
+    "name": "payeefsp",
+    "currency": "USD",
+    "limit": {
+      "type": "NET_DEBIT_CAP",
+      "value": 10000,
+      "alarmPercentage": 10
+    }
+  }
+]
+```
+
+#### Response data model
+
+Each limit in the returned list is applied to the specified participant name and currency in each object.
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -188,7 +359,7 @@ The following data is returned for each participant in the case of a successful 
 
 ### `GET /participants/{name}`
 
-The `GET /participants/{name}` request is used to retrieve information about a particular participant.
+Retrieves information about a particular participant.
 
 #### Path parameters
 
@@ -196,11 +367,58 @@ The `GET /participants/{name}` request is used to retrieve information about a p
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `GET /participants/{name}` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp'
+```
 
-The following data is returned in the case of a successful operation:
+#### Example response
+
+> **NOTE:** In the example below, `dev1-central-ledger.mojaloop.live` indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "payerfsp",
+  "id": "dev1-central-ledger.mojaloop.live/participants/payerfsp",
+  "created": "\"2021-03-04T13:42:02.000Z\"",
+  "isActive": 1,
+  "links": {
+    "self": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
+  },
+  "accounts": [
+    {
+      "id": 3,
+      "ledgerAccountType": "POSITION",
+      "currency": "USD",
+      "isActive": 1,
+      "createdDate": null,
+      "createdBy": "unknown"
+    },
+    {
+      "id": 4,
+      "ledgerAccountType": "SETTLEMENT",
+      "currency": "USD",
+      "isActive": 1,
+      "createdDate": null,
+      "createdBy": "unknown"
+    },
+    {
+      "id": 24,
+      "ledgerAccountType": "INTERCHANGE_FEE_SETTLEMENT",
+      "currency": "USD",
+      "isActive": 1,
+      "createdDate": null,
+      "createdBy": "unknown"
+    }
+  ]
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -213,7 +431,7 @@ The following data is returned in the case of a successful operation:
 
 ### `PUT /participants/{name}`
 
-The `PUT /participants/{name}` request is used to update participant details (activate/deactivate a participant).
+Updates participant details (activates/deactivates a participant).
 
 #### Path parameters
 
@@ -221,15 +439,64 @@ The `PUT /participants/{name}` request is used to update participant details (ac
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `PUT /participants/{name}` request sends the following request body:
+```
+curl -X PUT -H "Content-Type: application/json" \
+  -d '{"isActive": true}' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp 
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `isActive`  |  yes | [Boolean](boolean) | A flag to indicate whether or not the participant is active. |
 
-The following data is returned in the case of a successful operation:
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "payerfsp",
+  "id": "dev1-central-ledger.mojaloop.live/participants/payerfsp",
+  "created": "\"2021-03-04T13:42:02.000Z\"",
+  "isActive": 1,
+  "links": {
+    "self": "dev1-central-ledger.mojaloop.live/participants/payerfsp"
+  },
+  "accounts": [
+    {
+      "id": 3,
+      "ledgerAccountType": "POSITION",
+      "currency": "USD",
+      "isActive": 1,
+      "createdDate": null,
+      "createdBy": "unknown"
+    },
+    {
+      "id": 4,
+      "ledgerAccountType": "SETTLEMENT",
+      "currency": "USD",
+      "isActive": 1,
+      "createdDate": null,
+      "createdBy": "unknown"
+    },
+    {
+      "id": 24,
+      "ledgerAccountType": "INTERCHANGE_FEE_SETTLEMENT",
+      "currency": "USD",
+      "isActive": 1,
+      "createdDate": null,
+      "createdBy": "unknown"
+    }
+  ]
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -242,7 +509,7 @@ The following data is returned in the case of a successful operation:
 
 ### `GET /participants/{name}/endpoints`
 
-The `GET /participants/{name}/endpoints` request is used to retrieve information about the endpoints configured for a particular participant.
+Retrieves information about the endpoints configured for a particular participant.
 
 #### Path parameters
 
@@ -250,11 +517,122 @@ The `GET /participants/{name}/endpoints` request is used to retrieve information
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `GET /participants/{name}/endpoints` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/endpoints'
+```
 
-The following data is returned for each endpoint in the case of a successful operation:
+#### Example response
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_DELETE",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/parties/{{partyIdType}}/{{partyIdentifier}}/{{partySubIdOrType}}/error"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_AUTHORIZATIONS",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{partyIdType}}/{{partyIdentifier}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{partyIdType}}/{{partyIdentifier}}/error"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{requestId}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/participants/{{requestId}}/error"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTIES_GET",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/parties/{{partyIdType}}/{{partyIdentifier}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTIES_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/parties/{{partyIdType}}/{{partyIdentifier}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/parties/{{partyIdType}}/{{partyIdentifier}}/error"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_QUOTES",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_TRX_REQ_SERVICE",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_TRANSFER_POST",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/transfers"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_TRANSFER_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/transfers/{{transferId}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_TRANSFER_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/transfers/{{transferId}}/error"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_BULK_TRANSFER_POST",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/bulkTransfers"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_BULK_TRANSFER_PUT",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/bulkTransfers/{{id}}"
+  },
+  {
+    "type": "FSPIOP_CALLBACK_URL_BULK_TRANSFER_ERROR",
+    "value": "http://dev1-sim-payerfsp-scheme-adapter:4000/bulkTransfers/{{id}}/error"
+  },
+  {
+    "type": "NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL",
+    "value": "some.email@gmail.com"
+  },
+  {
+    "type": "NET_DEBIT_CAP_ADJUSTMENT_EMAIL",
+    "value": "some.email@gmail.com"
+  },
+  {
+    "type": "SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL",
+    "value": "some.email@gmail.com"
+  }
+]
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -263,7 +641,7 @@ The following data is returned for each endpoint in the case of a successful ope
 
 ### `POST /participants/{name}/endpoints`
 
-The `POST /participants/{name}/endpoints` request is used to add/update endpoints for a particular participant.
+Adds/updates endpoints for a particular participant.
 
 #### Path parameters
 
@@ -271,16 +649,31 @@ The `POST /participants/{name}/endpoints` request is used to add/update endpoint
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-The `POST /participants/{name}/endpoints` request sends the following request body:
+#### Example request
+
+```
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"type": "NET_DEBIT_CAP_ADJUSTMENT_EMAIL", "value": "some.email@org.com"}'
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/endpoints 
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `type`  |  yes | [String](#string) | Type of endpoint. |
 | `value`  |  yes | [String](#string) | Endpoint value. |
 
+#### Example response
+
+```
+HTTP/1.1 201 Created
+Content-Type: application/json
+```
+
 ### `GET /participants/{name}/limits`
 
-The `GET /participants/{name}/limits` request is used to view limits information for a particular participant.
+Retrieves limits information for a particular participant.
 
 #### Path parameters
 
@@ -295,11 +688,33 @@ The `GET /participants/{name}/limits` request is used to view limits information
 | `currency`  |  no | [CurrencyEnum](#currencyenum) | The currency of the limit. |
 | `limit`  |  no | [String](#string) | Limit type. |
 
-#### Data model
+#### Example request
 
-The `GET /participants/{name}/limits` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/limits'
+```
 
-The following data is returned in the case of a successful operation. Each limit in the list is applied to the specified participant name and currency in each object.
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "currency": "USD",
+    "limit": {
+      "type": "NET_DEBIT_CAP",
+      "value": 10000,
+      "alarmPercentage": 10
+    }
+  }
+]
+```
+
+#### Response data model
+
+Each limit in the returned list is applied to the specified participant name and currency in each object.
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -308,7 +723,7 @@ The following data is returned in the case of a successful operation. Each limit
 
 ### `PUT /participants/{name}/limits`
 
-The `PUT /participants/{name}/limits` request is used to adjust limits for a particular participant.
+Adjusts limits for a particular participant.
 
 #### Path parameters
 
@@ -316,16 +731,45 @@ The `PUT /participants/{name}/limits` request is used to adjust limits for a par
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `PUT /participants/{name}/limits` request sends the following request body:
+```
+curl -X PUT -H "Content-Type: application/json" \
+  -d '{ \
+    "currency": "USD", \
+    "limit": { \
+      "type": NET_DEBIT_CAP", \
+      "value": 10000, \
+      "alarmPercentage": 20
+    } \
+  }' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/limits 
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `currency`  |  yes | [CurrencyEnum](#currencyenum) | The currency configured for the participant. |
 | `limit`  |  yes | [ParticipantLimit](#participantlimit) | The limit configured for the participant.  |
 
-The following data is returned in the case of a successful operation.
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "currency": "USD",
+  "limit": {
+    "type": "NET_DEBIT_CAP",
+    "value": 10000,
+    "alarmPercentage": 20
+  }
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -334,7 +778,7 @@ The following data is returned in the case of a successful operation.
 
 ### `GET /participants/{name}/positions`
 
-The `GET /participants/{name}/positions` request is used to view the position of a particular participant.
+Retrieves the position of a particular participant.
 
 #### Path parameters
 
@@ -348,11 +792,28 @@ The `GET /participants/{name}/positions` request is used to view the position of
 |---|---|--|--|
 | `currency`  |  no | [CurrencyEnum](#currencyenum) | The currency of the limit. |
 
-#### Data model
+#### Example request
 
-The `GET /participants/{name}/positions` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/positions'
+```
 
-The following data is returned in the case of a successful operation. 
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "currency": "USD",
+    "value": 150,
+    "changedDate": "2021-05-10T08:01:38.000Z"
+  }
+]
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -362,7 +823,7 @@ The following data is returned in the case of a successful operation.
 
 ### `GET /participants/{name}/accounts`
 
-The `GET /participants/{name}/accounts` request is used to view the accounts and balances of a particular participant.
+Retrieves the accounts and balances of a particular participant.
 
 #### Path parameters
 
@@ -370,11 +831,50 @@ The `GET /participants/{name}/accounts` request is used to view the accounts and
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `GET /participants/{name}/accounts` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/accounts'
+```
 
-The following data is returned in the case of a successful operation. 
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "id": 3,
+    "ledgerAccountType": "POSITION",
+    "currency": "USD",
+    "isActive": 1,
+    "value": 150,
+    "reservedValue": 0,
+    "changedDate": "2021-05-10T08:01:38.000Z"
+  },
+  {
+    "id": 4,
+    "ledgerAccountType": "SETTLEMENT",
+    "currency": "USD",
+    "isActive": 1,
+    "value": -165000,
+    "reservedValue": 0,
+    "changedDate": "2021-05-10T14:27:02.000Z"
+  },
+  {
+    "id": 24,
+    "ledgerAccountType": "INTERCHANGE_FEE_SETTLEMENT",
+    "currency": "USD",
+    "isActive": 1,
+    "value": 0,
+    "reservedValue": 0,
+    "changedDate": "2021-03-30T12:23:06.000Z"
+  }
+]
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -388,7 +888,7 @@ The following data is returned in the case of a successful operation.
 
 ### `POST /participants/{name}/accounts`
 
-The `POST /participants/{name}/accounts` request is used to create accounts in the Hub.
+Creates accounts in the Hub.
 
 #### Path parameters
 
@@ -396,16 +896,49 @@ The `POST /participants/{name}/accounts` request is used to create accounts in t
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `POST /participants/{name}/accounts` request sends the following request body:
+```
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"currency": "USD", "type": "HUB_MULTILATERAL_SETTLEMENT"}' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/accounts  
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `currency`  |  yes | [CurrencyEnum](#currencyenum) | The currency of the participant ledger account. |
 | `type`  |  yes | [String](#string) | Type of ledger account. |
 
-The following data is returned in the case of a successful operation:
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "hub",
+  "id": "dev1-central-ledger.mojaloop.live/participants/hub",
+  "created": "2021-01-12T10:56:30.000Z",
+  "isActive": 0,
+  "links": {
+    "self": "dev1-central-ledger.mojaloop.live/participants/hub"
+  },
+  "accounts": [
+    {
+      "id": 1,
+      "ledgerAccountType": "HUB_MULTILATERAL_SETTLEMENT",
+      "currency": "USD",
+      "isActive": 0,
+      "createdDate": "2021-01-12T10:56:30.000Z",
+      "createdBy": "unknown"
+    }
+  ]
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -418,7 +951,7 @@ The following data is returned in the case of a successful operation:
 
 ### `POST /participants/{name}/accounts/{id}`
 
-The `POST /participants/{name}/accounts/{id}` request is used to Record Funds In or Out of a participant account.
+Records Funds In or Out of a participant account.
 
 #### Path parameters
 
@@ -427,9 +960,32 @@ The `POST /participants/{name}/accounts/{id}` request is used to Record Funds In
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 | `id`  |  yes | [Integer](#integer) | Account identifier. |
 
-#### Data model
+#### Example request
 
-The `POST /participants/{name}/accounts/{id}` request sends the following request body:
+````
+curl -X POST -H "Content-Type: application/json" \
+  -d '{ \
+    "transferId": "bfd38d14-893f-469d-a6ca-a312a0223949", \
+    "externalReference": "660616", \
+    "action": "recordFundsIn", \
+    "reason": "settlement", \
+    "amount": { \
+      "amount": "5000", \
+      "currency": "USD" \
+    }, \
+    "extensionList": { \
+      "extension": [ \
+        { \
+          "key": "scheme", \
+          "value": "abc" \
+        } \
+      ] \
+    } \
+  }' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/accounts/2
+````
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -440,9 +996,15 @@ The `POST /participants/{name}/accounts/{id}` request sends the following reques
 | `amount`  | yes  | [Money](#money) | The FundsIn or FundsOut amount. |
 | `extensionList`  | no  | [ExtensionList](#extensionlist) | Additional details. |
 
+#### Example response
+
+````
+HTTP/1.1 202 Accepted
+````
+
 ### `PUT /participants/{name}/accounts/{id}`
 
-The `PUT /participants/{name}/accounts/{id}` request is used to update a participant account. Currently, updating only the `isActive` flag is supported.
+Updates a participant account. Currently, updating only the `isActive` flag is supported.
 
 #### Path parameters
 
@@ -451,17 +1013,29 @@ The `PUT /participants/{name}/accounts/{id}` request is used to update a partici
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 | `id`  |  yes | [Integer](#integer) | Account identifier. |
 
-#### Data model
+#### Example request
 
-The `PUT /participants/{name}/accounts/{id}` request sends the following request body:
+```
+curl -X PUT -H "Content-Type: application/json" \
+  -d '{"isActive": true}' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/account/2 
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `isActive`  |  yes | [Boolean](boolean) | A flag to indicate whether or not the participant account is active. |
 
+#### Example response
+
+```
+HTTP/1.1 200 OK
+```
+
 ### `PUT /participants/{name}/accounts/{id}/transfers/{transferId}`
 
-The `PUT /participants/{name}/accounts/{id}/transfers/{transferId}` request is used to record a transfer as a Funds In or Out transaction for a participant account. 
+Records a transfer as a Funds In or Out transaction for a participant account. 
 
 #### Path parameters
 
@@ -471,18 +1045,30 @@ The `PUT /participants/{name}/accounts/{id}/transfers/{transferId}` request is u
 | `id`  |  yes | [Integer](#integer) | Account identifier. |
 | `transferId`  |  yes | [UUID](#uuid) | Transfer identifier. |
 
-#### Data model
+#### Example request
 
-The `PUT /participants/{name}/accounts/{id}/transfers/{transferId}` request sends the following request body:
+```
+curl -X PUT -H "Content-Type: application/json" \
+  -d '{"action": "recordFundsOutCommit", "reason": "fix"}' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/account/2/transfers/bfd38d14-893f-469d-a6ca-a312a0223949
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `action`  |  yes | [Enum](#enum) | The FundsOut action performed. Possible values are: `recordFundsOutCommit` and `recordFundsOutAbort`. |
 | `reason`  |  yes | [String](#string) | The reason for the FundsOut action. |
 
+#### Example response
+
+```
+HTTP/1.1 202 Accepted
+```
+
 ### `POST /participants/{name}/initialPositionAndLimits`
 
-The `POST /participants/{name}/initialPositionAndLimits` request is used to add initial limits and a position for a particular participant.
+Adds initial limits and a position for a particular participant.
 
 #### Path parameters
 
@@ -490,9 +1076,22 @@ The `POST /participants/{name}/initialPositionAndLimits` request is used to add 
 |---|---|--|--|
 | `name`  |  yes | [String(2..30)](#string) | The name of the participant. |
 
-#### Data model
+#### Example request
 
-The `POST /participants/{name}/initialPositionAndLimits` request sends the following request body:
+````
+curl -X POST -H "Content-Type: application/json" \
+  -d '{ \
+    "currency": "USD", \
+    "limit": { \
+      "type": "NET_DEBIT_CAP", \
+      "value": "10000" \
+    }, \
+    "initialPosition": 0 \
+  }' \
+  http://<domain-where-hub-central-ledger-service-is-running>/participants/payerfsp/initialPositionAndLimits
+````
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -500,19 +1099,61 @@ The `POST /participants/{name}/initialPositionAndLimits` request sends the follo
 | `limit`  |  yes | [ParticipantLimit](#participantlimit) | The limit configured for the participant.  |
 | `initialPosition`  |  no | [Number](#number) | Initial Position. |
 
+#### Example response
+
+```
+HTTP/1.1 201 Created
+```
+
 ## API Resource `/settlementModels`
 
 The services provided by the resource `/settlementModels` are used by the Hub Operator for creating, updating, and viewing settlement models.
 
 ### `GET /settlementModels`
 
-The `GET /settlementModels` request is used to retrieve information about all settlement models.
+Retrieves information about all settlement models.
 
-#### Data model
+#### Example request
 
-The `GET /settlementModels` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/settlementModels'
+```
 
-The following data is returned for each settlement model in the case of a successful operation:
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "settlementModelId": 1,
+    "name": "DEFERREDNETUSD",
+    "isActive": true,
+    "settlementGranularity": "NET",
+    "settlementInterchange": "MULTILATERAL",
+    "settlementDelay": "DEFERRED",
+    "currency": "USD",
+    "requireLiquidityCheck": true,
+    "ledgerAccountTypeId": "POSITION",
+    "autoPositionReset": true
+  },
+  {
+    "settlementModelId": 4,
+    "name": "DEFERREDNETEUR",
+    "isActive": true,
+    "settlementGranularity": "NET",
+    "settlementInterchange": "MULTILATERAL",
+    "settlementDelay": "DEFERRED",
+    "currency": "EUR",
+    "requireLiquidityCheck": true,
+    "ledgerAccountTypeId": "SETTLEMENT",
+    "autoPositionReset": true
+  }
+]
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -529,11 +1170,25 @@ The following data is returned for each settlement model in the case of a succes
 
 ### `POST /settlementModels`
 
-The `POST /settlementModels` request is used to create a settlement model.
+Creates a settlement model.
 
-#### Data model
+#### Example request
 
-The `POST /settlementModels` request sends the following data in the request body:
+```
+curl -X POST -H "Content-Type: application/json" \
+  -d '{ \
+    "name": "DEFERREDNET", \
+    "settlementGranularity": "NET", \
+    "settlementInterchange": "MULTILATERAL", \
+    "settlementDelay": "DEFERRED", \
+    "requireLiquidityCheck": true, \
+    "ledgerAccountType": "POSITION", \
+    "autoPositionReset": true \
+  }' \
+  http://<domain-where-hub-central-ledger-service-is-running>/settlementModels
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -547,9 +1202,15 @@ The `POST /settlementModels` request sends the following data in the request bod
 | `settlementAccountType`  |  yes | [String](#string) | A special type of ledger account into which settlements should be settled. Possible values are: <br> `SETTLEMENT`: A settlement account for the principal value of transfers (that is, the amount of money that the Payer wants the Payee to receive). <br> `INTERCHANGE_FEE_SETTLEMENT`: A settlement account for the fees associated with transfers. |
 | `autoPositionReset`  |  yes | [Boolean](boolean) | A flag to indicate whether or not the settlement model requires the automatic reset of the position. |
 
+#### Example response
+
+```
+HTTP/1.1 201 Created
+```
+
 ### `GET /settlementModels/{name}`
 
-The `GET /settlementModels/{name}` request is used to retrieve information about a particular settlement model.
+Retrieves information about a particular settlement model.
 
 #### Path parameters
 
@@ -557,11 +1218,33 @@ The `GET /settlementModels/{name}` request is used to retrieve information about
 |---|---|--|--|
 | `name`  |  yes | [String](#string) | The name of the settlement model. |
 
-#### Data model
+#### Example request
 
-The `GET /settlementModels/{name}` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/settlementModels/DEFERREDNET'
+```
 
-The following data is returned in the case of a successful operation:
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "settlementModelId": 1,
+  "name": "DEFERREDNET",
+  "isActive": true,
+  "settlementGranularity": "NET",
+  "settlementInterchange": "MULTILATERAL",
+  "settlementDelay": "DEFERRED",
+  "currency": "USD",
+  "requireLiquidityCheck": true,
+  "ledgerAccountTypeId": "POSITION",
+  "autoPositionReset": true
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -578,7 +1261,7 @@ The following data is returned in the case of a successful operation:
 
 ### `PUT /settlementModels/{name}`
 
-The `PUT /settlementModels/{name}` request is used to update a settlement model (activate/deactivate a settlement model).
+Updates a settlement model (activates/deactivates a settlement model).
 
 #### Path parameters
 
@@ -586,13 +1269,54 @@ The `PUT /settlementModels/{name}` request is used to update a settlement model 
 |---|---|--|--|
 | `name`  |  yes | [String](#string) | The name of the settlement model. |
 
-#### Data model
+#### Example request
 
-The `PUT /settlementModels/{name}` request sends the following request body:
+```
+curl -X PUT -H "Content-Type: application/json" \ 
+  -d '{"isActive": true}' \
+  http://<domain-where-hub-central-ledger-service-is-running>/settlementModels/DEFERREDNET 
+```
+
+#### Request data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
 | `isActive`  |  yes | [Boolean](#boolean) | A flag to indicate whether or not the settlement model is active. |
+
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "settlementModelId": 1,
+  "name": "DEFERREDNET",
+  "isActive": true,
+  "settlementGranularity": "NET",
+  "settlementInterchange": "MULTILATERAL",
+  "settlementDelay": "DEFERRED",
+  "currency": "USD",
+  "requireLiquidityCheck": true,
+  "ledgerAccountTypeId": "POSITION",
+  "autoPositionReset": true
+}
+```
+
+#### Response data model
+
+| Name  | Required  | Type | Description |
+|---|---|--|--|
+| `settlementModelId`  |  yes | [Integer](#integer) | Settlement model identifier. |
+| `name`  |  yes | [String](#string) | Settlement model name. |
+| `isActive`  |  yes | [Boolean](boolean) | A flag to indicate whether or not the settlement model is active. |
+| `settlementGranularity`  |  yes | [String](#string) | Specifies whether transfers are settled one by one or as a batch. Possible values are: <br> `GROSS`: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> `NET`: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.|
+| `settlementInterchange`  |  yes | [String](#string) | Specifies the type of settlement arrangement between parties. Possible values are: <br> `BILATERAL`: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> `MULTILATERAL`: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.|
+| `settlementDelay`  |  yes | [String](#string) | Specifies if settlement happens immediately after a transfer has completed or with a delay. Possible values are: <br> `IMMEDIATE`: Settlement happens immediately after a transfer has completed. <br> `DEFERRED`: Settlement is managed by the Hub operator on-demand or via a schedule.|
+| `currency`  |  yes | [CurrencyEnum](#currencyenum) | The currency configured for the settlement model. |
+| `requireLiquidityCheck`  |  yes | [Boolean](boolean) | A flag to indicate whether or not the settlement model requires liquidity check. |
+| `ledgerAccountTypeId`  |  yes | [String](#string) | Type of ledger account. Possible values are: <br> `INTERCHANGE_FEE`: Tracks the interchange fees charged for transfers. <br> `POSITION`: Tracks how much a DFSP owes or is owed. <br> `SETTLEMENT`: The DFSP's Settlement Bank Account mirrored in the Hub. Acts as a reconciliation account and mirrors the movement of real funds. |
+| `autoPositionReset`  |  yes | [Boolean](boolean) | A flag to indicate whether or not the settlement model requires the automatic reset of the position. |
 
 ## API Resource `/transactions`
 
@@ -600,7 +1324,7 @@ The services provided by the resource `/transactions` are used by the Hub Operat
 
 ### `GET /transactions/{id}`
 
-The `GET /transactions/{id}` request is used to retrieve information about a particular transaction.
+Retrieves information about a particular transaction.
 
 #### Path parameters
 
@@ -608,11 +1332,67 @@ The `GET /transactions/{id}` request is used to retrieve information about a par
 |---|---|--|--|
 | `id`  |  yes | [UUID](#uuid) | Transfer identifier. |
 
-#### Data model
+#### Example request
 
-The `GET /transactions/{id}` request sends an empty request body.
+```
+curl 'http://<domain-where-hub-central-ledger-service-is-running>/transactions/85feac2f-39b2-491b-817e-4a03203d4f14'
+```
 
-The following data is returned in the case of a successful operation:
+#### Example response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "quoteId": "7c23e80c-d078-4077-8263-2c047876fcf6",
+  "transactionId": "85feac2f-39b2-491b-817e-4a03203d4f14",
+  "transactionRequestId": "a8323bc6-c228-4df2-ae82-e5a997baf898",
+  "payee": {
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "123456789",
+      "fspId": "MobileMoneyAbc"
+    },
+    "name": "John Doe",
+    "personalInfo": {
+      "complexName": {
+        "firstName": "John",
+        "middleName": "William",
+        "lastName": "Doe"
+      },
+      "dateOfBirth": "1966-06-16"
+    }
+  },
+  "payer": {
+    "partyIdInfo": {
+      "partyIdType": "MSISDN",
+      "partyIdentifier": "987654321",
+      "fspId": "MobileMoneyXyz"
+    },
+    "name": "Jane Doe",
+    "personalInfo": {
+      "complexName": {
+        "firstName": "Mary",
+        "middleName": "Jane",
+        "lastName": "Doe"
+      },
+      "dateOfBirth": "1975-05-15"
+    }
+  },
+  "amount": {
+    "currency": "USD",
+    "amount": "50"
+  },
+  "transactionType": {
+    "scenario": "DEPOSIT",
+    "initiator": "PAYER",
+    "initiatorType": "CONSUMER"
+  }
+}
+```
+
+#### Response data model
 
 | Name  | Required  | Type | Description |
 |---|---|--|--|
@@ -672,14 +1452,6 @@ For details, see section [7.2.16 UUID](../fspiop-api/documents/API-Definition_v1
 
 This section defines element types used by the API.
 
-### AutoPositionReset
-
-Data model for the element **AutoPositionReset**.
-
-| Name  | Required  | Type | Description |
-|---|---|--|--|
-| `autoPositionReset`  | yes | [Boolean](#boolean) | A flag to indicate whether or not a settlement model requires the automatic reset of the position. |
-
 ### IsActive
 
 Data model for the element **IsActive**.
@@ -699,14 +1471,6 @@ Data model for the element **IsActiveBoolean**.
 ### CurrencyEnum
 
 For details, see section [7.3.9 Currency](../fspiop-api/documents/API-Definition_v1.1.md#739-currency) in the Mojaloop FSPIOP API Definition.
-
-### PartyIdentifier
-
-For details, see section [7.3.24 PartyIdentifier](../fspiop-api/documents/API-Definition_v1.1.md#7324-partyidentifier) in the Mojaloop FSPIOP API Definition.
-
-### PartyIdTypeEnum
-
-For details, see section [7.3.25 PartyIdType](../fspiop-api/documents/API-Definition_v1.1.md#7325-partyidtype) in the Mojaloop FSPIOP API Definition.
 
 ### RequireLiquidityCheck
 
@@ -830,7 +1594,7 @@ Data model for the complex type **ParticipantLimit**.
 |---|---|--|--|
 | `type`  |  yes | [String](#string) | The type of participant limit (for example, `NET_DEBIT_CAP`.)  |
 | `value`  |  yes | [Number](#number) | The value of the limit that has been set for the participant.  |
-| `alarmPercentage`  |  yes | [Number](#number) | An alarm notification is triggered when a pre-specified percentage of the limit is reached. Specifying an `alarmPercentage` is optional. If not specified, it will default to 10 percent. |
+| `alarmPercentage`  |  yes | [Number](#number) | An alarm notification is triggered when a pre-specified percentage of the limit is reached. Specifying an `alarmPercentage` is optional. If not specified, it will default to 10 percent, expressed as `10`. |
 
 ### ParticipantsNameEndpointsObject
 
