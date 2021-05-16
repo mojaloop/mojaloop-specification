@@ -4377,7 +4377,7 @@ The following list provides a detailed description of all the steps in the seque
 
 ## 10. End-to-End Example
 
-This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see [_Signature_](/documents/Signature.md)) and field level encryption using JWE (see [_Encryption_]((/documents/Encryption.md))).
+This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see [_Signature_](./Signature_v1.1.md)) and field level encryption using JWE (see [_Encryption_](./Encryption_v1.1.md)).
 
 ### 10.1 Example Setup
 
