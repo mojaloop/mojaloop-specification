@@ -4954,7 +4954,7 @@ FSPIOP-Source: MobileMoney
 FSPIOP-Destination: BankNrOne
 {
     "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
-    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "completedTimestamp": "2017-11-16T04:15:35.513+01:00",
     "transferState": "COMMITTED"
 }
 ```

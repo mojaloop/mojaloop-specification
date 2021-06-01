@@ -779,7 +779,7 @@ traceparent: 00-91e502e28cd723686e9940bd3f378f85-da6dbe3af96ed639-01
 tracestate: mobilemoney=da6dbe3af96ed639,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0
 {
     "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
-    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "completedTimestamp": "2017-11-16T04:15:35.513+01:00",
     "transferState": "COMMITTED"
 }
 ```
@@ -809,7 +809,7 @@ traceparent: 00-91e502e28cd723686e9940bd3f378f85-a6467a7068235c33-01
 tracestate: moja=a6467a7068235c33, mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0
 {
     "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
-    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "completedTimestamp": "2017-11-16T04:15:35.513+01:00",
     "transferState": "COMMITTED"
 }
 ```
