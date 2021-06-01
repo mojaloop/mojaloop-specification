@@ -68,7 +68,7 @@ The following conventions are used in this document to identify the specified ty
 
 |Version|Date|Change Description|
 |---|---|---|
-|**1.0**|2021-04-01|Initial version|
+|**1.0**|2021-06-01|Initial version|
 | | | |
 
 ## 2. Introduction
