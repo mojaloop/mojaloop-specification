@@ -22,7 +22,7 @@ The interactions and examples of how a DFSP and PISP will interact with the Thir
 
 ## Data Models
 
-The [Data Models Document]()
+The [Data Models Document](./data-models.md) describes 
 
 
 ## Supporting Documents
