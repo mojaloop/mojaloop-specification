@@ -710,12 +710,9 @@ The Account data model contains information relating to an account.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-address 0..1 AccountAddress
-An address which can be used to identify the account
-currency 1 Currency
-The currency in which the account is denominated
-accountNickname 0..1 Name
-Display name of the account, as set by the account owning DFSP. This will normally be a type name, such as “Transaction Account” or “Savings Account”
+| address | 0..1 | AccountAddress | An address which can be used to identify the account |
+| currency | 1 | Currency | The currency in which the account is denominated |
+| accountNickname | 0..1 | Name | Display name of the account, as set by the account owning DFSP. This will normally be a type name, such as “Transaction Account” or “Savings Account” |
 ##### 3.2.1.2 AccountAddress
 
 The `AccountAddress` data type is a variable length string with a maximum size of 1023 characters and consists of:
@@ -741,19 +738,17 @@ Blue DFSP may also simply use their own address if that is sufficient (in combin
 }
 ```
 This address is also routable to Blue DFSP because it uses the prefix `moja.blue`
-IMPORTANT: The policy for defining addresses and the life-cycle of these is at the discretion of the address space owner (the payer DFSP in this case).
+> ***IMPORTANT:* The policy for defining addresses and the life-cycle of these is at the discretion of the address space owner (the payer DFSP in this case).**
 ##### 3.2.1.3 AccountList
 The AccountList data model is used to hold information about the accounts that a party controls.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-account 1..n Account
-Information relating to an account that a party controls.
+| account | 1..n | Account | Information relating to an account that a party controls. |
 ##### 3.2.1.4 AuthenticationChannel
 The AuthenticationChannel data model is used to specify the type of out-of-loop authentication to use in verifying a customer’s wish to grant permissions to a PISP.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-AuthenticationChannel 1 Enum of String(1..32)
-See Section 3.2.2.2 below for more information on allowed values.
+|AuthenticationChannel | 1 | Enum of String(1..32) | See Section 3.2.2.2 below for more information on allowed values. |
 ##### 3.2.1.5 AuthenticationInfo
 The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](todo) of Ref. 1 above.
 ##### 3.2.1.6 AuthenticationResponse
@@ -762,23 +757,18 @@ The AuthenticationResponse data type is an enumeration of type AuthenticationRes
 The AuthenticationType data type used in these definitions is as defined in [Section 7.5.2](todo) of Ref. 1 above. It is enumerated by the AuthorizationChannelType enumeration.
 ##### 3.2.1.8 AuthenticationValue
 The AuthenticationValue data element contains a response returned by the recipient of an authorization request. It is described in [Section 7.3.3](todo) of Ref. 1 above, and is extended to support the new authentication type used for PISP. The data model is as follows:
-Name Cardinality Format Description
-AuthenticationValue 1 Depending on AuthenticationType: If OTP: OtpValue;
-If QRCODE: String(1..64);
-If U2F: BinaryString
-Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type.
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| AuthenticationValue | 1 | `OtpValue` or `String(1..64)` or `BinaryString` | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. If OTP: OtpValue; If QRCODE: String(1..64); If U2F: BinaryString |
 
 ##### 3.2.1.9 AuthenticatorAttestationResponse
 The AuthenticatorAttestationResponse object is used to store information relating to a credential which a PISP has created on a user’s device. It contains the following items of information.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-type  1 WebAuthenticationType
-An enumeration which describes whether the information relates to a newly created credential or to the receipt of an existing credential.
-challenge 1 BinaryString
-The base64url encoded version of the cryptographic challenge sent from the relying party's server.
-origin 1 string The fully qualified origin of the requester which has been given by the client/browser to the authenticator.
-tokenBindingId 0..1 TokenBindingState
-An object describing the state of the token binding protocol for the communication with the relying party.
+| type | 1 | WebAuthenticationType | An enumeration which describes whether the information relates to a newly created credential or to the receipt of an existing credential.|
+| challenge | 1 | BinaryString | The base64url encoded version of the cryptographic challenge sent from the relying party's server.|
+| origin | 1 | string  | The fully qualified origin of the requester which has been given by the client/browser to the authenticator.|
+| tokenBindingId | 0..1 | TokenBindingState | An object describing the state of the token binding protocol for the communication with the relying party.|
 
 ##### 3.2.1.10 BinaryString
 The BinaryString type used in these definitions is as defined in [Section 7.2.17](todo) of Ref. 1 above.
@@ -788,23 +778,20 @@ The BinaryString32 type used in these definitions is as defined in [Section 7.2.
 The Challenge object is used to hold a FIDO challenge and its associated signature.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-payload 1 String The value to be signed by the PISP
-signature 0..1 BinaryString(256)
-The signature produced by the application of the PISP’s private key to the payload.
+| payload | 1 | String | The value to be signed by the PISP |
+| signature | 0..1 | BinaryString(256) |T he signature produced by the application of the PISP’s private key to the payload.|
 
 ##### 3.2.1.13 ConsentRequestChannelType
 The ConsentRequestChannelType is used to hold an instance of the ConsentRequestChannelType enumeration. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-ConsentRequestChannelType 1 Enum of String(1..32)
-See [Section 3.2.2.4](todo) below ( ConsentRequestChannelType) for more information on allowed values.
+| ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](todo) below ( ConsentRequestChannelType) for more information on allowed values. |
 
 ##### 3.2.1.14 ConsentState
 The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](todo) above. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-ConsentState 1 Enum of String(1..32)
-See [Section 3.2.2.5](todo) below (ConsentStatusType) for more information on allowed values.
+| ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](todo) below (ConsentStatusType) for more information on allowed values.|
  
 ##### 3.2.1.15 CorrelationId
 The CorrelationId type used in these definitions is as defined in [Section 7.3.8](todo) of Ref. 1 above.
@@ -812,23 +799,16 @@ The CorrelationId type used in these definitions is as defined in [Section 7.3.8
 The Credential object is used to store information about a challenge which is exchanged with an authentication service. The data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-credentialId 1 CorrelationId
-A unique identifier for the credential.
-credentialType 1 AuthenticationChannel
-The type of credential this is
-status 0..1 CredentialState
-The current status of the credential.
-payload 1 The type of this field depends on the type of credential this is, as defined in the credentialType field:
-• If the credential type is FIDO, then the type of the payload will be PublicKeyCredential.
-• If the credential type is GENERIC, then the type of the payload will be GenericCredential.
-A description of the credential and information which allows the recipient of the credential to test its veracity.
+| credentialId | 1 | CorrelationId | A unique identifier for the credential. |
+| credentialType | 1 | AuthenticationChannel | The type of credential this is |
+| status | 0..1 | CredentialState | The current status of the credential. |
+| payload | 1 | `PublicKeyCredential` or `GenericCredential` | The type of this field depends on the type of credential this is, as defined in the credentialType field: • If the credential type is FIDO, then the type of the payload will be PublicKeyCredential. • If the credential type is GENERIC, then the type of the payload will be GenericCredential. A description of the credential and information which allows the recipient of the credential to test its veracity.|
 
 ##### 3.2.1.17 CredentialState
 The CredentialState data type stores the state of a credential request. Its data model is as follows.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-CredentialState 1 Enum of String(1..32)
-See [Section 3.2.2.5](todo) below (CredentialState) for more information on allowed values.
+| CredentialState | 1 | Enum of String(1..32) |See [Section 3.2.2.5](todo) below (CredentialState) for more information on allowed values. |
 
 ##### 3.2.1.18 DateTime
 The DateTime data type used in these definitions is as defined in [Section 7.2.14](todo) of Ref. 1 above.
@@ -844,10 +824,8 @@ The GeoCode data type used in these definitions is as defined in [Section 7.4.9]
 The GenericCredential object stores the payload for a credential which is validated according to a comparison of the signature created from the challenge using a private key against the same challenge signed using a public key. Its content is as follows. 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-publicKey 0..1 BinaryString32
-The public key to be used in checking the signature. Only required if the public key has not already been registered.
-signature 1 BinaryString32
-The signature to be checked against the public key.
+| publicKey | 0..1 | BinaryString32 | The public key to be used in checking the signature. Only required if the public key has not already been registered. |
+| signature | 1 | BinaryString32 | The signature to be checked against the public key. |
 
 ##### 3.2.1.24 ilpCondition
 The ilpCondition type used in these definitions is as defined in [Section 7.3.17](todo) of Ref. 1 above.
@@ -862,107 +840,75 @@ The following shows a proposed revision of the Party data element to support the
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-partyIdInfo 1 PartyIdInfo
-Party Id type, id, sub ID or type, and FSP Id.
-merchantClassificationCode 0..1 MerchantClassificationCode
-Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments.
-name 0..1 PartyName
-Display name of the Party, could be a real name or a nick name.
-personalInfo 0..1 PartyPersonalInfo
-Personal information used to verify identity of Party such as first, middle, last name and date of birth.
-accounts 0..1 AccountList A list of the accounts that the party has.
+| partyIdInfo | 1 | PartyIdInfo | Party Id type, id, sub ID or type, and FSP Id. |
+| merchantClassificationCode | 0..1 | MerchantClassificationCode | Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments. |
+| name | 0..1 | PartyName | Display name of the Party, could be a real name or a nick name. |
+| personalInfo | 0..1 | PartyPersonalInfo | Personal information used to verify identity of Party such as first, middle, last name and date of birth. |
+| accounts | 0..1 | AccountList  | A list of the accounts that the party has. |
 ##### 3.2.1.29 PartyIdInfo
 The PartyIdInfo data type used in these definitions is as defined in [Section 7.4.13](todo) of Ref. 1 above.
 ##### 3.2.1.30 PublicKeyCredential
 The PublicKeyCredential object contains information about a credential created on a device by a PISP. It contains the following items of information.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-credentialId 1 CorrelationId
-An identifier for the credential
-attestationResponse 1 AuthenticationAttestationResponse
-Information about the credential that was set up on the user’s device.
+| credentialId | 1 | CorrelationId | An identifier for the credential |
+| attestationResponse | 1 | AuthenticationAttestationResponse | Information about the credential that was set up on the user’s device. |
 
 ##### 3.2.1.31 Quote 
 The Quote object is used to collect the information on the terms of a transfer which a Payee DFSP returns as part of the positive response to a quotation. This information is forwarded to the PISP by the Payer DFSP so that the PISP’s customer can make an informed consent to the transfer, and is forwarded to the authentication service (if one is used) to confirm the bona fides of the authorization received from the PISP.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-transferAmount 1 Money
-The amount that the sender’s account will be debited
-payeeReceiveAmount 1 Money
-The amount of Money that the Payee should receive in the end-to-end transaction
-fees 0..1 Money
-The fees that the sender will pay as part of the transfer.
-expiration 0..1 DateTime
-Date and time until when the quotation is valid and can be honored when used in the subsequent transaction.
-transactionType 1 TransactionType
-Type of the transaction.
-note 0..1 Note
-Memo associated to the transaction, intended to the Payee.
-extensionList 0..1 ExtensionList
-Optional extension, specific to deployment.
+| transferAmount | 1 | Money | The amount that the sender’s account will be debited|
+| payeeReceiveAmount | 1 | Money | The amount of Money that the Payee should receive in the end-to-end transaction|
+| fees | 0..1 | Money | The fees that the sender will pay as part of the transfer.|
+| expiration | 0..1 | DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction.|
+| transactionType | 1 | TransactionType | Type of the transaction.|
+| note | 0..1 | Note | Memo associated to the transaction, intended to the Payee.|
+| extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment.|
 
 ##### 3.2.1.32 Scope
 The Scope element contains an identifier defining, in the terms of a DFSP, an account on which access types can be requested or granted. It also defines the access types which are requested or granted.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-accountId 1 AccountAddress
-The address of the account to which the PISP wishes to be permitted access, or is being granted access  
-actions 1..n ScopeAction
-The action that the PISP wants permission to take in relation to the customer’s account, or that it has been granted in relation to the customer’s account
-credential 0..1 Credential
-The credential which is to be applied to the scope.
-partyIdInfo 0..1 PartyIdInfo
-The identifier which the PISP should use to access the account.
+| accountId | 1 |AccountAddress | The address of the account to which the PISP wishes to be permitted access, or is being granted access  |
+| actions | 1..n |ScopeAction | The action that the PISP wants permission to take in relation to the customer’s account, or that it has been granted in relation to the customer’s account|
+| credential | 0..1 |Credential | The credential which is to be applied to the scope.|
+| partyIdInfo | 0..1 |PartyIdInfo | The identifier which the PISP should use to access the account.|
 ##### 3.2.1.33 ScopeAction
 The ScopeAction element contains an access type which a PISP can request from a DFSP, or which a DFSP can grant to a PISP. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-scopeAction 1 Enum of String(1..32)
-See [Section 0](todo) below ( ScopeEnumeration) for more information on allowed values.
+| scopeAction | 1 | Enum of String(1..32)| See [Section 0](todo) below ( ScopeEnumeration) for more information on allowed values. |
 ##### 3.2.1.34 ServiceType
 The ServiceType element contains a type of service where the requester wants a list of the participants in the scheme which provide that service. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-serviceType 1 Enum of String(1..32)
-See [Section 3.2.2.9](todo) below ServiceType) for more information on allowed values.
+| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.9](todo) below ServiceType) for more information on allowed values. |
 
 ##### 3.2.1.35 TokenBindingState
 The TokenBindingState object describes the state of a token binding protocol for communication with a relying party for a public key credential. It contains the following items of information.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-status 1 TokenBindingStateStatus
-Denotes whether or not token binding has been used to negotiate with the relying party.
-id 1 String The base64url encoding of the token binding ID which was used for the communication.
+| status | 1 | TokenBindingStateStatus | Denotes whether or not token binding has been used to negotiate with the relying party. |
+| id | 1 | String | The base64url encoding of the token binding ID which was used for the communication. |
 
 ##### 3.2.1.36 Transaction
 The Transaction type used in these definitions is as defined in [Section 7.4.17](todo) of Ref. 1 above, but with extensions to include the additional information required for verification and consent in the PISP ecosystem.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-transactionId 1 CorrelationId
-ID of the transaction. Decided by the Payer FSP during the creation of the quote.
-quoteId 1 CorrelationId
-ID of the quote. Decided by the Payer FSP during the creation of the quote.
-transactionRequestId 1 CorrelationId
-ID of the transaction request which the PISP used to request the transfer
-payee 1 Party
-Information about the Payee in the proposed financial transaction.
-payer 1 Party
-Information about the Payer in the proposed financial transaction.
-amount 1 Money
-Transaction amount to be sent.
-payeeReceiveAmount 1 Money
-The amount of Money that the Payee should receive in the end-to-end transaction.
-customerCost 0..1 Money
-The charges that the customer will pay as part of the transaction.
-expiration 0..1 DateTime
-Date and time until when the quotation is valid and can be honored when used in the subsequent transaction.
-transactionType 1 TransactionType
-Type of the transaction.
-note 0..1 Note
-Memo associated to the transaction, intended to the Payee.
-extensionList 0..1 ExtensionList
-Optional extension, specific to deployment.
+| transactionId | 1 |CorrelationId | ID of the transaction. Decided by the Payer FSP during the creation of the quote. |
+| quoteId | 1 | CorrelationId | ID of the quote. Decided by the Payer FSP during the creation of the quote. |
+| transactionRequestId | 1 | CorrelationId | ID of the transaction request which the PISP used to request the transfer |
+| payee | 1 | Party | Information about the Payee in the proposed financial transaction. |
+| payer | 1 | Party | Information about the Payer in the proposed financial transaction. |
+| amount | 1 | Money | Transaction amount to be sent. |
+| payeeReceiveAmount | 1 | Money | The amount of Money that the Payee should receive in the end-to-end transaction. |
+| customerCost | 0..1 | Money | The charges that the customer will pay as part of the transaction. |
+| expiration | 0..1 | DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
+| transactionType | 1 | TransactionType | Type of the transaction. |
+| note | 0..1 | Note | Memo associated to the transaction, intended to the Payee. |
+| extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment. |
 
 ##### 3.2.1.37 TransactionType
 The TransactionType type used in these definitions is as defined in [Section 7.4.18](todo) of Ref. 1 above.
