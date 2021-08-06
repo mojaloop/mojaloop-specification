@@ -56,15 +56,15 @@ Each resource in the API definition is accompanied by a definition of the type(s
 
 The PISP API will contain the following resources:
 
-#### 3.1.1 accounts
+#### 3.1.1 `/accounts`
 
-The /accounts resource is used to request information from a DFSP relating to the accounts 
+The `/accounts` resource is used to request information from a DFSP relating to the accounts 
 it holds for a given identifier. The identifier is given to the PISP by the user, and the 
 DFSP returns a set of information about the accounts it is prepared to divulge to the PISP.
 The PISP can then display the names of the accounts to the user, and allow the user to select
 the accounts with which they wish to link via the PISP.
 
-The /accounts resource supports the endpoints described below.
+The `/accounts` resource supports the endpoints described below.
 
 ##### 3.1.1.1 Requests
 
@@ -79,9 +79,9 @@ Party’s accounts, defined by `<Type>` and `<ID>` (for example, `GET /accounts/
 See Section 5.1.6.11 of Ref. 1 above for more information regarding addressing of a Party.
 
 Callback and data model information for `GET /accounts/<Type>/<ID>`:
-• Callback - PUT /accounts/<Type>/<ID>
-• Error Callback - PUT /accounts/<Type>/<ID>/error
-• Data Model – Empty body
+- Callback - `PUT /accounts/<Type>/<ID>`
+- Error Callback - `PUT /accounts/<Type>/<ID>/error`
+- Data Model – Empty body
 
 ##### 3.1.1.2 Callbacks 
 
@@ -107,146 +107,123 @@ Used by: DFSP
 
 The `PUT /accounts/<Type>/<ID>/error` response is used to inform the requester that an account list
 request has given rise to an error. The identifier type and the identifier ID given in the call are
-the values given in the original request (see [Section 3.1.1.1.1](#3_1_1_1_1) above.)
+the values given in the original request (see [Section 3.1.1.1.1](#31111--get-accountstypeid) above.)
 
 The data content of the message is given below.
 
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+
+#### 3.1.2 `/consentRequests`
+
+The `/consentRequests` resource is used by a PISP to initiate the process of linking with a DFSP’s 
+account on behalf of a user. The PISP contacts the DFSP and sends a list of the permissions that 
+it wants to obtain and the accounts for which it wants permission.
+
+##### 3.1.2.1 Requests
+
+This section describes the services that can be requested by a client on the API resource 
+`/consentRequests`.
+###### 3.1.2.1.1 `GET /consentRequests/<ID>`
+
+Used by: PISP
+
+The HTTP request `GET /consentRequests/<ID>` is used to get information about a previously 
+requested consent. The `<ID>` in the URI should contain the requestId that was assigned to the 
+request by the PISP when the PISP originated the request.
+
+Callback and data model information for `GET /consentRequests/<ID>`:
+- Callback – `PUT /consentRequests/<ID>`
+- Error Callback – `PUT /consentRequests/<ID>/error`
+- Data Model – Empty body
+
+###### 3.1.2.1.2 `POST /consentRequests`
+
+Used by: PISP
+
+The HTTP request `POST /consentRequests` is used to request a DFSP to grant access to one or more
+accounts owned by a customer of the DFSP for the PISP who sends the request.
+
+Callback and data model for `POST /consentRequests`:
+- Callback: `PUT /consentRequests/<ID>`
+- Error callback: `PUT /consentRequests/<ID>/error`
+- Data model – see below
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
+| consentRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the consent request object. The ID should be reused for resends of the same consent request. A new ID should be generated for each new consent request. |
+| partyIdInfo | 1 | PartyIdInfo | The identifier of the customer on behalf of whom the consent request is being made. |
+| scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
+| authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
+| callbackUri | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
 
+##### 3.1.2.2 Callbacks
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3.1.2 consentRequests
-The /consentRequests resource is used by a PISP to initiate the process of linking with a DFSP’s account on behalf of a user. The PISP contacts the DFSP and sends a list of the permissions that it wants to obtain and the accounts for which it wants permission.
-3.1.2.1 Requests
-This section describes the services that can be requested by a client on the API resource /consentRequests.
-3.1.2.1.1 GET /consentRequests/<ID>
-Used by: PISP
-The HTTP request GET /consentRequests/<ID> is used to get information about a previously requested consent. The <ID> in the URI should contain the requestId that was assigned to the request by the PISP when the PISP originated the request.
-Callback and data model information for GET /consentRequests/<ID>:
-• Callback – PUT /consentRequests /<ID>
-• Error Callback – PUT /consentRequests /<ID>/error
-• Data Model – Empty body
-3.1.2.1.2 POST /consentRequests
-Used by: PISP
-The HTTP request POST /consentRequests is used to request a DFSP to grant access to one or more accounts owned by a customer of the DFSP for the PISP who sends the request.
-Callback and data model for POST /consentRequests:
-• Callback: PUT /consentRequests/<ID>
-• Error callback: PUT /consentRequests/<ID>/error
-• Data model – see below
-Name Cardinality Type Description
-consentRequestId 1 CorrelationId
-Common ID between the PISP and the Payer DFSP for the consent request object. The ID should be reused for resends of the same consent request. A new ID should be generated for each new consent request.
-partyIdInfo 1 PartyIdInfo
-The identifier of the customer on behalf of whom the consent request is being made.
-scopes 1..n Scope
-One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given.
-authChannels 1..n ConsentRequestChannelType
-A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested..
-callbackUri 0..1 Uri
-The callback URI that the user will be redirected to after completing verification via the WEB authorization channel
-
-3.1.2.2 Callbacks
 This section describes the callbacks that are used by the server under the resource /consentRequests.
-3.1.2.2.1 PATCH /consentRequests/<ID>
+
+###### 3.1.2.2.1 `PATCH /consentRequests/<ID>`
+
 Used by: DFSP, PISP
-When a party intends to change the content of a consent request, it can do this via the PATCH /consentRequests/<ID> resource. The syntax of this call complies with the JSON Merge Patch specification  rather than the JSON Patch specification : that is to say, . The PATCH /consentRequests/<ID> resource contains a set of proposed changes to the current state of the permissions relating to a particular authorization request. The data model for this call is as follows:
 
-Name Cardinality Type Description
-scopes 0..n Scope
-One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given.
-authChannels 0..1 ConsentRequestChannelType
-The authorization channel chosen by the DFSP from the list of supported authorization channels proposed by the PISP in the original request.
-callbackUri 0..1 Uri
-The callback URI that the user will be redirected to after completing verification via the WEB authorization channel
-authUri 0..1 Uri
-The URI that the PISP should call to complete the linking procedure if completion is required.
-authToken 0..1 BinaryString
-The bearer token given to the PISP by the DFSP as part of the out-of-loop authentication process
+When a party intends to change the content of a consent request, it can do this via the 
+`PATCH /consentRequests/<ID>` resource. The syntax of this call complies with the JSON Merge Patch
+specification rather than the JSON Patch specification: that is to say, the 
+`PATCH /consentRequests/<ID>` resource contains a set of proposed changes to the current state of 
+the permissions relating to a particular authorization request. The data model for this call is as 
+follows:
 
-3.1.2.2.2 PUT /consentRequests/<ID>
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
+| authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
+| callbackUri | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
+| authUri | 0..1 | Uri |The URI that the PISP should call to complete the linking procedure if completion is required. |
+| authToken | 0..1 | BinaryString |The bearer token given to the PISP by the DFSP as part of the out-of-loop authentication process |
+
+##### 3.1.2.2.2 `PUT /consentRequests/<ID>`
+
 Used by: DFSP
-When a PISP requests a series of permissions from a DFSP on behalf of a DFSP’s customer, not all the permissions requested may be granted by the DFSP. Conversely, the out-of-loop authorization process may result in additional privileges being granted by the account holder to the PISP. The PUT /consentRequests/<ID> resource returns the current state of the permissions relating to a particular authorization request. The data model for this call is as follows:
+
+When a PISP requests a series of permissions from a DFSP on behalf of a DFSP’s customer, not all 
+the permissions requested may be granted by the DFSP. Conversely, the out-of-loop authorization 
+process  may result in additional privileges being granted by the account holder to the PISP. The
+`PUT /consentRequests/<ID>` resource returns the current state of the permissions relating to a 
+particular authorization request. The data model for this call is as follows:
+
 Name Cardinality Type Description
 
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
+| authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
+| callbackUri | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
+| authUri | 0..1 | Uri |The URI that the PISP should call to complete the linking procedure if completion is required. |
+| authToken | 0..1 | BinaryString |The bearer token given to the PISP by the DFSP as part of the out-of-loop authentication process |
 
 
+##### 3.1.2.3 Error callbacks
 
+This section describes the error callbacks that are used by the server under the resource 
+`/consentRequests`.
 
-Scopes 1..n Scope
-One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given.
-authChannels 1
-ConsentRequestChannelType
-The authorization channel chosen by the DFSP from the list of supported authorization channels proposed by the PISP in the original request.
-callbackUri 0..1 Uri
-The callback URI that the user will be redirected to after completing verification via the WEB authorization channel
-authUri 0..1 Uri
-The URI that the PISP should call to complete the linking procedure if completion is required.
-authToken 0..1 BinaryString
-The bearer token given to the PISP by the DFSP as part of the out-of-loop authentication process
+###### 3.1.2.3.1 `PUT /consentRequests/<ID>/error`
 
-3.1.2.3 Error callbacks
-This section describes the error callbacks that are used by the server under the resource /consentRequests.
-3.1.2.3.1 PUT /consentRequests/<ID>/error
 Used by: DFSP
-If the server is unable to complete the consent request, or if an out-of-loop processing error or another processing error occurs, the error callback PUT /consentRequests/<ID>/error is used. The <ID> in the URI should contain the <ID> that was used in the GET /consentRequests/<ID> request or the POST /consentRequests request. The data model for this resource is as follows:
-Name Cardinality Type Description
-errorInformation 1 ErrorInformation
-Error code, category description.
 
-3.1.3 consents
-The /consents resource is used to negotiate a series of permissions between the PISP and the DFSP which owns the account(s) on behalf of which the PISP wants to transact.
+If the server is unable to complete the consent request, or if an out-of-loop processing error or 
+another processing error occurs, the error callback `PUT /consentRequests/<ID>/error` is used. The
+`<ID>` in the URI should contain the `<ID>` that was used in the `GET /consentRequests/<ID>` 
+request or the `POST /consentRequests` request. The data model for this resource is as follows:
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+
+
+#### 3.1.3 `/consents`
+
+The `/consents` resource is used to negotiate a series of permissions between the PISP and the DFSP which owns the account(s) on behalf of which the PISP wants to transact.
 The /consents request is originally sent to the PISP by the DFSP following the original consent request process described in Section 3.1.3 above. At the close of this process, the DFSP which owns the customer’s account(s) will have satisfied itself that its customer really has requested that the PISP be allowed access to their accounts, and will have defined the accounts in question and the type of access which is to be granted.
 3.1.3.1 Requests 
 The /consents resource will support the following requests.
