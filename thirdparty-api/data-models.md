@@ -225,16 +225,16 @@ request or the `POST /consentRequests` request. The data model for this resource
 
 The `/consents` resource is used to negotiate a series of permissions between the PISP and the DFSP which owns the account(s) on behalf of which the PISP wants to transact.
 The /consents request is originally sent to the PISP by the DFSP following the original consent request process described in Section 3.1.3 above. At the close of this process, the DFSP which owns the customer’s account(s) will have satisfied itself that its customer really has requested that the PISP be allowed access to their accounts, and will have defined the accounts in question and the type of access which is to be granted.
-3.1.3.1 Requests 
+##### 3.1.3.1 Requests 
 The /consents resource will support the following requests.
-3.1.3.1.1 GET /consents/<ID>
+###### 3.1.3.1.1 GET /consents/<ID>
 Used by: DFSP
 The GET consents/<ID> resource allows a party to enquire after the status of a consent. The <ID> used in the URI of the request should be the consent request ID which was used to identify the consent when it was created.
 Callback and data model information for GET /consents/<ID>:
 • Callback – PUT /consents/<ID>
 • Error Callback – PUT /consents/<ID>/error
 • Data Model – Empty body
-3.1.3.1.2 POST /consents
+###### 3.1.3.1.2 POST /consents
 Used by: DFSP
 The POST /consents request is used to request the creation of a consent for interactions between a PISP and the DFSP who owns the account which a PISP’s customer wants to allow the PISP access to.
 Callback and data model information for POST /consents/<ID>:
@@ -260,16 +260,16 @@ credential 0..1 Credential
 The credential which is being used to support the consents.
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment
-3.1.3.1.3 DELETE /consents/<ID>
+###### 3.1.3.1.3 DELETE /consents/<ID>
 The DELETE /consents/<ID> request is used to request the deletion of a previously agreed consent. The switch should be sure not to delete the consent physically; instead, information relating to the consent should be marked as deleted and requests relating to the consent should not be honoured.
 Note: the ALS should verify that the participant who is requesting the deletion is either the initiator named in the consent or the account holding institution named in the consent. If any other party attempts to delete a consent, the request should be rejected, and an error raised.
 Callback and data model information for DELETE /consents/<ID>:
 • Callback – PUT /consents/<ID>
 • Error Callback – PUT /consents/<ID>/error
 
-3.1.3.2 Callbacks 
+##### 3.1.3.2 Callbacks 
 The /consents resource will support the following callbacks: 
-3.1.3.2.1 PATCH/consents/<ID>
+###### 3.1.3.2.1 PATCH/consents/<ID>
 Used by: PISP
 When a party intends to change the content of a consent, it can do this via the PATCH /consents/<ID> resource. The syntax of this call complies with the JSON Merge Patch specification  rather than the JSON Patch specification . The PATCH /consents/<ID> resource contains a set of proposed changes to the current state of the permissions relating to a particular authorization grant. The data model for this call is as follows:
 Name Cardinality Type Description
@@ -281,7 +281,7 @@ credential 0
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment
 
-3.1.3.2.2 PUT /consents/<ID>
+###### 3.1.3.2.2 PUT /consents/<ID>
 Used by: PISP
 The PUT /consents/<ID> resource is used to return information relating to the consent object whose consentId is given in the URI. The data returned by the call is as follows:
 Name Cardinality Type Description
@@ -293,72 +293,72 @@ credential 1 Credential
 Information about the challenge which relates to the consent.
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment
-3.1.3.3 Error callbacks
+##### 3.1.3.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource /consents.
-3.1.3.3.1 PUT /consents/<ID>/error
+###### 3.1.3.3.1 PUT /consents/<ID>/error
 Used by: PISP
 If the server is unable to complete the consent, or if an out-of-loop processing error or another processing error occurs, the error callback PUT /consents/<ID>/error is used. The <ID> in the URI should contain the <ID> that was used in the GET /consents/<ID> request or the POST /consents request. The data model for this resource is as follows:
 Name Cardinality Type Description
 errorInformation 1 ErrorInformation
 Error code, category description.
 
-3.1.4 parties
+#### 3.1.4 parties
 The parties resource will be used by the PISP to identify a party to a transfer. This will be used by the PISP to identify the payee DFSP when it requests a transfer.
 The PISP will be permitted to issue a PUT /parties response. Although it does not own any transaction accounts, there are circumstances in which another party may want to pay a customer via their PISP identification: for instance, where the customer is at a merchant’s premises and tells the merchant that they would like to pay via their PISP app. In these circumstances, the PISP will need to be able to confirm that it does act for the customer.
-3.1.4.1 Requests 
+##### 3.1.4.1 Requests 
 The parties resource will support the following requests.
-3.1.4.1.1 GET /parties
+###### 3.1.4.1.1 GET /parties
 Used by: PISP
 The GET /parties resource will use the same form as the resource described in Section 6.3.3.1 of Ref. 1 above.
-3.1.4.2 Callbacks 
+##### 3.1.4.2 Callbacks 
 The parties resource will support the following callbacks.
-3.1.4.2.1 PUT /parties
+###### 3.1.4.2.1 PUT /parties
 Used by: DFSP
 The PUT /parties resource will use the same form as the resource described in Section 6.3.4.1 of Ref. 1 above.
 It should be noted, however, that the Party object returned from this resource has a different format from the Party object described in Section 7.4.11 of Ref. 1 above. The structure of this object is described in Section 3.2.1.29 below.
-3.1.5 services
+#### 3.1.5 services
 The services resource is a new resource which enables a participant to query for other participants who offer a particular service. The requester will issue a GET request, specifying the type of service for which information is required as part of the query string. The switch will respond with a list of the current DFSPs in the scheme which are registered as providing that service.
-3.1.5.1 Requests 
+##### 3.1.5.1 Requests 
 The services resource will support the following requests.
-3.1.5.2 GET /services/<Type>
+##### 3.1.5.2 GET /services/<Type>
 Used by: DFSP, PISP
 The HTTP request GET /services/<Type> is used to find out the names of the participants in a scheme which provide the type of service defined in the <Type> parameter. The <Type> parameter should specify a value from the ServiceType enumeration. If it does not, the request will be rejected with an error.
 Callback and data model information for GET /services/<Type>:
 • Callback - PUT /services/<Type>
 • Error Callback - PUT /services/<Type>/error
 • Data Model – Empty body
-3.1.5.3 Callbacks
+##### 3.1.5.3 Callbacks
 This section describes the callbacks that are used by the server for services provided by the resource /services.
-3.1.5.3.1 PUT /services/<Type>
+###### 3.1.5.3.1 PUT /services/<Type>
 Used by: Switch
 The callback PUT /services/<Type> is used to inform the client of a successful result of the service information lookup. The information is returned in the following form:
 Name Cardinality Type Description
 serviceProviders 1…n FspId
 A list of the Ids of the participants who provide the service requested.
 
-3.1.5.3.2 PUT /services/<Type>/error
+###### 3.1.5.3.2 PUT /services/<Type>/error
 Used by: Switch
 If the server encounters an error in fulfilling a request for a list of participants who provide a service, the error callback PUT /services/<Type>/error is used to inform the client that an error has occurred.
 Name Cardinality Type Description
 errorInformation 1 ErrorInformation
 Error code, category description.
 
-3.1.6 thirdpartyRequests/authorizations
+#### 3.1.6 thirdpartyRequests/authorizations
 The /thirdpartyRequests/authorizations resource is analogous to the /authorizations resource described in Section 6.6 of Ref. 1 above. The DFSP uses it to request the PISP to:
 1. Display the information defining the terms of a proposed transfer to its customer;
 2. Obtain the customer’s confirmation that they want the transfer to proceed;
 3. Return a signed version of the terms which the DFSP can use to verify the consent
 The /thirdpartyRequests/authorizations resource supports the endpoints described below.
-3.1.6.1 Requests
+##### 3.1.6.1 Requests
 This section describes the services that a client can request on the /thirdpartyRequests/authorizations resource.
-3.1.6.1.1 GET /thirdpartyRequests/authorizations/<ID>
+###### 3.1.6.1.1 GET /thirdpartyRequests/authorizations/<ID>
 Used by: DFSP
 The HTTP request GET /thirdpartyRequests/authorizations /<ID> is used to get information relating to a previously issued authorization request. The <ID> in the request should match the authorizationRequestId which was given when the authorization request was created.
 Callback and data model information for GET /thirdpartyRequests/authorizations/<ID>:
 • Callback - PUT /thirdpartyRequests/authorizations /<ID>
 • Error Callback - PUT /thirdpartyRequests/authorizations /<ID>/error
 • Data Model – Empty body
-3.1.6.1.2 POST /thirdpartyRequests/authorizations
+###### 3.1.6.1.2 POST /thirdpartyRequests/authorizations
 Used by: DFSP
 The HTTP request POST /thirdpartyRequests/authorizations is used to request the validation by a customer for the transfer described in the request.
 Callback and data model information for POST /thirdpartyRequests/authorizations:
@@ -414,29 +414,29 @@ The time by which the transfer must be completed, set by the payee DFSP.
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment.
 
-3.1.6.2 Callbacks
+##### 3.1.6.2 Callbacks
 The following callbacks are supported for the /thirdpartyRequests/authorizations resource
-3.1.6.2.1 PUT /thirdpartyRequests/authorizations/<ID>
+###### 3.1.6.2.1 PUT /thirdpartyRequests/authorizations/<ID>
 Used by: PISP
 The PUT /thirdpartyRequests/authorizations/<ID> resource will have the same content as the PUT /authorizations/<ID> resource described in Section 6.6.4.1 of Ref. 1 above.
-3.1.6.3 Error callbacks
+##### 3.1.6.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource /thirdpartyRequests/authorizations.
-3.1.6.3.1 PUT /thirdpartyRequests/authorizations/<ID>/error
+###### 3.1.6.3.1 PUT /thirdpartyRequests/authorizations/<ID>/error
 Used by: DFSP
 The PUT /thirdpartyRequests/authorizations/<ID>/error resource will have the same content as the PUT /authorizations/<ID>/error resource described in Section 6.6.5.1 of Ref. 1 above.
-3.1.7 thirdpartyRequests/transactions
+#### 3.1.7 thirdpartyRequests/transactions
 The /thirdpartyRequests/transactions resource is analogous to the /transactionRequests resource described in Section 6.4 of Ref. 1 above. The PISP uses it to request the owner of the PISP’s customer’s account to transfer a specified amount from the customer’s account with the DFSP to a named Payee.
 The /thirdpartyRequests/transactions resource supports the endpoints described below.
-3.1.7.1 Requests
+##### 3.1.7.1 Requests
 This section describes the services that a client can request on the /thirdpartyRequests/transactions resource.
-3.1.7.1.1 GET /thirdpartyRequests/transactions/<ID>
+###### 3.1.7.1.1 GET /thirdpartyRequests/transactions/<ID>
 Used by: PISP
 The HTTP request GET /thirdpartyRequests/transactions/<ID> is used to get information relating to a previously issued transaction request. The <ID> in the request should match the transactionRequestId which was given when the transaction request was created.
 Callback and data model information for GET /thirdpartyRequests/transactions/<ID>:
 • Callback - PUT /thirdpartyRequests/transactions /<ID>
 • Error Callback - PUT /thirdpartyRequests/transactions /<ID>/error
 • Data Model – Empty body
-3.1.7.1.2 POST /thirdpartyRequests/transactions
+###### 3.1.7.1.2 POST /thirdpartyRequests/transactions
 Used by: PISP
 The HTTP request POST /thirdpartyRequests/transactions is used to request the creation of a transaction request on the server for the transfer described in the request.
 Callback and data model information for POST /thirdpartyRequests/transactions:
@@ -467,12 +467,12 @@ expiration 0..1 DateTime
 Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit.
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment.
-3.1.7.2 Callbacks
+##### 3.1.7.2 Callbacks
 The following callbacks are supported for the /thirdpartyRequests/transactions resource
-3.1.7.2.1 PUT /thirdpartyRequests/transactions/<ID>
+###### 3.1.7.2.1 PUT /thirdpartyRequests/transactions/<ID>
 Used by: DFSP
 The PUT /thirdpartyRequests/transactions/<ID> resource will have the same content as the PUT /transactionRequests/<ID> resource described in Section 6.4.4.1 of Ref. 1 above.
-3.1.7.2.2 PATCH /thirdpartyRequests/transactions/<ID>
+###### 3.1.7.2.2 PATCH /thirdpartyRequests/transactions/<ID>
 Used by: DFSP
 The issuing PISP will expect a response to their request for a transfer which describes the finalised state of the requested transfer. This response will be given by a PATCH call on the /thirdpartyRequests/transactions/<ID> resource.  The <ID> given in the query string should be the transactionRequestId which was originally used by the PISP to identify the transaction request (see Section 3.1.8.1.2 above.)
 The data model for this endpoint is as follows:
@@ -484,27 +484,27 @@ State of the transfer
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment
 
-3.1.7.3 Error callbacks
+##### 3.1.7.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource /thirdpartyRequests/transactions.
-3.1.7.3.1 PUT /thirdpartyRequests/transactions/<ID>/error
+###### 3.1.7.3.1 PUT /thirdpartyRequests/transactions/<ID>/error
 Used by: DFSP
 The PUT /thirdpartyRequests/transactions/<ID>/error resource will have the same content as the PUT /transactionRequests/<ID>/error resource described in Section 6.4.5.1 of Ref. 1 above.
-3.1.7.3.2 PATCH /thirdpartyRequests/transactions/<ID>/error
+###### 3.1.7.3.2 PATCH /thirdpartyRequests/transactions/<ID>/error
 Used by: DFSP
 The issuing PISP will expect a response to their request for a transfer which describes the finalized state of the requested transfer. This response will be given by a PATCH call on the /thirdpartyRequests/transactions/<ID>/error resource.  The content of this resource will be the same as the data model described in Table 24 of Ref. 1 above, in the section describing the PUT command on the /transfers/<ID>/error resource shown in Section 6.7.5.1 of Ref. 1 above.
 
-3.1.8 thirdPartyRequests/verifications
+#### 3.1.8 thirdPartyRequests/verifications
 The /thirdPartyRequests/verifications resource is used by a Payer DFSP to verify that an authorization response received from a PISP was signed using the correct key, in cases where the authentication service to be used is implemented by the switch and not internally by the DFSP. The DFSP sends the original challenge and the signed response to the authentication service, together with the consent ID to be used for the verification. The authentication service compares the response with the result of signing the challenge with the private key associated with the consent ID, and, if the two match, it returns a positive result. Otherwise, it returns an error.
 The /thirdPartyRequests/verifications resource supports the endpoints described below.
-3.1.8.1 Requests
+##### 3.1.8.1 Requests
 This section describes the services that a client can request on the /thirdPartyRequests/verifications resource.
-3.1.8.1.1 GET /thirdPartyRequests/verifications/<ID>
+###### 3.1.8.1.1 GET /thirdPartyRequests/verifications/<ID>
 Used by: DFSP
 The HTTP request /thirdPartyRequests/verifications <ID> is used to get information regarding a previously created or requested authorization. The <ID> in the URI should contain the verification request ID (see Section 3.1.9.1.2 below) that was used for the creation of the transfer.Callback and data model information for GET /thirdPartyRequests/verifications/<ID>:
 Callback – PUT /thirdPartyRequests/verifications/<ID>
 Error Callback – PUT /thirdPartyRequests/verifications/<ID>/error
 Data Model – Empty body
-3.1.8.1.2 POST /thirdPartyRequests/verifications
+###### 3.1.8.1.2 POST /thirdPartyRequests/verifications
 Used by: DFSP
 The POST /thirdPartyRequests/verifications resource is used to request confirmation from an authentication service that a challenge has been signed using the correct private key. 
 Callback and data model information for POST /thirdpartyRequests/verifications:
@@ -521,17 +521,17 @@ The signed challenge returned by the PISP.
 consentId 1 CorrelationId
 Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature
 
-3.1.8.2 Callbacks 
+##### 3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource /thirdPartyRequests/verifications/
-3.1.8.2.1 PUT /thirdPartyRequests/verifications/<ID>
+###### 3.1.8.2.1 PUT /thirdPartyRequests/verifications/<ID>
 Used by: FIDO
 The callback PUT /thirdPartyRequests/verifications/<ID> is used to inform the client of the result of an authorization check. The <ID> in the URI should contain the authorizationRequestId (see Section 3.1.9.1.2 above) which was used to request the check, or the <ID> that was used in the GET /thirdPartyRequests/verifications/<ID>. The data model for this resource is as follows:
 Name Cardinality Type Description
 authorizationResponse 1 AuthenticationResponse
 The result of the authorization check.
-3.1.8.3 Error callbacks
+##### 3.1.8.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource /thirdPartyRequests/verifications.
-3.1.8.3.1 PUT /thirdPartyRequests/verifications/<ID>/error
+###### 3.1.8.3.1 PUT /thirdPartyRequests/verifications/<ID>/error
 Used by: FIDO
 If the server is unable to complete the authorization request, or another processing error occurs, the error callback PUT /thirdPartyRequests/verifications/<ID>/error is used. The <ID> in the URI should contain the <ID> that was used in the call which requested the authorization. The data model for this resource is as follows:
 Name Cardinality Type Description
