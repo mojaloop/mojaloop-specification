@@ -51,8 +51,6 @@ The API is used by the following different types of participant, as follows:
 
 Each resource in the API definition is accompanied by a definition of the type(s) of participant ¬¬¬allowed to access it.
 
-
-
 ### 3.1 Resources
 
 The PISP API will contain the following resources:
@@ -447,53 +445,19 @@ Callback and data model information for `POST /thirdpartyRequests/authorizations
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-authorizationRequestId 1 CorrelationId
-Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request.
-transactionRequestId 1 CorrelationId
-The unique identifier of the transaction request for which authorization is being requested.
-challenge 1 BinaryString
-The challenge that the PISP’s client is to sign.
-transactionId 1 CorrelationId
-The unique identifier for the proposed transaction. It is set by the payer DFSP and signed by the payee DFSP as part of the terms of the transfer
-transferAmount 1 Money
-The amount that will be debited from the sending customer’s account as a consequence of the transaction.
-payeeReceiveAmount 1 Money
-The amount that will be credited to the receiving customer’s account as a consequence of the transaction.
-
-
-
-
-
-fees
-1 Money
-The amount of fees that the paying customer will be charged as part of the transaction.
-
-payer
-1 Party
-Information about the Payer in the proposed transaction
-payee
-1 Party
-Information about the Payee in the proposed transaction
-
-transactionType
-1
-TransactionType
-The type of the transaction.
-
-condition
-1
-IlpCondition
-The condition returned by the payee DFSP to the payer DFSP as a cryptographic guarantee of the transfer.
-
-
-
-
-
-expiration 1
-DateTime
-The time by which the transfer must be completed, set by the payee DFSP.
-extensionList 0..1 ExtensionList
-Optional extension, specific to deployment.
+| authorizationRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request. |
+| transactionRequestId | 1 | CorrelationId | The unique identifier of the transaction request for which authorization is being requested. |
+| challenge | 1 | BinaryString | The challenge that the PISP’s client is to sign. |
+| transactionId | 1 | CorrelationId | The unique identifier for the proposed transaction. It is set by the payer DFSP and signed by the payee DFSP as part of the terms of the transfer |
+| transferAmount | 1 | Money | The amount that will be debited from the sending customer’s account as a consequence of the transaction. |
+| payeeReceiveAmount | 1 | Money | The amount that will be credited to the receiving customer’s account as a consequence of the transaction. |
+| fees | 1 | Money | The amount of fees that the paying customer will be charged as part of the transaction. |
+| payer | 1 | Party | Information about the Payer in the proposed transaction |
+| payee | 1 | Party | Information about the Payee in the proposed transaction |
+| transactionType | 1 | TransactionType | The type of the transaction. |
+| condition | 1 | IlpCondition | The condition returned by the payee DFSP to the payer DFSP as a cryptographic guarantee of the transfer. |
+| expiration | 1 | DateTime |The time by which the transfer must be completed, set by the payee DFSP. |
+| extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 
 ##### 3.1.6.2 Callbacks
 The following callbacks are supported for the `/thirdpartyRequests/authorizations` resource
@@ -550,25 +514,15 @@ Callback and data model information for `POST /thirdpartyRequests/transactions`:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-transactionRequestId 1 CorrelationId
-Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request.
-payee 1 Party
-Information about the Payee in the proposed financial transaction.
-payer 1 PartyIdInfo
-Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction.
-amount 1 Money
-Requested amount to be transferred from the Payer to Payee.
-transactionType 1 TransactionType
-Type of transaction
-note 0..1 Note
-Reason for the transaction request, intended for the Payer.
-
-authenticationType 0..1 AuthenticationType
-OTP, FIDO or QR Code, otherwise empty.
-expiration 0..1 DateTime
-Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit.
-extensionList 0..1 ExtensionList
-Optional extension, specific to deployment.
+|transactionRequestId | 1 | CorrelationId |Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request. |
+|payee | 1 | Party |Information about the Payee in the proposed financial transaction. |
+|payer | 1 | PartyIdInfo |Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
+|amount | 1 | Money |Requested amount to be transferred from the Payer to Payee. |
+|transactionType | 1 | TransactionType |Type of transaction |
+|note | 0..1 | Note |Reason for the transaction request, intended for the Payer. |
+|authenticationType | 0..1 | AuthenticationType |OTP, FIDO or QR Code, otherwise empty. |
+|expiration | 0..1 | DateTime |Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
+|extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 ##### 3.1.7.2 Callbacks
 The following callbacks are supported for the `/thirdpartyRequests/transactions` resource
 ###### 3.1.7.2.1 `PUT /thirdpartyRequests/transactions/<ID>`
@@ -590,12 +544,9 @@ request (see [Section 3.1.8.1.2](todo) above.)
 The data model for this endpoint is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-completedTimestamp 0..1 DateTime
-Time and date when the transaction was completed
-transferState 1 TransferState
-State of the transfer
-extensionList 0..1 ExtensionList
-Optional extension, specific to deployment
+| completedTimestamp | 0..1 | DateTime |Time and date when the transaction was completed |
+| transferState | 1 | TransferState |State of the transfer |
+| extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
 
 ##### 3.1.7.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource
@@ -656,14 +607,10 @@ Callback and data model information for `POST /thirdpartyRequests/verifications`
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-verificationRequestId 1 CorrelationId
-Common ID between the DFSP and authentication service for the verification request object. The ID should be reused for resends of the same authorization request. A new ID should be generated for each new authorization request.
-challenge 1 Challenge
-The challenge originally sent to the PISP
-value 1 authenticationValue
-The signed challenge returned by the PISP.
-consentId 1 CorrelationId
-Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature
+| verificationRequestId | 1 | CorrelationId |Common ID between the DFSP and authentication service for the verification request object. The ID should be reused for resends of the same authorization request. A new ID should be generated for each new authorization request. |
+| challenge | 1 | Challenge |The challenge originally sent to the PISP |
+| value | 1 | authenticationValue |The signed challenge returned by the PISP. |
+| consentId | 1 | CorrelationId |Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature |
 
 ##### 3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource
@@ -696,8 +643,7 @@ check, or the `<ID>` that was used in the `GET /thirdPartyRequests/verifications
 The data model for this resource is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-errorInformation 1 ErrorInformation
-Error code, category description.
+| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
 
 ### 3.2 Data Models
 
