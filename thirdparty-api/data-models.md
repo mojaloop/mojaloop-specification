@@ -2,8 +2,7 @@
 
 
 TODOs:
-- fix link to Ref 1
-- add in section links to make reading document much easier
+- add in section + Data model links to make reading document much easier
 
 ## 1 Revision History
 
@@ -48,7 +47,7 @@ The API is used by the following different types of participant, as follows:
   3. FIDO authorization servers.
   4. The Mojaloop switch
 
-Each resource in the API definition is accompanied by a definition of the type(s) of participant ¬¬¬allowed to access it.
+Each resource in the API definition is accompanied by a definition of the type(s) of participant allowed to access it.
 
 ### 3.1 Resources
 
@@ -91,7 +90,7 @@ Used by: DFSP
 
 The `PUT /accounts/<Type>/<ID>` response is used to inform the requester of the result of a request
 for accounts information.  The identifier type and the identifier ID given in the call are the 
-values given in the original request (see Section 3.1.1.1.1 above.)
+values given in the original request (see [Section 3.1.1.1.1](todo) above.)
 
 The data content of the message is given below.
 
@@ -342,7 +341,7 @@ The `/parties` resource will support the following requests.
 Used by: PISP
 
 The `GET /parties` resource will use the same form as the resource described in 
-[Section 6.3.3.1](todo link) of Ref. 1 above.
+[Section 6.3.3.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6331-get-partiestypeid) of Ref. 1 above.
 ##### 3.1.4.2 Callbacks 
 The parties resource will support the following callbacks.
 ###### 3.1.4.2.1 `PUT /parties`
@@ -350,10 +349,10 @@ The parties resource will support the following callbacks.
 Used by: DFSP
 
 The `PUT /parties` resource will use the same form as the resource described in 
-[Section 6.3.4.1](todo) of Ref. 1 above.
+[Section 6.3.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6341-put-partiestypeid) of Ref. 1 above.
 
 It should be noted, however, that the Party object returned from this resource has a different
-format from the Party object described in [Section 7.4.11](todo) of Ref. 1 above. The 
+format from the Party object described in [Section 7.4.11](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7411-party) of Ref. 1 above. The 
 structure of this object is described in [Section 3.2.1.29](todo) below.
 #### 3.1.5 `/services`
 The `/services` resource is a new resource which enables a participant to query for other 
@@ -405,7 +404,7 @@ client that an error has occurred.
 #### 3.1.6 `thirdpartyRequests/authorizations`
 
 The `/thirdpartyRequests/authorizations` resource is analogous to the `/authorizations` resource
- described in [Section 6.6](todo) of Ref. 1 above. The DFSP uses it to request the PISP to:
+ described in [Section 6.6](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#66-api-resource-authorizations) of Ref. 1 above. The DFSP uses it to request the PISP to:
 
 1. Display the information defining the terms of a proposed transfer to its customer;
 2. Obtain the customer’s confirmation that they want the transfer to proceed;
@@ -465,7 +464,7 @@ The following callbacks are supported for the `/thirdpartyRequests/authorization
 Used by: PISP
 
 The `PUT /thirdpartyRequests/authorizations/<ID>` resource will have the same content as the 
-`PUT /authorizations/<ID>` resource described in [Section 6.6.4.1](todo) of Ref. 1 above.
+`PUT /authorizations/<ID>` resource described in [Section 6.6.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6641-put-authorizationsid) of Ref. 1 above.
 ##### 3.1.6.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
 `/thirdpartyRequests/authorizations`.
@@ -474,11 +473,11 @@ This section describes the error callbacks that are used by the server under the
 Used by: DFSP
 
 The `PUT /thirdpartyRequests/authorizations/<ID>/error` resource will have the same content
-as the `PUT /authorizations/<ID>/error` resource described in [Section 6.6.5.1](todo) 
+as the `PUT /authorizations/<ID>/error` resource described in [Section 6.6.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6651-put-authorizationsiderror) 
 of Ref. 1 above.
 #### 3.1.7 `/thirdpartyRequests/transactions`
 The `/thirdpartyRequests/transactions` resource is analogous to the `/transactionRequests` 
-resource described in [Section 6.4](todo) of Ref. 1 above. The PISP uses it to request the
+resource described in [Section 6.4](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#64-api-resource-transactionrequests) of Ref. 1 above. The PISP uses it to request the
 owner of the PISP’s customer’s account to transfer a specified amount from the customer’s 
 account with the DFSP to a named Payee.
 
@@ -529,7 +528,7 @@ The following callbacks are supported for the `/thirdpartyRequests/transactions`
 Used by: DFSP
 
 The `PUT /thirdpartyRequests/transactions/<ID>` resource will have the same content as 
-the `PUT /transactionRequests/<ID>` resource described in [Section 6.4.4.1](todo) of Ref. 1 above.
+the `PUT /transactionRequests/<ID>` resource described in [Section 6.4.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6441-put-transactionrequestsid) of Ref. 1 above.
 ###### 3.1.7.2.2 `PATCH /thirdpartyRequests/transactions/<ID>`
 
 Used by: DFSP
@@ -555,7 +554,7 @@ This section describes the error callbacks that are used by the server under the
 Used by: DFSP
 
 The `PUT /thirdpartyRequests/transactions/<ID>/error` resource will have the same content as 
-the `PUT /transactionRequests/<ID>/error` resource described in [Section 6.4.5.1](todo) of Ref. 1 above.
+the `PUT /transactionRequests/<ID>/error` resource described in [Section 6.4.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6451-put-transactionrequestsiderror) of Ref. 1 above.
 ###### 3.1.7.3.2 `PATCH /thirdpartyRequests/transactions/<ID>/error`
 
 Used by: DFSP
@@ -565,7 +564,7 @@ The issuing PISP will expect a response to their request for a transfer which de
 state of the requested transfer. This response will be given by a `PATCH` call on the 
 `/thirdpartyRequests/transactions/<ID>/error` resource.  The content of this resource will be the same
  as the data model described in [Table 24](todo) of Ref. 1 above, in the section describing the `PUT` 
- command on the `/transfers/<ID>/error` resource shown in [Section 6.7.5.1](todo) of Ref. 1 above.
+ command on the `/transfers/<ID>/error` resource shown in [Section 6.7.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6751-put-transfersiderror) of Ref. 1 above.
 
 #### 3.1.8 `/thirdPartyRequests/verifications`
 The `/thirdPartyRequests/verifications` resource is used by a Payer DFSP to verify that an authorization
@@ -694,13 +693,13 @@ The AuthenticationChannel data model is used to specify the type of out-of-loop 
 | --- | --- | --- | --- |
 |AuthenticationChannel | 1 | Enum of String(1..32) | See Section 3.2.2.2 below for more information on allowed values. |
 ##### 3.2.1.5 AuthenticationInfo
-The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](todo) of Ref. 1 above.
+The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#741-authenticationinfo) of Ref. 1 above.
 ##### 3.2.1.6 AuthenticationResponse
 The AuthenticationResponse data type is an enumeration of type AuthenticationResponse.
 ##### 3.2.1.7 AuthenticationType
-The AuthenticationType data type used in these definitions is as defined in [Section 7.5.2](todo) of Ref. 1 above. It is enumerated by the AuthorizationChannelType enumeration.
+The AuthenticationType data type used in these definitions is as defined in [Section 7.5.2](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#752-authenticationtype) of Ref. 1 above. It is enumerated by the AuthorizationChannelType enumeration.
 ##### 3.2.1.8 AuthenticationValue
-The AuthenticationValue data element contains a response returned by the recipient of an authorization request. It is described in [Section 7.3.3](todo) of Ref. 1 above, and is extended to support the new authentication type used for PISP. The data model is as follows:
+The AuthenticationValue data element contains a response returned by the recipient of an authorization request. It is described in [Section 7.3.3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#733-authenticationvalue) of Ref. 1 above, and is extended to support the new authentication type used for PISP. The data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | AuthenticationValue | 1 | `OtpValue` or `String(1..64)` or `BinaryString` | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. If OTP: OtpValue; If QRCODE: String(1..64); If U2F: BinaryString |
@@ -715,9 +714,9 @@ The AuthenticatorAttestationResponse object is used to store information relatin
 | tokenBindingId | 0..1 | TokenBindingState | An object describing the state of the token binding protocol for the communication with the relying party.|
 
 ##### 3.2.1.10 BinaryString
-The BinaryString type used in these definitions is as defined in [Section 7.2.17](todo) of Ref. 1 above.
+The BinaryString type used in these definitions is as defined in [Section 7.2.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7217-binarystring) of Ref. 1 above.
 ##### 3.2.1.11 BinaryString32
-The BinaryString32 type used in these definitions is as defined in [Section 7.2.18](todo) of Ref. 1 above.
+The BinaryString32 type used in these definitions is as defined in [Section 7.2.18](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7218-binarystring32) of Ref. 1 above.
 ##### 3.2.1.12 Challenge
 The Challenge object is used to hold a FIDO challenge and its associated signature.
 | Name | Cardinality | Type | Description |
@@ -738,7 +737,7 @@ The ConsentState type stores the status of a consent request, as described in [S
 | ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](todo) below (ConsentStatusType) for more information on allowed values.|
  
 ##### 3.2.1.15 CorrelationId
-The CorrelationId type used in these definitions is as defined in [Section 7.3.8](todo) of Ref. 1 above.
+The CorrelationId type used in these definitions is as defined in [Section 7.3.8](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#738-correlationid) of Ref. 1 above.
 ##### 3.2.1.16 Credential
 The Credential object is used to store information about a challenge which is exchanged with an authentication service. The data model is as follows:
 | Name | Cardinality | Type | Description |
@@ -755,15 +754,15 @@ The CredentialState data type stores the state of a credential request. Its data
 | CredentialState | 1 | Enum of String(1..32) |See [Section 3.2.2.5](todo) below (CredentialState) for more information on allowed values. |
 
 ##### 3.2.1.18 DateTime
-The DateTime data type used in these definitions is as defined in [Section 7.2.14](todo) of Ref. 1 above.
+The DateTime data type used in these definitions is as defined in [Section 7.2.14](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7214-datetime) of Ref. 1 above.
 ##### 3.2.1.19 ErrorInformation
-The ErrorInformation data type used in these definitions is as defined in [Section 7.4.2](todo) of Ref. 1 above
+The ErrorInformation data type used in these definitions is as defined in [Section 7.4.2](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#742-errorinformation) of Ref. 1 above
 ##### 3.2.1.20 ExtensionList
-The ExtensionList data type used in these definitions is as defined in [Section 7.4.4](todo) of Ref. 1 above.
+The ExtensionList data type used in these definitions is as defined in [Section 7.4.4](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#744-extensionlist) of Ref. 1 above.
 ##### 3.2.1.21 FspId
-The FspId data type used in these definitions is as defined in [Section 7.3.16](todo) of Ref. 1 above.
+The FspId data type used in these definitions is as defined in [Section 7.3.16](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7316-fspid) of Ref. 1 above.
 ##### 3.2.1.22 GeoCode
-The GeoCode data type used in these definitions is as defined in [Section 7.4.9](todo) of Ref. 1 above.
+The GeoCode data type used in these definitions is as defined in [Section 7.4.9](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#749-geocode) of Ref. 1 above.
 ##### 3.2.1.23 GenericCredential
 The GenericCredential object stores the payload for a credential which is validated according to a comparison of the signature created from the challenge using a private key against the same challenge signed using a public key. Its content is as follows. 
 | Name | Cardinality | Type | Description |
@@ -772,13 +771,13 @@ The GenericCredential object stores the payload for a credential which is valida
 | signature | 1 | BinaryString32 | The signature to be checked against the public key. |
 
 ##### 3.2.1.24 ilpCondition
-The ilpCondition type used in these definitions is as defined in [Section 7.3.17](todo) of Ref. 1 above.
+The ilpCondition type used in these definitions is as defined in [Section 7.3.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7317-ilpcondition) of Ref. 1 above.
 ##### 3.2.1.25 Integer
-The Integer type used in these definitions is as defined in [Section 7.2.5](todo) of Ref. 1 above.
+The Integer type used in these definitions is as defined in [Section 7.2.5](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#725-integer) of Ref. 1 above.
 ##### 3.2.1.26 Money
-The Money type used in these definitions is a defined in [Section 7.4.10](todo) of Ref. 1 above.
+The Money type used in these definitions is a defined in [Section 7.4.10](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7410-money) of Ref. 1 above.
 ##### 3.2.1.27 Note
-The Note data type used in these definitions is as defined in [Section 7.3.23](todo) of Ref. 1 above.
+The Note data type used in these definitions is as defined in [Section 7.3.23](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7323-note) of Ref. 1 above.
 ##### 3.2.1.28 Party
 The following shows a proposed revision of the Party data element to support the additional information required to support PISP interactions.
 
@@ -790,7 +789,7 @@ The following shows a proposed revision of the Party data element to support the
 | personalInfo | 0..1 | PartyPersonalInfo | Personal information used to verify identity of Party such as first, middle, last name and date of birth. |
 | accounts | 0..1 | AccountList  | A list of the accounts that the party has. |
 ##### 3.2.1.29 PartyIdInfo
-The PartyIdInfo data type used in these definitions is as defined in [Section 7.4.13](todo) of Ref. 1 above.
+The PartyIdInfo data type used in these definitions is as defined in [Section 7.4.13](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7413-partyidinfo) of Ref. 1 above.
 ##### 3.2.1.30 PublicKeyCredential
 The PublicKeyCredential object contains information about a credential created on a device by a PISP. It contains the following items of information.
 | Name | Cardinality | Type | Description |
@@ -837,7 +836,7 @@ The TokenBindingState object describes the state of a token binding protocol for
 | id | 1 | String | The base64url encoding of the token binding ID which was used for the communication. |
 
 ##### 3.2.1.36 Transaction
-The Transaction type used in these definitions is as defined in [Section 7.4.17](todo) of Ref. 1 above, but with extensions to include the additional information required for verification and consent in the PISP ecosystem.
+The Transaction type used in these definitions is as defined in [Section 7.4.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7417-transaction) of Ref. 1 above, but with extensions to include the additional information required for verification and consent in the PISP ecosystem.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
@@ -855,9 +854,9 @@ The Transaction type used in these definitions is as defined in [Section 7.4.17]
 | extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment. |
 
 ##### 3.2.1.37 TransactionType
-The TransactionType type used in these definitions is as defined in [Section 7.4.18](todo) of Ref. 1 above.
+The TransactionType type used in these definitions is as defined in [Section 7.4.18](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7418-transactiontype) of Ref. 1 above.
 ##### 3.2.1.38 TransferState
-The TransferState type used in these definitions is as defined in [Section 7.3.35](todo) of Ref. 1 above.
+The TransferState type used in these definitions is as defined in [Section 7.3.35](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7335-transferstate) of Ref. 1 above.
 ##### 3.2.1.39 Uri
 The API data type Uri is a JSON string in a canonical format that is restricted by a regular expression for interoperability reasons. The regular expression for restricting the Uri type is as follows:
 `^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))? `
@@ -871,14 +870,14 @@ The AuthenticationResponse enumeration describes the result of authenticating a 
 | RESEND | A problem occurred. Please re-submit. |
 
 ##### 3.2.2.2 AuthorizationChannelType
-This is an extension of the AuthenticationType enumeration described in [Section 7.5.2](todo) of Ref. 1 above.
+This is an extension of the AuthenticationType enumeration described in [Section 7.5.2](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#752-authenticationtype) of Ref. 1 above.
 | Name | Description |
 | ---  | ----------- |
 | OTP | One-time password generated by the Payer FSP. |
 | QRCODE | QR code used as One Time Password. |
 | U2F | A FIDO challenge |
 ##### 3.2.2.3 AuthorizationResponse
-The AuthorizationResponseType enumeration is the same as the AuthorizationResponse enumeration described in [Section 7.5.3](todo) of Ref. 1 above.
+The AuthorizationResponseType enumeration is the same as the AuthorizationResponse enumeration described in [Section 7.5.3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#753-authorizationresponse) of Ref. 1 above.
 ##### 3.2.2.4 ConsentRequestChannelType
 
 | Name | Description |
