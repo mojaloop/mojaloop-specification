@@ -4,7 +4,6 @@
 TODOs:
 - fix link to Ref 1
 - add in section links to make reading document much easier
-- clean up tables
 
 ## 1 Revision History
 
@@ -16,16 +15,16 @@ TODOs:
 | `0.3` | Following HK and LD reviews                | M. Richards | 9 February 2021  |
 | `0.4` | Following reviews                          | M. Richards | 30 March 2021    |
 | `0.5` | Following discussion on transaction object | M. Richards | 8 June 2021      |
-| `0.6` | Conversion to .md format                   | L. Daly     | 6 August 2021    |
+| `0.6` | Conversion to `.md` format                 | L. Daly     | 6 August 2021    |
 
 
 ## 2 References
 
 The following references are used in this specification:
 
-| Reference | Description | Version | URL |
+| Reference | Description | Version | Link |
 | --- | --- | --- | --- |
-| Ref. 1 | Open API for FSP Interoperability | `1.1` | [https://github.com/mojaloop/mojaloop-specification/blob/master/documents/v1.1-document-set/API%20Definition_v1.1.pdf](https://github.com/mojaloop/mojaloop-specification/blob/master/documents/v1.1-document-set/API%20Definition_v1.1.pdf)|
+| Ref. 1 | Open API for FSP Interoperability | `1.1` | [API Definition v1.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md)|
 
 ## 3 Third Party API
 
@@ -626,8 +625,7 @@ used in the `GET /thirdPartyRequests/verifications/<ID>`. The data model for thi
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-authorizationResponse 1 AuthenticationResponse
-The result of the authorization check.
+| authorizationResponse | 1 | AuthenticationResponse |The result of the authorization check. |
 ##### 3.1.8.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
 `/thirdPartyRequests/verifications`.
