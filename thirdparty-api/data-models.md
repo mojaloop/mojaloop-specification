@@ -496,33 +496,57 @@ Optional extension, specific to deployment.
 
 ##### 3.1.6.2 Callbacks
 The following callbacks are supported for the `/thirdpartyRequests/authorizations` resource
-###### 3.1.6.2.1 PUT /thirdpartyRequests/authorizations/<ID>
+###### 3.1.6.2.1 `PUT /thirdpartyRequests/authorizations/<ID>`
+
 Used by: PISP
-The PUT /thirdpartyRequests/authorizations/<ID> resource will have the same content as the PUT /authorizations/<ID> resource described in Section 6.6.4.1 of Ref. 1 above.
+
+The `PUT /thirdpartyRequests/authorizations/<ID>` resource will have the same content as the 
+`PUT /authorizations/<ID>` resource described in [Section 6.6.4.1](todo) of Ref. 1 above.
 ##### 3.1.6.3 Error callbacks
-This section describes the error callbacks that are used by the server under the resource /thirdpartyRequests/authorizations.
-###### 3.1.6.3.1 PUT /thirdpartyRequests/authorizations/<ID>/error
+This section describes the error callbacks that are used by the server under the resource 
+`/thirdpartyRequests/authorizations`.
+###### 3.1.6.3.1 `PUT /thirdpartyRequests/authorizations/<ID>/error`
+
 Used by: DFSP
-The PUT /thirdpartyRequests/authorizations/<ID>/error resource will have the same content as the PUT /authorizations/<ID>/error resource described in Section 6.6.5.1 of Ref. 1 above.
-#### 3.1.7 thirdpartyRequests/transactions
-The /thirdpartyRequests/transactions resource is analogous to the /transactionRequests resource described in Section 6.4 of Ref. 1 above. The PISP uses it to request the owner of the PISP’s customer’s account to transfer a specified amount from the customer’s account with the DFSP to a named Payee.
-The /thirdpartyRequests/transactions resource supports the endpoints described below.
+
+The `PUT /thirdpartyRequests/authorizations/<ID>/error` resource will have the same content
+as the `PUT /authorizations/<ID>/error` resource described in [Section 6.6.5.1](todo) 
+of Ref. 1 above.
+#### 3.1.7 `/thirdpartyRequests/transactions`
+The `/thirdpartyRequests/transactions` resource is analogous to the `/transactionRequests` 
+resource described in [Section 6.4](todo) of Ref. 1 above. The PISP uses it to request the
+owner of the PISP’s customer’s account to transfer a specified amount from the customer’s 
+account with the DFSP to a named Payee.
+
+The `/thirdpartyRequests/transactions` resource supports the endpoints described below.
 ##### 3.1.7.1 Requests
-This section describes the services that a client can request on the /thirdpartyRequests/transactions resource.
+
+This section describes the services that a client can request on the 
+`/thirdpartyRequests/transactions` resource.
 ###### 3.1.7.1.1` GET /thirdpartyRequests/transactions/<ID>`
+
 Used by: PISP
-The HTTP request` GET /thirdpartyRequests/transactions/<ID> is used to get information relating to a previously issued transaction request. The <ID>` in the request should match the transactionRequestId which was given when the transaction request was created.
-Callback and data model information for` GET /thirdpartyRequests/transactions/<ID>`:
-• Callback - PUT /thirdpartyRequests/transactions /<ID>
-• Error Callback - PUT /thirdpartyRequests/transactions /<ID>/error
-• Data Model – Empty body
-###### 3.1.7.1.2 POST /thirdpartyRequests/transactions
+
+The HTTP request `GET /thirdpartyRequests/transactions/<ID>` is used to get information 
+relating to a previously issued transaction request. The `<ID>` in the request should 
+match the `transactionRequestId` which was given when the transaction request was created.
+
+Callback and data model information for `GET /thirdpartyRequests/transactions/<ID>`:
+- Callback - `PUT /thirdpartyRequests/transactions/<ID>`
+- Error Callback - `PUT /thirdpartyRequests/transactions/<ID>/error`
+- Data Model – Empty body
+###### 3.1.7.1.2 `POST /thirdpartyRequests/transactions`
+
 Used by: PISP
-The HTTP request POST /thirdpartyRequests/transactions is used to request the creation of a transaction request on the server for the transfer described in the request.
-Callback and data model information for POST /thirdpartyRequests/transactions:
-• Callback - PUT /thirdpartyRequests/transactions /<ID>
-• Error Callback - PUT /thirdpartyRequests/transactions /<ID>/error
-• Data Model – See Table below
+
+The HTTP request `POST /thirdpartyRequests/transactions` is used to request the creation
+of a transaction request on the server for the transfer described in the request.
+
+Callback and data model information for `POST /thirdpartyRequests/transactions`:
+- Callback - `PUT /thirdpartyRequests/transactions/<ID>`
+- Error Callback - `PUT /thirdpartyRequests/transactions/<ID>/error`
+- Data Model – See Table below
+
 Name Cardinality Type Description
 transactionRequestId 1 CorrelationId
 Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request.
@@ -537,10 +561,6 @@ Type of transaction
 note 0..1 Note
 Reason for the transaction request, intended for the Payer.
 
-
-
-
-
 authenticationType 0..1 AuthenticationType
 OTP, FIDO or QR Code, otherwise empty.
 expiration 0..1 DateTime
@@ -548,13 +568,23 @@ Can be set to get a quick failure in case the peer FSP takes too long to respond
 extensionList 0..1 ExtensionList
 Optional extension, specific to deployment.
 ##### 3.1.7.2 Callbacks
-The following callbacks are supported for the /thirdpartyRequests/transactions resource
-###### 3.1.7.2.1 PUT /thirdpartyRequests/transactions/<ID>
+The following callbacks are supported for the `/thirdpartyRequests/transactions` resource
+###### 3.1.7.2.1 `PUT /thirdpartyRequests/transactions/<ID>`
+
 Used by: DFSP
-The PUT /thirdpartyRequests/transactions/<ID> resource will have the same content as the PUT /transactionRequests/<ID> resource described in Section 6.4.4.1 of Ref. 1 above.
-###### 3.1.7.2.2 PATCH /thirdpartyRequests/transactions/<ID>
+
+The `PUT /thirdpartyRequests/transactions/<ID>` resource will have the same content as 
+the `PUT /transactionRequests/<ID>` resource described in [Section 6.4.4.1](todo) of Ref. 1 above.
+###### 3.1.7.2.2 `PATCH /thirdpartyRequests/transactions/<ID>`
+
 Used by: DFSP
-The issuing PISP will expect a response to their request for a transfer which describes the finalised state of the requested transfer. This response will be given by a PATCH call on the /thirdpartyRequests/transactions/<ID> resource.  The <ID> given in the query string should be the transactionRequestId which was originally used by the PISP to identify the transaction request (see Section 3.1.8.1.2 above.)
+
+The issuing PISP will expect a response to their request for a transfer which describes 
+the finalised state of the requested transfer. This response will be given by a `PATCH` call on the
+`/thirdpartyRequests/transactions/<ID>` resource. The `<ID>` given in the query string should be 
+the `transactionRequestId` which was originally used by the PISP to identify the transaction 
+request (see [Section 3.1.8.1.2](todo) above.)
+
 The data model for this endpoint is as follows:
 Name Cardinality Type Description
 completedTimestamp 0..1 DateTime
@@ -565,32 +595,62 @@ extensionList 0..1 ExtensionList
 Optional extension, specific to deployment
 
 ##### 3.1.7.3 Error callbacks
-This section describes the error callbacks that are used by the server under the resource /thirdpartyRequests/transactions.
-###### 3.1.7.3.1 PUT /thirdpartyRequests/transactions/<ID>/error
-Used by: DFSP
-The PUT /thirdpartyRequests/transactions/<ID>/error resource will have the same content as the PUT /transactionRequests/<ID>/error resource described in Section 6.4.5.1 of Ref. 1 above.
-###### 3.1.7.3.2 PATCH /thirdpartyRequests/transactions/<ID>/error
-Used by: DFSP
-The issuing PISP will expect a response to their request for a transfer which describes the finalized state of the requested transfer. This response will be given by a PATCH call on the /thirdpartyRequests/transactions/<ID>/error resource.  The content of this resource will be the same as the data model described in Table 24 of Ref. 1 above, in the section describing the PUT command on the /transfers/<ID>/error resource shown in Section 6.7.5.1 of Ref. 1 above.
+This section describes the error callbacks that are used by the server under the resource
+`/thirdpartyRequests/transactions`.
+###### 3.1.7.3.1 `PUT /thirdpartyRequests/transactions/<ID>/error`
 
-#### 3.1.8 thirdPartyRequests/verifications
-The /thirdPartyRequests/verifications resource is used by a Payer DFSP to verify that an authorization response received from a PISP was signed using the correct key, in cases where the authentication service to be used is implemented by the switch and not internally by the DFSP. The DFSP sends the original challenge and the signed response to the authentication service, together with the consent ID to be used for the verification. The authentication service compares the response with the result of signing the challenge with the private key associated with the consent ID, and, if the two match, it returns a positive result. Otherwise, it returns an error.
-The /thirdPartyRequests/verifications resource supports the endpoints described below.
+Used by: DFSP
+
+The `PUT /thirdpartyRequests/transactions/<ID>/error` resource will have the same content as 
+the `PUT /transactionRequests/<ID>/error` resource described in [Section 6.4.5.1](todo) of Ref. 1 above.
+###### 3.1.7.3.2 `PATCH /thirdpartyRequests/transactions/<ID>/error`
+
+Used by: DFSP
+
+<!-- TODO: is this right? I thought we agreed not to use PATCH .../error... -->
+The issuing PISP will expect a response to their request for a transfer which describes the finalized
+state of the requested transfer. This response will be given by a `PATCH` call on the 
+`/thirdpartyRequests/transactions/<ID>/error` resource.  The content of this resource will be the same
+ as the data model described in [Table 24](todo) of Ref. 1 above, in the section describing the `PUT` 
+ command on the `/transfers/<ID>/error` resource shown in [Section 6.7.5.1](todo) of Ref. 1 above.
+
+#### 3.1.8 `/thirdPartyRequests/verifications`
+The `/thirdPartyRequests/verifications` resource is used by a Payer DFSP to verify that an authorization
+response received from a PISP was signed using the correct key, in cases where the authentication service
+to be used is implemented by the switch and not internally by the DFSP. The DFSP sends the original 
+challenge and the signed response to the authentication service, together with the consent ID to be used
+for the verification. The authentication service compares the response with the result of signing the
+challenge with the private key associated with the `consentId`, and, if the two match, it returns a 
+positive result. Otherwise, it returns an error.
+
+The `/thirdPartyRequests/verifications` resource supports the endpoints described below.
 ##### 3.1.8.1 Requests
-This section describes the services that a client can request on the /thirdPartyRequests/verifications resource.
-###### 3.1.8.1.1` GET /thirdPartyRequests/verifications/<ID>`
+This section describes the services that a client can request on the `/thirdPartyRequests/verifications`
+resource.
+###### 3.1.8.1.1 `GET /thirdPartyRequests/verifications/<ID>`
+
 Used by: DFSP
-The HTTP request /thirdPartyRequests/verifications <ID> is used to get information regarding a previously created or requested authorization. The <ID> in the URI should contain the verification request ID (see Section 3.1.9.1.2 below) that was used for the creation of the transfer.Callback and data model information for` GET /thirdPartyRequests/verifications/<ID>`:
-Callback – PUT /thirdPartyRequests/verifications/<ID>
-Error Callback – PUT /thirdPartyRequests/verifications/<ID>/error
-Data Model – Empty body
-###### 3.1.8.1.2 POST /thirdPartyRequests/verifications
+
+The HTTP request `/thirdPartyRequests/verifications/<ID>` is used to get information regarding a previously
+created or requested authorization. The `<ID>` in the URI should contain the verification request ID 
+(see [Section 3.1.9.1.2](todo) below) that was used for the creation of the transfer.Callback and data model
+information for` GET /thirdPartyRequests/verifications/<ID>`:
+
+- Callback – `PUT /thirdPartyRequests/verifications/<ID>`
+- Error Callback – `PUT /thirdPartyRequests/verifications/<ID>/error`
+- Data Model – Empty body
+###### 3.1.8.1.2 `POST /thirdPartyRequests/verifications`
+
 Used by: DFSP
-The POST /thirdPartyRequests/verifications resource is used to request confirmation from an authentication service that a challenge has been signed using the correct private key. 
-Callback and data model information for POST /thirdpartyRequests/verifications:
-• Callback - PUT /thirdpartyRequests/verifications /<ID>
-• Error Callback - PUT /thirdpartyRequests/verifications /<ID>/error
-• Data Model – See Table below
+
+The `POST /thirdPartyRequests/verifications` resource is used to request confirmation from an authentication
+service that a challenge has been signed using the correct private key.
+
+Callback and data model information for `POST /thirdpartyRequests/verifications`:
+- Callback - `PUT /thirdpartyRequests/verifications/<ID>`
+- Error Callback - `PUT /thirdpartyRequests/verifications /<ID>/error`
+- Data Model – See Table below
+
 Name Cardinality Type Description
 verificationRequestId 1 CorrelationId
 Common ID between the DFSP and authentication service for the verification request object. The ID should be reused for resends of the same authorization request. A new ID should be generated for each new authorization request.
@@ -602,18 +662,33 @@ consentId 1 CorrelationId
 Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature
 
 ##### 3.1.8.2 Callbacks 
-This section describes the callbacks that are used by the server under the resource /thirdPartyRequests/verifications/
-###### 3.1.8.2.1 PUT /thirdPartyRequests/verifications/<ID>
-Used by: FIDO
-The callback PUT /thirdPartyRequests/verifications/<ID> is used to inform the client of the result of an authorization check. The <ID> in the URI should contain the authorizationRequestId (see Section 3.1.9.1.2 above) which was used to request the check, or the <ID> that was used in the` GET /thirdPartyRequests/verifications/<ID>`. The data model for this resource is as follows:
+This section describes the callbacks that are used by the server under the resource
+`/thirdPartyRequests/verifications/`
+###### 3.1.8.2.1 `PUT /thirdPartyRequests/verifications/<ID>`
+
+Used by: Auth Service
+
+The callback `PUT /thirdPartyRequests/verifications/<ID>` is used to inform the client of the result 
+of an authorization check. The `<ID>` in the URI should contain the `authorizationRequestId`
+(see [Section 3.1.9.1.2](todo) above) which was used to request the check, or the `<ID>` that was 
+used in the `GET /thirdPartyRequests/verifications/<ID>`. The data model for this resource is as follows:
+
 Name Cardinality Type Description
 authorizationResponse 1 AuthenticationResponse
 The result of the authorization check.
 ##### 3.1.8.3 Error callbacks
-This section describes the error callbacks that are used by the server under the resource /thirdPartyRequests/verifications.
-###### 3.1.8.3.1 PUT /thirdPartyRequests/verifications/<ID>/error
-Used by: FIDO
-If the server is unable to complete the authorization request, or another processing error occurs, the error callback PUT /thirdPartyRequests/verifications/<ID>/error is used. The <ID> in the URI should contain the <ID> that was used in the call which requested the authorization. The data model for this resource is as follows:
+This section describes the error callbacks that are used by the server under the resource 
+`/thirdPartyRequests/verifications`.
+###### 3.1.8.3.1 `PUT /thirdPartyRequests/verifications/<ID>/error`
+
+Used by: Auth Service
+
+If the server is unable to complete the authorization request, or another processing error occurs, the 
+error callback `PUT /thirdPartyRequests/verifications/<ID>/error` is used.The `<ID>` in the URI should 
+contain the `authorizationRequestId` (see [Section 3.1.9.1.2](todo) above) which was used to request the 
+check, or the `<ID>` that was used in the `GET /thirdPartyRequests/verifications/<ID>`.
+
+The data model for this resource is as follows:
 Name Cardinality Type Description
 errorInformation 1 ErrorInformation
 Error code, category description.
