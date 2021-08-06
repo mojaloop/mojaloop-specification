@@ -1,9 +1,4 @@
 # Mojaloop Third Party API Specification
-
-
-TODOs:
-- add in section + Data model links to make reading document much easier
-
 ## 1 Revision History
 
 | Version | Description | Modified By | Date |
@@ -90,13 +85,13 @@ Used by: DFSP
 
 The `PUT /accounts/<Type>/<ID>` response is used to inform the requester of the result of a request
 for accounts information.  The identifier type and the identifier ID given in the call are the 
-values given in the original request (see [Section 3.1.1.1.1](todo) above.)
+values given in the original request (see [Section 3.1.1.1.1](#31111--get-accountstypeid) above.)
 
 The data content of the message is given below.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| accountList | 1 | [AccountList](todo) | Information about the accounts that the DFSP associates with the identifier sent by the PISP. |
+| accountList | 1 | AccountList | Information about the accounts that the DFSP associates with the identifier sent by the PISP. |
 
 ###### 3.1.1.2.2  `PUT /accounts/<type>/<ID>/error`
 
@@ -110,7 +105,7 @@ The data content of the message is given below.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
 
 #### 3.1.2 `/consentRequests`
 
@@ -537,7 +532,7 @@ The issuing PISP will expect a response to their request for a transfer which de
 the finalised state of the requested transfer. This response will be given by a `PATCH` call on the
 `/thirdpartyRequests/transactions/<ID>` resource. The `<ID>` given in the query string should be 
 the `transactionRequestId` which was originally used by the PISP to identify the transaction 
-request (see [Section 3.1.8.1.2](todo) above.)
+request (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above.)
 
 The data model for this endpoint is as follows:
 | Name | Cardinality | Type | Description |
@@ -563,7 +558,7 @@ Used by: DFSP
 The issuing PISP will expect a response to their request for a transfer which describes the finalized
 state of the requested transfer. This response will be given by a `PATCH` call on the 
 `/thirdpartyRequests/transactions/<ID>/error` resource.  The content of this resource will be the same
- as the data model described in [Table 24](todo) of Ref. 1 above, in the section describing the `PUT` 
+ as the data model described in [Table 32](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#table-32) of Ref. 1 above, in the section describing the `PUT` 
  command on the `/transfers/<ID>/error` resource shown in [Section 6.7.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6751-put-transfersiderror) of Ref. 1 above.
 
 #### 3.1.8 `/thirdPartyRequests/verifications`
@@ -585,7 +580,7 @@ Used by: DFSP
 
 The HTTP request `/thirdPartyRequests/verifications/<ID>` is used to get information regarding a previously
 created or requested authorization. The `<ID>` in the URI should contain the verification request ID 
-(see [Section 3.1.9.1.2](todo) below) that was used for the creation of the transfer.Callback and data model
+(see [Section 3.1.8.1.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31812-post-thirdpartyrequestsverifications) below) that was used for the creation of the transfer.Callback and data model
 information for` GET /thirdPartyRequests/verifications/<ID>`:
 
 - Callback – `PUT /thirdPartyRequests/verifications/<ID>`
@@ -619,7 +614,7 @@ Used by: Auth Service
 
 The callback `PUT /thirdPartyRequests/verifications/<ID>` is used to inform the client of the result 
 of an authorization check. The `<ID>` in the URI should contain the `authorizationRequestId`
-(see [Section 3.1.9.1.2](todo) above) which was used to request the check, or the `<ID>` that was 
+(see [Section 3.1.8.1.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31812-post-thirdpartyrequestsverifications) above) which was used to request the check, or the `<ID>` that was 
 used in the `GET /thirdPartyRequests/verifications/<ID>`. The data model for this resource is as follows:
 
 | Name | Cardinality | Type | Description |
@@ -634,13 +629,13 @@ Used by: Auth Service
 
 If the server is unable to complete the authorization request, or another processing error occurs, the 
 error callback `PUT /thirdPartyRequests/verifications/<ID>/error` is used.The `<ID>` in the URI should 
-contain the `authorizationRequestId` (see [Section 3.1.9.1.2](todo) above) which was used to request the 
+contain the `verificationRequestId` (see [Section 3.1.8.1.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31812-post-thirdpartyrequestsverifications) above) which was used to request the 
 check, or the `<ID>` that was used in the `GET /thirdPartyRequests/verifications/<ID>`.
 
 The data model for this resource is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
 
 ### 3.2 Data Models
 
@@ -691,7 +686,7 @@ The AccountList data model is used to hold information about the accounts that a
 The AuthenticationChannel data model is used to specify the type of out-of-loop authentication to use in verifying a customer’s wish to grant permissions to a PISP.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-|AuthenticationChannel | 1 | Enum of String(1..32) | See Section 3.2.2.2 below for more information on allowed values. |
+|AuthenticationChannel | 1 | Enum of String(1..32) | See [Section 3.2.2.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3222-authorizationchanneltype) below for more information on allowed values. |
 ##### 3.2.1.5 AuthenticationInfo
 The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#741-authenticationinfo) of Ref. 1 above.
 ##### 3.2.1.6 AuthenticationResponse
@@ -728,13 +723,13 @@ The Challenge object is used to hold a FIDO challenge and its associated signatu
 The ConsentRequestChannelType is used to hold an instance of the ConsentRequestChannelType enumeration. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](todo) below ( ConsentRequestChannelType) for more information on allowed values. |
+| ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3224-consentrequestchanneltype) below ( ConsentRequestChannelType) for more information on allowed values. |
 
 ##### 3.2.1.14 ConsentState
-The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](todo) above. Its data model is as follows:
+The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31322-put-consentsid) above. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](todo) below (ConsentStatusType) for more information on allowed values.|
+| ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3225-consentstatustype) below (ConsentStatusType) for more information on allowed values.|
  
 ##### 3.2.1.15 CorrelationId
 The CorrelationId type used in these definitions is as defined in [Section 7.3.8](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#738-correlationid) of Ref. 1 above.
@@ -751,7 +746,7 @@ The Credential object is used to store information about a challenge which is ex
 The CredentialState data type stores the state of a credential request. Its data model is as follows.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| CredentialState | 1 | Enum of String(1..32) |See [Section 3.2.2.5](todo) below (CredentialState) for more information on allowed values. |
+| CredentialState | 1 | Enum of String(1..32) |See [Section 3.2.2.6](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3226-credentialstate) below (CredentialState) for more information on allowed values. |
 
 ##### 3.2.1.18 DateTime
 The DateTime data type used in these definitions is as defined in [Section 7.2.14](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7214-datetime) of Ref. 1 above.
@@ -821,12 +816,12 @@ The Scope element contains an identifier defining, in the terms of a DFSP, an ac
 The ScopeAction element contains an access type which a PISP can request from a DFSP, or which a DFSP can grant to a PISP. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| scopeAction | 1 | Enum of String(1..32)| See [Section 0](todo) below ( ScopeEnumeration) for more information on allowed values. |
+| scopeAction | 1 | Enum of String(1..32)| See [Section 3.2.2.9](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3229-scopeenumeration) below (ScopeEnumeration) for more information on allowed values. |
 ##### 3.2.1.34 ServiceType
 The ServiceType element contains a type of service where the requester wants a list of the participants in the scheme which provide that service. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.9](todo) below ServiceType) for more information on allowed values. |
+| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.10](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#32210-servicetype) below ServiceType) for more information on allowed values. |
 
 ##### 3.2.1.35 TokenBindingState
 The TokenBindingState object describes the state of a token binding protocol for communication with a relying party for a public key credential. It contains the following items of information.
