@@ -438,18 +438,16 @@ Callback and data model information for `POST /thirdpartyRequests/authorizations
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| authorizationRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request. |
+| authorizationRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the authoriztion request object. The ID should be reused for resends of the same authoriztion request. A new ID should be generated for each new authoriztion request. |
 | transactionRequestId | 1 | CorrelationId | The unique identifier of the transaction request for which authorization is being requested. |
 | challenge | 1 | BinaryString | The challenge that the PISP’s client is to sign. |
-| transactionId | 1 | CorrelationId | The unique identifier for the proposed transaction. It is set by the payer DFSP and signed by the payee DFSP as part of the terms of the transfer |
 | transferAmount | 1 | Money | The amount that will be debited from the sending customer’s account as a consequence of the transaction. |
 | payeeReceiveAmount | 1 | Money | The amount that will be credited to the receiving customer’s account as a consequence of the transaction. |
 | fees | 1 | Money | The amount of fees that the paying customer will be charged as part of the transaction. |
-| payer | 1 | Party | Information about the Payer in the proposed transaction |
+| payer | 1 | PartyIdInfo | Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
 | payee | 1 | Party | Information about the Payee in the proposed transaction |
 | transactionType | 1 | TransactionType | The type of the transaction. |
-| condition | 1 | IlpCondition | The condition returned by the payee DFSP to the payer DFSP as a cryptographic guarantee of the transfer. |
-| expiration | 1 | DateTime |The time by which the transfer must be completed, set by the payee DFSP. |
+| expiration | 1 | DateTime | The time by which the transfer must be completed, set by the payee DFSP. |
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 
 ##### 3.1.6.2 Callbacks
@@ -481,7 +479,7 @@ The `/thirdpartyRequests/transactions` resource supports the endpoints described
 
 This section describes the services that a client can request on the 
 `/thirdpartyRequests/transactions` resource.
-###### 3.1.7.1.1` GET /thirdpartyRequests/transactions/<ID>`
+###### 3.1.7.1.1 `GET /thirdpartyRequests/transactions/<ID>`
 
 Used by: PISP
 
@@ -522,8 +520,16 @@ The following callbacks are supported for the `/thirdpartyRequests/transactions`
 
 Used by: DFSP
 
-The `PUT /thirdpartyRequests/transactions/<ID>` resource will have the same content as 
-the `PUT /transactionRequests/<ID>` resource described in [Section 6.4.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6441-put-transactionrequestsid) of Ref. 1 above.
+After a PISP requests the creation of a Third Party Transaction request (`POST /thirdpartyRequests/transactions`)
+or the status of a previously created Third Party Transaction request 
+(`GET /thirdpartyRequests/transactions/<ID>`), the DFSP will send this callback.
+
+The data model for this endpoint is as follows:
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| transactionRequestState | 1 | TransactionRequestState | State of the transaction request. |
+| extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
+
 ###### 3.1.7.2.2 `PATCH /thirdpartyRequests/transactions/<ID>`
 
 Used by: DFSP
@@ -830,6 +836,7 @@ The TokenBindingState object describes the state of a token binding protocol for
 | status | 1 | TokenBindingStateStatus | Denotes whether or not token binding has been used to negotiate with the relying party. |
 | id | 1 | String | The base64url encoding of the token binding ID which was used for the communication. |
 
+<!-- TODO: can this be removed? I don't see any references to it... -->
 ##### 3.2.1.36 Transaction
 The Transaction type used in these definitions is as defined in [Section 7.4.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7417-transaction) of Ref. 1 above, but with extensions to include the additional information required for verification and consent in the PISP ecosystem.
 
