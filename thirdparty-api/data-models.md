@@ -456,8 +456,18 @@ The following callbacks are supported for the `/thirdpartyRequests/authorization
 
 Used by: PISP
 
-The `PUT /thirdpartyRequests/authorizations/<ID>` resource will have the same content as the 
-`PUT /authorizations/<ID>` resource described in [Section 6.6.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6641-put-authorizationsid) of Ref. 1 above.
+After receiving the `POST /thirdpartyRequests/authorizations`, the PISP will present the details of the 
+transaction to their user, and request that the client sign the `challenge` field using the credential
+they previously registered.
+
+The signed challenge will be sent back by the PISP in `PUT /thirdpartyRequests/authorizations/<ID>`:
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| signedPayloadType | 1 | SignedPayloadType | |
+| signedPayload | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | If the registered credential is of type `GENERIC`, this will be a BinaryString representing a HMACSHA256 of the challenge + private key of the credential. If the registered credential is of type BinaryString, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
+
+
 ##### 3.1.6.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
 `/thirdpartyRequests/authorizations`.
@@ -608,8 +618,9 @@ Callback and data model information for `POST /thirdpartyRequests/verifications`
 | --- | --- | --- | --- |
 | verificationRequestId | 1 | CorrelationId |Common ID between the DFSP and authentication service for the verification request object. The ID should be reused for resends of the same authorization request. A new ID should be generated for each new authorization request. |
 | challenge | 1 | Challenge |The challenge originally sent to the PISP |
-| value | 1 | authenticationValue |The signed challenge returned by the PISP. |
 | consentId | 1 | CorrelationId |Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature |
+| signedPayloadType | 1 | SignedPayloadType | The type of the SignedPayload, depending on the type of credential registered by the PISP |
+| signedPayload | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | The signed challenge returned by the PISP. If the registered credential is of type `GENERIC`, this will be a BinaryString representing a HMACSHA256 of the challenge + private key of the credential. If the registered credential is of type BinaryString, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
 
 ##### 3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource
@@ -956,3 +967,10 @@ The WebAuthenticationType enumeration defines the type of a web authentication c
 | ---  | ----------- |
 | webauthn.get | An existing credential was retrieved |
 | webauthn.create | A new credential was created |
+
+##### 3.2.2.13 SignedPayloadType
+The SignedPayloadType enumeration contains the allowed values for the type of a signed playoad
+| Name | Description |
+| ---  | ----------- |
+| FIDO | The signed payload is based on a FIDO Assertion Response. Its payload is a FIDOPublicKeyCredentialAssertion object. |
+| GENERIC | The signed payload is based on a simple public key validation. Its payload is a BinaryString object |
