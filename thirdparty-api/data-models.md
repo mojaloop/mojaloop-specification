@@ -106,7 +106,7 @@ The data content of the message is given below.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | Information describing the error and error code. |
 
 #### 3.1.2 `/consentRequests`
 
@@ -209,7 +209,7 @@ request or the `POST /consentRequests` request. The data model for this resource
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | Information describing the error and error code. |
 
 
 #### 3.1.3 `/consents`
@@ -260,7 +260,9 @@ Callback and data model information for `POST /consents/<ID>`:
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
 ###### 3.1.3.1.3 `DELETE /consents/<ID>`
 
-The `DELETE /consents/<ID>` request is used to request the deletion of a previously agreed consent.
+Used by PISP, DFSP
+
+The `DELETE /consents/<ID>` request is used to request the revokation of a previously agreed consent.
 The switch should be sure not to delete the consent physically; instead, information relating to 
 the consent should be marked as deleted and requests relating to the consent should not be honoured.
 
@@ -269,25 +271,35 @@ the consent should be marked as deleted and requests relating to the consent sho
 > other party attempts to delete a consent, the request should be rejected, and an error raised.
 
 Callback and data model information for `DELETE /consents/<ID>`:
-- Callback – `PUT /consents/<ID>`
+- Callback – `PATCH /consents/<ID>`
 - Error Callback – `PUT /consents/<ID>/error`
 
 ##### 3.1.3.2 Callbacks 
 The `/consents` resource will support the following callbacks: 
 ###### 3.1.3.2.1 `PATCH/consents/<ID>`
 
-Used by: PISP
+Used by: Auth-Service, DFSP
 
-When a party intends to change the content of a consent, it can do this via the `PATCH /consents/<ID>`
-resource. The syntax of this call complies with the JSON Merge Patch specification  rather than the 
+`PATCH /consents/<ID>` is used in 2 places:
+1. To inform the PISP that the consent.credential is valid and the account linking process compeleted
+   successfuly.
+2. To inform the PISP or the DFSP that the Consent has been revoked.
+
+In the first case, a DFSP sends a `PATCH/consents/<ID>` request to the PISP with a `credential.status`
+of `VERIFIED`.
+
+In the second case, an Auth-Service or DFSP sends a `PATCH/consents/<ID>` request with a `status` of
+`REVOKED`, and the `revokedAt` field set.
+
+The syntax of this call complies with the JSON Merge Patch specification  rather than the 
 JSON Patch specification. The `PATCH /consents/<ID>` resource contains a set of proposed changes to 
 the current state of the permissions relating to a particular authorization grant. The data model 
 for this call is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| scopes | 0..n  | Scope | The scopes covered by the consent. |
-| consentState | 0..1 | CredentialState | State of the consent |
+| status | 0..1 | "REVOKED" | Consent status is now revoked. |
+| revokedAt | 0..1 | DateTime | The DateTime the consent was revoked at. |
 | credential | 0..1 | Credential | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
 
@@ -308,7 +320,7 @@ whose `consentId` is given in the URI. The data returned by the call is as follo
 This section describes the error callbacks that are used by the server under the resource `/consents`.
 ###### 3.1.3.3.1 `PUT /consents/<ID>/error`
 
-Used by: PISP
+Used by: PISP, DFSP, Auth-Service
 
 If the server is unable to complete the consent, or if an out-of-loop processing error or another
 processing error occurs, the error callback `PUT /consents/<ID>/error` is used. The `<ID>` in the
@@ -317,7 +329,7 @@ URI should contain the `<ID>` that was used in the `GET /consents/<ID>` request 
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | Information describing the error and error code. |
 
 #### 3.1.4 `/parties`
 
@@ -395,7 +407,7 @@ client that an error has occurred.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | Information describing the error and error code. |
 
 #### 3.1.6 `thirdpartyRequests/authorizations`
 
@@ -562,8 +574,9 @@ request (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) ab
 The data model for this endpoint is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| completedTimestamp | 0..1 | DateTime |Time and date when the transaction was completed |
-| transferState | 1 | TransferState |State of the transfer |
+| completedTimestamp | 0..1 | DateTime |Time and date when the transaction was completed, if it was completed. |
+| transactionRequestState | 1 | TransactionRequestState | State of the transaction request |
+| transactionState | 1 | TransactionState | State of the transaction created by the DFSP in response to this transaction request |
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
 
 ##### 3.1.7.3 Error callbacks
@@ -651,7 +664,7 @@ check, or the `<ID>` that was used in the `GET /thirdPartyRequests/verifications
 The data model for this resource is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | Information describing the error and error code. |
 
 ### 3.2 Data Models
 
@@ -754,7 +767,7 @@ The Credential object is used to store information about a challenge which is ex
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | credentialId | 1 | CorrelationId | A unique identifier for the credential. |
-| credentialType | 1 | AuthenticationChannel | The type of credential this is |
+| credentialType | 1 | CredentialType | The type of credential this is - `FIDO` or `GENERIC` |
 | status | 0..1 | CredentialState | The current status of the credential. |
 | payload | 1 | `PublicKeyCredential` or `GenericCredential` | The type of this field depends on the type of credential this is, as defined in the credentialType field: • If the credential type is FIDO, then the type of the payload will be PublicKeyCredential. • If the credential type is GENERIC, then the type of the payload will be GenericCredential. A description of the credential and information which allows the recipient of the credential to test its veracity.|
 
@@ -772,8 +785,7 @@ The ErrorInformation data type used in these definitions is as defined in [Secti
 The ExtensionList data type used in these definitions is as defined in [Section 7.4.4](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#744-extensionlist) of Ref. 1 above.
 ##### 3.2.1.21 FspId
 The FspId data type used in these definitions is as defined in [Section 7.3.16](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7316-fspid) of Ref. 1 above.
-##### 3.2.1.22 GeoCode
-The GeoCode data type used in these definitions is as defined in [Section 7.4.9](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#749-geocode) of Ref. 1 above.
+
 ##### 3.2.1.23 GenericCredential
 The GenericCredential object stores the payload for a credential which is validated according to a comparison of the signature created from the challenge using a private key against the same challenge signed using a public key. Its content is as follows. 
 | Name | Cardinality | Type | Description |
@@ -781,10 +793,6 @@ The GenericCredential object stores the payload for a credential which is valida
 | publicKey | 0..1 | BinaryString32 | The public key to be used in checking the signature. Only required if the public key has not already been registered. |
 | signature | 1 | BinaryString32 | The signature to be checked against the public key. |
 
-##### 3.2.1.24 ilpCondition
-The ilpCondition type used in these definitions is as defined in [Section 7.3.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7317-ilpcondition) of Ref. 1 above.
-##### 3.2.1.25 Integer
-The Integer type used in these definitions is as defined in [Section 7.2.5](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#725-integer) of Ref. 1 above.
 ##### 3.2.1.26 Money
 The Money type used in these definitions is a defined in [Section 7.4.10](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7410-money) of Ref. 1 above.
 ##### 3.2.1.27 Note
@@ -848,8 +856,8 @@ The TokenBindingState object describes the state of a token binding protocol for
 
 ##### 3.2.1.37 TransactionType
 The TransactionType type used in these definitions is as defined in [Section 7.4.18](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7418-transactiontype) of Ref. 1 above.
-##### 3.2.1.38 TransferState
-The TransferState type used in these definitions is as defined in [Section 7.3.35](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7335-transferstate) of Ref. 1 above.
+##### 3.2.1.38 TransactionState
+The TransactionState type used in these definitions is as defined in [Section 7.3.33](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7333-transactionstate) of Ref. 1 above.
 ##### 3.2.1.39 Uri
 The API data type Uri is a JSON string in a canonical format that is restricted by a regular expression for interoperability reasons. The regular expression for restricting the Uri type is as follows:
 `^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))? `
@@ -920,9 +928,9 @@ The PartyIdType enumeration is extended for PISPs to include a definition for th
 
 | Name | Description |
 | ---  | ----------- |
-| BALANCE_ENQUIRY | PISP can request a balance for the linked account|
-| FUNDS_TRANSFER | PISP can request a transfer of funds from the linked account in the DFSP|
-| STATEMENT | PISP can request a statement of individual transactions on a user’s account|
+| getBalance | PISP can request a balance for the linked account|
+| transfer | PISP can request a transfer of funds from the linked account in the DFSP|
+| statement | PISP can request a statement of individual transactions on a user’s account|
 
 ##### 3.2.2.10 ServiceType
 The ServiceType enumeration describes the types of role for which a DFSP may query using the /services resource.
@@ -930,7 +938,7 @@ The ServiceType enumeration describes the types of role for which a DFSP may que
 | ---  | ----------- |
 | THIRD_PARTY_DFSP| DFSPs which will support linking with PISPs |
 | PISP| PISPs |
-| AUTH_SERVICE| Participanys which provide Authentication Services |
+| AUTH_SERVICE| Participants which provide Authentication Services |
 
 ##### 3.2.2.11 TokenBindingStateStatus
 The TokenBindingStateStatus enumeration describes the possible status values for a token binding state object associated with a public key credential. It forms part of the TokenBindingState object.
