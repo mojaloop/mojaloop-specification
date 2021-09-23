@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="757" preserveAspectRatio="none" style="width:1928px;height:757px" width="1928">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="330" x="801.5" y="28.708">
+    Adapters Tandem: clashing endpoints
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M1 40.953h73v710.516H1z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="4" y="53.02">
+    Mojaloop
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M207 40.953h555.5v710.516H207z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="156" x="406.75" y="53.02">
+    SDK-scheme-adapter
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M764.5 40.953H1435v710.516H764.5z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="202" x="998.75" y="53.02">
+    Thirdparty-scheme-adapter
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M32.5 309.578h10v244.063h-10zM263.5 553.641h10v92.398h-10zM841 382.977h10v321.195h-10zM1348 280.445h10v423.727h-10zM1688 105.383h10v598.789h-10z"/>
+  <path stroke="#a80036" stroke-dasharray="5,5" d="M37 95.383v617.789M268 95.383v617.789M700.5 95.383v617.789M845.5 95.383v617.789M1353 95.383v617.789M1693 95.383v617.789"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M6 60.086h59v30.297H6z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="13" y="80.081">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M6 712.172h59v30.297H6z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="13" y="732.167">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M211 60.086h111v30.297H211z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="97" x="218" y="80.081">
+    SDK-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M211 712.172h111v30.297H211z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="97" x="218" y="732.167">
+    SDK-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M642.5 60.086h112v30.297h-112z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="98" x="649.5" y="80.081">
+    SDK-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M642.5 712.172h112v30.297h-112z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="98" x="649.5" y="732.167">
+    SDK-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M768.5 60.086h151v30.297h-151z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="137" x="775.5" y="80.081">
+    Thirdparty-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M768.5 712.172h151v30.297h-151z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="137" x="775.5" y="732.167">
+    Thirdparty-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1275 60.086h152v30.297h-152z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="138" x="1282" y="80.081">
+    Thirdparty-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1275 712.172h152v30.297h-152z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="138" x="1282" y="732.167">
+    Thirdparty-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1669 60.086h44v30.297h-44z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="1676" y="80.081">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1669 712.172h44v30.297h-44z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="1676" y="732.167">
+    PISP
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M32.5 309.578h10v244.063h-10zM263.5 553.641h10v92.398h-10zM841 382.977h10v321.195h-10zM1348 280.445h10v423.727h-10zM1688 105.383h10v598.789h-10z"/>
+  <path d="M181 110.383v55h170v-45l-10-10H181" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M341 110.383v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="149" x="187" y="127.45">
+    PUT /parties/MSISDN/...
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="120" x="195" y="142.583">
+    callback registered
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="140" x="195" y="157.715">
+    in the Mojaloop switch
+  </text>
+  <path d="M709 179.781v55h270v-45l-10-10H709" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M969 179.781v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="149" x="715" y="196.848">
+    PUT /parties/MSISDN/...
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="230" x="723" y="211.981">
+    two callbacks for the same endpoint
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="241" x="723" y="227.114">
+    can&apos;t be registered in Mojaloop Switch
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M1369 276.445l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M1363 280.445h324"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="280" x="1375" y="260.247">
+    start the Transfer flow which involes using of
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="1375" y="275.379">
+    GET /parties/MSISDN/12345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M53.5 305.578l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M47.5 309.578H1347"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="59.5" y="304.512">
+    GET /parties/MSISDN/12345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M1336 334.71l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M42.5 338.711H1342"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="46" x="49.5" y="333.645">
+    200 OK
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M862 378.977l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M856 382.977h491"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="183" x="868" y="362.778">
+    register to PUB/SUB channel
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="211" x="868" y="377.911">
+    to receive data from PUT /parties
+  </text>
+  <path stroke="#a80036" d="M851 412.109h42M893 412.109v13M852 425.109h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M862 421.11l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="272" x="858" y="407.043">
+    waiting on PUT /parties/MSISDN/... callback
+  </text>
+  <path stroke="#a80036" d="M1358 469.375h42M1400 469.375v13M1359 482.375h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M1369 478.375l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="221" x="1365" y="449.176">
+    keeping open connection with PISP
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="316" x="1365" y="464.309">
+    and waiting on data to be send down as response
+  </text>
+  <path stroke="#a80036" d="M42.5 511.508h42M84.5 511.508v13M43.5 524.508h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M53.5 520.508l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="171" x="49.5" y="506.442">
+    resolving party information
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M251.5 549.64l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M37.5 553.641h220"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="44.5" y="548.575">
+    PUT /parties/MSISDN/12345678
+  </text>
+  <path stroke="#a80036" d="M273.5 582.773h42M315.5 582.773v13M274.5 595.773h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M284.5 591.773l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="408" x="280.5" y="577.707">
+    unexpected PUT /parties/MSISDN/12345678 - what to do with it?
+  </text>
+  <path stroke="#a80036" d="M851 645.039h42M893 645.039v13M846 658.039h47"/>
+  <path fill="#A80036" stroke="#a80036" d="M856 654.04l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="483" x="858" y="624.84">
+    still waiting on PUT /parties - it will never be delivered to Thirdparty-Incoming
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="261" x="862" y="639.973">
+    so it can&apos;t be PUB to Thirdparty-Outgoing
+  </text>
+  <path stroke="#a80036" d="M1698 682.172h42M1740 682.172v13M1699 695.172h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M1709 691.172l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="216" x="1705" y="677.106">
+    still open connection and listening
+  </text>
+</svg>

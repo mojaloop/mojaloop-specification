@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="665" preserveAspectRatio="none" style="width:1106px;height:665px" width="1106">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <path fill="#DDD" stroke="#a80036" d="M136 6h806.5v653.648H136z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="505.75" y="18.067">
+    Mojaloop
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M944.5 6h76v653.648h-76z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="54" x="955.5" y="18.067">
+    DFSP A
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M1022.5 6h78v653.648h-78z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="54" x="1034.5" y="18.067">
+    DFSP B
+  </text>
+  <path stroke="#a80036" d="M232 76.727v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M232 86.727v40.804"/>
+  <path stroke="#a80036" d="M232 127.531v477.524M506 76.727v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M506 86.727v40.804"/>
+  <path stroke="#a80036" d="M506 127.531v477.524M878.5 76.727v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M878.5 86.727v40.804"/>
+  <path stroke="#a80036" d="M878.5 127.531v477.524M982.5 76.727v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M982.5 86.727v40.804"/>
+  <path stroke="#a80036" d="M982.5 127.531v477.524M1061.5 76.727v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M1061.5 86.727v40.804"/>
+  <path stroke="#a80036" d="M1061.5 127.531v477.524"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M140 41.43h180v30.297H140z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="166" x="147" y="61.425">
+    Central Event Processor
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M140 604.055h180v30.297H140z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="166" x="147" y="624.05">
+    Central Event Processor
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M446 41.43h116v30.297H446z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="102" x="453" y="61.425">
+    ML API Adapter
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M446 604.055h116v30.297H446z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="102" x="453" y="624.05">
+    ML API Adapter
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M819.5 41.43h115v30.297h-115z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="101" x="826.5" y="61.425">
+    Central Ledger
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M819.5 604.055h115v30.297h-115z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="101" x="826.5" y="624.05">
+    Central Ledger
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M948.5 25.133h64v46.594h-64z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="955.5" y="45.128">
+    DFSP A
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="956.5" y="61.425">
+    (Payer)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M948.5 604.055h64v46.594h-64z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="955.5" y="624.05">
+    DFSP A
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="956.5" y="640.347">
+    (Payer)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1026.5 25.133h66v46.594h-66z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="51" x="1034" y="45.128">
+    DFSP B
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="52" x="1033.5" y="61.425">
+    (Payee)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1026.5 604.055h66v46.594h-66z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="51" x="1034" y="624.05">
+    DFSP B
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="52" x="1033.5" y="640.347">
+    (Payee)
+  </text>
+  <text font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="385" x="399.75" y="110.937">
+    User signs the authorization, DFSPA verifies it, and issues a
+  </text>
+  <text font-family="monospace" font-size="11" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="105" x="788.75" y="110.937">
+    POST /transfers
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M878 132.531h208v129H878z"/>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="120" x="882" y="148.598">
+    POST /transfers
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="882" y="163.731">
+    FSPIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="200" x="882" y="178.864">
+    FSPIOP-Destination: dfspb
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="882" y="193.997">
+    {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="115" x="898" y="209.129">
+    transferId: &quot;9876&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="143" x="898" y="224.262">
+    transactionId: 5678
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="12" x="898" y="239.395">
+    ...
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="882" y="254.528">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M517 283.727l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M511 287.727h470.5"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="120" x="523" y="282.661">
+    POST /transfers
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M970.5 312.86l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M506 316.859h470.5"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="88" x="513" y="311.793">
+    202 Accepted
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M867 341.992l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M506 345.992h367"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="349" x="513" y="340.926">
+    Transfer is going ahead... can you check these details?
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M517 371.125l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M511 375.125h367"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="282" x="523" y="370.059">
+    Yep, looks good to me (Prepare Notification)
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M243 400.258l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M237 404.258h641"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="320" x="249" y="399.192">
+    Here&apos;s a transfer that looks like it might go ahead.
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M1049.5 429.39l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M506 433.391h549.5"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="120" x="513" y="428.325">
+    POST /transfers
+  </text>
+  <path stroke="#a80036" d="M232 462.523h42M274 462.523v13M233 475.523h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M243 471.523l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="224" x="239" y="457.457">
+    That transfer has a transactionId of
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32" x="467" y="457.457">
+    5678
+  </text>
+  <path stroke="#a80036" d="M232 519.789h42M274 519.789v13M233 532.789h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M243 528.79l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="129" x="239" y="499.59">
+    It had a transferId of
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32" x="372" y="499.59">
+    9876
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="219" x="243" y="514.723">
+    let&apos;s now listen for transfers with id
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32" x="466" y="514.723">
+    5678
+  </text>
+  <path d="M5 545.79v40h451v-30l-10-10H5" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M446 545.79v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="390" x="11" y="562.856">
+    The CEP now knows that it needs to listen for transfers with id
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32" x="409" y="562.856">
+    9876
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="248" x="11" y="577.989">
+    in order to fulfil it&apos;s original subscription
+  </text>
+</svg>

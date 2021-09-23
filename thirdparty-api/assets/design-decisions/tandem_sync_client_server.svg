@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="571" preserveAspectRatio="none" style="width:1270px;height:571px" width="1270">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <path fill="#DDD" stroke="#a80036" d="M1 6h73v559.719H1z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="4" y="18.067">
+    Mojaloop
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M207 6h414.5v559.719H207z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="156" x="336.25" y="18.067">
+    SDK-scheme-adapter
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M685 6h329v559.719H685z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="202" x="748.5" y="18.067">
+    Thirdparty-scheme-adapter
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M32.5 264.359h10v100.398h-10zM263.5 364.758h10v29.133h-10zM554.5 135.828h10v157.664h-10zM554.5 393.891h10v29.133h-10zM927 106.695h10v411.727h-10zM1231 106.695h10v411.727h-10z"/>
+  <path stroke="#a80036" stroke-dasharray="5,5" d="M37 60.43v466.992M268 60.43v466.992M559.5 60.43v466.992M766 60.43v466.992M932 60.43v466.992M1236 60.43v466.992"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M6 25.133h59V55.43H6z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="13" y="45.128">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M6 526.422h59v30.297H6z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="13" y="546.417">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M211 25.133h111V55.43H211z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="97" x="218" y="45.128">
+    SDK-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M211 526.422h111v30.297H211z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="97" x="218" y="546.417">
+    SDK-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M501.5 25.133h112V55.43h-112z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="98" x="508.5" y="45.128">
+    SDK-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M501.5 526.422h112v30.297h-112z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="98" x="508.5" y="546.417">
+    SDK-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M689 25.133h151V55.43H689z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="137" x="696" y="45.128">
+    Thirdparty-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M689 526.422h151v30.297H689z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="137" x="696" y="546.417">
+    Thirdparty-Incoming
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M854 25.133h152V55.43H854z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="138" x="861" y="45.128">
+    Thirdparty-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M854 526.422h152v30.297H854z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="138" x="861" y="546.417">
+    Thirdparty-Outgoing
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1212 25.133h44V55.43h-44z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="1219" y="45.128">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1212 526.422h44v30.297h-44z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="1219" y="546.417">
+    PISP
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M32.5 264.359h10v100.398h-10zM263.5 364.758h10v29.133h-10zM554.5 135.828h10v157.664h-10zM554.5 393.891h10v29.133h-10zM927 106.695h10v411.727h-10zM1231 106.695h10v411.727h-10z"/>
+  <path fill="#A80036" stroke="#a80036" d="M948 102.695l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M942 106.695h288"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="280" x="954" y="86.497">
+    start the Transfer flow which involes using of
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="954" y="101.629">
+    GET /parties/MSISDN/12345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M575.5 131.828l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M569.5 135.828H926"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="234" x="581.5" y="130.762">
+    sync GET /parties/MSISDN/12345678
+  </text>
+  <path stroke="#a80036" d="M564.5 180.094h42M606.5 180.094v13M565.5 193.094h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M575.5 189.094l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="183" x="571.5" y="159.895">
+    register to PUB/SUB channel
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="137" x="571.5" y="175.028">
+    and wait for response
+  </text>
+  <path stroke="#a80036" d="M937 222.227h42M979 222.227v13M938 235.227h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M948 231.227l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="200" x="944" y="217.161">
+    wait on response from sync call
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M53.5 260.36l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M47.5 264.359h506"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="59.5" y="259.293">
+    GET /parties/MSISDN/12345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M547.5 289.492l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M42.5 293.492h511"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="46" x="49.5" y="288.426">
+    200 OK
+  </text>
+  <path stroke="#a80036" d="M42.5 322.625h42M84.5 322.625v13M43.5 335.625h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M53.5 331.625l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="156" x="49.5" y="317.559">
+    finding party information
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M251.5 360.758l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M37.5 364.758h220"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="44.5" y="359.692">
+    PUT /parties/MSISDN/12345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M542.5 389.89l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M268.5 393.891h280"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="262" x="275.5" y="388.825">
+    publish PUT payload to PUB/SUB channel
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M915 419.023l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M559.5 423.023H921"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="226" x="566.5" y="417.957">
+    send PUT payload as http response
+  </text>
+  <path stroke="#a80036" d="M937 467.289h42M979 467.289v13M938 480.289h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M948 476.29l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="259" x="944" y="447.09">
+    consume PUT payload received from call
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="944" y="462.223">
+    and continue the Transfer flow
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M1219 505.422l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M937 509.422h288"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="171" x="944" y="504.356">
+    send result of Transfer flow
+  </text>
+</svg>

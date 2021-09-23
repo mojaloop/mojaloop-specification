@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="339" preserveAspectRatio="none" style="width:1021px;height:339px" width="1021">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="527" x="247" y="28.708">
+    PISP Linking: Authentication (Third-party FIDO registration)
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M472 40.953h73v292.391h-73z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="475" y="53.02">
+    Mojaloop
+  </text>
+  <path stroke="#a80036" d="M442 95.383v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M442 105.383v28"/>
+  <path stroke="#a80036" d="M442 133.383v54.265"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M442 187.648v28"/>
+  <path stroke="#a80036" d="M442 215.648v79.399M508 95.383v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M508 105.383v28"/>
+  <path stroke="#a80036" d="M508 133.383v54.265"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M508 187.648v28"/>
+  <path stroke="#a80036" d="M508 215.648v79.399M578 95.383v10"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M578 105.383v28"/>
+  <path stroke="#a80036" d="M578 133.383v54.265"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M578 187.648v28"/>
+  <path stroke="#a80036" d="M578 215.648v79.399"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M418 60.086h44v30.297h-44z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="425" y="80.081">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M418 294.047h44v30.297h-44z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="425" y="314.042">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M477 60.086h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="484" y="80.081">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M477 294.047h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="484" y="314.042">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M551 60.086h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="558" y="80.081">
+    DFSP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M551 294.047h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="558" y="314.042">
+    DFSP
+  </text>
+  <path d="M29 138.383v40h957v-30l-10-10H29" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M976 138.383v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="485" x="35" y="155.45">
+    Here the user goes through the web authentication process with their DFSP.
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="936" x="35" y="170.583">
+    The end result is a redirect back to the PISP with a special URL parameter indicating to the PISP that it should wait to be notified about a credential.
+  </text>
+  <path d="M5 220.648v55h1007v-45l-10-10H5" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M1002 220.648v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="986" x="11" y="237.715">
+    At this point, the DFSP believes that the User is their customer and that User trusts the PISP. This means that the DFSP can continue by granting consent.
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="820" x="11" y="267.981">
+    Note that the DFSP never &quot;responds&quot; to the Consent Request itself. Instead, it will create a Consent resource in the Grant phase.
+  </text>
+</svg>

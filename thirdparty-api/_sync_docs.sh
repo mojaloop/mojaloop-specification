@@ -10,17 +10,29 @@
 # to have this script to sync everything
 ##
 
-PISP_PROJECT_BASE="https://raw.githubusercontent.com/mojaloop/pisp-project/master"
+set -eu
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PISP_PROJECT_GIT_URL="https://github.com/mojaloop/pisp-project.git"
+PISP_PROJECT_BRANCH='master'
+CLONE_DIR='/tmp/pisp-project'
+
+rm -rf ${CLONE_DIR}
+
+git clone -b ${PISP_PROJECT_BRANCH} ${PISP_PROJECT_GIT_URL} ${CLONE_DIR}
 
 
 # API definition, grab from mojaloop/pisp-project
-wget ${PISP_PROJECT_BASE}/src/interface/thirdparty-dfsp-api.yaml -O ./thirdparty-dfsp-v1.0.yaml
-wget ${PISP_PROJECT_BASE}/src/interface/thirdparty-pisp-api.yaml -O ./thirdparty-pisp-v1.0.yaml
+cp ${CLONE_DIR}/src/interface/thirdparty-dfsp-api.yaml ${DIR}/thirdparty-dfsp-v1.0.yaml
+cp ${CLONE_DIR}/src/interface/thirdparty-pisp-api.yaml ${DIR}/thirdparty-pisp-v1.0.yaml
 
 # Tx pattern documents
-wget ${PISP_PROJECT_BASE}/docs/linking/README.md -O ./transaction-patterns-linking.md
-wget ${PISP_PROJECT_BASE}/docs/transfer/README.md -O ./transaction-patterns-transfer.md
+cp ${CLONE_DIR}/docs/linking/README.md  ${DIR}/transaction-patterns-linking.md
+cp ${CLONE_DIR}/docs/transfer/README.md ${DIR}/transaction-patterns-transfer.md
 
-# TODO: copy tx pattern svgs...
+# copy tx pattern svgs.
+cp -R ${CLONE_DIR}/docs/out/* ${DIR}/assets/
 
-# TODO: sed...
+# sed to update the svg paths
+sed -i 's/..\/out/.\/assets/g' transaction-patterns-linking.md
+sed -i 's/..\/out/.\/assets/g' transaction-patterns-transfer.md

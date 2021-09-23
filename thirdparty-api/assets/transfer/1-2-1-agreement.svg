@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="1251" preserveAspectRatio="none" style="width:1227px;height:1251px" width="1227">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="236" x="492" y="28.708">
+    Transfer: 1.2.1 Agreement
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M1 40.953h104v1204.359H1z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="33" x="36.5" y="53.02">
+    PISP
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M369.5 40.953h73v1204.359h-73z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="372.5" y="53.02">
+    Mojaloop
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M721 40.953h76v1204.359h-76z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="54" x="732" y="53.02">
+    DFSP A
+  </text>
+  <path stroke="#a80036" stroke-dasharray="5,5" d="M53 111.68v1079.039M405.5 111.68v1079.039M759 111.68v1079.039"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 76.383h92v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="78" x="12" y="96.378">
+    PISP Server
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 1189.719h92v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="78" x="12" y="1209.714">
+    PISP Server
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M374.5 76.383h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="381.5" y="96.378">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M374.5 1189.719h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="381.5" y="1209.714">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M725 60.086h64v46.594h-64z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="732" y="80.081">
+    DFSP A
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="733" y="96.378">
+    (Payer)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M725 1189.719h64v46.594h-64z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="732" y="1209.714">
+    DFSP A
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="733" y="1226.011">
+    (Payer)
+  </text>
+  <path fill="#EEE" filter="url(#a)" stroke="#eee" d="M0 142.246h1220v3H0z"/>
+  <path stroke="#000" d="M0 142.246h1220M0 145.246h1220"/>
+  <path fill="#EEE" filter="url(#a)" stroke="#000" stroke-width="2" d="M534.5 131.68h151v23.133h-151z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="132" x="540.5" y="147.747">
+    Agreement Phase
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M58 169.813h459v446H58z"/>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="296" x="62" y="185.879">
+    POST /thirdpartyRequests/transactions
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="62" y="201.012">
+    FSPIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="200" x="62" y="216.145">
+    FSPIOP-Destination: dfspa
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="62" y="231.278">
+    {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="443" x="70" y="246.411">
+    &quot;transactionRequestId&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="65" x="70" y="261.543">
+    &quot;payee&quot;: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="93" x="78" y="276.676">
+    &quot;partyIdInfo&quot;: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="158" x="86" y="291.809">
+    &quot;partyIdType&quot;: &quot;MSISDN&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="211" x="86" y="306.942">
+    &quot;partyIdentifier&quot;: &quot;+4412345678&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="93" x="86" y="322.075">
+    &quot;fspId&quot;: &quot;dfspb&quot;
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="78" y="337.207">
+    }
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="12" x="70" y="352.34">
+    },
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="62" x="70" y="367.473">
+    &quot;payer&quot;: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="225" x="78" y="382.606">
+    &quot;partyIdType&quot;: &quot;THIRD_PARTY_LINK&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="207" x="78" y="397.739">
+    &quot;partyIdentifier&quot;: &quot;qwerty-56789&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="93" x="78" y="412.872">
+    &quot;fspId&quot;: &quot;dfspa&quot;
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="12" x="70" y="428.004">
+    },
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="149" x="70" y="443.137">
+    &quot;amountType&quot;: &quot;SEND&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="76" x="70" y="458.27">
+    &quot;amount&quot;: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="106" x="78" y="473.403">
+    &quot;amount&quot;: &quot;100&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="112" x="78" y="488.536">
+    &quot;currency&quot;: &quot;USD&quot;
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="12" x="70" y="503.668">
+    },
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="128" x="70" y="518.801">
+    &quot;transactionType&quot;: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="78" y="533.934">
+    &quot;scenario&quot;: &quot;TRANSFER&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="120" x="78" y="549.067">
+    &quot;initiator&quot;: &quot;PAYER&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="181" x="78" y="564.2">
+    &quot;initiatorType&quot;: &quot;CONSUMER&quot;
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="12" x="70" y="579.332">
+    },
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="297" x="70" y="594.465">
+    &quot;expiration&quot;: &quot;2020-06-15T22:17:28.985-01:00&quot;
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="62" y="609.598">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M394 638.797l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M53 642.797h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="296" x="60" y="637.731">
+    POST /thirdpartyRequests/transactions
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M64 667.93l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M58 671.93h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="70" y="666.864">
+    202 Accepted
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M747 697.063l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M406 701.063h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="296" x="413" y="695.997">
+    POST /thirdpartyRequests/transactions
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M417 726.195l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M411 730.195h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="423" y="725.129">
+    202 Accepted
+  </text>
+  <path stroke="#a80036" d="M759 774.461h42M801 774.461v13M760 787.461h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M770 783.46l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="174" x="766" y="754.262">
+    Lookup the consent for this
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="40" x="944" y="754.262">
+    payer
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="225" x="984" y="754.262">
+    , verify that they exist, and consent
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="205" x="766" y="769.395">
+    is granted with a valid credential
+  </text>
+  <path stroke="#a80036" d="M759 816.594h42M801 816.594v13M760 829.594h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M770 825.594l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="146" x="766" y="811.528">
+    Store a referece to the
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="72" x="916" y="811.528">
+    consentId
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="50" x="992" y="811.528">
+    with the
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="1046" y="811.528">
+    transactionRequestId
+  </text>
+  <path stroke="#a80036" d="M759 873.859h42M801 873.859v13M760 886.859h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M770 882.86l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="387" x="766" y="853.661">
+    Generate a unique transactionId for this transaction request:
+  </text>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="288" x="766" y="868.793">
+    11111111-0000-0000-0000-000000000000
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M347 899.859h407v129H347z"/>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="288" x="351" y="915.926">
+    PUT /thirdpartyRequests/transactions
+  </text>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="296" x="383" y="931.059">
+    /00000000-0000-0000-0000-000000000000
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="351" y="946.192">
+    FSPIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="200" x="351" y="961.325">
+    FSPIOP-Destination: pispa
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="351" y="976.457">
+    {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="391" x="359" y="991.59">
+    &quot;transactionId&quot;: &quot;11111111-0000-0000-0000-000000000000&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="250" x="359" y="1006.723">
+    &quot;transactionRequestState&quot;: &quot;RECEIVED&quot;
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="351" y="1021.856">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M417 1066.188l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M411 1070.188h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="288" x="423" y="1049.989">
+    PUT /thirdpartyRequests/transactions
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="296" x="455" y="1065.122">
+    /00000000-0000-0000-0000-000000000000
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M747 1095.32l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M406 1099.32h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="413" y="1094.254">
+    200 OK
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M64 1139.586l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M58 1143.586h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="288" x="70" y="1123.387">
+    PUT /thirdpartyRequests/transactions
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="296" x="102" y="1138.52">
+    /00000000-0000-0000-0000-000000000000
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M394 1168.719l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M53 1172.719h347"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="60" y="1167.653">
+    200 OK
+  </text>
+</svg>

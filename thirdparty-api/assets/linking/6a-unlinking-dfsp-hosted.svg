@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="742" preserveAspectRatio="none" style="width:1163px;height:742px" width="1163">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <path fill="#DDD" stroke="#a80036" d="M386.5 40.953h71v695.914h-71z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="388.5" y="53.02">
+    Mojaloop
+  </text>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="203" x="482.5" y="28.708">
+    PISP Linking: Unlinking
+  </text>
+  <path stroke="#a80036" d="M29 95.383v8"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M29 103.383v28"/>
+  <path stroke="#a80036" d="M29 131.383v39.133"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M29 170.516v28"/>
+  <path stroke="#a80036" d="M29 198.516V695.57"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#fff" d="M24 103.383h10v67.133H24z"/>
+  <path stroke="#a80036" d="M24 103.383v67.133M34 103.383v67.133M24 103.383h10"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#fff" d="M24 198.516h10v80.531H24z"/>
+  <path stroke="#a80036" d="M24 198.516v80.531M34 198.516v80.531M24 279.047h10"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M24 648.438h10v47.133H24z"/>
+  <path stroke="#a80036" d="M422 95.383v8"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M422 103.383v28"/>
+  <path stroke="#a80036" d="M422 131.383v39.133"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M422 170.516v28"/>
+  <path stroke="#a80036" d="M422 198.516V695.57"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M417 249.914h10v87.398h-10zM417 499.375h10V695.57h-10z"/>
+  <path stroke="#a80036" d="M815 95.383v8"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M815 103.383v28"/>
+  <path stroke="#a80036" d="M815 131.383v39.133"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M815 170.516v28"/>
+  <path stroke="#a80036" d="M815 198.516V695.57"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M810 308.18h10v220.328h-10z"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 60.086h44v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="12" y="80.081">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M390.5 60.086h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="397.5" y="80.081">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M787.5 60.086h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="794.5" y="80.081">
+    DFSP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 695.57h44v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="12" y="715.565">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M390.5 695.57h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="397.5" y="715.565">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M787.5 695.57h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="794.5" y="715.565">
+    DFSP
+  </text>
+  <path d="M8.25 136.383v25h827v-15l-10-10h-817" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M825.25 136.383v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="546" x="89" y="153.45">
+    In this scenario there is no Hub-hosted Auth Service. The DFSP is the authority on the
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="56" x="639" y="153.45">
+    Consent
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="43" x="699" y="153.45">
+    object.
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M405 245.914l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M34 249.914h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="41" y="229.715">
+    UNLINK-A-1
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="128" y="214.583">
+    DELETE /consents/123
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="144" y="229.715">
+    FSIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="144" y="244.848">
+    FSIOP-Destination: dfspa
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M45 275.047l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M39 279.047h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="51" y="273.981">
+    UNLINK-A-2
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="138" y="273.981">
+    202 Accepted
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M798 304.18l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M427 308.18h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="434" y="303.114">
+    UNLINK-A-3
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="521" y="303.114">
+    DELETE /consents/123
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M438 333.313l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M432 337.313h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="444" y="332.247">
+    UNLINK-A-4
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="531" y="332.247">
+    202 Accepted
+  </text>
+  <path stroke="#a80036" d="M820 366.445h42M862 366.445v13M821 379.445h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M831 375.445l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="827" y="361.379">
+    UNLINK-A-5
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="56" x="914" y="361.379">
+    Mark the
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="56" x="974" y="361.379">
+    Consent
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="122" x="1034" y="361.379">
+    object as &quot;Deleted&quot;
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M438 495.375l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M432 499.375h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="444" y="448.911">
+    UNLINK-A-6
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="531" y="403.512">
+    PATCH /consents/123
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="547" y="418.645">
+    FSIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="547" y="433.778">
+    FSIOP-Destination: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="531" y="448.911">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="120" x="547" y="464.043">
+    status: string,
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="256" x="547" y="479.176">
+    revokedAt: string (of timestamp)
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="531" y="494.309">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M798 524.508l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M427 528.508h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="434" y="523.442">
+    UNLINK-A-7
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="521" y="523.442">
+    200 OK
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M45 644.438l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M39 648.438h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="51" y="597.973">
+    UNLINK-A-8
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="138" y="552.575">
+    PATCH /consents/123
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="154" y="567.707">
+    FSIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="154" y="582.84">
+    FSIOP-Destination: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="138" y="597.973">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="120" x="154" y="613.106">
+    status: string,
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="256" x="154" y="628.239">
+    revokedAt: string (of timestamp)
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="138" y="643.372">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M405 673.57l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M34 677.57h377"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="41" y="672.504">
+    UNLINK-A-9
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="128" y="672.504">
+    200 OK
+  </text>
+</svg>

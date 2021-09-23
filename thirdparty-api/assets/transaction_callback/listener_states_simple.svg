@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="687" preserveAspectRatio="none" style="width:415px;height:687px" width="415">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <circle cx="87" cy="16" filter="url(#a)" r="10"/>
+  <rect fill="#FEFECE" filter="url(#a)" height="64.234" rx="12.5" ry="12.5" width="160" x="7" y="103" stroke="#a80036" stroke-width="1.5"/>
+  <path stroke="#a80036" stroke-width="1.5" d="M7 129.297h160"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="95" x="39.5" y="120.995">
+    txReqCreated
+  </text>
+  <text font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61" x="12" y="145.435">
+    Listeners:
+  </text>
+  <text font-family="monospace" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="140" x="12" y="159.404">
+    transactionRequestId
+  </text>
+  <rect fill="#FEFECE" filter="url(#a)" height="78.203" rx="12.5" ry="12.5" width="160" x="7" y="244" stroke="#a80036" stroke-width="1.5"/>
+  <path stroke="#a80036" stroke-width="1.5" d="M7 270.297h160"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="81" x="46.5" y="261.995">
+    authWaiting
+  </text>
+  <text font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61" x="12" y="286.435">
+    Listeners:
+  </text>
+  <text font-family="monospace" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="140" x="12" y="300.404">
+    transactionRequestId
+  </text>
+  <text font-family="monospace" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="91" x="12" y="314.373">
+    transactionId
+  </text>
+  <rect fill="#FEFECE" filter="url(#a)" height="78.203" rx="12.5" ry="12.5" width="160" x="7" y="399" stroke="#a80036" stroke-width="1.5"/>
+  <path stroke="#a80036" stroke-width="1.5" d="M7 425.297h160"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="103" x="35.5" y="416.995">
+    transferWaiting
+  </text>
+  <text font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61" x="12" y="441.435">
+    Listeners:
+  </text>
+  <text font-family="monospace" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="140" x="12" y="455.404">
+    transactionRequestId
+  </text>
+  <text font-family="monospace" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70" x="12" y="469.373">
+    transferId
+  </text>
+  <rect fill="#FEFECE" filter="url(#a)" height="40" rx="12.5" ry="12.5" width="130" x="22" y="554" stroke="#a80036" stroke-width="1.5"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="120" x="27" y="578.847">
+    transferComplete
+  </text>
+  <circle cx="87" cy="665" fill="none" filter="url(#a)" stroke="#000" r="10"/>
+  <circle cx="87.5" cy="665.5" r="6"/>
+  <path d="M87 26.146v71.523" fill="none" stroke="#a80036"/>
+  <path fill="#A80036" stroke="#a80036" d="M87 102.883l4-9-4 4-4-4 4 9z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="319" x="88" y="69.067">
+    ThirdpartyTransactionRequest Subscription
+  </text>
+  <path d="M87 167.114V238.7" fill="none" stroke="#a80036"/>
+  <path fill="#A80036" stroke="#a80036" d="M87 243.84l4-9-4 4-4-4 4 9z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="235" x="88" y="210.067">
+    ThirdpartyAuthorizationRequest
+  </text>
+  <path d="M87 322.113v71.741" fill="none" stroke="#a80036"/>
+  <path fill="#A80036" stroke="#a80036" d="M87 398.9l4-9-4 4-4-4 4 9z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="215" x="88" y="365.067">
+    Transfer Prepare Notification
+  </text>
+  <path d="M87 477.337v71.13" fill="none" stroke="#a80036"/>
+  <path fill="#A80036" stroke="#a80036" d="M87 553.628l4-9-4 4-4-4 4 9z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="192" x="88" y="520.067">
+    Transfer Fulfil Notification
+  </text>
+  <path d="M87 594.196v55.56" fill="none" stroke="#a80036"/>
+  <path fill="#A80036" stroke="#a80036" d="M87 654.968l4-9-4 4-4-4 4 9z"/>
+</svg>

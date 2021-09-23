@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="1005" preserveAspectRatio="none" style="width:1211px;height:1005px" width="1211">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="356" x="424" y="28.708">
+    PISP Linking: Authentication Invalid OTP
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M455.5 40.953h73v958.773h-73z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="458.5" y="53.02">
+    Mojaloop
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M24 914.297h10v29.133H24zM487 340.445h10v163.063h-10zM487 734.969h10V943.43h-10zM950 474.375h10v289.727h-10z"/>
+  <path stroke="#a80036" d="M29 95.383v53.133"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M29 148.516v28"/>
+  <path stroke="#a80036" d="M29 176.516v39.132"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M29 215.648v28"/>
+  <path stroke="#a80036" d="M29 243.648V961.43M491.5 95.383v53.133"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M491.5 148.516v28"/>
+  <path stroke="#a80036" d="M491.5 176.516v39.132"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M491.5 215.648v28"/>
+  <path stroke="#a80036" d="M491.5 243.648V961.43M954.5 95.383v53.133"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M954.5 148.516v28"/>
+  <path stroke="#a80036" d="M954.5 176.516v39.132"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M954.5 215.648v28"/>
+  <path stroke="#a80036" d="M954.5 243.648V961.43"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 60.086h44v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="12" y="80.081">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 960.43h44v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="12" y="980.425">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M460.5 60.086h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="467.5" y="80.081">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M460.5 960.43h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="467.5" y="980.425">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M927.5 60.086h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="934.5" y="80.081">
+    DFSP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M927.5 960.43h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="934.5" y="980.425">
+    DFSP
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M24 914.297h10v29.133H24zM487 340.445h10v163.063h-10zM487 734.969h10V943.43h-10zM950 474.375h10v289.727h-10z"/>
+  <path fill="#EEE" filter="url(#a)" stroke="#eee" d="M0 125.949h1204v3H0z"/>
+  <path stroke="#000" d="M0 125.949h1204M0 128.949h1204"/>
+  <path fill="#EEE" filter="url(#a)" stroke="#000" stroke-width="2" d="M548 115.383h108v23.133H548z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="89" x="554" y="131.45">
+    Failure case
+  </text>
+  <path d="M5 181.516v25h972v-15l-10-10H5" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M967 181.516v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="330" x="319.75" y="198.583">
+    The user enters an incorrect OTP for authentication.
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M475 336.445l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M29 340.445h452"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="36" y="297.547">
+    AUTH-1
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="208" x="93" y="259.715">
+    PATCH /consentRequests/356
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="125" y="274.848">
+    FSIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="125" y="289.981">
+    FSIOP-Destination: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="101" y="305.114">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="280" x="125" y="320.247">
+    authToken: &quot;&lt;OTP&gt;&quot; // This is new !
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="109" y="335.379">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M40 365.578l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M34 369.578h452"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="46" y="364.512">
+    AUTH-2
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="103" y="364.512">
+    202 Accepted
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M938 470.375l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M497 474.375h447"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="504" y="431.477">
+    AUTH-3
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="208" x="561" y="393.645">
+    PATCH /consentRequests/356
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="593" y="408.778">
+    FSIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="593" y="423.911">
+    FSIOP-Destination: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="569" y="439.043">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="280" x="593" y="454.176">
+    authToken: &quot;&lt;OTP&gt;&quot; // This is new !
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="577" y="469.309">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M503 499.508l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M497 503.508h452"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="509" y="498.442">
+    AUTH-4
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="566" y="498.442">
+    202 Accepted
+  </text>
+  <path stroke="#a80036" d="M960 532.641h42M1002 532.641v13M961 545.641h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M971 541.64l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="967" y="527.575">
+    AUTH-5
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="168" x="1024" y="527.575">
+    Verify the OTP is incorrect.
+  </text>
+  <path d="M5 558.64v25h972v-15l-10-10H5" fill="#FBFB77" filter="url(#a)" stroke="#a80036"/>
+  <path d="M967 558.64v10h10l-10-10" fill="#FBFB77" stroke="#a80036"/>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="526" x="221.75" y="575.707">
+    We respond with an error that the OTP is incorrect so the PISP can inform the user.
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M508 730.969l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M502 734.969h447"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="514" y="669.372">
+    AUTH-6
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="240" x="571" y="608.84">
+    PUT /consentRequests/356/error
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="595" y="623.973">
+    FSIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="595" y="639.106">
+    FSIOP-Destination: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="579" y="654.239">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="595" y="669.372">
+    errorInformation : {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="144" x="611" y="684.504">
+    errorCode: &quot;7205&quot;,
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="328" x="611" y="699.637">
+    errorDescription: &quot;OTP failed validation&quot;
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="595" y="714.77">
+    }
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="579" y="729.903">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M943 760.102l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M497 764.102h452"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="504" y="759.036">
+    AUTH-7
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="561" y="759.036">
+    200 OK
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M45 910.297l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M39 914.297h447"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="51" y="848.7">
+    AUTH-8
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="240" x="108" y="788.168">
+    PUT /consentRequests/356/error
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="132" y="803.301">
+    FSIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="132" y="818.434">
+    FSIOP-Destination: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="116" y="833.567">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="132" y="848.7">
+    errorInformation : {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="144" x="148" y="863.832">
+    errorCode: &quot;7205&quot;,
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="328" x="148" y="878.965">
+    errorDescription: &quot;OTP failed validation&quot;
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="132" y="894.098">
+    }
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="116" y="909.231">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M480 939.43l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M29 943.43h457"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="53" x="36" y="938.364">
+    AUTH-9
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="93" y="938.364">
+    200 OK
+  </text>
+</svg>

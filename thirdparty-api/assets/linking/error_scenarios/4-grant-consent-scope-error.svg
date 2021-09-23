@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="914" preserveAspectRatio="none" style="width:1669px;height:914px" width="1669">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <path fill="#DDD" stroke="#a80036" d="M612 40.953h488v867.641H612z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="822.5" y="53.02">
+    Mojaloop
+  </text>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="434" x="615" y="28.708">
+    PISP Linking: Grant consent scope retrieval error
+  </text>
+  <path stroke="#a80036" stroke-dasharray="5,5" d="M29 95.383v771.914M702 95.383v771.914"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M697 243.313h10v163.063h-10zM697 640.836h10v208.461h-10z"/>
+  <path stroke="#a80036" stroke-dasharray="5,5" d="M890 95.383v771.914M1044 95.383v771.914M1380 95.383v771.914"/>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M1375 377.242h10v292.727h-10z"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 60.086h44v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="12" y="80.081">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M616 60.086h168v30.297H616z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="154" x="623" y="80.081">
+    Thirdparty-API-Adapter
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M798 60.086h180v30.297H798z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="166" x="805" y="80.081">
+    Account Lookup Service
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M992 60.086h100v30.297H992z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="86" x="999" y="80.081">
+    Auth Service
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1352.5 60.086h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="1359.5" y="80.081">
+    DFSP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 867.297h44v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="30" x="12" y="887.292">
+    PISP
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M616 867.297h168v30.297H616z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="154" x="623" y="887.292">
+    Thirdparty-API-Adapter
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M798 867.297h180v30.297H798z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="166" x="805" y="887.292">
+    Account Lookup Service
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M992 867.297h100v30.297H992z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="86" x="999" y="887.292">
+    Auth Service
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M1352.5 867.297h51v30.297h-51z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="37" x="1359.5" y="887.292">
+    DFSP
+  </text>
+  <path fill="#EEE" filter="url(#a)" stroke="#eee" d="M5 123.949h1654v3H5z"/>
+  <path stroke="#000" d="M5 123.949h1654M5 126.949h1654"/>
+  <path fill="#EEE" filter="url(#a)" stroke="#000" stroke-width="2" d="M778 113.383h108v23.133H778z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="89" x="784" y="129.45">
+    Failure case
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M685 239.313l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M29 243.313h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="36" y="200.415">
+    GRANT-1
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="208" x="104" y="162.583">
+    PATCH /consentRequests/456
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="136" y="177.715">
+    FSIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="136" y="192.848">
+    FSIOP-Destination: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="112" y="207.981">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="280" x="136" y="223.114">
+    authToken: &quot;&lt;OTP&gt;&quot; // This is new !
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="120" y="238.247">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M40 268.445l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M34 272.445h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="46" y="267.379">
+    GRANT-2
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="114" y="267.379">
+    202 Accepted
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M1363 373.242l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M707 377.242h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="714" y="334.344">
+    GRANT-3
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="208" x="782" y="296.512">
+    PATCH /consentRequests/456
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="814" y="311.645">
+    FSIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="814" y="326.778">
+    FSIOP-Destination: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="790" y="341.911">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="280" x="814" y="357.043">
+    authToken: &quot;&lt;OTP&gt;&quot; // This is new !
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="798" y="372.176">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M718 402.375l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M712 406.375h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="724" y="401.309">
+    GRANT-4
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="792" y="401.309">
+    202 Accepted
+  </text>
+  <path stroke="#a80036" d="M1385 435.508h42M1427 435.508v13M1386 448.508h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M1396 444.508l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="1392" y="430.442">
+    GRANT-5
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="157" x="1460" y="430.442">
+    Verify the OTP is correct.
+  </text>
+  <path stroke="#a80036" d="M1385 477.641h42M1427 477.641v13M1386 490.641h41"/>
+  <path fill="#A80036" stroke="#a80036" d="M1396 486.64l-10 4 10 4-4-4z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="1392" y="472.575">
+    GRANT-6
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="1460" y="472.575">
+    Unable to fetch stored scopes
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M718 636.836l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M712 640.836h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="724" y="575.239">
+    GRANT-7
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="240" x="792" y="514.707">
+    PUT /consentRequests/456/error
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="816" y="529.84">
+    FSIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="816" y="544.973">
+    FSIOP-Destination: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="800" y="560.106">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="816" y="575.239">
+    errorInformation : {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="144" x="832" y="590.372">
+    errorCode: &quot;7207&quot;,
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="528" x="832" y="605.504">
+    errorDescription: &quot;FSP failed retrieve scopes for consent request&quot;
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="816" y="620.637">
+    }
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="800" y="635.77">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M1363 665.969l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M707 669.969h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="714" y="664.903">
+    GRANT-8
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="782" y="664.903">
+    200 OK
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M40 816.164l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M34 820.164h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="64" x="46" y="754.567">
+    GRANT-9
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="240" x="114" y="694.036">
+    PUT /consentRequests/456/error
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="152" x="138" y="709.168">
+    FSIOP-Source: dfspa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="192" x="138" y="724.301">
+    FSIOP-Destination: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="122" y="739.434">
+    {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="138" y="754.567">
+    errorInformation : {
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="144" x="154" y="769.7">
+    errorCode: &quot;7207&quot;,
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="528" x="154" y="784.832">
+    errorDescription: &quot;FSP failed retrieve scopes for consent request&quot;
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="138" y="799.965">
+    }
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="122" y="815.098">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M685 845.297l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M29 849.297h662"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="73" x="36" y="844.231">
+    GRANT-10
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="113" y="844.231">
+    200 OK
+  </text>
+</svg>

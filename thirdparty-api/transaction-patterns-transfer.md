@@ -39,7 +39,7 @@ If the response is successful, the PISP will recieve a `PUT /parties` callback f
 
 Should the PISP receive a `PUT /parties/{Type}/{ID}/error` (or `PUT /parties/{Type}/{ID}/{SubId}/error`) callback, the PISP should display the relevant error to their user.
 
-![Discovery](../out/transfer/1-1-discovery.svg)
+![Discovery](./assets/transfer/1-1-discovery.svg)
 
 ### <a name='Agreement'></a>1.2 Agreement
 
@@ -55,7 +55,7 @@ If the User has linked more than 1 account with the PISP application, the PISP a
 
 The PISP then generates a random `transactionRequestId` of type UUID (see [RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)).
 
-![1-2-1-agreement](../out/transfer/1-2-1-agreement.svg)
+![1-2-1-agreement](./assets/transfer/1-2-1-agreement.svg)
 
 Upon receiving the `POST /thirdpartyRequests/transactions` call from the PISP, the DFSP performs some validation such as:
 1. Determine that the `payer` identifer exists, and is one that was issued by this DFSP to the PISP specified in the `FSPIOP-Source`.
@@ -86,19 +86,100 @@ could be derived.
 - `transactionType` the `transactionType` field from the original `POST /thirdpartyRequests/transactions` request
 
 
-![1-2-2-authorization](../out/transfer/1-2-2-authorization.svg)
+![1-2-2-authorization](./assets/transfer/1-2-2-authorization.svg)
 
 
 #### <a name='SignedAuthorization'></a>1.2.3 Signed Authorization
 
-Upon receiving the `POST /thirdpartyRequests/authorizations` request from the DFSP, the PISP confirms the details of the 
-transaction with the user, and uses the [FIDO Authentication](https://webauthn.guide/#authentication) flow to sign the `challenge`
-with the private key on the user's device that was registered in [1.6.2 Registering the credential](../linking/README.md#162-registering-the-credential)
+Upon receiving the `POST /thirdpartyRequests/authorizations` request from the DFSP, the PISP presents the terms of the proposed
+transaction to the user, and asks them if they want to proceed. 
 
-After retrieving the signed challenge from the user's device, the PISP sends a `PUT /thirdpartyRequests/authorizations/{ID}` call to the DFSP.
+The results of the authorization request are returned to the DFSP via the `PUT /thirdpartyRequests/authorizations/{ID}`, where
+the `{ID}` is the `authorizationRequestId`.
 
 
-![1-2-3-signed-authorization](../out/transfer/1-2-3-signed-authorization.svg)
+If the user rejects the transaction, the following is the payload sent in `PUT /thirdpartyRequests/authorizations/{ID}`:
+
+```json
+{
+    "responseType": "REJECTED"
+}
+```
+
+![1-2-3-rejected-authorization](./assets/transfer/1-2-3-rejected-authorization.svg)
+
+
+Should the user accept the transaction, the payload will depend on the `credentialType` of the `Consent.credential`:
+
+1. If `FIDO`, the PISP asks the user to complete the [FIDO Assertion](https://webauthn.guide/#authentication) flow to sign the challenge. The `signedPayload.value` is the `FIDOPublicKeyCredentialAssertion` returned from the FIDO Assertion process. See [1.2.3.1 Signing the Challlenge FIDO](#SigningTheChallengeFIDO)
+
+2. If `GENERIC`, the private key created during the [credential registration process](../linking/README.md#162-registering-the-credential) is
+   used to sign the challenge. See [1.2.3.2 Signing the Challenge with a GENERIC Credential](#SigningTheChallengeGeneric)
+
+##### <a name='SigningTheChallengeFIDO'></a>1.2.3.1 Signing the Challlenge FIDO
+
+For a `FIDO` `credentialType`, the PISP asks the user to complete the [FIDO Assertion](https://webauthn.guide/#authentication) flow to sign the challenge. The `signedPayload.value` is the [`PublicKeyCredential`](https://w3c.github.io/webauthn/#publickeycredential) returned from the FIDO Assertion process, where the `ArrayBuffer`s are parsed as base64 encoded utf-8 strings. As a `PublicKeyCredential` is the response of both the FIDO Attesttation and Assertion, we define the following interface: `FIDOPublicKeyCredentialAssertion`:
+
+
+```json
+FIDOPublicKeyCredentialAssertion {
+    "id": "string",
+    "rawId": "string - base64 encoded utf-8",
+    "response": {
+        "authenticatorData": "string - base64 encoded utf-8",
+        "clientDataJSON": "string - base64 encoded utf-8",
+        "signature": "string - base64 encoded utf-8",
+        "userHandle": "string - base64 encoded utf-8",
+    },
+    "type": "public-key"
+}
+```
+
+The final payload of the `PUT /thirdpartyRequests/authorizations/{ID}` is then:
+
+```json
+{
+    "responseType": "ACCEPTED",
+    "signedPayload": {
+        "signedPayloadType": "FIDO",
+        "value": FIDOPublicKeyCredentialAssertion
+    }
+}
+```
+
+![1-2-3-signed-authorization-fido](./assets/transfer/1-2-3-signed-authorization-fido.svg)
+
+
+##### <a name='SigningTheChallengeGeneric'></a>1.2.3.2 Signing the Challenge with a GENERIC Credential
+
+For a `GENERIC` credential, the PISP will perform the following steps:
+
+<!-- TODO: need some more help formatting this nicely -->
+
+1. Given the inputs:
+    - _challenge_ (`authorizationRequest.challenge`) as a base64 encoded utf-8 string
+    - _privatekey_ (stored by the PISP when creating the credential), as a base64 encoded utf-8 string
+    - SHA256() is a one way hash function, as defined in [RFC6234](https://datatracker.ietf.org/doc/html/rfc6234)
+    - sign(data, key) is a signature function that takes some data and a private key to produce a signature
+2. let _challengeHash_ be the result of applying the SHA256() function over the _challenge_
+3. let _signature_ be the result of applying the sign() function to the _challengeHash_ and _privateKey_
+
+The response from the PISP to the DFSP then uses this _signature_ as the `signedPayload.value` field:
+
+
+The final payload of the `PUT /thirdpartyRequests/authorizations/{ID}` is then:
+
+```json
+{
+    "responseType": "ACCEPTED",
+    "signedPayload": {
+        "signedPayloadType": "GENERIC",
+        "value": "utf-8 base64 encoded signature"
+    }
+}
+```
+
+![1-2-3-signed-authorization-generic](./assets/transfer/1-2-3-signed-authorization-generic.svg)
 
 
 #### <a name='ValidateAuthorization'></a>1.2.4 Validate Authorization
@@ -116,7 +197,7 @@ The DFSP uses the API call `POST /thirdpartyRequests/verifications`, the body of
 - `consentId` - The `consentId` of the Consent resource that contains the credential public key with which to verify this transaction.
 The DFSP must lookup the `consentId` based on the `payer` details of the `ThirdpartyTransactionRequest`.
 
-![1-2-4-verify-authorization](../out/transfer/1-2-4-verify-authorization.svg)
+![1-2-4-verify-authorization](./assets/transfer/1-2-4-verify-authorization.svg)
 
 ### <a name='Transfer'></a>1.3 Transfer
 
@@ -127,26 +208,26 @@ and sends a `PATCH /thirdpartyRequests/transactions/{ID}` call to the PISP.
 
 Upon receiving this callback, the PISP knows that the transfer has completed successfully, and can inform their user.
 
-![1-3-transfer](../out/transfer/1-3-transfer.svg)
+![1-3-transfer](./assets/transfer/1-3-transfer.svg)
 
 
 ## <a name='RequestTransactionRequestStatus'></a>2. Request TransactionRequest Status
 
-A PISP can issue a `GET /thirdpartyRequests/{id}/transactions` to find the status of a transaction request.
+A PISP can issue a `GET /thirdpartyRequests/transactions/{ID}` to find the status of a transaction request.
 
-![PISPTransferSimpleAPI](../out/transfer/get_transaction_request.svg)
+![PISPTransferSimpleAPI](./assets/transfer/get_transaction_request.svg)
 
-1. PISP issues a `GET /thirdpartyRequests/transactions/{id}`
+1. PISP issues a `GET /thirdpartyRequests/transactions/{ID}`
 1. Switch validates request and responds with `202 Accepted`
 1. Switch looks up the endpoint for `dfspa` for forwards to DFSP A
 1. DFSPA validates the request and responds with `202 Accepted`
 1. DFSP looks up the transaction request based on it's `transactionRequestId` (`123` in this case)
-    - If it can't be found, it calls `PUT /thirdpartyRequests/transactions/{id}/error` to the Switch, with a relevant error message
+    - If it can't be found, it calls `PUT /thirdpartyRequests/transactions/{ID}/error` to the Switch, with a relevant error message
 
 1. DFSP Ensures that the `FSPIOP-Source` header matches that of the originator of the `POST //thirdpartyRequests/transactions`
-    - If it does not match, it calls `PUT /thirdpartyRequests/transactions/{id}/error` to the Switch, with a relevant error message
+    - If it does not match, it calls `PUT /thirdpartyRequests/transactions/{ID}/error` to the Switch, with a relevant error message
 
-1. DFSP calls `PUT /thirdpartyRequests/transactions/{id}` with the following request body:
+1. DFSP calls `PUT /thirdpartyRequests/transactions/{ID}` with the following request body:
     ```
     {
       transactionId: <transactionId>
@@ -188,7 +269,7 @@ When the DFSP receives the `POST /thirdpartyRequests/transactions` request from 
 
 In this case, the DFSP must inform the PISP of the failure by sending a `PUT /thirdpartyRequests/transactions/{ID}/error` callback to the PISP.
 
-![3-2-1-bad-tx-request](../out/transfer/3-2-1-bad-tx-request.svg)
+![3-2-1-bad-tx-request](./assets/transfer/3-2-1-bad-tx-request.svg)
 
 The PISP can then inform their user of the failure, and can ask them to restart the Thirdparty Transaction request if desired.
 
@@ -199,11 +280,11 @@ The DFSP may not want to (or may not be able to) expose details about downstream
 
 For example, before issuing a `POST /thirdpartyRequests/authorizations` to the PISP, if the `POST /quotes` call with the Payee FSP fails, the DFSP sends a `PUT /thirdpartyRequests/transactions/{ID}/error` callback to the PISP.
 
-![3-3-1-bad-quote-request](../out/transfer/3-3-1-bad-quote-request.svg)
+![3-3-1-bad-quote-request](./assets/transfer/3-3-1-bad-quote-request.svg)
 
 Another example is where the `POST /transfers` request fails:
 
-![3-3-2-bad-transfer-request](../out/transfer/3-3-2-bad-transfer-request.svg)
+![3-3-2-bad-transfer-request](./assets/transfer/3-3-2-bad-transfer-request.svg)
 
 
 ## 3.4 Invalid Signed Challenge
@@ -221,29 +302,19 @@ Should the signed challenge be invalid, the DFSP sends a `PUT /thirdpartyRequest
 
 ### Case 1: DFSP self-verifies the signed challenge
 
-![3-4-1-bad-signed-challenge-self-hosted](../out/transfer/3-4-1-bad-signed-challenge-self-hosted.svg)
+![3-4-1-bad-signed-challenge-self-hosted](./assets/transfer/3-4-1-bad-signed-challenge-self-hosted.svg)
 
 
 ### Case 2: DFSP uses the hub-hosted Auth-Service to check the validity of the signed challenge against the registered credential.
 
-![3-4-2-bad-signed-challenge-auth-service](../out/transfer/3-4-2-bad-signed-challenge-auth-service.svg)
-
-## 3.5 User Rejects the terms of the Thirdparty Transaction Request
-
-In the case where the user rejects the terms of the Thirdparty Transaction Request, a PISP should send a `PUT /thirdpartyRequests/authorizations/{ID}` request with a `responseType` of `REJECTED`.
-
-> ***Note**: this is not considered an Error, so the DFSP should not send an `.../error` callback to the PISP*
-
-The DFSP shall respond with the callback `PATCH /thirdpartyRequests/transactions/{ID}`.
-
-![3-5-user-rejects-tpr](../out/transfer/3-5-user-rejects-tpr.svg)
+![3-4-2-bad-signed-challenge-auth-service](./assets/transfer/3-4-2-bad-signed-challenge-auth-service.svg)
 
 ## 3.5 Thirdparty Transaction Request Timeout
 
 If a PISP doesn't recieve either of the above callbacks within the `expiration` DateTime specified in the `POST /thirdpartyRequests/transactions`, it can assume the Thirdparty Transaction Request failed, and inform their user accordingly.
 
 
-![3-6-tpr-timeout](../out/transfer/3-6-tpr-timeout.svg)
+![3-6-tpr-timeout](./assets/transfer/3-6-tpr-timeout.svg)
 
 ## <a name='Appendix'></a>4. Appendix
 

@@ -73,7 +73,7 @@ begin the linking process.
 The PISP can display this list of DFSPs to their user, and the user can select
 which DFSP they hold an account with for linking.
 
-![Pre-linking](../out/linking/0-pre-linking.svg)
+![Pre-linking](./assets/linking/0-pre-linking.svg)
 
 ## 1.2. Discovery
 
@@ -97,7 +97,7 @@ that they actually would like to link a different account than those chosen at
 the very beginning. This is perfectly acceptable and should be expected from
 time to time.
 
-![Discovery](../out/linking/1-discovery.svg)
+![Discovery](./assets/linking/1-discovery.svg)
 
 ## 1.3. Request consent
 
@@ -130,7 +130,7 @@ In the web authentication channel, the result is the PISP being instructed on
 a specific URL where this supposed user should be redirected. This URL should be
 a place where the user can prove their identity (e.g., by logging in).
 
-![Request consent](../out/linking/2-request-consent-web.svg)
+![Request consent](./assets/linking/2-request-consent-web.svg)
 
 ### 1.3.2. OTP / SMS
 
@@ -139,7 +139,7 @@ to their user (e.g. over SMS or Email). The PISP prompts the user for this OTP
 message, and includes it in the `authToken` field in the `PUT /consentRequests/{id}`
 callback.
 
-![Request consent](../out/linking/2-request-consent-otp.svg)
+![Request consent](./assets/linking/2-request-consent-otp.svg)
 
 ## 1.4. Authentication
 
@@ -172,7 +172,7 @@ which accounts to link with. The result of this will be seen later on when
 during the Grant consent phase, where the DFSP will provide the correct values
 to the PISP in the `scopes` field.
 
-![Authentication (Web)](../out/linking/3-authentication-web.svg)
+![Authentication (Web)](./assets/linking/3-authentication-web.svg)
 
 #### DFSPAuthorizeSimulator
 DFSPAuthorizeSimulator is api service for demo purposes. For the `Web flow` it is the backend  for single page application (SPA) which demonstrates the process of User's authorizations and granting the consents at DFSP web service.
@@ -193,7 +193,7 @@ When using the OTP authentication channel, the DFSP will send the User some sort
 of one-time password over a pre-established channel (most likely SMS). The PISP
 should prompt the user for this secret and then provide that back to the DFSP.
 
-![Authentication (OTP)](../out/linking/3-authentication-otp.svg)
+![Authentication (OTP)](./assets/linking/3-authentication-otp.svg)
 
 #### DFSPAuthorizeSimulator
 DFSPAuthorizeSimulator is api service for demo purposes. For the `OTP flow` it exposes `/sendOTP` API endpoint which allows to simulate sending SMS token to the User's device.
@@ -211,7 +211,7 @@ future.
 This phase consists exclusively of the DFSP requesting that a new consent be
 created. This request must be conveyed both to the PISP itself.
 
-![Grant consent](../out/linking/4-grant-consent.svg)
+![Grant consent](./assets/linking/4-grant-consent.svg)
 
 
 ## 1.6. Credential registration
@@ -297,7 +297,7 @@ The Auth service is then responsible for calling `POST /participants/CONSENTS/{i
 This call will associate the `consentId` with the auth-service's `participantId` and
 allows us to look up the Auth service given a `consentId` at a later date.
 
-![Credential registration: Register](../out/linking/5a-credential-registration.svg)
+![Credential registration: Register](./assets/linking/5a-credential-registration.svg)
 
 
 ### 1.6.3. Finalizing the Consent
@@ -312,7 +312,7 @@ Finally, the DFSP calls `PUT /consent/{id}` with the finalized Consent
 object it received from the Auth Service.
 
 
-![Credential registration: Finalize](../out/linking/5b-finalize_consent.svg)
+![Credential registration: Finalize](./assets/linking/5b-finalize_consent.svg)
 
 
 # 2. Unlinking
@@ -335,7 +335,7 @@ There are 2 scenarios we need to cater for with a `DELETE /consents/{id}` reques
 ## 2.1 Unlinking without a Hub Hosted Auth Service
 In this case, the switch passes on the `DELETE /consents/123` request to the DFSP in the `FSPIOP-Destination` header.
 
-![Unlinking-DFSP-Hosted](../out/linking/6a-unlinking-dfsp-hosted.svg)
+![Unlinking-DFSP-Hosted](./assets/linking/6a-unlinking-dfsp-hosted.svg)
 
 In the case where Unlinking is requested from the DFSP's side, the DFSP can
 simply call `PATCH /consents/123` to inform the PISP of an update to the
@@ -351,7 +351,7 @@ using the ALS Call, `GET /participants/CONSENT/{id}`. If it is determined that t
 is a Hub-hosted Auth Service which 'owns' this `Consent`, the HTTP call `DELETE /consents/{id}`
 will be redirected to the Auth Service.
 
-![Unlinking-Hub-Hosted](../out/linking/6b-unlinking-hub-hosted.svg)
+![Unlinking-Hub-Hosted](./assets/linking/6b-unlinking-hub-hosted.svg)
 
 
 # 3. Third-party credential registration
@@ -371,7 +371,7 @@ The authentication phase becomes very minimal. Since the credential will be
 collected by the DFSP itself (for use later by the PISP), there's no need to
 send back any sort of secret and no need to pass a secret back to the DFSP.
 
-![Authentication](../out/linking/3-authentication-third-party-fido.svg)
+![Authentication](./assets/linking/3-authentication-third-party-fido.svg)
 
 ## 3.2. Credential registration
 
@@ -380,7 +380,7 @@ TODO!
 # 4. Linking Error Scenarios
 
 ## 4.1. Discovery
-![Accounts error](../out/linking/error_scenarios/1-discovery-error.svg)
+![Accounts error](./assets/linking/error_scenarios/1-discovery-error.svg)
 
 ## 4.2. Bad consentRequests
 When the DFSP receives the POST /consentRequests request from the PISP, any number of processing or validation errors could occur, such as:
@@ -394,10 +394,10 @@ When the DFSP receives the POST /consentRequests request from the PISP, any numb
 
 In this case, the DFSP must inform the PISP of the failure by sending a PUT /consentRequests/{ID}/error callback to the PISP.
 
-![consentRequests error](../out/linking/error_scenarios/2-request-consent-error.svg)
+![consentRequests error](./assets/linking/error_scenarios/2-request-consent-error.svg)
 
 ## 4.3. Authentication
-![Authentication Invalid OTP](../out/linking/error_scenarios/3-authentication-otp-invalid.svg)
+![Authentication Invalid OTP](./assets/linking/error_scenarios/3-authentication-otp-invalid.svg)
 
 ## 4.4 Grant consent
-![Grant consent scope error](../out/linking/error_scenarios/4-grant-consent-scope-error.svg)
+![Grant consent scope error](./assets/linking/error_scenarios/4-grant-consent-scope-error.svg)

@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="982" preserveAspectRatio="none" style="width:830px;height:982px" width="830">
+  <defs>
+    <filter height="300%" id="a" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3"/>
+    </filter>
+  </defs>
+  <text font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="208" x="307.75" y="28.708">
+    Transfer: 1.1 Discovery
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M1 40.953h104v935.648H1z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="33" x="36.5" y="53.02">
+    PISP
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M289.5 40.953h239v935.648h-239z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="67" x="375.5" y="53.02">
+    Mojaloop
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M530.5 40.953h76v935.648h-76z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="54" x="541.5" y="53.02">
+    DFSP A
+  </text>
+  <path fill="#DDD" stroke="#a80036" d="M608.5 40.953h78v935.648h-78z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="54" x="620.5" y="53.02">
+    DFSP B
+  </text>
+  <path stroke="#a80036" d="M53 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M53 299.211v40.805"/>
+  <path stroke="#a80036" d="M53 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M53 823.203v40.805"/>
+  <path stroke="#a80036" d="M53 864.008v10M324.5 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M324.5 299.211v40.805"/>
+  <path stroke="#a80036" d="M324.5 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M324.5 823.203v40.805"/>
+  <path stroke="#a80036" d="M324.5 864.008v10M387.5 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M387.5 299.211v40.805"/>
+  <path stroke="#a80036" d="M387.5 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M387.5 823.203v40.805"/>
+  <path stroke="#a80036" d="M387.5 864.008v10M471.5 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M471.5 299.211v40.805"/>
+  <path stroke="#a80036" d="M471.5 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M471.5 823.203v40.805"/>
+  <path stroke="#a80036" d="M471.5 864.008v10M568.5 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M568.5 299.211v40.805"/>
+  <path stroke="#a80036" d="M568.5 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M568.5 823.203v40.805"/>
+  <path stroke="#a80036" d="M568.5 864.008v10M647.5 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M647.5 299.211v40.805"/>
+  <path stroke="#a80036" d="M647.5 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M647.5 823.203v40.805"/>
+  <path stroke="#a80036" d="M647.5 864.008v10M755.5 139.547v159.664"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M755.5 299.211v40.805"/>
+  <path stroke="#a80036" d="M755.5 340.016v483.187"/>
+  <path stroke="#a80036" stroke-dasharray="1,4" d="M755.5 823.203v40.805"/>
+  <path stroke="#a80036" d="M755.5 864.008v10"/>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 104.25h92v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="78" x="12" y="124.245">
+    PISP Server
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M5 873.008h92v30.297H5z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="78" x="12" y="893.003">
+    PISP Server
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M293.5 104.25h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="300.5" y="124.245">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M293.5 873.008h59v30.297h-59z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="45" x="300.5" y="893.003">
+    Switch
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M366.5 104.25h39v30.297h-39z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="25" x="373.5" y="124.245">
+    ALS
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M366.5 873.008h39v30.297h-39z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="25" x="373.5" y="893.003">
+    ALS
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M419.5 104.25h101v30.297h-101z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="87" x="426.5" y="124.245">
+    Auth-Service
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M419.5 873.008h101v30.297h-101z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="87" x="426.5" y="893.003">
+    Auth-Service
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M534.5 87.953h64v46.594h-64z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="541.5" y="107.948">
+    DFSP A
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="542.5" y="124.245">
+    (Payer)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M534.5 873.008h64v46.594h-64z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="541.5" y="893.003">
+    DFSP A
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="48" x="542.5" y="909.3">
+    (Payer)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M612.5 87.953h66v46.594h-66z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="51" x="620" y="107.948">
+    DFSP B
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="52" x="619.5" y="124.245">
+    (Payee)
+  </text>
+  <path fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="1.5" d="M612.5 873.008h66v46.594h-66z"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="51" x="620" y="893.003">
+    DFSP B
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="52" x="619.5" y="909.3">
+    (Payee)
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="60" x="722.5" y="119.948">
+    Bhavesh
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="120" x="692.5" y="136.245">
+    (+44 1234 5678)
+  </text>
+  <circle cx="755.5" cy="49.953" fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="2" r="8"/>
+  <path d="M755.5 57.953v27m-13-19h26m-13 19l-13 15m13-15l13 15" fill="none" filter="url(#a)" stroke="#a80036" stroke-width="2"/>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="60" x="722.5" y="886.003">
+    Bhavesh
+  </text>
+  <text font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="120" x="692.5" y="902.3">
+    (+44 1234 5678)
+  </text>
+  <circle cx="755.5" cy="915.602" fill="#FEFECE" filter="url(#a)" stroke="#a80036" stroke-width="2" r="8"/>
+  <path d="M755.5 923.602v27m-13-19h26m-13 19l-13 15m13-15l13 15" fill="none" filter="url(#a)" stroke="#a80036" stroke-width="2"/>
+  <path fill="#EEE" filter="url(#a)" stroke="#eee" d="M0 170.113h823.5v3H0z"/>
+  <path stroke="#000" d="M0 170.113h823.5M0 173.113h823.5"/>
+  <path fill="#EEE" filter="url(#a)" stroke="#000" stroke-width="2" d="M331.25 159.547h161v23.133h-161z"/>
+  <text font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="142" x="337.25" y="175.614">
+    Discovery (Lookup)
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M58 197.68h256v38H58z"/>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="248" x="62" y="213.747">
+    GET /parties/MSISDN/+4412345678
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="62" y="228.879">
+    FSPIOP-Source: pispa
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M313 258.078l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M53 262.078h266"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="248" x="60" y="257.012">
+    GET /parties/MSISDN/+4412345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M64 287.21l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M58 291.211h266"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="70" y="286.145">
+    202 Accepted
+  </text>
+  <text font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="182" x="313.25" y="323.421">
+    ALS lookup flow not shown here
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M197 345.016h256v53H197z"/>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="248" x="201" y="361.082">
+    GET /parties/MSISDN/+4412345678
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="201" y="376.215">
+    FSPIOP-Source: pispa
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="200" x="201" y="391.348">
+    FSPIOP-Destination: dfspb
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M635.5 420.547l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" d="M325 424.547h316.5"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="248" x="332" y="419.481">
+    GET /parties/MSISDN/+4412345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M336 449.68l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M330 453.68h316.5"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96" x="342" y="448.614">
+    202 Accepted
+  </text>
+  <path fill="#FFF" filter="url(#a)" stroke="#a80036" d="M386 466.68h256v234H386z"/>
+  <text font-family="monospace" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="248" x="390" y="482.747">
+    PUT /parties/MSISDN/+4412345678
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160" x="390" y="497.879">
+    FSPIOP-Source: dfspb
+  </text>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="200" x="390" y="513.012">
+    FSPIOP-Destination: pispa
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="390" y="528.145">
+    {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="148" x="398" y="543.278">
+    partyIdType: &quot;MSISDN&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="398" y="558.411">
+    partyIdentifier: &quot;+4412345678&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="49" x="398" y="573.543">
+    party: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="83" x="406" y="588.676">
+    partyIdInfo: {
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="148" x="414" y="603.809">
+    partyIdType: &quot;MSISDN&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="201" x="414" y="618.942">
+    partyIdentifier: &quot;+4412345678&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="85" x="414" y="634.075">
+    fspId: &apos;dfspb&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="12" x="406" y="649.207">
+    },
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="131" x="406" y="664.34">
+    name: &quot;Bhavesh S.&quot;,
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="398" y="679.473">
+    }
+  </text>
+  <text font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="390" y="694.606">
+    }
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M336 723.805l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M330 727.805h316.5"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="248" x="342" y="722.739">
+    PUT /parties/MSISDN/+4412345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M635.5 752.938l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M325 756.938h316.5"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="332" y="751.872">
+    200 OK
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M64 782.07l-10 4 10 4-4-4z"/>
+  <path stroke="#a80036" d="M58 786.07h266"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="248" x="70" y="781.004">
+    PUT /parties/MSISDN/+4412345678
+  </text>
+  <path fill="#A80036" stroke="#a80036" d="M313 811.203l10 4-10 4 4-4z"/>
+  <path stroke="#a80036" stroke-dasharray="2,2" d="M53 815.203h266"/>
+  <text font-family="monospace" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="60" y="810.137">
+    200 OK
+  </text>
+  <text font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="237" x="285.75" y="847.414">
+    PISP confirms payee party with their user
+  </text>
+</svg>
