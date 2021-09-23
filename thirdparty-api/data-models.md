@@ -3,13 +3,14 @@
 
 | Version | Description | Modified By | Date |
 | --- | --- | --- | --- |
-| `0.0` | Initial Version                            | M. Richards | 4 November 2020  |
-| `0.1` | Following review by Henrik Karlsson        | M. Richards | 9 November 2020  |
-| `0.2` | Further changes consequent on HK review    | M. Richards | 13 November 2020 |
-| `0.3` | Following HK and LD reviews                | M. Richards | 9 February 2021  |
-| `0.4` | Following reviews                          | M. Richards | 30 March 2021    |
-| `0.5` | Following discussion on transaction object | M. Richards | 8 June 2021      |
-| `0.6` | Conversion to `.md` format                 | L. Daly     | 6 August 2021    |
+| `0.0` | Initial Version                            | M. Richards | 4 November 2020   |
+| `0.1` | Following review by Henrik Karlsson        | M. Richards | 9 November 2020   |
+| `0.2` | Further changes consequent on HK review    | M. Richards | 13 November 2020  |
+| `0.3` | Following HK and LD reviews                | M. Richards | 9 February 2021   |
+| `0.4` | Following reviews                          | M. Richards | 30 March 2021     |
+| `0.5` | Following discussion on transaction object | M. Richards | 8 June 2021       |
+| `0.6` | Conversion to `.md` format                 | L. Daly     | 6 August 2021     |
+| `0.7` | Clarify rejected authorization response    | L. Daly     | 23 September 2021 |
 
 
 ## 2 References
@@ -208,7 +209,7 @@ request or the `POST /consentRequests` request. The data model for this resource
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
 
 
 #### 3.1.3 `/consents`
@@ -217,7 +218,7 @@ The `/consents` resource is used to negotiate a series of permissions between th
 DFSP which owns the account(s) on behalf of which the PISP wants to transact.
 
 The `/consents` request is originally sent to the PISP by the DFSP following the original consent
-request process described in [Section 3.1.3](todo) above. At the close of this process, the DFSP 
+request process described in Section 3.1.2.1.2 above. At the close of this process, the DFSP 
 which owns the customer’s account(s) will have satisfied itself that its customer really has 
 requested that the PISP be allowed access to their accounts, and will have defined the accounts in
 question and the type of access which is to be granted.
@@ -316,7 +317,7 @@ URI should contain the `<ID>` that was used in the `GET /consents/<ID>` request 
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
 
 #### 3.1.4 `/parties`
 
@@ -348,7 +349,7 @@ The `PUT /parties` resource will use the same form as the resource described in
 
 It should be noted, however, that the Party object returned from this resource has a different
 format from the Party object described in [Section 7.4.11](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7411-party) of Ref. 1 above. The 
-structure of this object is described in [Section 3.2.1.29](todo) below.
+structure of this object is described in Section 3.2.1.29 below.
 #### 3.1.5 `/services`
 The `/services` resource is a new resource which enables a participant to query for other 
 participants who offer a particular service. The requester will issue a `GET` request, specifying 
@@ -394,7 +395,7 @@ client that an error has occurred.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| errorInformation | 1 | [ErrorInformation](todo) | The result of the authentication check carried out by the authentication service. |
+| errorInformation | 1 | ErrorInformation | The result of the authentication check carried out by the authentication service. |
 
 #### 3.1.6 `thirdpartyRequests/authorizations`
 
@@ -464,8 +465,16 @@ The signed challenge will be sent back by the PISP in `PUT /thirdpartyRequests/a
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| signedPayloadType | 1 | SignedPayloadType | |
-| signedPayload | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | If the registered credential is of type `GENERIC`, this will be a BinaryString representing a HMACSHA256 of the challenge + private key of the credential. If the registered credential is of type BinaryString, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
+| responseType  | 1    | AuthorizationResponseType | `ACCEPTED` or `REJECTED` |
+| signedPayload | 0..1 | SignedPayload | If the `responseType` is `ACCEPTED`, `signedPayload` is required. |
+
+
+`SignedPayload` is defined as follows:
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| signedPayloadType  | 1 | SignedPayloadType | `FIDO` or `GENERIC` |
+| signedPayload      | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | If the registered credential is of type `GENERIC`, this will be a BinaryString representing a signature of a sha-256 hash of the challenge. If the registered credential is of type BinaryString, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) | -->
 
 
 ##### 3.1.6.3 Error callbacks
@@ -566,16 +575,6 @@ Used by: DFSP
 
 The `PUT /thirdpartyRequests/transactions/<ID>/error` resource will have the same content as 
 the `PUT /transactionRequests/<ID>/error` resource described in [Section 6.4.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6451-put-transactionrequestsiderror) of Ref. 1 above.
-###### 3.1.7.3.2 `PATCH /thirdpartyRequests/transactions/<ID>/error`
-
-Used by: DFSP
-
-<!-- TODO: is this right? I thought we agreed not to use PATCH .../error... -->
-The issuing PISP will expect a response to their request for a transfer which describes the finalized
-state of the requested transfer. This response will be given by a `PATCH` call on the 
-`/thirdpartyRequests/transactions/<ID>/error` resource.  The content of this resource will be the same
- as the data model described in [Table 32](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#table-32) of Ref. 1 above, in the section describing the `PUT` 
- command on the `/transfers/<ID>/error` resource shown in [Section 6.7.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6751-put-transfersiderror) of Ref. 1 above.
 
 #### 3.1.8 `/thirdPartyRequests/verifications`
 The `/thirdPartyRequests/verifications` resource is used by a Payer DFSP to verify that an authorization
@@ -847,25 +846,6 @@ The TokenBindingState object describes the state of a token binding protocol for
 | status | 1 | TokenBindingStateStatus | Denotes whether or not token binding has been used to negotiate with the relying party. |
 | id | 1 | String | The base64url encoding of the token binding ID which was used for the communication. |
 
-<!-- TODO: can this be removed? I don't see any references to it... -->
-##### 3.2.1.36 Transaction
-The Transaction type used in these definitions is as defined in [Section 7.4.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7417-transaction) of Ref. 1 above, but with extensions to include the additional information required for verification and consent in the PISP ecosystem.
-
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| transactionId | 1 |CorrelationId | ID of the transaction. Decided by the Payer FSP during the creation of the quote. |
-| quoteId | 1 | CorrelationId | ID of the quote. Decided by the Payer FSP during the creation of the quote. |
-| transactionRequestId | 1 | CorrelationId | ID of the transaction request which the PISP used to request the transfer |
-| payee | 1 | Party | Information about the Payee in the proposed financial transaction. |
-| payer | 1 | Party | Information about the Payer in the proposed financial transaction. |
-| amount | 1 | Money | Transaction amount to be sent. |
-| payeeReceiveAmount | 1 | Money | The amount of Money that the Payee should receive in the end-to-end transaction. |
-| customerCost | 0..1 | Money | The charges that the customer will pay as part of the transaction. |
-| expiration | 0..1 | DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction. |
-| transactionType | 1 | TransactionType | Type of the transaction. |
-| note | 0..1 | Note | Memo associated to the transaction, intended to the Payee. |
-| extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-
 ##### 3.2.1.37 TransactionType
 The TransactionType type used in these definitions is as defined in [Section 7.4.18](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7418-transactiontype) of Ref. 1 above.
 ##### 3.2.1.38 TransferState
@@ -880,7 +860,6 @@ The AuthenticationResponse enumeration describes the result of authenticating a 
 | ---  | ----------- |
 | VERIFIED | The challenge was correctly signed. |
 | REJECTED | The challenge was not correctly signed. |
-| RESEND | A problem occurred. Please re-submit. |
 
 ##### 3.2.2.2 AuthorizationChannelType
 This is an extension of the AuthenticationType enumeration described in [Section 7.5.2](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#752-authenticationtype) of Ref. 1 above.
@@ -974,3 +953,8 @@ The SignedPayloadType enumeration contains the allowed values for the type of a 
 | ---  | ----------- |
 | FIDO | The signed payload is based on a FIDO Assertion Response. Its payload is a FIDOPublicKeyCredentialAssertion object. |
 | GENERIC | The signed payload is based on a simple public key validation. Its payload is a BinaryString object |
+
+
+##### ErrorInformation
+
+For details, see section [7.4.2 ErrorInformation](../fspiop-api/documents/API-Definition_v1.1.md#742-errorinformation) in the Mojaloop FSPIOP API Definition.

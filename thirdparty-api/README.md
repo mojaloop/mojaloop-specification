@@ -1,11 +1,6 @@
 # Third Party API
 
 The Third Party API is an API for non-fund-holding participants to interact over a centralized Mojaloop hub.
-
-## Terms
-
-- [ todo: do we need this here?]
-
 ## API Definitions
 
 The Third Party API is defined across the following OpenAPI 3.0 files
@@ -23,10 +18,3 @@ The interactions and examples of how a DFSP and PISP will interact with the Thir
 ## Data Models
 
 The [Data Models Document](./data-models.md) describes 
-
-
-## Supporting Documents
-
-- [todo: what else can we use to support this documentation?]
-
-
