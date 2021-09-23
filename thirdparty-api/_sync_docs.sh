@@ -20,3 +20,7 @@ wget ${PISP_PROJECT_BASE}/src/interface/thirdparty-pisp-api.yaml -O ./thirdparty
 # Tx pattern documents
 wget ${PISP_PROJECT_BASE}/docs/linking/README.md -O ./transaction-patterns-linking.md
 wget ${PISP_PROJECT_BASE}/docs/transfer/README.md -O ./transaction-patterns-transfer.md
+
+# TODO: copy tx pattern svgs...
+
+# TODO: sed...

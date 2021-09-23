@@ -17,4 +17,4 @@ The interactions and examples of how a DFSP and PISP will interact with the Thir
 
 ## Data Models
 
-The [Data Models Document](./data-models.md) describes 
+The [Data Models Document](./data-models.md) describes in detail the Data Models used in the Thirdparty API
