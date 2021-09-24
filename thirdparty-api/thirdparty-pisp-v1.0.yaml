@@ -458,7 +458,7 @@ paths:
                       - "OTP" - The OTP auth channel.
                 callbackUri:
                   type: string
-                  description: The callback uri that the user will be redirected to after completing the WEB auth channel.
+                  description: The callback uri that the user will be redirected to after completing the out of band WEB authentication with the DFSP. Used to allow the DFSP to whitelist the PISP's url ahead of time.
               required:
                 - consentRequestId
                 - userId
@@ -541,8 +541,6 @@ paths:
                     supposed user should be redirected. This URL should be a place where
                     the user can prove their identity (e.g., by logging in).
                   properties:
-                    consentRequestId:
-                      $ref: '#/paths/~1consentRequests/post/requestBody/content/application~1json/schema/properties/consentRequestId'
                     scopes:
                       type: array
                       items:
@@ -558,12 +556,11 @@ paths:
                           The web auth channel being used for PUT consentRequest/{ID} request.
                     callbackUri:
                       type: string
-                      description: The callback uri that the user will be redirected to after completing the WEB auth channel.
+                      description: The callback uri that the user will be redirected to after completing the out of band WEB authentication with the DFSP. Used to allow the DFSP to whitelist the PISP's url ahead of time.
                     authUri:
                       type: string
-                      description: The callback uri that the pisp app redirects to for user to complete their login.
+                      description: The callback uri that the pisp app should redirect to for user to complete their login.
                   required:
-                    - consentRequestId
                     - scopes
                     - authChannels
                     - callbackUri
@@ -576,8 +573,6 @@ paths:
 
                     Schema used in the request consent phase of the account linking OTP/SMS flow.
                   properties:
-                    consentRequestId:
-                      $ref: '#/paths/~1consentRequests/post/requestBody/content/application~1json/schema/properties/consentRequestId'
                     scopes:
                       type: array
                       items:
@@ -593,12 +588,10 @@ paths:
                           The OTP auth channel being used for PUT consentRequest/{ID} request.
                     callbackUri:
                       type: string
-                      description: The callback uri that the user will be redirected to after completing the WEB auth channel.
+                      description: The callback uri that the user will be redirected to after completing the out of band WEB authentication with the DFSP. Used to allow the DFSP to whitelist the PISP's url ahead of time.
                   required:
-                    - consentRequestId
                     - scopes
                     - authChannels
-                    - callbackUri
                   additionalProperties: false
       responses:
         '202':
@@ -989,6 +982,59 @@ paths:
                             - PENDING
                           description: The challenge has signed but not yet verified.
                         payload:
+                          oneOf:
+                            - $ref: '#/paths/~1consents~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/1/properties/credential/properties/payload'
+                            - title: GenericCredential
+                              type: object
+                              description: |
+                                A publicKey + signature of a challenge for a generic public/private keypair
+                              properties:
+                                publicKey:
+                                  $ref: '#/paths/~1thirdpartyRequests~1authorizations~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/2/properties/signedPayload/properties/value'
+                                signature:
+                                  $ref: '#/paths/~1thirdpartyRequests~1authorizations~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/2/properties/signedPayload/properties/value'
+                              required:
+                                - publicKey
+                                - signature
+                              additionalProperties: false
+                      required:
+                        - credentialType
+                        - status
+                        - payload
+                      additionalProperties: false
+                  required:
+                    - scopes
+                    - credential
+                  additionalProperties: false
+                - title: ConsentsIDPutResponseVerified
+                  type: object
+                  description: |
+                    The HTTP request `PUT /consents/{ID}` is used by the DFSP or Auth-Service to update a Consent object once it has been Verified.
+                    Called by a `auth-service` to notify a DFSP that a credential has been verified and registered.
+                  properties:
+                    scopes:
+                      type: array
+                      items:
+                        $ref: '#/paths/~1consentRequests/post/requestBody/content/application~1json/schema/properties/scopes/items'
+                    credential:
+                      title: VerifiedCredential
+                      type: object
+                      description: |
+                        A credential used to allow a user to prove their identity and access
+                        to an account with a DFSP.
+
+                        VerifiedCredential is a special formatting of the credential to allow us to be
+                        more explicit about the `status` field - it should only ever be VERIFIED when
+                        updating a credential.
+                      properties:
+                        credentialType:
+                          $ref: '#/paths/~1consents~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/0/properties/credential/properties/credentialType'
+                        status:
+                          type: string
+                          enum:
+                            - VERIFIED
+                          description: 'The Credential is valid, and ready to be used by the PISP.'
+                        payload:
                           title: FIDOPublicKeyCredentialAttestation
                           type: object
                           description: |
@@ -1043,45 +1089,6 @@ paths:
                             - response
                             - type
                           additionalProperties: false
-                      required:
-                        - credentialType
-                        - status
-                        - payload
-                      additionalProperties: false
-                  required:
-                    - scopes
-                    - credential
-                  additionalProperties: false
-                - title: ConsentsIDPutResponseVerified
-                  type: object
-                  description: |
-                    The HTTP request `PUT /consents/{ID}` is used by the DFSP or Auth-Service to update a Consent object once it has been Verified.
-                    Called by a `auth-service` to notify a DFSP that a credential has been verified and registered.
-                  properties:
-                    scopes:
-                      type: array
-                      items:
-                        $ref: '#/paths/~1consentRequests/post/requestBody/content/application~1json/schema/properties/scopes/items'
-                    credential:
-                      title: VerifiedCredential
-                      type: object
-                      description: |
-                        A credential used to allow a user to prove their identity and access
-                        to an account with a DFSP.
-
-                        VerifiedCredential is a special formatting of the credential to allow us to be
-                        more explicit about the `status` field - it should only ever be VERIFIED when
-                        updating a credential.
-                      properties:
-                        credentialType:
-                          $ref: '#/paths/~1consents~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/0/properties/credential/properties/credentialType'
-                        status:
-                          type: string
-                          enum:
-                            - VERIFIED
-                          description: 'The Credential is valid, and ready to be used by the PISP.'
-                        payload:
-                          $ref: '#/paths/~1consents~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/0/properties/credential/properties/payload'
                       required:
                         - credentialType
                         - status
@@ -1958,8 +1965,6 @@ paths:
               type: object
               description: 'The object sent in the PUT /thirdPartyRequests/transactions/{ID} request.'
               properties:
-                transactionId:
-                  $ref: '#/paths/~1consentRequests/post/requestBody/content/application~1json/schema/properties/consentRequestId'
                 transactionRequestState:
                   title: TransactionRequestState
                   type: string
@@ -1976,7 +1981,6 @@ paths:
                     - REJECTED - Payer has rejected the transaction.
                   example: RECEIVED
               required:
-                - transactionId
                 - transactionRequestState
             example:
               transactionId: 11111111-0000-0000-0000-000000000000
