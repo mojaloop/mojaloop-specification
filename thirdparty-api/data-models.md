@@ -539,11 +539,10 @@ Callback and data model information for `POST /thirdpartyRequests/transactions`:
 | transactionRequestId | 1 | CorrelationId |Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request. |
 | payee                | 1 | Party |Information about the Payee in the proposed financial transaction. |
 | payer                | 1 | PartyIdInfo |Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
-| amountType           | 1 | AmountType |  |
-| amount               | 1 | Money |Requested amount to be transferred from the Payer to Payee. |
+| amountType           | 1 | AmountType | SEND for send amount, RECEIVE for receive amount. |
+| amount               | 1 | Money | Requested amount to be transferred from the Payer to Payee. |
 | transactionType      | 1 | TransactionType |Type of transaction |
 | note                 | 0..1 | Note |Reason for the transaction request, intended for the Payer. |
-| authenticationType   | 0..1 | AuthenticationType |OTP, FIDO or QR Code, otherwise empty. |
 | expiration           | 0..1 | DateTime |Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
 | extensionList        | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 ##### 3.1.7.2 Callbacks
@@ -591,10 +590,11 @@ The `PUT /thirdpartyRequests/transactions/<ID>/error` resource will have the sam
 the `PUT /transactionRequests/<ID>/error` resource described in [Section 6.4.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6451-put-transactionrequestsiderror) of Ref. 1 above.
 
 #### 3.1.8 `/thirdPartyRequests/verifications`
+
 The `/thirdPartyRequests/verifications` resource is used by a Payer DFSP to verify that an authorization
-response received from a PISP was signed using the correct key, in cases where the authentication service
+response received from a PISP was signed using the correct private key, in cases where the authentication service
 to be used is implemented by the switch and not internally by the DFSP. The DFSP sends the original 
-challenge and the signed response to the authentication service, together with the consent ID to be used
+challenge and the signed response to the authentication service, together with the `consentId` to be used
 for the verification. The authentication service compares the response with the result of signing the
 challenge with the private key associated with the `consentId`, and, if the two match, it returns a 
 positive result. Otherwise, it returns an error.
@@ -609,7 +609,7 @@ Used by: DFSP
 
 The HTTP request `/thirdPartyRequests/verifications/<ID>` is used to get information regarding a previously
 created or requested authorization. The `<ID>` in the URI should contain the verification request ID 
-(see [Section 3.1.8.1.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31812-post-thirdpartyrequestsverifications) below) that was used for the creation of the transfer.Callback and data model
+(see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) below) that was used for the creation of the transfer.Callback and data model
 information for` GET /thirdPartyRequests/verifications/<ID>`:
 
 - Callback – `PUT /thirdPartyRequests/verifications/<ID>`
@@ -633,7 +633,7 @@ Callback and data model information for `POST /thirdpartyRequests/verifications`
 | challenge | 1 | Challenge |The challenge originally sent to the PISP |
 | consentId | 1 | CorrelationId |Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature |
 | signedPayloadType | 1 | SignedPayloadType | The type of the SignedPayload, depending on the type of credential registered by the PISP |
-| signedPayload | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | The signed challenge returned by the PISP. If the registered credential is of type `GENERIC`, this will be a BinaryString representing a HMACSHA256 of the challenge + private key of the credential. If the registered credential is of type BinaryString, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
+| value | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | The signed challenge returned by the PISP. If the registered credential is of type `GENERIC`, this will be a BinaryString representing a signature of the challenge + private key of the credential. If the registered credential is of type `FIDO`, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
 
 ##### 3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource
@@ -644,7 +644,7 @@ Used by: Auth Service
 
 The callback `PUT /thirdPartyRequests/verifications/<ID>` is used to inform the client of the result 
 of an authorization check. The `<ID>` in the URI should contain the `authorizationRequestId`
-(see [Section 3.1.8.1.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31812-post-thirdpartyrequestsverifications) above) which was used to request the check, or the `<ID>` that was 
+(see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above) which was used to request the check, or the `<ID>` that was 
 used in the `GET /thirdPartyRequests/verifications/<ID>`. The data model for this resource is as follows:
 
 | Name | Cardinality | Type | Description |
@@ -659,7 +659,7 @@ Used by: Auth Service
 
 If the server is unable to complete the authorization request, or another processing error occurs, the 
 error callback `PUT /thirdPartyRequests/verifications/<ID>/error` is used.The `<ID>` in the URI should 
-contain the `verificationRequestId` (see [Section 3.1.8.1.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31812-post-thirdpartyrequestsverifications) above) which was used to request the 
+contain the `verificationRequestId` (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above) which was used to request the 
 check, or the `<ID>` that was used in the `GET /thirdPartyRequests/verifications/<ID>`.
 
 The data model for this resource is as follows:
@@ -716,7 +716,7 @@ The AccountList data model is used to hold information about the accounts that a
 The AuthenticationChannel data model is used to specify the type of out-of-loop authentication to use in verifying a customer’s wish to grant permissions to a PISP.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-|AuthenticationChannel | 1 | Enum of String(1..32) | See [Section 3.2.2.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3222-authorizationchanneltype) below for more information on allowed values. |
+|AuthenticationChannel | 1 | Enum of String(1..32) | See [Section 3.2.2.2](#3222-authorizationchanneltype) below for more information on allowed values. |
 ##### 3.2.1.5 AuthenticationInfo
 The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#741-authenticationinfo) of Ref. 1 above.
 ##### 3.2.1.6 AuthenticationResponse
@@ -753,30 +753,32 @@ The Challenge object is used to hold a FIDO challenge and its associated signatu
 The ConsentRequestChannelType is used to hold an instance of the ConsentRequestChannelType enumeration. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3224-consentrequestchanneltype) below ( ConsentRequestChannelType) for more information on allowed values. |
+| ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](#3224-consentrequestchanneltype) below ( ConsentRequestChannelType) for more information on allowed values. |
 
 ##### 3.2.1.14 ConsentState
-The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#31322-put-consentsid) above. Its data model is as follows:
+The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](#31322-put-consentsid) above. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3225-consentstatustype) below (ConsentStatusType) for more information on allowed values.|
+| ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](#3225-consentstatustype) below (ConsentStatusType) for more information on allowed values.|
  
 ##### 3.2.1.15 CorrelationId
 The CorrelationId type used in these definitions is as defined in [Section 7.3.8](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#738-correlationid) of Ref. 1 above.
 ##### 3.2.1.16 Credential
-The Credential object is used to store information about a challenge which is exchanged with an authentication service. The data model is as follows:
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| credentialId | 1 | CorrelationId | A unique identifier for the credential. |
-| credentialType | 1 | CredentialType | The type of credential this is - `FIDO` or `GENERIC` |
-| status | 0..1 | CredentialState | The current status of the credential. |
-| payload | 1 | `PublicKeyCredential` or `GenericCredential` | The type of this field depends on the type of credential this is, as defined in the credentialType field: • If the credential type is FIDO, then the type of the payload will be PublicKeyCredential. • If the credential type is GENERIC, then the type of the payload will be GenericCredential. A description of the credential and information which allows the recipient of the credential to test its veracity.|
+The Credential object is used to store information about a publicKey and signature that has been regsitered with a Consent.
+This publicKey can be used to verify that transaction authorizations have been signed by the previously-registered privateKey, 
+which resides on a User's device.
 
-##### 3.2.1.17 CredentialState
-The CredentialState data type stores the state of a credential request. Its data model is as follows.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| CredentialState | 1 | Enum of String(1..32) |See [Section 3.2.2.6](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3226-credentialstate) below (CredentialState) for more information on allowed values. |
+| credentialType | 1 | CredentialType | The type of credential this is - `FIDO` or `GENERIC` |
+| status | 1 | CredentialStatus | The current status of the credential. |
+| payload | 1 | `FIDOPublicKeyCredentialAttestation` or `GenericCredential` | Type depends on `credentialType`: • If the credential type is FIDO, then the type of the payload will be FIDOPublicKeyCredentialAttestation. • If the credential type is GENERIC, then the type of the payload will be GenericCredential. A description of the credential and information which allows the recipient of the credential to test its veracity.|
+
+##### 3.2.1.17 CredentialStatus
+The CredentialStatus data type stores the state of a credential request. Its data model is as follows.
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| CredentialStatus | 1 | Enum of String(1..32) |See [Section 3.2.2.6](#3226-CredentialStatus) below (CredentialStatus) for more information on allowed values. |
 
 ##### 3.2.1.18 DateTime
 The DateTime data type used in these definitions is as defined in [Section 7.2.14](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7214-datetime) of Ref. 1 above.
@@ -810,12 +812,6 @@ The following shows a proposed revision of the Party data element to support the
 | accounts | 0..1 | AccountList  | A list of the accounts that the party has. |
 ##### 3.2.1.29 PartyIdInfo
 The PartyIdInfo data type used in these definitions is as defined in [Section 7.4.13](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7413-partyidinfo) of Ref. 1 above.
-##### 3.2.1.30 PublicKeyCredential
-The PublicKeyCredential object contains information about a credential created on a device by a PISP. It contains the following items of information.
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| credentialId | 1 | CorrelationId | An identifier for the credential |
-| attestationResponse | 1 | AuthenticationAttestationResponse | Information about the credential that was set up on the user’s device. |
 
 ##### 3.2.1.31 Quote 
 The Quote object is used to collect the information on the terms of a transfer which a Payee DFSP returns as part of the positive response to a quotation. This information is forwarded to the PISP by the Payer DFSP so that the PISP’s customer can make an informed consent to the transfer, and is forwarded to the authentication service (if one is used) to confirm the bona fides of the authorization received from the PISP.
@@ -841,12 +837,12 @@ The Scope element contains an identifier defining, in the terms of a DFSP, an ac
 The ScopeAction element contains an access type which a PISP can request from a DFSP, or which a DFSP can grant to a PISP. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| scopeAction | 1 | Enum of String(1..32)| See [Section 3.2.2.9](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#3229-scopeenumeration) below (ScopeEnumeration) for more information on allowed values. |
+| scopeAction | 1 | Enum of String(1..32)| See [Section 3.2.2.9](#3229-scopeenumeration) below (ScopeEnumeration) for more information on allowed values. |
 ##### 3.2.1.34 ServiceType
 The ServiceType element contains a type of service where the requester wants a list of the participants in the scheme which provide that service. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.10](https://github.com/vessels-tech/mojaloop-specification/blob/feat/3p-api/thirdparty-api/data-models.md#32210-servicetype) below ServiceType) for more information on allowed values. |
+| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.10](#32210-servicetype) below ServiceType) for more information on allowed values. |
 
 ##### 3.2.1.35 TokenBindingState
 The TokenBindingState object describes the state of a token binding protocol for communication with a relying party for a public key credential. It contains the following items of information.
@@ -893,21 +889,18 @@ The ConsentStatusType enumeration describes the allowed status values that a con
 | PENDING | The consent item has been proposed but not yet approved. |
 | VERIFIED | The consent item has been verified and approved. |
 
-##### 3.2.2.6 CredentialState
-This contains the allowed values for the state of a credential state
+##### 3.2.2.6 CredentialStatus
+This contains the allowed values for the CredentialStatus
 | Name | Description |
 | ---  | ----------- |
-| RECEIVED | Authentication service has received the credential. |
-| PENDING | Authentication service is validating the credential. |
-| COMPLETED | Authentication service has successfully validated the credential. |
-| REJECTED | Authentication service has rejected the credential. |
-| VERIFIED | Authentication service has verified the credential |
+| PENDING | The credential has been created but not yet verified. |
+| VERIFIED | Authentication service has verified the credential. |
 
 ##### 3.2.2.7 CredentialType
 The CredentialType enumeration contains the allowed values for the type of credential which is associated with a permission.
 | Name | Description |
 | ---  | ----------- |
-| FIDO | The credential is based on a FIDO challenge. Its payload is a PublicKeyCredential object. |
+| FIDO | The credential is based on a FIDO challenge. Its payload is a FIDOPublicKeyCredentialAttestation object. |
 | GENERIC | The credential is based on a simple public key validation. Its payload is a GenericCredential object |
 
 ##### 3.2.2.8 PartyIdType
@@ -964,6 +957,53 @@ The SignedPayloadType enumeration contains the allowed values for the type of a 
 | GENERIC | The signed payload is based on a simple public key validation. Its payload is a BinaryString object |
 
 
+##### AmountType
+
+See [7.3.1 Amount Type](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#731-amounttype)
+
 ##### ErrorInformation
 
 For details, see section [7.4.2 ErrorInformation](../fspiop-api/documents/API-Definition_v1.1.md#742-errorinformation) in the Mojaloop FSPIOP API Definition.
+
+##### FIDOPublicKeyCredentialAttestation
+
+A data model representing a FIDO Attestation result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential),
+where the ArrayBuffer fields are represented as base64-encoded utf-8 strings.
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| id       | 1    | string | The identifier of a keypair created by an authenticator |
+| rawId    | 0..1 | string | The identifier of a keypair created by an authenticator, base64 encoded |
+| response | 1    | AuthenticatorAttestationResponse | The attestation response from the authenticator |
+
+##### FIDOPublicKeyCredentialAssertion
+
+A data model representing a FIDO Assertion result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential),
+where the ArrayBuffer fields are represented as base64-encoded utf-8 strings.
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| id       | 1    | string | The identifier of a keypair created by an authenticator |
+| rawId    | 0..1 | string | The identifier of a keypair created by an authenticator, base64 encoded |
+| response | 1    | AuthenticatorAssertionResponse | The assertion response from the authenticator |
+
+##### AuthenticatorAttestationResponse
+
+A data model representing an [AttestationStatement](https://w3c.github.io/webauthn/#attestation-statement).
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| clientDataJSON    | 1 | string | JSON string with client data |
+| attestationObject | 1 | string | CBOR.encoded attestation object|
+
+
+##### AuthenticatorAssertionResponse
+
+A data model representing an [AuthenticatorAssertionResponse](https://w3c.github.io/webauthn/#authenticatorassertionresponse).
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| authenticatorData | 1 | string | Information about the authenticator. |
+| clientDataJSON    | 1 | string | base64 encoded JSON string containing information about the client. |
+| signature         | 1 | string | The signature generated by the private key associated with this credential. |
+| userHandle        | 0..1 | string | This field is optionally provided by the authenticator, and represents the user.id that was supplied during registration.|
