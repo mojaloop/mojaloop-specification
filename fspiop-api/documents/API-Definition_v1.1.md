@@ -1166,7 +1166,7 @@ Because the _Party ID_ and the _Party Sub ID or Type_ are used as part of the UR
 
 - Forward slash (**/**) is not allowed in the ID, as it is used by the Path (see [Section 3.1.3.3](#3133-path)), to indicate a separation of the Path.
 
-- Question mark (**?**) is not allowed in the ID, as it is used to indicate the Query (see [Section 3.1.3.4](#3133-query)) part of the URI.
+- Question mark (**?**) is not allowed in the ID, as it is used to indicate the Query (see [Section 3.1.3.4](#3134-query)) part of the URI.
 
 ### 5.3 Mapping of Use Cases to Transaction Types
 
@@ -1380,7 +1380,7 @@ If this model is used, all FSPs should support being both client and server of t
 
 [Figure 42](#figure-42) shows how an account lookup can be performed if there is a common ALS in a scheme. The process is to ask the common Account Lookup service which FSP owns the Party with the provided identity. The common service is depicted as "Account Lookup" in the flows; this service could either be implemented by the switch or as a separate service, depending on the setup in the market.
 
-The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.3.2](#6232-post-participants) and [Section 6.2.2.3](#6223-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.3.4](#6234-delete-participantstypeid)) methods.
+The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.3.2](#6232-post-participants) and [Section 6.2.3.3](#6233-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.3.4](#6234-delete-participantstypeid)) methods.
 
 ###### Figure 42
 
@@ -1709,8 +1709,8 @@ The HTTP request **GET /transactionRequests/**_{ID}_ is used to get information 
 
 Callback and data model information for **GET /transactionRequests/**_{ID}_:
 
-- Callback - [**PUT /transactionRequests/**_{ID}_](#6431-put-transactionrequestsid)
-- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6441-put-transactionrequestsiderror)
+- Callback - [**PUT /transactionRequests/**_{ID}_](#6441-put-transactionrequestsid)
+- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6451-put-transactionrequestsiderror)
 - Data Model -- Empty body
 
 #### 6.4.3.2 POST /transactionRequests
@@ -1850,7 +1850,7 @@ Payee FSP must:
 - Determine the ILP Address (see [Section 4.3](#43-ILP-addressing) for more information) of the Payee and the amount that the Payee will receive. Note that since the **amount** element in the ILP Packet is defined as an UInt64, which is an Integer value, the amount should be multiplied with the currency's exponent (for example, USD's exponent is 2, which means the amount should be multiplied by 10<sup>2</sup>, and JPY's exponent is 0, which means the amount should be multiplied by 10<sup>0</sup>). Both the ILP Address and the amount should be populated in the ILP Packet (see [Section 4.5](#45-ilp-packet) for more information).
 
 - Populate the **data** element in the ILP Packet by the Transaction ([Section 7.4.17](#7417-transaction)) data model.
-- Generate the fulfilment and the condition (see [Section 4.4](#44-conditional-transfers) for more information). Populate the **condition** element in the **PUT /quotes/**_{ID}_ (see [Section 6.5.3.1](#6531-put-quotesid)). [Table 18](#table-18) shows data model with the generated condition.
+- Generate the fulfilment and the condition (see [Section 4.4](#44-conditional-transfers) for more information). Populate the **condition** element in the **PUT /quotes/**_{ID}_ (see [Section 6.5.4.1](#6541-put-quotesid)). [Table 18](#table-18) shows data model with the generated condition.
 
 The fulfilment is a temporary secret that is generated for each financial transaction by the Payee FSP and used as the trigger to commit the transfers that make up an ILP payment.
 
@@ -1897,7 +1897,7 @@ The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a p
 Callback and data model information for **GET /quotes/**_{ID}_:
 
 - Callback -- [**PUT /quotes/**_{ID}_](#6541-put-quotesid)
-- Error Callback -- [**PUT /quotes/**_{ID}_**/_error_**](#6541-put-quotesiderror)
+- Error Callback -- [**PUT /quotes/**_{ID}_**/_error_**](#6551-put-quotesiderror)
 - Data Model -- Empty body
 
 #### 6.5.3.2 POST /quotes
@@ -2251,8 +2251,8 @@ The HTTP request **GET /transfers/**_{ID}_ is used to get information regarding 
 
 Callback and data model information for **GET /transfer/**_{ID}_:
 
-- Callback -- [**PUT /transfers/**_{ID}_](#6731-put-transfersid)
-- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror)
+- Callback -- [**PUT /transfers/**_{ID}_](#6741-put-transfersid)
+- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror)
 - Data Model -- Empty body
 
 #### 6.7.3.2 POST /transfers
@@ -2428,7 +2428,7 @@ The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requ
 
 This section describes the error callbacks that are used by the server under the resource **/transactions**.
 
-#### 6.8.5.1 PUT /transactions/{ID}/error
+#### 6.8.5.1 PUT /transactions/_{ID}_/error
 
 Alternative URI: N/A
 
@@ -2687,7 +2687,7 @@ The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a req
 
 This section describes the error callbacks that are used by the server under the resource **/bulkTransfers**.
 
-#### 6.10.4.1 PUT /bulkTransfers/_{ID}_/error
+#### 6.10.5.1 PUT /bulkTransfers/_{ID}_/error
 
 Alternative URI: N/A
 
@@ -3832,7 +3832,7 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **ALIAS** | An alias is used in reference to a participant. The alias should be created in the FSP as an alternative reference to an account owner. Another example of an alias is a username in the FSP system. The ALIAS identifier can be in any format. It is also possible to use the **PartySubIdOrType** element for identifying an account under an Alias defined by the **PartyIdentifier**. |
 **Table 102 -- Enumeration PartyIdType**
 
-####7.5.7 PersonalIdentifierType
+#### 7.5.7 PersonalIdentifierType
 
 [Table 103](#table-103) contains the allowed values for the enumeration **PersonalIdentifierType**.
 ###### Table 92
@@ -4270,15 +4270,15 @@ The typical error from the **/transfers** service is that either the hop-to-hop 
 
 The following list provides a detailed description of all the steps in the sequence (see [Figure 69](#figure-69)).
 
-1. The transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After the transfer has been successfully reserved, the request [**POST /transfers**](#6722-post-transfers) is used on the Switch. The transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
+1. The transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After the transfer has been successfully reserved, the request [**POST /transfers**](#6732-post-transfers) is used on the Switch. The transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
-2. The Switch receives the request [**POST /transfers**](#6722-post-transfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, a transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfer has been successfully reserved, the request [**POST /transfers**](#6722-post-transfers) is used on the Payee FSP. The transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
+2. The Switch receives the request [**POST /transfers**](#6732-post-transfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, a transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfer has been successfully reserved, the request [**POST /transfers**](#6732-post-transfers) is used on the Payee FSP. The transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
 
-3. The Payee FSP receives the [**POST /transfers**](#6722-post-transfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal transaction validations. The validation is assumed to fail at this point, for example, due to a limit breach. The error callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the transfer process.
+3. The Payee FSP receives the [**POST /transfers**](#6732-post-transfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal transaction validations. The validation is assumed to fail at this point, for example, due to a limit breach. The error callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the transfer process.
 
-4. The Switch receives the error callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) and immediately responds with an **OK** response. The Switch then cancels the earlier reserved transfer, as it has received an error callback. The Switch will then use the callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) to the Payer FSP, using the same parameters, and wait for an **OK** response to complete the transfer process.
+4. The Switch receives the error callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) and immediately responds with an **OK** response. The Switch then cancels the earlier reserved transfer, as it has received an error callback. The Switch will then use the callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) to the Payer FSP, using the same parameters, and wait for an **OK** response to complete the transfer process.
 
-5. The Payer FSP receives the callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels the earlier reserved transfer because it has received an error callback.
+5. The Payer FSP receives the callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels the earlier reserved transfer because it has received an error callback.
 
 #### 9.3.7 API Resource /transactions
 
@@ -4309,7 +4309,7 @@ The following list describes the steps in the sequence (see [Figure 70](#figure-
 
 3. The Payee FSP receives [**POST /bulkTransfers**](#61032-post-bulktransfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal bulk transfer validations. The validation is assumed to fail due to some reason; for example, a validation failure that prevents the entire bulk transfer from being performed. The error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the bulk transfer process.
 
-4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderrorr) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
+4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
 
 5. The Payer FSP receives the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels all the earlier reserved transfers, as it has received an error callback.
 
@@ -4519,7 +4519,7 @@ Mats Hagman knows that Henrik Karlsson has phone number **123456789**, so he inp
 
 #### 10.4.2 Request Party Information from Switch -- Step 5 in End-to-End Flow
 
-In Step 5 in the end-to-end flow, **BankNrOne** receives the request from Mats Hagman that he would like the phone number 123456789 to receive 100 USD. **BankNrOne** performs an internal search to see if 123456789 exists within the bank, but fails to find the account internally. **BankNrOne** then uses the service [**GET /parties/**_{Type}_**/**_{ID}_](#6321-get-partiestypeid) in the Switch to see if the Switch knows anything about the account.
+In Step 5 in the end-to-end flow, **BankNrOne** receives the request from Mats Hagman that he would like the phone number 123456789 to receive 100 USD. **BankNrOne** performs an internal search to see if 123456789 exists within the bank, but fails to find the account internally. **BankNrOne** then uses the service [**GET /parties/**_{Type}_**/**_{ID}_](#6331-get-partiestypeid) in the Switch to see if the Switch knows anything about the account.
 
 [Listing 33](#listing-33) shows the HTTP request where the FSP **BankNrOne** asks the Switch for Party information regarding the account identified by **MSISDN** and **123456789**.
 
@@ -4877,9 +4877,9 @@ In this example, Mats Hagman accepts to perform the transaction. How the accepta
 
 #### 10.4.12 Send Transfer Request from FSP BankNrOne -- Step 15 in End-to-End Flow
 
-When Mats Hagman has accepted the transaction, FSP **BankNrOne** reserves the internal transfers needed to perform the transaction. This means that 100 USD will be reserved from Mats Hagman's account, where 1 USD will end up as income for the FSP and 99 USD will be transferred to the prefunded Switch account. After the reservations are successfully performed, the FSP **BankNrOne** sends a [**POST /transfers**](#6722-post-transfers) to the Switch as in [Listing 47](#listing-47). The same ilpPacket and condition elements are sent as was received in the quote callback and the **amount** is the same as the received **transferAmount**, see [Listing 45](#listing-45).
+When Mats Hagman has accepted the transaction, FSP **BankNrOne** reserves the internal transfers needed to perform the transaction. This means that 100 USD will be reserved from Mats Hagman's account, where 1 USD will end up as income for the FSP and 99 USD will be transferred to the prefunded Switch account. After the reservations are successfully performed, the FSP **BankNrOne** sends a [**POST /transfers**](#6732-post-transfers) to the Switch as in [Listing 47](#listing-47). The same ilpPacket and condition elements are sent as was received in the quote callback and the **amount** is the same as the received **transferAmount**, see [Listing 45](#listing-45).
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6722-post-transfers) for more information about the service [**POST /transfers**](#6722-post-transfers). More information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6732-post-transfers) for more information about the service [**POST /transfers**](#6732-post-transfers). More information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 47
 
@@ -4996,7 +4996,7 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 When the FSP **MobileMoney** has received the transfer request in [Listing 47](#listing-47), it should perform the transfer as detailed in the earlier quote request, this means that 100 USD should be transferred to Henrik Karlsson's account, where 99 USD is from the prefunded Switch account and 1 USD is from an FSP commission account.
 
-As proof of performing the transaction, the FSP **MobileMoney** then retrieves the stored fulfilment [(Listing 43](#listing-43)) from the database (stored in [Section 10.4.8](#1048-determine-fees-and-fsp-commission-in-fsp-mobilemoney----step-11-in-end-to-end-flow)) and enters that in the **fulfilment** element in the callback [**PUT /transfers/**_{ID}_](#6731-put-transfersid). The **transferState** is set to COMMITTED and the **completedTimestamp** is set to when the transaction was completed; see [Listing 50](#listing-50) for the complete HTTP request.
+As proof of performing the transaction, the FSP **MobileMoney** then retrieves the stored fulfilment [(Listing 43](#listing-43)) from the database (stored in [Section 10.4.8](#1048-determine-fees-and-fsp-commission-in-fsp-mobilemoney----step-11-in-end-to-end-flow)) and enters that in the **fulfilment** element in the callback [**PUT /transfers/**_{ID}_](#6741-put-transfersid). The **transferState** is set to COMMITTED and the **completedTimestamp** is set to when the transaction was completed; see [Listing 50](#listing-50) for the complete HTTP request.
 
 At the same time, a notification is sent to the Payee Henrik Karlsson to
 say that he has received 100 USD from Mats Hagman.
