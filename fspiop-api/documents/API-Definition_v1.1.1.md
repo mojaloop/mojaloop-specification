@@ -1344,6 +1344,7 @@ On a high level, the API can be used to perform the following actions:
 **Table 6 – API-supported services**
 
 #### 6.1.2 Current Resource Versions
+
 [Table 7](#table-7) contains the version for each resource that this document version describes.
 
 ###### Table 7
@@ -2608,6 +2609,7 @@ The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a reques
 | **individualQuoteResults** | 0..1000 | IndividualQuoteResult | Fees for each individual transaction, if any of them are charged per transaction. |
 | **expiration** | 1 |  DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction request. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
+
 **Table 39 -- PUT /bulkQuotes/_{ID}_ data model**
 
 #### 6.9.5 Error Callbacks
@@ -3337,6 +3339,7 @@ This section defines elements types used by the API.
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **ExtensionKey** | 1 | String(1..32) | Extension Key |
+
 **Table 58 -- Element ExtensionKey**
 
 #### 7.3.14 ExtensionValue
@@ -3540,6 +3543,7 @@ This section defines elements types used by the API.
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **TransactionInitiatorType** | 1 | Enum of String(1..32) | See [Section 7.5.9](#759-transactioninitiatortype) (TransactionInitiatorType) for more information on allowed values. |
+
 **Table 75 -- Element Transaction InitiatorType**
 
 #### 7.3.31 TransactionRequestState
