@@ -63,30 +63,37 @@ The `/accounts` resource supports the endpoints described below.
 
 This section describes the services that a PISP can request on the /accounts resource.
 
-###### 3.1.1.1.1  `GET /accounts/<Type>/<ID>`
+###### 3.1.1.1.1  `GET /accounts/<ID>`
 
 Used by: PISP
 
-The HTTP request `GET /accounts/<Type>/<ID>` is used to lookup information about the requested
-Party’s accounts, defined by `<Type>` and `<ID>` (for example, `GET /accounts/MSISDN/123456789`).
+The HTTP request `GET /accounts/<ID>` is used to lookup information about the requested
+Party’s accounts, defined by an identifier `<ID>`, where `<ID>` is some identifier a user
+uses to access their account with the DFSP, such as a phone number, email address, clientId.
+
+> __Note:__ This differs from the `GET /parties/<TYPE>/<ID>` request of Ref.1. above
+> because the destination DFSP is _already known_ by the PISP when the user selects
+> from a list of supported DFSPs, so the switch does not need to perform a lookup to determine
+> the DFSP this request should be routed to.  
+
 See Section 5.1.6.11 of Ref. 1 above for more information regarding addressing of a Party.
 
-Callback and data model information for `GET /accounts/<Type>/<ID>`:
-- Callback - `PUT /accounts/<Type>/<ID>`
-- Error Callback - `PUT /accounts/<Type>/<ID>/error`
+Callback and data model information for `GET /accounts/<ID>`:
+- Callback - `PUT /accounts/<ID>`
+- Error Callback - `PUT /accounts/<ID>/error`
 - Data Model – Empty body
 
 ##### 3.1.1.2 Callbacks 
 
 The responses for the `/accounts` resource are as follows
 
-###### 3.1.1.2.1  `PUT /accounts/<Type>/<ID>`
+###### 3.1.1.2.1  `PUT /accounts/<ID>`
 
 Used by: DFSP
 
-The `PUT /accounts/<Type>/<ID>` response is used to inform the requester of the result of a request
-for accounts information.  The identifier type and the identifier ID given in the call are the 
-values given in the original request (see [Section 3.1.1.1.1](#31111--get-accountstypeid) above.)
+The `PUT /accounts/<ID>` response is used to inform the requester of the result of a request
+for accounts information.  The identifier ID given in the call are the 
+values given in the original request (see Section 3.1.1.1.1 above.)
 
 The data content of the message is given below.
 
@@ -94,13 +101,13 @@ The data content of the message is given below.
 | --- | --- | --- | --- |
 | accountList | 1 | AccountList | Information about the accounts that the DFSP associates with the identifier sent by the PISP. |
 
-###### 3.1.1.2.2  `PUT /accounts/<type>/<ID>/error`
+###### 3.1.1.2.2  `PUT /accounts/<ID>/error`
 
 Used by: DFSP
 
-The `PUT /accounts/<Type>/<ID>/error` response is used to inform the requester that an account list
-request has given rise to an error. The identifier type and the identifier ID given in the call are
-the values given in the original request (see [Section 3.1.1.1.1](#31111--get-accountstypeid) above.)
+The `PUT /accounts/<ID>/error` response is used to inform the requester that an account list
+request has given rise to an error. The identifier ID given in the call are
+the values given in the original request (see Section 3.1.1.1.1 above.)
 
 The data content of the message is given below.
 
@@ -146,52 +153,47 @@ Callback and data model for `POST /consentRequests`:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | consentRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the consent request object. The ID should be reused for resends of the same consent request. A new ID should be generated for each new consent request. |
-| partyIdInfo | 1 | PartyIdInfo | The identifier of the customer on behalf of whom the consent request is being made. |
+| userId           | 1 | string        | The identifier used in the `GET /accounts/<ID>`. Used by the DFSP to correlate an account lookup to a `consentRequest` |
 | scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
 | authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
-| callbackUri | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
+| callbackUri | 1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
 
 ##### 3.1.2.2 Callbacks
 
 This section describes the callbacks that are used by the server under the resource /consentRequests.
 
-###### 3.1.2.2.1 `PATCH /consentRequests/<ID>`
-
-Used by: DFSP, PISP
-
-When a party intends to change the content of a consent request, it can do this via the 
-`PATCH /consentRequests/<ID>` resource. The syntax of this call complies with the JSON Merge Patch
-specification rather than the JSON Patch specification: that is to say, the 
-`PATCH /consentRequests/<ID>` resource contains a set of proposed changes to the current state of 
-the permissions relating to a particular authorization request. The data model for this call is as 
-follows:
-
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
-| authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
-| callbackUri | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
-| authUri | 0..1 | Uri |The URI that the PISP should call to complete the linking procedure if completion is required. |
-| authToken | 0..1 | BinaryString |The bearer token given to the PISP by the DFSP as part of the out-of-loop authentication process |
-
-##### 3.1.2.2.2 `PUT /consentRequests/<ID>`
+##### 3.1.2.2.1 `PUT /consentRequests/<ID>`
 
 Used by: DFSP
 
+A DFSP uses this callback to (1) inform the PISP that the consentRequest has been accepted, 
+and (2) communicate to the PISP which `authChannel` it should use to authenticate their user
+with.
+
 When a PISP requests a series of permissions from a DFSP on behalf of a DFSP’s customer, not all 
-the permissions requested may be granted by the DFSP. Conversely, the out-of-loop authorization 
+the permissions requested may be granted by the DFSP. Conversely, the out-of-band authorization 
 process  may result in additional privileges being granted by the account holder to the PISP. The
 `PUT /consentRequests/<ID>` resource returns the current state of the permissions relating to a 
 particular authorization request. The data model for this call is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
-| authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
-| callbackUri | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
-| authUri | 0..1 | Uri |The URI that the PISP should call to complete the linking procedure if completion is required. |
-| authToken | 0..1 | BinaryString |The bearer token given to the PISP by the DFSP as part of the out-of-loop authentication process |
+| scopes       | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
+| authChannels | 1 | ConsentRequestChannelType | A list of one element, which the DFSP uses to inform |
+| callbackUri  | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
+| authUri      | 0..1 | Uri | The URI that the PISP should call to complete the linking procedure if completion is required. |
 
+
+###### 3.1.2.2.2 `PATCH /consentRequests/<ID>`
+
+Used by: PISP
+
+After the user completes an out-of-band authorization with the DFSP, the PISP will receive
+a token which they can use to prove to the DFSP that the user trusts this PISP.
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| authToken | 1 | BinaryString |The token given to the PISP by the DFSP as part of the out-of-band authentication process |
 
 ##### 3.1.2.3 Error callbacks
 
@@ -202,7 +204,7 @@ This section describes the error callbacks that are used by the server under the
 
 Used by: DFSP
 
-If the server is unable to complete the consent request, or if an out-of-loop processing error or 
+If the server is unable to complete the consent request, or if an out-of-band processing error or 
 another processing error occurs, the error callback `PUT /consentRequests/<ID>/error` is used. The
 `<ID>` in the URI should contain the `<ID>` that was used in the `GET /consentRequests/<ID>` 
 request or the `POST /consentRequests` request. The data model for this resource is as follows:
@@ -217,7 +219,7 @@ request or the `POST /consentRequests` request. The data model for this resource
 The `/consents` resource is used to negotiate a series of permissions between the PISP and the 
 DFSP which owns the account(s) on behalf of which the PISP wants to transact.
 
-The `/consents` request is originally sent to the PISP by the DFSP following the original consent
+A `/consents` call is originally sent to the PISP by the DFSP following the original consent
 request process described in Section 3.1.2.1.2 above. At the close of this process, the DFSP 
 which owns the customer’s account(s) will have satisfied itself that its customer really has 
 requested that the PISP be allowed access to their accounts, and will have defined the accounts in
@@ -253,8 +255,6 @@ Callback and data model information for `POST /consents/<ID>`:
 | --- | --- | --- | --- |
 | consentId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the consent object. The ID should be reused for resends of the same consent. A new ID should be generated for each new consent.|
 | consentRequestId | 1 | CorrelationId | The ID given to the original consent request on which this consent is based. |
-| initiatorId | 1 | FspId | The ID of the PISP associated with the consent. |
-| issuerId | 1 | FspId | The ID of the DFSP which created the consent. |
 | scopes   | 1..n  | Scope |One or more accounts on which the DFSP is prepared to grant specified permissions to the PISP. |
 | credential | 0..1 | Credential | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
@@ -281,7 +281,7 @@ The `/consents` resource will support the following callbacks:
 Used by: Auth-Service, DFSP
 
 `PATCH /consents/<ID>` is used in 2 places:
-1. To inform the PISP that the consent.credential is valid and the account linking process compeleted
+1. To inform the PISP that the `consent.credential` is valid and the account linking process compeleted
    successfuly.
 2. To inform the PISP or the DFSP that the Consent has been revoked.
 
@@ -308,13 +308,13 @@ for this call is as follows:
 Used by: PISP
 
 The `PUT /consents/<ID>` resource is used to return information relating to the consent object 
-whose `consentId` is given in the URI. The data returned by the call is as follows:
+whose `consentId` is given in the URI. And for registering a credential for the consent. The 
+data returned by the call is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| scopes | 1..n | Scope | The scopes covered by the consent. |
-| consentState | 1 | ConsentState |State of the consent |
-| credential | 1 | Credential |Information about the challenge which relates to the consent. |
+| scopes        | 1..n | Scope         | The scopes covered by the consent. |
+| credential    | 1    | Credential    | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
 ##### 3.1.3.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource `/consents`.
@@ -395,7 +395,7 @@ the service information lookup. The information is returned in the following for
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| serviceProviders | 1…n | FspId |A list of the Ids of the participants who provide the service requested. |
+| providers | 1…n | FspId |A list of the Ids of the participants who provide the service requested. |
 
 ###### 3.1.5.3.2 `PUT /services/<Type>/error`
 
@@ -452,16 +452,16 @@ Callback and data model information for `POST /thirdpartyRequests/authorizations
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | authorizationRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the authoriztion request object. The ID should be reused for resends of the same authoriztion request. A new ID should be generated for each new authoriztion request. |
-| transactionRequestId | 1 | CorrelationId | The unique identifier of the transaction request for which authorization is being requested. |
-| challenge | 1 | BinaryString | The challenge that the PISP’s client is to sign. |
-| transferAmount | 1 | Money | The amount that will be debited from the sending customer’s account as a consequence of the transaction. |
-| payeeReceiveAmount | 1 | Money | The amount that will be credited to the receiving customer’s account as a consequence of the transaction. |
-| fees | 1 | Money | The amount of fees that the paying customer will be charged as part of the transaction. |
-| payer | 1 | PartyIdInfo | Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
-| payee | 1 | Party | Information about the Payee in the proposed transaction |
-| transactionType | 1 | TransactionType | The type of the transaction. |
-| expiration | 1 | DateTime | The time by which the transfer must be completed, set by the payee DFSP. |
-| extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment. |
+| transactionRequestId   | 1 | CorrelationId | The unique identifier of the transaction request for which authorization is being requested. |
+| challenge              | 1 | BinaryString | The challenge that the PISP’s client is to sign. |
+| transferAmount         | 1 | Money | The amount that will be debited from the sending customer’s account as a consequence of the transaction. |
+| payeeReceiveAmount     | 1 | Money | The amount that will be credited to the receiving customer’s account as a consequence of the transaction. |
+| fees                   | 1 | Money | The amount of fees that the paying customer will be charged as part of the transaction. |
+| payer                  | 1 | PartyIdInfo | Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
+| payee                  | 1 | Party | Information about the Payee in the proposed transaction |
+| transactionType        | 1 | TransactionType | The type of the transaction. |
+| expiration             | 1 | DateTime | The time by which the transfer must be completed, set by the payee DFSP. |
+| extensionList          | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 
 ##### 3.1.6.2 Callbacks
 The following callbacks are supported for the `/thirdpartyRequests/authorizations` resource
@@ -536,15 +536,16 @@ Callback and data model information for `POST /thirdpartyRequests/transactions`:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-|transactionRequestId | 1 | CorrelationId |Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request. |
-|payee | 1 | Party |Information about the Payee in the proposed financial transaction. |
-|payer | 1 | PartyIdInfo |Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
-|amount | 1 | Money |Requested amount to be transferred from the Payer to Payee. |
-|transactionType | 1 | TransactionType |Type of transaction |
-|note | 0..1 | Note |Reason for the transaction request, intended for the Payer. |
-|authenticationType | 0..1 | AuthenticationType |OTP, FIDO or QR Code, otherwise empty. |
-|expiration | 0..1 | DateTime |Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
-|extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment. |
+| transactionRequestId | 1 | CorrelationId |Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request. |
+| payee                | 1 | Party |Information about the Payee in the proposed financial transaction. |
+| payer                | 1 | PartyIdInfo |Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction. |
+| amountType           | 1 | AmountType |  |
+| amount               | 1 | Money |Requested amount to be transferred from the Payer to Payee. |
+| transactionType      | 1 | TransactionType |Type of transaction |
+| note                 | 0..1 | Note |Reason for the transaction request, intended for the Payer. |
+| authenticationType   | 0..1 | AuthenticationType |OTP, FIDO or QR Code, otherwise empty. |
+| expiration           | 0..1 | DateTime |Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
+| extensionList        | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 ##### 3.1.7.2 Callbacks
 The following callbacks are supported for the `/thirdpartyRequests/transactions` resource
 ###### 3.1.7.2.1 `PUT /thirdpartyRequests/transactions/<ID>`
