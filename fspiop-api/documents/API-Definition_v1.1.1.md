@@ -2336,7 +2336,7 @@ Alternative URI: N/A
 
 Logical API service: **Commit Notification**
 
-The HTTP request **PATCH /transfers/**_{ID}_ is use d by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The _{ID}_ in the URI should contain the transferId (see Table 31) that was used for the creation of the transfer. Please note that this request does not generate a callback. See Table 31 for data model.
+The HTTP request **PATCH /transfers/**_{ID}_ is use d by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The _{ID}_ in the URI should contain the transferId (see Table 30) that was used for the creation of the transfer. Please note that this request does not generate a callback. See Table 31 for data model.
 
 ###### Table 31
 
