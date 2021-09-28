@@ -1785,7 +1785,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Request Information**
 
-The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of a requested or created transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 20](#table-20)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 20](#table-20) for data model.
+The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of a requested or created transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 19](#table-19)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 20](#table-20) for data model.
 
 ###### Table 20
 
