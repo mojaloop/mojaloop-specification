@@ -703,7 +703,7 @@ In this example, the Payee FSP decides to give commission to the Payer FSP since
 
 **Figure 9 -- Simplified view of money movement for non-disclosing receive amount example**
 
-To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Quote_ _Amount_ is **amount** in [Table 24](#table-24), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 24](#table-24), and Payee FSP commission is payeeFspCommission in [Table 24](#table-24).
+To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Quote_ _Amount_ is **amount** in [Table 23](#table-23), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 24](#table-24), and Payee FSP commission is payeeFspCommission in [Table 24](#table-24).
 
 ###### Listing 7
 
@@ -2584,8 +2584,11 @@ Callback and data model information for **POST /bulkQuotes**:
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
-| **individualQuoteResults** | 0..1000 | IndividualQuoteResult | Fees for each individual transaction, if any of them are charged per transaction. |
-| **expiration** | 1 | DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction request. |
+| **bulkQuoteId** | 1 | CorrelationId | Common ID between the FSPs for the bulk quote object, decided by the Payer FSP. The ID should be reused for resends of the same bulk quote. A new ID should be generated for each new bulk quote. |
+| **payer** | 1 | Party | Information about the Payer in the proposed financial transaction. |
+| **geoCode** | 0..1 | GeoCode | Longitude and Latitude of the initiating Party. Can be used to detect fraud. |
+| **expiration** | 0..1 | DateTime | Expiration is optional to let the Payee FSP know when a quote no longer needs to be returned. |
+| **individualQuotes** | 1..1000 | IndividualQuote | List of quotes elements. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
 
 **Table 38 -- POST /bulkQuotes data model**
