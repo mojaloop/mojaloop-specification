@@ -2600,7 +2600,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Quote Information**
 
-The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a requested or created bulk quote. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 39](#table-39)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 39](#table-39) for data model.
+The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a requested or created bulk quote. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 38](#table-38)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 39](#table-39) for data model.
 
 ###### Table 39
 
