@@ -2735,7 +2735,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Transfer Information**
 
-The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a requested or created bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 43](#table-43)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 43](#table-43) for data model.
+The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a requested or created bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 42](#table-42)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 43](#table-43) for data model.
 
 ###### Table 43
 
