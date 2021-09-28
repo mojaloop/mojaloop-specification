@@ -1982,7 +1982,7 @@ Alternative URI: N/A
 
 Logical API service: **Return Quote Information**
 
-The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested or created quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 24](#table-24)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 24](#table-24) for data model.
+The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested or created quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 23](#table-23)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 24](#table-24) for data model.
 
 ###### Table 24
 
