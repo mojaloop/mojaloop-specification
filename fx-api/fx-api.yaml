@@ -1094,10 +1094,9 @@ components:
       description: Name of the Party. Could be a real name or a nickname.
     PartySubIdOrType:
       title: PartySubIdOrType
-      type: string
-      minLength: 1
-      maxLength: 128
-      description: Either a sub-identifier of a PartyIdentifier, or a sub-type of the PartyIdType, normally a PersonalIdentifierType.
+      oneOf:
+        - $ref: "#/components/schemas/PersonalIdentifierType"
+        - $ref: "#/components/schemas/PartyIdentifier"
     PersonalIdentifierType:
       title: PersonalIdentifierType
       type: string
