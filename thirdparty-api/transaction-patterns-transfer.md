@@ -1,3 +1,59 @@
+# Transaction Patterns - Transfer
+
+Third Party API
+
+### Table Of Contents
+
+<!-- todo -->
+
+
+## 1. Preface
+
+This section contains information about how to use this document.
+
+### 1.1 Conventions Used in This Document
+
+The following conventions are used in this document to identify the
+specified types of information.
+
+|Type of Information|Convention|Example|
+|---|---|---|
+|**Elements of the API, such as resources**|Boldface|**/authorization**|
+|**Variables**|Italics with in angle brackets|_{ID}_|
+|**Glossary terms**|Italics on first occurrence; defined in _Glossary_|The purpose of the API is to enable interoperable financial transactions between a _Payer_ (a payer of electronic funds in a payment transaction) located in one _FSP_ (an entity that provides a digital financial service to an end user) and a _Payee_ (a recipient of electronic funds in a payment transaction) located in another FSP.|
+|**Library documents**|Italics|User information should, in general, not be used by API deployments; the security measures detailed in _API Signature and API Encryption_ should be used instead.|
+
+### 1.2 Document Version Information
+
+| Version | Date | Change Description |
+| --- | --- | --- | --- |
+| **1.0** | 2021-10-03    | Initial Version
+
+### 1.3 References
+
+The following references are used in this specification:
+
+| Reference | Description | Version | Link |
+| --- | --- | --- | --- |
+| Ref. 1 | Open API for FSP Interoperability | `1.1` | [API Definition v1.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md)|
+
+
+## 2. Introduction
+
+This document introduces the transaction patterns supported by the Third Party API relating
+to the initiation of a Transaction Request from a PISP.
+
+## 2.1 Third Party API Specification
+
+The Mojaloop Third Party API Specification includes the following documents:
+
+- [Data Models](./data-models.md)
+- [Transaction Patterns - Linking](./transaction-patterns-linking.md)
+- [Transaction Patterns - Transfer](./transaction-patterns-transfer.md)
+- [Third Party Open API Definition - DFSP](./thirdparty-dfsp-v1.0.yaml)
+- [Third Party Open API Definition - PISP](./thirdparty-dfsp-v1.0.yaml)
+
+
 # Transfer API
 
 <!-- vscode-markdown-toc -->
