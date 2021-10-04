@@ -20,8 +20,8 @@ The following terms are commonly used across the Third Party API Documentation
 
 The Third Party API is defined across the following OpenAPI 3.0 files:
 
-- [Thirdparty API - PISP](./thirdparty-pisp-v1.0.yaml)
-- [Thirdparty API - DFSP](./thirdparty-dfsp-v1.0.yaml)
+- [Third Party API - PISP](./thirdparty-pisp-v1.0.yaml)
+- [Third Party API - DFSP](./thirdparty-dfsp-v1.0.yaml)
 
 ## Transaction Patterns
 
@@ -32,4 +32,4 @@ The interactions and examples of how a DFSP and PISP will interact with the Thir
 
 ## Data Models
 
-The [Data Models Document](./data-models.md) describes in detail the Data Models used in the Thirdparty API
+The [Data Models Document](./data-models.md) describes in detail the Data Models used in the Third Party API
