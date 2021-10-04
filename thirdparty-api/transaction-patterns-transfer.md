@@ -6,20 +6,20 @@ Mojaloop Third Party API
 
 1. [Preface](#Preface)  
    1.1. [Conventions Used in This Document](#ConventionsUsedinThisDocument)  
-   1.2. [Document Version Information](#DocumentVersionInformation)  
+   3.2. [Document Version Information](#DocumentVersionInformation)  
    1.3. [References](#References)  
 2. [Introduction](#Introduction)  
    2.1 [Third Party API Specification](#ThirdPartyAPISpecification)  
 
 
-<!-- todo - iupdate-->
+<!-- todo - update-->
 * [1. Transfers](#Transfers)
 	* [1.1 Discovery](#Discovery)
 	* [1.2 Agreement](#Agreement)
-		* [1.2.1 `POST /thirdpartyRequests/transactions`](#POSTthirdpartyRequeststransactions)
-		* [1.2.2 Thirdparty Authorization Request](#ThirdpartyAuthorizationRequest)
-		* [1.2.3 Signed Authorization](#SignedAuthorization)
-		* [1.2.4 Validate Authorization](#ValidateAuthorization)
+		* [3.2.1 `POST /thirdpartyRequests/transactions`](#POSTthirdpartyRequeststransactions)
+		* [3.2.2 Thirdparty Authorization Request](#ThirdpartyAuthorizationRequest)
+		* [3.2.3 Signed Authorization](#SignedAuthorization)
+		* [3.2.4 Validate Authorization](#ValidateAuthorization)
 	* [1.3 Transfer](#Transfer)
 * [2. Request TransactionRequest Status](#RequestTransactionRequestStatus)
 * [3. Error Conditions](#ErrorConditions)
@@ -43,7 +43,7 @@ specified types of information.
 |**Glossary terms**|Italics on first occurrence; defined in _Glossary_|The purpose of the API is to enable interoperable financial transactions between a _Payer_ (a payer of electronic funds in a payment transaction) located in one _FSP_ (an entity that provides a digital financial service to an end user) and a _Payee_ (a recipient of electronic funds in a payment transaction) located in another FSP.|
 |**Library documents**|Italics|User information should, in general, not be used by API deployments; the security measures detailed in _API Signature and API Encryption_ should be used instead.|
 
-##  1.2. <a id='DocumentVersionInformation'></a>Document Version Information
+##  3.2. <a id='DocumentVersionInformation'></a>Document Version Information
 
 | Version | Date | Change Description |
 | --- | --- | --- |
@@ -74,7 +74,7 @@ The Mojaloop Third Party API Specification includes the following documents:
 - [Third Party Open API Definition - PISP](./thirdparty-dfsp-v1.0.yaml)
 
 
-## <a name='Transfers'></a>1. Transfers
+# <a name='Transfers'></a>3. Transfers
 
 Transfers is broken down into the separate sections:
 1. **Discovery**: PISP looks up the Payee Party to send funds to
@@ -83,7 +83,7 @@ Transfers is broken down into the separate sections:
 
 3. **Transfer** The Payer DFSP initiates the transaction, and informs the PISP of the transaction result.
 
-###  <a name='Discovery'></a>1.1 Discovery
+##  <a name='Discovery'></a>3.1 Discovery
 
 In this phase, a user enters the identifer of the user they wish to send funds to. The PISP executes a `GET /parties/{Type}/{ID}` (or `GET /parties/{Type}/{ID}/{SubId}`) call with the FSPIOP-API, and awaits a callback from the Mojaloop switch.
 
@@ -93,9 +93,9 @@ Should the PISP receive a `PUT /parties/{Type}/{ID}/error` (or `PUT /parties/{Ty
 
 ![Discovery](./assets/transfer/1-1-discovery.svg)
 
-### <a name='Agreement'></a>1.2 Agreement
+## <a name='Agreement'></a>3.2 Agreement
 
-#### <a name='POSTthirdpartyRequeststransactions'></a>1.2.1 `POST /thirdpartyRequests/transactions`
+### <a name='thirdpartyTransactionRequest'></a>3.2.1 Thirdparty Transaction Request
 
 Upon confirming the details of the Payee with their user, the PISP asks the user to enter the `amount` of funds they wish to send to the Payee, and whether or not they wish the Payee to _recieve_ that amount, or they wish to _send_ that amount (`amountType` field).
 
@@ -121,11 +121,9 @@ This call informs the PISP that the Thirdparty Transaction Request was accepted,
 
 If the above validation fail, the DFSP should send a `PUT /thirdpartyRequests/transactions/{ID}/error` call to the PISP, with an error message communicating the failure to the PISP. See [Error Codes](../error_codes.md) for more information.
 
-#### <a name='ThirdpartyAuthorizationRequest'></a>1.2.2 Thirdparty Authorization Request
+### <a name='ThirdpartyAuthorizationRequest'></a>3.2.2 Thirdparty Authorization Request
 
-<!-- TODO: state who the Payee and Payer DFSP are before this step -->
-
-The DFSP will then issue a quotation request (`POST /quotes`) to the Payee DFSP. Upon receiving the `PUT /quotes/{Id}` callback from the Payee DFSP, the Payer DFSP needs to confirm the details of the transaction with the PISP.
+The Payer DFSP (that is, the institution sending funds at the request of the PISP) may then issue a quotation request (`POST /quotes`) to the Payee DFSP (that is, the  institution receiving the funds). Upon receiving the `PUT /quotes/{Id}` callback from the Payee DFSP, the Payer DFSP needs to confirm the details of the transaction with the PISP.
 
 They use the API call `POST /thirdpartyRequests/authorizations`. The request body is populated with the following fields:
 
@@ -135,15 +133,13 @@ They use the API call `POST /thirdpartyRequests/authorizations`. The request bod
 could be a random string, we recommend that it be derived from something _meaningful_ to the actors involved in the transaction, 
 that can't be predicted ahead of time by the PISP. See [Section 4.1](#DerivingtheChallenge) for an example of how the challenge
 could be derived.
-    > Note: this requirement could be enforced in scheme rules
-- `quote` - the response body from the `PUT /quotes/{ID}` callback
 - `transactionType` the `transactionType` field from the original `POST /thirdpartyRequests/transactions` request
 
 
 ![1-2-2-authorization](./assets/transfer/1-2-2-authorization.svg)
 
 
-#### <a name='SignedAuthorization'></a>1.2.3 Signed Authorization
+### <a name='SignedAuthorization'></a>3.2.3 Signed Authorization
 
 Upon receiving the `POST /thirdpartyRequests/authorizations` request from the Payer DFSP, the PISP presents the terms of the proposed
 transaction to the user, and asks them if they want to proceed. 
@@ -165,12 +161,12 @@ If the user rejects the transaction, the following is the payload sent in `PUT /
 
 Should the user accept the transaction, the payload will depend on the `credentialType` of the `Consent.credential`:
 
-1. If `FIDO`, the PISP asks the user to complete the [FIDO Assertion](https://webauthn.guide/#authentication) flow to sign the challenge. The `signedPayload.value` is the `FIDOPublicKeyCredentialAssertion` returned from the FIDO Assertion process. See [1.2.3.1 Signing the Challlenge FIDO](#SigningTheChallengeFIDO)
+1. If `FIDO`, the PISP asks the user to complete the [FIDO Assertion](https://webauthn.guide/#authentication) flow to sign the challenge. The `signedPayload.value` is the `FIDOPublicKeyCredentialAssertion` returned from the FIDO Assertion process. See [3.2.3.1 Signing the Challlenge FIDO](#SigningTheChallengeFIDO)
 
 2. If `GENERIC`, the private key created during the [credential registration process](../linking/README.md#162-registering-the-credential) is
-   used to sign the challenge. See [1.2.3.2 Signing the Challenge with a GENERIC Credential](#SigningTheChallengeGeneric)
+   used to sign the challenge. See [3.2.3.2 Signing the Challenge with a GENERIC Credential](#SigningTheChallengeGeneric)
 
-##### <a name='SigningTheChallengeFIDO'></a>1.2.3.1 Signing the Challlenge FIDO
+#### <a name='SigningTheChallengeFIDO'></a>3.2.3.1 Signing the Challlenge FIDO
 
 For a `FIDO` `credentialType`, the PISP asks the user to complete the [FIDO Assertion](https://webauthn.guide/#authentication) flow to sign the challenge. The `signedPayload.value` is the [`PublicKeyCredential`](https://w3c.github.io/webauthn/#publickeycredential) returned from the FIDO Assertion process, where the `ArrayBuffer`s are parsed as base64 encoded utf-8 strings. As a `PublicKeyCredential` is the response of both the FIDO Attesttation and Assertion, we define the following interface: `FIDOPublicKeyCredentialAssertion`:
 
@@ -206,7 +202,7 @@ The final payload of the `PUT /thirdpartyRequests/authorizations/{ID}` is then:
 ![1-2-3-signed-authorization-fido](./assets/transfer/1-2-3-signed-authorization-fido.svg)
 
 
-##### <a name='SigningTheChallengeGeneric'></a>1.2.3.2 Signing the Challenge with a GENERIC Credential
+#### <a name='SigningTheChallengeGeneric'></a>3.2.3.2 Signing the Challenge with a GENERIC Credential
 
 For a `GENERIC` credential, the PISP will perform the following steps:
 
@@ -239,7 +235,7 @@ The final payload of the `PUT /thirdpartyRequests/authorizations/{ID}` is then:
 ![1-2-3-signed-authorization-generic](./assets/transfer/1-2-3-signed-authorization-generic.svg)
 
 
-#### <a name='ValidateAuthorization'></a>1.2.4 Validate Authorization
+### <a name='ValidateAuthorization'></a>3.2.4 Validate Authorization
 
 > __Note:__ If the DFSP uses a self-hosted authorization service, this step can be skipped.
 
@@ -249,14 +245,14 @@ public key that is attached to the `Consent` object.
 The DFSP uses the API call `POST /thirdpartyRequests/verifications`, the body of which is comprised of:
 
 - `verificationRequestId` - A UUID created by the DFSP to identify this verification request.
-- `challenge` - The same challenge that was sent to the PISP in [1.2.2 Thirdparty Authorization Request](#ThirdpartyAuthorizationRequest)
+- `challenge` - The same challenge that was sent to the PISP in [3.2.2 Thirdparty Authorization Request](#ThirdpartyAuthorizationRequest)
 - `value` - The body of the `PUT /thirdpartyRequests/authorizations` from the PISP.
 - `consentId` - The `consentId` of the Consent resource that contains the credential public key with which to verify this transaction.
 The DFSP must lookup the `consentId` based on the `payer` details of the `ThirdpartyTransactionRequest`.
 
 ![1-2-4-verify-authorization](./assets/transfer/1-2-4-verify-authorization.svg)
 
-### <a name='Transfer'></a>1.3 Transfer
+## <a name='Transfer'></a>3.3 Transfer
 
 Upon validating the signed challenge, the DFSP can go ahead and initiate a standard Mojaloop Transaction using the FSPIOP API.
 
@@ -269,7 +265,7 @@ Upon receiving this callback, the PISP knows that the transfer has completed suc
 ![1-3-transfer](./assets/transfer/1-3-transfer.svg)
 
 
-## <a name='RequestTransactionRequestStatus'></a>2. Request TransactionRequest Status
+# <a name='RequestTransactionRequestStatus'></a>4. Request TransactionRequest Status
 
 A PISP can issue a `GET /thirdpartyRequests/transactions/{ID}` to find the status of a transaction request.
 
@@ -301,7 +297,7 @@ A PISP can issue a `GET /thirdpartyRequests/transactions/{ID}` to find the statu
 1. Switch looks up the endpoint for `pispa` for forwards to PISP
 1. PISP validates the request and responds with `200 OK`
 
-## <a name='ErrorConditions'></a>3. Error Conditions
+# <a name='ErrorConditions'></a>5. Error Conditions
 
 After the PISP initiates the Thirdparty Transaction Request with `POST /thirdpartyRequests/transactions`, the DFSP must send either a `PUT /thirdpartyRequests/transactions/{ID}/error` or `PATCH /thirdpartyRequests/transactions/{ID}` callback to inform the PISP of a final status to the Thirdparty Transaction Request.
 
@@ -310,14 +306,14 @@ After the PISP initiates the Thirdparty Transaction Request with `POST /thirdpar
 - If a PISP doesn't recieve either of the above callbacks within the `expiration` DateTime specified in the `POST /thirdpartyRequests/transactions`, it can assume the Thirdparty Transaction Request failed, and inform their user accordingly
 
 
-### 3.1 Bad Payee Lookup
+## 5.1 Bad Payee Lookup
 
 When the PISP performs a Payee lookup (`GET /parties/{Type}/{Id}`), they may recieve the callback `PUT /parties/{Type}/{Id}/error`. 
 
 See [6.3.4 Parties Error Callbacks](https://docs.mojaloop.io/mojaloop-specification/documents/API%20Definition%20v1.0.html#634-error-callbacks) of the FSPIOP API Definition for details on how to interpret use this error callback.
 
 In this case, the PISP may wish to display an error message to their user informing them to try a different identifier, or try again at a later stage.
-### 3.2 Bad `thirdpartyRequest/transactions` Request
+## 5.2 Bad Thirdparty Transaction Request
 
 When the DFSP receives the `POST /thirdpartyRequests/transactions` request from the PISP, any number of processing or validation errors could occur, such as:
 1. The `payer.partyIdType` or `payer.partyIdentifier` is not valid, or not linked with a valid **Consent** that the DFSP knows about
@@ -333,7 +329,7 @@ In this case, the DFSP must inform the PISP of the failure by sending a `PUT /th
 The PISP can then inform their user of the failure, and can ask them to restart the Thirdparty Transaction request if desired.
 
 
-### 3.3 Downstream FSPIOP-API Failure
+## 5.3 Downstream FSPIOP-API Failure
 
 The DFSP may not want to (or may not be able to) expose details about downstream failures in the FSPIOP API to PISPs.
 
@@ -346,7 +342,7 @@ Another example is where the `POST /transfers` request fails:
 ![3-3-2-bad-transfer-request](./assets/transfer/3-3-2-bad-transfer-request.svg)
 
 
-## 3.4 Invalid Signed Challenge
+## 5.4 Invalid Signed Challenge
 
 After receiving a `POST /thirdpartyRequests/authorizations` call from the DFSP, the PISP asks the user to sign the `challenge` using the credential that was registered during the account linking flow. 
 
@@ -368,16 +364,16 @@ Should the signed challenge be invalid, the DFSP sends a `PUT /thirdpartyRequest
 
 ![3-4-2-bad-signed-challenge-auth-service](./assets/transfer/3-4-2-bad-signed-challenge-auth-service.svg)
 
-## 3.5 Thirdparty Transaction Request Timeout
+## 5.5 Thirdparty Transaction Request Timeout
 
 If a PISP doesn't recieve either of the above callbacks within the `expiration` DateTime specified in the `POST /thirdpartyRequests/transactions`, it can assume the Thirdparty Transaction Request failed, and inform their user accordingly.
 
 
 ![3-6-tpr-timeout](./assets/transfer/3-6-tpr-timeout.svg)
 
-## <a name='Appendix'></a>4. Appendix
+# <a name='Appendix'></a>6. Appendix
 
-### <a name='DerivingtheChallenge'></a>4.1 Deriving the Challenge
+## <a name='DerivingtheChallenge'></a>6.1 Deriving the Challenge
 
 1. _let `quote` be the value of the response body from the `PUT /quotes/{ID}` call_
 2. _let the function `CJSON()` be the implementation of a Canonical JSON to string, as specified in [RFC-8785 - Canonical JSON format](https://tools.ietf.org/html/rfc8785)_
