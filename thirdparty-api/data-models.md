@@ -384,9 +384,6 @@ Used by: DFSP
 The `PUT /parties` resource will use the same form as the resource described in 
 [Section 6.3.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6341-put-partiestypeid) of Ref. 1 above.
 
-It should be noted, however, that the Party object returned from this resource has a different
-format from the Party object described in [Section 7.4.11](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7411-party) of Ref. 1 above. The 
-structure of this object is described in Section 3.2.1.20 below.
 #### 3.1.5 `/services`
 The `/services` resource is a new resource which enables a participant to query for other 
 participants who offer a particular service. The requester will issue a `GET` request, specifying 
@@ -395,39 +392,39 @@ respond with a list of the current DFSPs in the scheme which are registered as p
 service.
 ##### 3.1.5.1 Requests 
 The services resource will support the following requests.
-##### 3.1.5.2 `GET /services/<Type>`
+##### 3.1.5.2 `GET /services/<ServiceType>`
 
 Used by: DFSP, PISP
 
-The HTTP request `GET /services/<Type>` is used to find out the names of the participants in a 
-scheme which provide the type of service defined in the `<Type>` parameter. The `<Type>` parameter
+The HTTP request `GET /services/<ServiceType>` is used to find out the names of the participants in a 
+scheme which provide the type of service defined in the `<ServiceType>` parameter. The `<ServiceType>` parameter
 should specify a value from the ServiceType enumeration. If it does not, the request will be 
 rejected with an error.
 
-Callback and data model information for `GET /services/<Type>`:
-- Callback - `PUT /services/<Type>`
-- Error Callback - `PUT /services/<Type>/error`
+Callback and data model information for `GET /services/<ServiceType>`:
+- Callback - `PUT /services/<ServiceType>`
+- Error Callback - `PUT /services/<ServiceType>/error`
 - Data Model – Empty body
 ##### 3.1.5.3 Callbacks
 This section describes the callbacks that are used by the server for services provided by the 
 resource `/services`.
-###### 3.1.5.3.1 `PUT /services/<Type>`
+###### 3.1.5.3.1 `PUT /services/<ServiceType>`
 
 Used by: Switch
 
-The callback `PUT /services/<Type>` is used to inform the client of a successful result of 
+The callback `PUT /services/<ServiceType>` is used to inform the client of a successful result of 
 the service information lookup. The information is returned in the following form:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| providers | 1…n | FspId |A list of the Ids of the participants who provide the service requested. |
+| providers | 0...256 | FspId | A list of the Ids of the participants who provide the service requested. |
 
-###### 3.1.5.3.2 `PUT /services/<Type>/error`
+###### 3.1.5.3.2 `PUT /services/<ServiceType>/error`
 
 Used by: Switch
 
 If the server encounters an error in fulfilling a request for a list of participants who 
-provide a service, the error callback `PUT /services/<Type>/error` is used to inform the 
+provide a service, the error callback `PUT /services/<ServiceType>/error` is used to inform the 
 client that an error has occurred.
 
 | Name | Cardinality | Type | Description |
@@ -504,15 +501,6 @@ The signed challenge will be sent back by the PISP in `PUT /thirdpartyRequests/a
 | --- | --- | --- | --- |
 | responseType  | 1    | AuthorizationResponseType | `ACCEPTED` or `REJECTED` |
 | signedPayload | 0..1 | SignedPayload | If the `responseType` is `ACCEPTED`, `signedPayload` is required. |
-
-
-`SignedPayload` is defined as follows:
-
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| signedPayloadType  | 1 | SignedPayloadType | `FIDO` or `GENERIC` |
-| signedPayload      | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | If the registered credential is of type `GENERIC`, this will be a BinaryString representing a signature of a sha-256 hash of the challenge. If the registered credential is of type BinaryString, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) | -->
-
 
 ##### 3.1.6.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
@@ -614,9 +602,9 @@ Used by: DFSP
 The `PUT /thirdpartyRequests/transactions/<ID>/error` resource will have the same content as 
 the `PUT /transactionRequests/<ID>/error` resource described in [Section 6.4.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6451-put-transactionrequestsiderror) of Ref. 1 above.
 
-#### 3.1.8 `/thirdPartyRequests/verifications`
+#### 3.1.8 `/thirdpartyRequests/verifications`
 
-The `/thirdPartyRequests/verifications` resource is used by a Payer DFSP to verify that an authorization
+The `/thirdpartyRequests/verifications` resource is used by a Payer DFSP to verify that an authorization
 response received from a PISP was signed using the correct private key, in cases where the authentication service
 to be used is implemented by the switch and not internally by the DFSP. The DFSP sends the original 
 challenge and the signed response to the authentication service, together with the `consentId` to be used
@@ -624,27 +612,27 @@ for the verification. The authentication service compares the response with the 
 challenge with the private key associated with the `consentId`, and, if the two match, it returns a 
 positive result. Otherwise, it returns an error.
 
-The `/thirdPartyRequests/verifications` resource supports the endpoints described below.
+The `/thirdpartyRequests/verifications` resource supports the endpoints described below.
 ##### 3.1.8.1 Requests
-This section describes the services that a client can request on the `/thirdPartyRequests/verifications`
+This section describes the services that a client can request on the `/thirdpartyRequests/verifications`
 resource.
-###### 3.1.8.1.1 `GET /thirdPartyRequests/verifications/<ID>`
+###### 3.1.8.1.1 `GET /thirdpartyRequests/verifications/<ID>`
 
 Used by: DFSP
 
-The HTTP request `/thirdPartyRequests/verifications/<ID>` is used to get information regarding a previously
+The HTTP request `/thirdpartyRequests/verifications/<ID>` is used to get information regarding a previously
 created or requested authorization. The `<ID>` in the URI should contain the verification request ID 
 (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) below) that was used for the creation of the transfer.Callback and data model
-information for` GET /thirdPartyRequests/verifications/<ID>`:
+information for` GET /thirdpartyRequests/verifications/<ID>`:
 
-- Callback – `PUT /thirdPartyRequests/verifications/<ID>`
-- Error Callback – `PUT /thirdPartyRequests/verifications/<ID>/error`
+- Callback – `PUT /thirdpartyRequests/verifications/<ID>`
+- Error Callback – `PUT /thirdpartyRequests/verifications/<ID>/error`
 - Data Model – Empty body
-###### 3.1.8.1.2 `POST /thirdPartyRequests/verifications`
+###### 3.1.8.1.2 `POST /thirdpartyRequests/verifications`
 
 Used by: DFSP
 
-The `POST /thirdPartyRequests/verifications` resource is used to request confirmation from an authentication
+The `POST /thirdpartyRequests/verifications` resource is used to request confirmation from an authentication
 service that a challenge has been signed using the correct private key.
 
 Callback and data model information for `POST /thirdpartyRequests/verifications`:
@@ -658,34 +646,35 @@ Callback and data model information for `POST /thirdpartyRequests/verifications`
 | challenge | 1 | BinaryString |The challenge originally sent to the PISP |
 | consentId | 1 | CorrelationId |Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature |
 | signedPayloadType | 1 | SignedPayloadType | The type of the SignedPayload, depending on the type of credential registered by the PISP |
-| value | 1 | `BinaryString` or `FIDOPublicKeyCredentialAssertion` | The signed challenge returned by the PISP. If the registered credential is of type `GENERIC`, this will be a BinaryString representing a signature of the challenge + private key of the credential. If the registered credential is of type `FIDO`, this will be a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
+| genericValue | 0..1 | BinaryString | Required if signedPayloadType is GENERIC. The signed challenge returned by the PISP. A BinaryString representing a signature of the challenge + private key of the credential. |
+| fidoValue | 0..1 | FIDOPublicKeyCredentialAssertion | Required if signedPayloadType is FIDO. The signed challenge returned by the PISP in the form of a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
 
 ##### 3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource
-`/thirdPartyRequests/verifications/`
-###### 3.1.8.2.1 `PUT /thirdPartyRequests/verifications/<ID>`
+`/thirdpartyRequests/verifications/`
+###### 3.1.8.2.1 `PUT /thirdpartyRequests/verifications/<ID>`
 
 Used by: Auth Service
 
-The callback `PUT /thirdPartyRequests/verifications/<ID>` is used to inform the client of the result 
+The callback `PUT /thirdpartyRequests/verifications/<ID>` is used to inform the client of the result 
 of an authorization check. The `<ID>` in the URI should contain the `authorizationRequestId`
 (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above) which was used to request the check, or the `<ID>` that was 
-used in the `GET /thirdPartyRequests/verifications/<ID>`. The data model for this resource is as follows:
+used in the `GET /thirdpartyRequests/verifications/<ID>`. The data model for this resource is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| authorizationResponse | 1 | AuthenticationResponse |The result of the authorization check. |
+| authorizationResponse | 1 | AuthenticationResponse | The result of the authorization check. |
 ##### 3.1.8.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
-`/thirdPartyRequests/verifications`.
-###### 3.1.8.3.1 `PUT /thirdPartyRequests/verifications/<ID>/error`
+`/thirdpartyRequests/verifications`.
+###### 3.1.8.3.1 `PUT /thirdpartyRequests/verifications/<ID>/error`
 
 Used by: Auth Service
 
 If the server is unable to complete the authorization request, or another processing error occurs, the 
-error callback `PUT /thirdPartyRequests/verifications/<ID>/error` is used.The `<ID>` in the URI should 
+error callback `PUT /thirdpartyRequests/verifications/<ID>/error` is used.The `<ID>` in the URI should 
 contain the `verificationRequestId` (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above) which was used to request the 
-check, or the `<ID>` that was used in the `GET /thirdPartyRequests/verifications/<ID>`.
+check, or the `<ID>` that was used in the `GET /thirdpartyRequests/verifications/<ID>`.
 
 The data model for this resource is as follows:
 | Name | Cardinality | Type | Description |
@@ -740,6 +729,11 @@ The AccountList data model is used to hold information about the accounts that a
 ##### 3.2.1.4 AuthenticationInfo
 The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#741-authenticationinfo) of Ref. 1 above.
 ##### 3.2.1.5 AuthenticationResponse
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| AuthenticationResponse | 1 | Enum of String(1..32) | See [Section 3.2.2.1](#3221-AuthenticationResponse) below (AuthenticationResponse) for more information on allowed values.|
+ 
 ##### 3.2.1.6 AuthenticationValue
 The AuthenticationValue data element contains a response returned by the recipient of an authorization request. It is described in [Section 7.3.3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#733-authenticationvalue) of Ref. 1 above, and is extended to support the new authentication type used for PISP. The data model is as follows:
 | Name | Cardinality | Type | Description |
@@ -896,10 +890,20 @@ A data model representing an [AuthenticatorAssertionResponse](https://w3c.github
 | signature         | 1 | string | The signature generated by the private key associated with this credential. |
 | userHandle        | 0..1 | string | This field is optionally provided by the authenticator, and represents the user.id that was supplied during registration.|
 
+##### [todo] SignedPayload
+
+A data model representing a Third Party Transaction request signature.
+
+| Name | Cardinality | Type | Description |
+| --- | --- | --- | --- |
+| signedPayloadType     | 1 | SignedPayloadType | `FIDO` or `GENERIC` |
+| genericSignedPayload  | 0..1 | BinaryString(256) | Required if signedPayloadType is of type `GENERIC`. A BinaryString(256) of a signature of a sha-256 hash of the challenge. |
+| fidoSignedPayload     | 0..1 | FIDOPublicKeyCredentialAssertion | Required if signedPayloadType is of type `FIDO`. |
+
 
 #### 3.2.2 Enumerations
 ##### 3.2.2.1 AuthenticationResponse
-The AuthenticationResponse enumeration describes the result of authenticating a FIDO challenge.
+The AuthenticationResponse enumeration describes the result of authenticating verification request.
 | Name | Description |
 | ---  | ----------- |
 | VERIFIED | The challenge was correctly signed. |
