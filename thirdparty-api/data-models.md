@@ -53,22 +53,15 @@ The Mojaloop Third Party API Specification includes the following documents:
 - [Third Party Open API Definition - PISP](./thirdparty-dfsp-v1.0.yaml)
 
 
-## 3 Third Party API
+## 3 Third Party API Elements
 
-This section describes the content of the API which will be used by PISPs.
-The content of the API falls into two sections. The first section manages the process for linking customer accounts and providing a general permission mechanism for PISPs to perform operations on those accounts. The second section manages the transfer of funds at the instigation of a PISP.
-The content of the account linking section consists of the following operations:
-- The PISP requests association with a customer account on behalf of the customer.
-- The owner of the customer’s account satisfies itself that association really was requested by their customer, and the customer has a chance to confirm or modify directly with the account owning DFSP the types of access and the accounts for which the PISP will have permission. The DFSP then notifies the PISP that the customer has authorized access, and provides a token which the PISP can use to continue the process. This part of the process is performed via direct communication between the PISP application and the DFSP, and does not use the API.
-- The DFSP requests confirmation from the PISP that the DFSP’s customer has confirmed with the PISP that they authorize the PISP to perform operations on their account. Confirmation requires the PISP to provide the bearer token that the DFSP sent the PISP as confirmation of the successful completion of the out-of-band customer authorization described in the previous step.
-- The DFSP confirms to the PISP the accounts which it will allow the PISP to access and the access types available to the PISP on each account. It also confirms the following items of information:
-  - For each account to which the DFSP grants access, the Mojaloop identifier which the PISP should use in subsequent access requests to identify the account on which the operation should be performed.
-- For each association to be made, the PISP asks the user’s handset to register a keypair to be used to confirm transfer requests in the future. The public key belonging to this keypair is returned to the DFSP, together with the account identifier provided by the DFSP.
-- If the DFSP is not using a local authentication service to verify the challenges it uses to authenticate transfer requests, it asks the scheme’s authentication service to register the public key and associate it with the account ID it provides.
+This section describes the content of the API which will be used by PISPs and DFSPs.
 
-- For each association to be made, the DFSP provides a challenge to the PISP. The PISP asks the customer to sign the challenge, and returns the signed challenge to the DFSP.
+The content of the API falls into two sections: 
 
-- The DFSP verifies that the signed challenge matches the value that it holds for the association, using either its own authentication service or the scheme authentication service.
+1. [Transaction Patterns - Linking](./transaction-patterns-linking.md) desribes the process for linking customer accounts and providing a general permission mechanism for PISPs to perform operations on those accounts
+2. [Transaction Patterns - Transfer](./transaction-patterns-transfer.md) describes the transfer of funds at the instigation of a PISP.
+
 The API is used by the following different types of participant, as follows:
   1. PISPs.
   2. DFSPs who offer services to their customer which allow the customer to access their account via one or more PISPs.
@@ -79,7 +72,7 @@ Each resource in the API definition is accompanied by a definition of the type(s
 
 ### 3.1 Resources
 
-The PISP API will contain the following resources:
+The API contains the following resources:
 
 #### 3.1.1 `/accounts`
 
@@ -100,13 +93,9 @@ This section describes the services that a PISP can request on the /accounts res
 Used by: PISP
 
 The HTTP request `GET /accounts/<ID>` is used to lookup information about the requested
-Party’s accounts, defined by an identifier `<ID>`, where `<ID>` is some identifier a user
-uses to access their account with the DFSP, such as a phone number, email address, clientId.
-
-> __Note:__ This differs from the `GET /parties/<TYPE>/<ID>` request of Ref.1. above
-> because the destination DFSP is _already known_ by the PISP when the user selects
-> from a list of supported DFSPs, so the switch does not need to perform a lookup to determine
-> the DFSP this request should be routed to.  
+user's accounts, defined by an identifier `<ID>`, where `<ID>` is an identifier a user
+uses to access their account with the DFSP, such as a phone number, email address, or
+some other identifier previously provided by the DFSP.
 
 See Section 5.1.6.11 of Ref. 1 above for more information regarding addressing of a Party.
 
@@ -162,7 +151,7 @@ This section describes the services that can be requested by a client on the API
 Used by: PISP
 
 The HTTP request `GET /consentRequests/<ID>` is used to get information about a previously 
-requested consent. The `<ID>` in the URI should contain the requestId that was assigned to the 
+requested consent. The `<ID>` in the URI should contain the consentRequestId that was assigned to the 
 request by the PISP when the PISP originated the request.
 
 Callback and data model information for `GET /consentRequests/<ID>`:
@@ -185,10 +174,10 @@ Callback and data model for `POST /consentRequests`:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | consentRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the consent request object. The ID should be reused for resends of the same consent request. A new ID should be generated for each new consent request. |
-| userId           | 1 | string        | The identifier used in the `GET /accounts/<ID>`. Used by the DFSP to correlate an account lookup to a `consentRequest` |
-| scopes | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
-| authChannels | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
-| callbackUri | 1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
+| userId           | 1 | String(1..128) | The identifier used in the `GET /accounts/<ID>`. Used by the DFSP to correlate an account lookup to a `consentRequest` |
+| scopes           | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
+| authChannels     | 1..n | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
+| callbackUri      | 1 | Uri | The callback URI that the user will be redirected to after completing verification via the WEB authorization channel. This field is mandatory as the PISP does not know ahead of time which AuthChannel the DSFP will use to authenticate their user.  |
 
 ##### 3.1.2.2 Callbacks
 
@@ -211,7 +200,7 @@ particular authorization request. The data model for this call is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | scopes       | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
-| authChannels | 1 | ConsentRequestChannelType | A list of one element, which the DFSP uses to inform |
+| authChannels | 1 | ConsentRequestChannelType | A list of one element, which the DFSP uses to inform the PISP of the selected authorization channel. |
 | callbackUri  | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
 | authUri      | 0..1 | Uri | The URI that the PISP should call to complete the linking procedure if completion is required. |
 
@@ -287,7 +276,8 @@ Callback and data model information for `POST /consents/<ID>`:
 | --- | --- | --- | --- |
 | consentId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the consent object. The ID should be reused for resends of the same consent. A new ID should be generated for each new consent.|
 | consentRequestId | 1 | CorrelationId | The ID given to the original consent request on which this consent is based. |
-| scopes   | 1..n  | Scope |One or more accounts on which the DFSP is prepared to grant specified permissions to the PISP. |
+| scopes   | 1..n  | Scope | A list Scope objects, which represent the accounts and attached permissions on which the DFSP is prepared to grant specified permissions to the PISP. |
+| status | 0..1 | ConsentStatus | The status of the Consent. |
 | credential | 0..1 | Credential | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
 ###### 3.1.3.1.3 `DELETE /consents/<ID>`
@@ -295,8 +285,9 @@ Callback and data model information for `POST /consents/<ID>`:
 Used by PISP, DFSP
 
 The `DELETE /consents/<ID>` request is used to request the revokation of a previously agreed consent.
-The switch should be sure not to delete the consent physically; instead, information relating to 
-the consent should be marked as deleted and requests relating to the consent should not be honoured.
+For tracing and auditing purposes, the switch should be sure not to delete the consent physically; 
+instead, information relating to the consent should be marked as deleted and requests relating to the
+consent should not be honoured.
 
 > Note: the ALS should verify that the participant who is requesting the deletion is either the 
 > initiator named in the consent or the account holding institution named in the consent. If any 
@@ -307,7 +298,7 @@ Callback and data model information for `DELETE /consents/<ID>`:
 - Error Callback – `PUT /consents/<ID>/error`
 
 ##### 3.1.3.2 Callbacks 
-The `/consents` resource will support the following callbacks: 
+The `/consents` resource supports the following callbacks: 
 ###### 3.1.3.2.1 `PATCH/consents/<ID>`
 
 Used by: Auth-Service, DFSP
@@ -323,17 +314,18 @@ of `VERIFIED`.
 In the second case, an Auth-Service or DFSP sends a `PATCH/consents/<ID>` request with a `status` of
 `REVOKED`, and the `revokedAt` field set.
 
-The syntax of this call complies with the JSON Merge Patch specification  rather than the 
-JSON Patch specification. The `PATCH /consents/<ID>` resource contains a set of proposed changes to 
-the current state of the permissions relating to a particular authorization grant. The data model 
+The syntax of this call complies with the JSON Merge Patch specification [RFC-7386](https://datatracker.ietf.org/doc/html/rfc7386) 
+rather than the JSON Patch specification [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902). 
+The `PATCH /consents/<ID>` resource contains a set of proposed changes to the current state of the 
+permissions relating to a particular authorization grant. The data model 
 for this call is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| status | 0..1 | "REVOKED" | Consent status is now revoked. |
+| status | 0..1 | ConsentStatus | The status of the Consent. |
 | revokedAt | 0..1 | DateTime | The DateTime the consent was revoked at. |
 | credential | 0..1 | Credential | The credential which is being used to support the consents. |
-| extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
+| extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
 
 ###### 3.1.3.2.2 `PUT /consents/<ID>`
 
@@ -346,6 +338,7 @@ data returned by the call is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | scopes        | 1..n | Scope         | The scopes covered by the consent. |
+| status        | 0..1 | ConsentStatus | The status of the Consent. |
 | credential    | 1    | Credential    | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
 ##### 3.1.3.3 Error callbacks
@@ -978,6 +971,17 @@ The SignedPayloadType enumeration contains the allowed values for the type of a 
 | ---  | ----------- |
 | FIDO | The signed payload is based on a FIDO Assertion Response. Its payload is a FIDOPublicKeyCredentialAssertion object. |
 | GENERIC | The signed payload is based on a simple public key validation. Its payload is a BinaryString object |
+
+
+##### ConsentStatus
+The ConsentStatus Enumeration describes the possible states of a Consent object.
+
+| Name | Description |
+| ---  | ----------- |
+| ISSUED | The Consent has been issued by the DFSP |
+| REVOKED | The Consent has been revoked  |
+
+
 
 
 ##### 3.2.2.11 AmountType

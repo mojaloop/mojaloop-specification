@@ -225,6 +225,9 @@ In the web authentication channel, the user is actually redirected to the DFSP's
 website where they can prove their identity (likely by a typical username and
 password style login).
 
+<!-- TODO: add a comment about using the authUri field -->
+
+
 **Note:** Keep in mind that at this stage, the User may update their choices of
 which accounts to link with. The result of this will be seen later on when
 during the Grant consent phase, where the DFSP will provide the correct values
@@ -246,6 +249,8 @@ It is implemented as extension for TestingToolkit service which allows to define
 - SIM-19 in response from /authorize call is generated `secret`
 - SIM-20 `secret` is appended to callbackUri as query parameter
 ### 1.4.2. OTP
+
+<!-- TODO: add a comment about using the PATCH /consentRequest/{id} call -->
 
 When using the OTP authentication channel, the DFSP will send the User some sort
 of one-time password over a pre-established channel (most likely SMS). The PISP
