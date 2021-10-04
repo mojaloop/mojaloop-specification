@@ -8,6 +8,38 @@ Third Party API
 <!-- todo -->
 
 
+<!-- TOC -->
+
+- [1. Linking](#1-linking)
+  - [1.1. Pre-linking](#11-pre-linking)
+  - [1.2. Discovery](#12-discovery)
+  - [1.3. Request consent](#13-request-consent)
+      - [1.3.1. Web](#131-web)
+      - [1.3.2. OTP / SMS](#132-otp--sms)
+  - [1.4. Authentication](#14-authentication)
+      - [1.4.1. Web](#141-web)
+          - [DFSPAuthorizeSimulator](#dfspauthorizesimulator)
+      - [1.4.2. OTP](#142-otp)
+          - [DFSPAuthorizeSimulator](#dfspauthorizesimulator-1)
+  - [1.5. Grant consent](#15-grant-consent)
+  - [1.6. Credential registration](#16-credential-registration)
+      - [1.6.1. Deriving the challenge](#161-requesting-a-challenge)
+      - [1.6.2. Registering the credential](#162-registering-the-credential)
+      - [1.6.2. Finalizing the Consent](#163-finalizing-the-consent)
+- [2. Unlinking](#2-unlinking)
+- [3. Third-party credential registration](#3-third-party-credential-registration)
+  - [3.1. Authentication](#31-authentication)
+  - [3.2. Credential registration](#32-credential-registration)
+- [4. Linking Error Scenarios](#4-linking-error-scenarios)
+  - [4.1. Discovery](#41-Discovery)
+  - [4.2. Bad consentRequests](#42-Bad-consentRequests)
+  - [4.3. Authentication](#43-Authentication)
+  - [4.4. Grant consent](#44-Grant-consent)
+  
+<!-- /TOC -->
+
+
+
 ## 1. Preface
 
 This section contains information about how to use this document.
@@ -55,40 +87,7 @@ The Mojaloop Third Party API Specification includes the following documents:
 - [Third Party Open API Definition - PISP](./thirdparty-dfsp-v1.0.yaml)
 
 
-
-<h1>Contents</h1>
-
-<!-- TOC -->
-
-- [1. Linking](#1-linking)
-  - [1.1. Pre-linking](#11-pre-linking)
-  - [1.2. Discovery](#12-discovery)
-  - [1.3. Request consent](#13-request-consent)
-      - [1.3.1. Web](#131-web)
-      - [1.3.2. OTP / SMS](#132-otp--sms)
-  - [1.4. Authentication](#14-authentication)
-      - [1.4.1. Web](#141-web)
-          - [DFSPAuthorizeSimulator](#dfspauthorizesimulator)
-      - [1.4.2. OTP](#142-otp)
-          - [DFSPAuthorizeSimulator](#dfspauthorizesimulator-1)
-  - [1.5. Grant consent](#15-grant-consent)
-  - [1.6. Credential registration](#16-credential-registration)
-      - [1.6.1. Deriving the challenge](#161-requesting-a-challenge)
-      - [1.6.2. Registering the credential](#162-registering-the-credential)
-      - [1.6.2. Finalizing the Consent](#163-finalizing-the-consent)
-- [2. Unlinking](#2-unlinking)
-- [3. Third-party credential registration](#3-third-party-credential-registration)
-  - [3.1. Authentication](#31-authentication)
-  - [3.2. Credential registration](#32-credential-registration)
-- [4. Linking Error Scenarios](#4-linking-error-scenarios)
-  - [4.1. Discovery](#41-Discovery)
-  - [4.2. Bad consentRequests](#42-Bad-consentRequests)
-  - [4.3. Authentication](#43-Authentication)
-  - [4.4. Grant consent](#44-Grant-consent)
-  
-<!-- /TOC -->
-
-# 1. Linking
+# 3. Linking
 
 The goal of the linking process is to explain how users establish trust between
 all three interested parties:
@@ -96,8 +95,6 @@ all three interested parties:
 1. User
 2. DFSP where User has an account
 3. PISP that User wants to rely on to initiate payments
-
-*NOTE: For now, we're focusing on the FIDO / Web authentication channel.*
 
 Linking is broken down into several separate phases:
 
@@ -115,7 +112,7 @@ Linking is broken down into several separate phases:
    In this phase, a User establishes the credential they'll use to consent to
    future transfers from the DFSP and initiated by the PISP.
 
-## 1.1. Pre-linking
+## 3.1 Pre-linking
 
 In this phase, a PISP Server needs to know what DFSPs are available to link
 with. This is *unlikely* to be done on-demand (e.g., when a User clicks "link"
@@ -123,6 +120,10 @@ in the PISP mobile App), and far more likely to be done periodically and cached
 by the PISP Server. The reason for this is simply that new DFSPs don't typically
 join the Mojaloop network all that frequently, so calling this multiple times on
 the same day (or even the same month) would likely yield the same results.
+
+Additionally, a Mojaloop switch can send a `PUT /services/<ID>` whenever a new 
+DFSP is added to the network to effectively broadcast an update to the list of
+DFSPs available for linking.
 
 The end-goal of this phase is for the PISP Server to have a final list of DFSPs
 available and any relevant metadata about those DFPSs that are necessary to
@@ -133,7 +134,7 @@ which DFSP they hold an account with for linking.
 
 ![Pre-linking](./assets/linking/0-pre-linking.svg)
 
-## 1.2. Discovery
+## 3.2 Discovery
 
 In this phase, we ask the user to select the type and value of identifier they use
 with the DFSP they intend to link with. This could be a username, MSISDN (phone number),
@@ -157,7 +158,7 @@ time to time.
 
 ![Discovery](./assets/linking/1-discovery.svg)
 
-## 1.3. Request consent
+## 3.3 Request consent
 
 In this phase, a PISP is asking a specific DFSP to start the process of
 establishing consent between three parties:
@@ -182,7 +183,7 @@ information is required:
 
 The end result of this phase depends on the authentication channel used:
 
-### 1.3.1. Web
+### 3.3.1 Web
 
 In the web authentication channel, the result is the PISP being instructed on
 a specific URL where this supposed user should be redirected. This URL should be
@@ -190,16 +191,16 @@ a place where the user can prove their identity (e.g., by logging in).
 
 ![Request consent](./assets/linking/2-request-consent-web.svg)
 
-### 1.3.2. OTP / SMS
+### 3.3.2 OTP / SMS
 
 In the OTP authentication channel, the DFSP sends an 'out of bound' OTP message
 to their user (e.g. over SMS or Email). The PISP prompts the user for this OTP
-message, and includes it in the `authToken` field in the `PUT /consentRequests/{id}`
+message, and includes it in the `authToken` field in the `PATCH /consentRequests/<ID>`
 callback.
 
 ![Request consent](./assets/linking/2-request-consent-otp.svg)
 
-## 1.4. Authentication
+## 3.4 Authentication
 
 In the authentication phase, the user is expected to prove their identity to the
 DFSP. Once this is done, the DFSP will provide the User with some sort of secret
@@ -219,7 +220,7 @@ behalf of the User, and mutual trust exists between all three parties.
 The process of establishing this chain of trust depends on the authentication
 channel being used:
 
-### 1.4.1. Web
+### 3.4.1 Web
 
 In the web authentication channel, the user is actually redirected to the DFSP's
 website where they can prove their identity (likely by a typical username and
@@ -235,34 +236,17 @@ to the PISP in the `scopes` field.
 
 ![Authentication (Web)](./assets/linking/3-authentication-web.svg)
 
-#### DFSPAuthorizeSimulator
-DFSPAuthorizeSimulator is api service for demo purposes. For the `Web flow` it is the backend  for single page application (SPA) which demonstrates the process of User's authorizations and granting the consents at DFSP web service.
 
-It is implemented as extension for TestingToolkit service which allows to define testing scenarios as TTK rules driven by `username` parameter.
-
-- SIM-4 PISP application redirects user to `authUri`, passing `consentRequestId` as query parameter.
-- SIM-7 WebBrowser renders DFSP login form
-- SIM-8 User submits the `username` and `password` at DFSP login page
-- SIM-12 WebBrowser retrieves the consentRequest details - including the list of accounts
-- SIM-15 WebBrowser renders grant consent page
-- SIM-16 User grants consent
-- SIM-19 in response from /authorize call is generated `secret`
-- SIM-20 `secret` is appended to callbackUri as query parameter
-### 1.4.2. OTP
+### 3.4.2 OTP
 
 <!-- TODO: add a comment about using the PATCH /consentRequest/{id} call -->
 
 When using the OTP authentication channel, the DFSP will send the User some sort
 of one-time password over a pre-established channel (most likely SMS). The PISP
-should prompt the user for this secret and then provide that back to the DFSP.
+should prompt the user for this one-time password and then provide that back to the DFSP.
 
 ![Authentication (OTP)](./assets/linking/3-authentication-otp.svg)
-
-#### DFSPAuthorizeSimulator
-DFSPAuthorizeSimulator is api service for demo purposes. For the `OTP flow` it exposes `/sendOTP` API endpoint which allows to simulate sending SMS token to the User's device.
-
-It is implemented as extension for TestingToolkit service which allows to define testing scenarios as TTK rules driven by `username` parameter.
-## 1.5. Grant consent
+## 3.5 Grant consent
 
 Now that mutual trust has been established between all three parties, the DFSP
 is able to create a record of that fact by creating a new Consent resource.
@@ -272,15 +256,15 @@ for how the User can prove that it consents to each individual transfer in the
 future.
 
 This phase consists exclusively of the DFSP requesting that a new consent be
-created. This request must be conveyed both to the PISP itself.
+created.
 
 ![Grant consent](./assets/linking/4-grant-consent.svg)
 
 
-## 1.6. Credential registration
+## 3.6 Credential registration
 
 Once the consent resource has been created, the PISP will attempt to establish
-with the network the credential that should be used to verify that a user has
+with the DFSP the credential that should be used to verify that a user has
 given consent for each transfer in the future.
 
 This will be done by storing a FIDO credential (e.g., a public key) on the Auth
@@ -291,7 +275,7 @@ case, the private key) in order to be considered valid.
 This credential registration is composed of three phases: (1) deriving the
 challenge, (2) registering the credential, and (3) finalizing the consent.
 
-### 1.6.1. Deriving the challenge
+### 3.6.1 Deriving the challenge
 
 The PISP must derive the challenge to be used as an input to the FIDO Key
 Registration step. This challenge must not be guessable ahead of time by
@@ -317,11 +301,10 @@ i.e. `SHA256(CJSON(rawChallenge))`
 The output of this algorithm, `challenge` will be used as the challenge for the [FIDO registration flow](https://webauthn.guide/#registration)
 
 
-### 1.6.2 Registering the credential
-
+### 3.6.2 Registering the credential
 
 Once the PISP has derived the challenge, the PISP will generate a new
-credential on the device, digitally signing the challenge, and provide the some new
+credential on the device, digitally signing the challenge, and provide additional
 information about the credential on the Consent resource:
 
 1. The `PublicKeyCredential` object - which contains the key's Id, and an [AuthenticatorAttestationResponse](https://w3c.github.io/webauthn/#iface-authenticatorattestationresponse) which contains the public key
@@ -329,7 +312,7 @@ information about the credential on the Consent resource:
 3. a `status` field set to `PENDING`
 
 > **Note:** Generic `Credential` objects
-> While we are focussed on FIDO first, we don't want to exclude PISPs who want
+> While we are focused on FIDO first, we don't want to exclude PISPs who want
 > to offer services to users over other channels, eg. USSD or SMS, for this
 > reason, the API also supports a `GENERIC` Credential type, i.e.:
 >```
@@ -363,7 +346,7 @@ allows us to look up the Auth service given a `consentId` at a later date.
 ![Credential registration: Register](./assets/linking/5a-credential-registration.svg)
 
 
-### 1.6.3. Finalizing the Consent
+### 3.6.3 Finalizing the Consent
 
 Once the DFSP is satisfied that the credential is valid, it calls
 `POST /participants/THIRD_PARTY_LINK/{id}` for each account in the
@@ -378,7 +361,7 @@ object it received from the Auth Service.
 ![Credential registration: Finalize](./assets/linking/5b-finalize_consent.svg)
 
 
-# 2. Unlinking
+# 4. Unlinking
 
 At some point in the future, it's possible that a User, PISP, or DFSP may decide
 that the relationship of trust previously established should no longer exist.
@@ -391,11 +374,11 @@ to remove the Consent resourse and notify the other parties about the removal.
 
 
 There are 2 scenarios we need to cater for with a `DELETE /consents/{id}` request:
-1. A DFSP-hosted Auth Service, where no details about the Consent are stored in the Hub, and
-2. A Hub-hosted Auth Service, where the Hub hosted auth service is considered the Authoritative source on the `Consent` object
+1. A DFSP-hosted Auth Service, where no details about the Consent are stored in the Switch, and
+2. A Switch hosted Auth Service, where the Switch hosted auth service is considered the Authoritative source on the `Consent` object
 
 
-## 2.1 Unlinking without a Hub Hosted Auth Service
+## 4.1 Unlinking without a Switch Hosted Auth Service
 In this case, the switch passes on the `DELETE /consents/123` request to the DFSP in the `FSPIOP-Destination` header.
 
 ![Unlinking-DFSP-Hosted](./assets/linking/6a-unlinking-dfsp-hosted.svg)
@@ -404,49 +387,25 @@ In the case where Unlinking is requested from the DFSP's side, the DFSP can
 simply call `PATCH /consents/123` to inform the PISP of an update to the
 `Consent` object.
 
-## 2.2 Unlinking with a Hub Hosted Auth Service
+## 4.2 Unlinking with a Switch Hosted Auth Service
 
 In this instance, the PISP still addresses it's `DELETE /consents/123` call to the
 DFSP, since it knows nothing
 
 Internally, the switch will lookup the Authoritative source of the `Consent` object,
 using the ALS Call, `GET /participants/CONSENT/{id}`. If it is determined that there
-is a Hub-hosted Auth Service which 'owns' this `Consent`, the HTTP call `DELETE /consents/{id}`
+is a Switch hosted Auth Service which 'owns' this `Consent`, the HTTP call `DELETE /consents/{id}`
 will be redirected to the Auth Service.
 
-![Unlinking-Hub-Hosted](./assets/linking/6b-unlinking-hub-hosted.svg)
+![Unlinking-Switch-Hosted](./assets/linking/6b-unlinking-swtch-hosted.svg)
 
+# 5. Linking Error Scenarios
 
-# 3. Third-party credential registration
-
-There is ongoing work with the FIDO alliance to allow third parties the ability
-to collect a FIDO credential on behalf of the intended user of the credential.
-In other words, this work would allow the DFSP (during the web authentication
-flow) to ask the user to provide a FIDO credential that would be for use by the
-PISP rather than the DFSP.
-
-If this becomes possible, the flow changes, speciifcally in the Authentication
-phase and the Credential registration phase.
-
-## 3.1. Authentication
-
-The authentication phase becomes very minimal. Since the credential will be
-collected by the DFSP itself (for use later by the PISP), there's no need to
-send back any sort of secret and no need to pass a secret back to the DFSP.
-
-![Authentication](./assets/linking/3-authentication-third-party-fido.svg)
-
-## 3.2. Credential registration
-
-TODO!
-
-# 4. Linking Error Scenarios
-
-## 4.1. Discovery
+## 5.1 Discovery
 ![Accounts error](./assets/linking/error_scenarios/1-discovery-error.svg)
 
-## 4.2. Bad consentRequests
-When the DFSP receives the POST /consentRequests request from the PISP, any number of processing or validation errors could occur, such as:
+## 5.2 Bad consentRequests
+When the DFSP receives the `POST /consentRequests` request from the PISP, any number of processing or validation errors could occur, such as:
 
 1. FSP does not support any requested authentication channels (Error code: `7203`)
 2. FSP does not support any requested scope actions (Error code: `7204`)
@@ -455,12 +414,12 @@ When the DFSP receives the POST /consentRequests request from the PISP, any numb
 5. FSP does not allow consent requests for specified username (Error code: `7211`)
 6. Any other checks or validation of the consentRequests on the DFSP's side fail (Error code: `7208`)
 
-In this case, the DFSP must inform the PISP of the failure by sending a PUT /consentRequests/{ID}/error callback to the PISP.
+In this case, the DFSP must inform the PISP of the failure by sending a `PUT /consentRequests/{ID}/error` callback to the PISP.
 
 ![consentRequests error](./assets/linking/error_scenarios/2-request-consent-error.svg)
 
-## 4.3. Authentication
+## 5.3 Authentication
 ![Authentication Invalid OTP](./assets/linking/error_scenarios/3-authentication-otp-invalid.svg)
 
-## 4.4 Grant consent
+## 5.4 Grant consent
 ![Grant consent scope error](./assets/linking/error_scenarios/4-grant-consent-scope-error.svg)

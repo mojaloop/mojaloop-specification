@@ -63,9 +63,9 @@ The content of the API falls into two sections:
 2. [Transaction Patterns - Transfer](./transaction-patterns-transfer.md) describes the transfer of funds at the instigation of a PISP.
 
 The API is used by the following different types of participant, as follows:
-  1. PISPs.
-  2. DFSPs who offer services to their customer which allow the customer to access their account via one or more PISPs.
-  3. FIDO authorization servers.
+  1. PISPs
+  2. DFSPs who offer services to their customer which allow the customer to access their account via one or more PISPs
+  3. Auth-Services
   4. The Mojaloop switch
 
 Each resource in the API definition is accompanied by a definition of the type(s) of participant allowed to access it.
@@ -96,8 +96,6 @@ The HTTP request `GET /accounts/<ID>` is used to lookup information about the re
 user's accounts, defined by an identifier `<ID>`, where `<ID>` is an identifier a user
 uses to access their account with the DFSP, such as a phone number, email address, or
 some other identifier previously provided by the DFSP.
-
-See Section 5.1.6.11 of Ref. 1 above for more information regarding addressing of a Party.
 
 Callback and data model information for `GET /accounts/<ID>`:
 - Callback - `PUT /accounts/<ID>`
