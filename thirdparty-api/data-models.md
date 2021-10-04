@@ -692,7 +692,7 @@ The Account data model contains information relating to an account.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| address | 0..1 | AccountAddress | An address which can be used to identify the account |
+| address  | 1 | AccountAddress | An address which can be used to identify the account |
 | currency | 1 | Currency | The currency in which the account is denominated |
 | accountNickname | 0..1 | Name | Display name of the account, as set by the account owning DFSP. This will normally be a type name, such as “Transaction Account” or “Savings Account” |
 ##### 3.2.1.2 AccountAddress
@@ -703,23 +703,10 @@ The `AccountAddress` data type is a variable length string with a maximum size o
 - Tilde (~)
 - Hyphen (-)
 - Period (.) Addresses MUST NOT end in a period (.) character
-An entity providing accounts to parties (i.e. a participant) can provide any value for an `AccountAddress` that is routable to that entity. It does not need to provide an address that makes the account identifiable outside the entity’s domain. i.e. This is an address not an identifier
-For example, a participant (Blue DFSP) that has been allocated the address space `moja.blue` might allocate a random UUID to the account and return the value:
-```json
-{
-  "address": "moja.blue.8f027046-b82a-4fa9-838b-70210fcf8137",
-  "currency": "ZAR"
-}
-```
-This address is routable to Blue DFSP because it uses the prefix `moja.blue`
-Blue DFSP may also simply use their own address if that is sufficient (in combination with the remainder of the `PartyIdInfo`) to uniquely identify the payee and the destination account.
-```json
-{
-  "address": "moja.blue",
-  "currency": "ZAR"
-}
-```
-This address is also routable to Blue DFSP because it uses the prefix `moja.blue`
+
+An entity providing accounts to parties (i.e. a participant) can provide any value for an `AccountAddress` that is meaningful to that entity.
+It does not need to provide an address that makes the account identifiable outside the entity’s domain. 
+
 > ***IMPORTANT:* The policy for defining addresses and the life-cycle of these is at the discretion of the address space owner (the payer DFSP in this case).**
 ##### 3.2.1.3 AccountList
 The AccountList data model is used to hold information about the accounts that a party controls.
@@ -732,13 +719,7 @@ The AuthenticationInfo data type used in these definitions is as defined in [Sec
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| AuthenticationResponse | 1 | Enum of String(1..32) | See [Section 3.2.2.1](#3221-AuthenticationResponse) below (AuthenticationResponse) for more information on allowed values.|
- 
-##### 3.2.1.6 AuthenticationValue
-The AuthenticationValue data element contains a response returned by the recipient of an authorization request. It is described in [Section 7.3.3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#733-authenticationvalue) of Ref. 1 above, and is extended to support the new authentication type used for PISP. The data model is as follows:
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| AuthenticationValue | 1 | `OtpValue` or `String(1..64)` or `BinaryString` | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. If OTP: OtpValue; If QRCODE: String(1..64); If U2F: BinaryString |
+| AuthenticationResponse | 1 | Enum of String(1..32) | See [Section 3.2.2.1](#3221-AuthenticationResponse) below (AuthenticationResponse) for more information on allowed values.| 
 ##### 3.2.1.7 BinaryString
 The BinaryString type used in these definitions is as defined in [Section 7.2.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7217-binarystring) of Ref. 1 above.
 ##### 3.2.1.8 ConsentRequestChannelType
@@ -764,7 +745,8 @@ which resides on a User's device.
 | --- | --- | --- | --- |
 | credentialType | 1 | CredentialType | The type of credential this is - `FIDO` or `GENERIC` |
 | status | 1 | CredentialStatus | The current status of the credential. |
-| payload | 1 | `FIDOPublicKeyCredentialAttestation` or `GenericCredential` | Type depends on `credentialType`: • If the credential type is FIDO, then the type of the payload will be FIDOPublicKeyCredentialAttestation. • If the credential type is GENERIC, then the type of the payload will be GenericCredential. A description of the credential and information which allows the recipient of the credential to test its veracity.|
+| genericPayload | 0..1 | GenericCredential | Required if credentialType is GENERIC. A description of the credential and information which allows the recipient of the credential to test its veracity. |
+| fidoPayload    | 0..1 | FIDOPublicKeyCredentialAttestation | Required if credentialType is FIDO. A description of the credential and information which allows the recipient of the credential to test its veracity. |
 
 ##### 3.2.1.12 CredentialStatus
 The CredentialStatus data type stores the state of a credential request. Its data model is as follows.
@@ -793,36 +775,19 @@ The Money type used in these definitions is a defined in [Section 7.4.10](https:
 ##### 3.2.1.19 Note
 The Note data type used in these definitions is as defined in [Section 7.3.23](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7323-note) of Ref. 1 above.
 ##### 3.2.1.20 Party
-The following shows a proposed revision of the Party data element to support the additional information required to support PISP interactions.
 
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| partyIdInfo | 1 | PartyIdInfo | Party Id type, id, sub ID or type, and FSP Id. |
-| merchantClassificationCode | 0..1 | MerchantClassificationCode | Used in the context of Payee Information, where the Payee happens to be a merchant accepting merchant payments. |
-| name | 0..1 | PartyName | Display name of the Party, could be a real name or a nick name. |
-| personalInfo | 0..1 | PartyPersonalInfo | Personal information used to verify identity of Party such as first, middle, last name and date of birth. |
-| accounts | 0..1 | AccountList  | A list of the accounts that the party has. |
+The Note data type used in these definitions is as defined in [Section 7.4.11](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7411-party) of Ref. 1 above.
+
 ##### 3.2.1.21 PartyIdInfo
 The PartyIdInfo data type used in these definitions is as defined in [Section 7.4.13](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7413-partyidinfo) of Ref. 1 above.
 
-##### 3.2.1.22 Quote 
-The Quote object is used to collect the information on the terms of a transfer which a Payee DFSP returns as part of the positive response to a quotation. This information is forwarded to the PISP by the Payer DFSP so that the PISP’s customer can make an informed consent to the transfer, and is forwarded to the authentication service (if one is used) to confirm the bona fides of the authorization received from the PISP.
-| Name | Cardinality | Type | Description |
-| --- | --- | --- | --- |
-| transferAmount | 1 | Money | The amount that the sender’s account will be debited|
-| payeeReceiveAmount | 1 | Money | The amount of Money that the Payee should receive in the end-to-end transaction|
-| fees | 0..1 | Money | The fees that the sender will pay as part of the transfer.|
-| expiration | 0..1 | DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction.|
-| transactionType | 1 | TransactionType | Type of the transaction.|
-| note | 0..1 | Note | Memo associated to the transaction, intended to the Payee.|
-| extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment.|
 
 ##### 3.2.1.22 Scope
 The Scope element contains an identifier defining, in the terms of a DFSP, an account on which access types can be requested or granted. It also defines the access types which are requested or granted.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | accountId | 1 |AccountAddress | The address of the account to which the PISP wishes to be permitted access, or is being granted access  |
-| actions | 1..n |ScopeAction | The action that the PISP wants permission to take in relation to the customer’s account, or that it has been granted in relation to the customer’s account|
+| actions | 1..32 |ScopeAction | The action that the PISP wants permission to take in relation to the customer’s account, or that it has been granted in relation to the customer’s account|
 | credential | 0..1 |Credential | The credential which is to be applied to the scope.|
 | partyIdInfo | 0..1 |PartyIdInfo | The identifier which the PISP should use to access the account.|
 ##### 3.2.1.23 ScopeAction
@@ -834,7 +799,7 @@ The ScopeAction element contains an access type which a PISP can request from a 
 The ServiceType element contains a type of service where the requester wants a list of the participants in the scheme which provide that service. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.10](#3229-servicetype) below ServiceType) for more information on allowed values. |
+| serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.10](#3229-servicetype) below (ServiceType) for more information on allowed values. |
 
 ##### 3.2.1.25 TransactionType
 The TransactionType type used in these definitions is as defined in [Section 7.4.18](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7418-transactiontype) of Ref. 1 above.
@@ -850,34 +815,39 @@ For details, see section [7.4.2 ErrorInformation](../fspiop-api/documents/API-De
 
 ##### 3.2.1.29 FIDOPublicKeyCredentialAttestation
 
-A data model representing a FIDO Attestation result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential),
-where the ArrayBuffer fields are represented as base64-encoded utf-8 strings.
+A data model representing a FIDO Attestation result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential).
+
+The `PublicKeyCredential` interface represents the below fields with a Type of Javascript [ArrayBuffer](https://heycam.github.io/webidl/#idl-ArrayBuffer).
+For this API, we represent ArrayBuffers as base64 encoded utf-8 strings.
+
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| id       | 1    | string | The identifier of a keypair created by an authenticator |
-| rawId    | 0..1 | string | The identifier of a keypair created by an authenticator, base64 encoded |
+| id       | 1    | String(59..118) | The identifier of a keypair created by an authenticator |
+| rawId    | 0..1 | String(59..118) | The identifier of a keypair created by an authenticator, base64 encoded |
 | response | 1    | AuthenticatorAttestationResponse | The attestation response from the authenticator |
 
 ##### 3.2.1.30 FIDOPublicKeyCredentialAssertion
 
-A data model representing a FIDO Assertion result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential),
-where the ArrayBuffer fields are represented as base64-encoded utf-8 strings.
+A data model representing a FIDO Assertion result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential) in [WebAuthN](https://w3c.github.io/webauthn/).
+
+The `PublicKeyCredential` interface represents the below fields with a Type of Javascript [ArrayBuffer](https://heycam.github.io/webidl/#idl-ArrayBuffer).
+For this API, we represent ArrayBuffers as base64 encoded utf-8 strings.
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| id       | 1    | string | The identifier of a keypair created by an authenticator |
-| rawId    | 0..1 | string | The identifier of a keypair created by an authenticator, base64 encoded |
+| id       | 1    | String(59..118) | The identifier of a keypair created by an authenticator |
+| rawId    | 0..1 | String(59..118) | The identifier of a keypair created by an authenticator, base64 encoded |
 | response | 1    | AuthenticatorAssertionResponse | The assertion response from the authenticator |
 
 ##### 3.2.1.31 AuthenticatorAttestationResponse
 
-A data model representing an [AttestationStatement](https://w3c.github.io/webauthn/#attestation-statement).
+A data model representing an [AttestationStatement](https://w3c.github.io/webauthn/#attestation-statement) from [WebAuthN](https://w3c.github.io/webauthn/).
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| clientDataJSON    | 1 | string | JSON string with client data |
-| attestationObject | 1 | string | CBOR.encoded attestation object|
+| clientDataJSON    | 1 | String(121...512) | JSON string with client data |
+| attestationObject | 1 | String(306...2048) | Object encoded in Concise Binary Object Representation(CBOR), as defined in [RFC-8949](https://www.rfc-editor.org/rfc/rfc8949)|
 
 ##### 3.2.1.32 AuthenticatorAssertionResponse
 
@@ -885,10 +855,10 @@ A data model representing an [AuthenticatorAssertionResponse](https://w3c.github
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| authenticatorData | 1 | string | Information about the authenticator. |
-| clientDataJSON    | 1 | string | base64 encoded JSON string containing information about the client. |
-| signature         | 1 | string | The signature generated by the private key associated with this credential. |
-| userHandle        | 0..1 | string | This field is optionally provided by the authenticator, and represents the user.id that was supplied during registration.|
+| authenticatorData | 1 | String(29..256) | Information about the authenticator. |
+| clientDataJSON    | 1 | String(121..512) | base64 encoded JSON string containing information about the client. |
+| signature         | 1 | String(59..256) | The signature generated by the private key associated with this credential. |
+| userHandle        | 0..1 | String(1..88) | This field is optionally provided by the authenticator, and represents the user.id that was supplied during registration, as defined in [WebAuthN's user.id](https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-id).|
 
 ##### [todo] SignedPayload
 
@@ -908,7 +878,7 @@ The AuthenticationResponse enumeration describes the result of authenticating ve
 | ---  | ----------- |
 | VERIFIED | The challenge was correctly signed. |
 | REJECTED | The challenge was not correctly signed. |
-##### 3.2.2.2 AuthorizationResponse
+##### 3.2.2.2 AuthorizationResponseType
 The AuthorizationResponseType enumeration is the same as the AuthorizationResponse enumeration described in [Section 7.5.3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#753-authorizationresponse) of Ref. 1 above.
 ##### 3.2.2.3 ConsentRequestChannelType
 
@@ -955,11 +925,13 @@ The PartyIdType enumeration is extended for PISPs to include a definition for th
 
 ##### 3.2.2.8 ScopeEnumeration
 
+<!-- TODO: update other references! -->
+
 | Name | Description |
 | ---  | ----------- |
-| accounts.getBalance | PISP can request a balance for the linked account|
-| accounts.transfer   | PISP can request a transfer of funds from the linked account in the DFSP|
-| accounts.statement  | PISP can request a statement of individual transactions on a user’s account|
+| ACCOUNTS_GET_BALANCE | PISP can request a balance for the linked account|
+| ACCOUNTS_TRANSFER   | PISP can request a transfer of funds from the linked account in the DFSP|
+| ACCOUNTS_STATEMENT  | PISP can request a statement of individual transactions on a user’s account|
 
 ##### 3.2.2.9 ServiceType
 The ServiceType enumeration describes the types of role for which a DFSP may query using the /services resource.
