@@ -26,7 +26,7 @@ specified types of information.
 ### 1.2 Document Version Information
 
 | Version | Date | Change Description |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | **1.0** | 2021-10-03    | Initial Version
 
 ### 1.3 References
@@ -720,23 +720,23 @@ The AuthenticationInfo data type used in these definitions is as defined in [Sec
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | AuthenticationResponse | 1 | Enum of String(1..32) | See [Section 3.2.2.1](#3221-AuthenticationResponse) below (AuthenticationResponse) for more information on allowed values.| 
-##### 3.2.1.7 BinaryString
+##### 3.2.1.6 BinaryString
 The BinaryString type used in these definitions is as defined in [Section 7.2.17](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7217-binarystring) of Ref. 1 above.
-##### 3.2.1.8 ConsentRequestChannelType
+##### 3.2.1.7 ConsentRequestChannelType
 The ConsentRequestChannelType is used to hold an instance of the ConsentRequestChannelType enumeration. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](#3223-consentrequestchanneltype) below ( ConsentRequestChannelType) for more information on allowed values. |
 
-##### 3.2.1.9 ConsentState
+##### 3.2.1.8 ConsentState
 The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](#31322-put-consentsid) above. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](#3224-consentstatustype) below (ConsentStatusType) for more information on allowed values.|
  
-##### 3.2.1.10 CorrelationId
+##### 3.2.1.9 CorrelationId
 The CorrelationId type used in these definitions is as defined in [Section 7.3.8](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#738-correlationid) of Ref. 1 above.
-##### 3.2.1.11 Credential
+##### 3.2.1.10 Credential
 The Credential object is used to store information about a publicKey and signature that has been regsitered with a Consent.
 This publicKey can be used to verify that transaction authorizations have been signed by the previously-registered privateKey, 
 which resides on a User's device.
@@ -748,41 +748,41 @@ which resides on a User's device.
 | genericPayload | 0..1 | GenericCredential | Required if credentialType is GENERIC. A description of the credential and information which allows the recipient of the credential to test its veracity. |
 | fidoPayload    | 0..1 | FIDOPublicKeyCredentialAttestation | Required if credentialType is FIDO. A description of the credential and information which allows the recipient of the credential to test its veracity. |
 
-##### 3.2.1.12 CredentialStatus
+##### 3.2.1.11 CredentialStatus
 The CredentialStatus data type stores the state of a credential request. Its data model is as follows.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | CredentialStatus | 1 | Enum of String(1..32) |See [Section 3.2.2.6](#3225-CredentialStatus) below (CredentialStatus) for more information on allowed values. |
 
-##### 3.2.1.13 DateTime
+##### 3.2.1.12 DateTime
 The DateTime data type used in these definitions is as defined in [Section 7.2.14](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7214-datetime) of Ref. 1 above.
-##### 3.2.1.14 ErrorInformation
+##### 3.2.1.13 ErrorInformation
 The ErrorInformation data type used in these definitions is as defined in [Section 7.4.2](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#742-errorinformation) of Ref. 1 above
-##### 3.2.1.15 ExtensionList
+##### 3.2.1.14 ExtensionList
 The ExtensionList data type used in these definitions is as defined in [Section 7.4.4](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#744-extensionlist) of Ref. 1 above.
-##### 3.2.1.16 FspId
+##### 3.2.1.15 FspId
 The FspId data type used in these definitions is as defined in [Section 7.3.16](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7316-fspid) of Ref. 1 above.
 
-##### 3.2.1.17 GenericCredential
+##### 3.2.1.16 GenericCredential
 The GenericCredential object stores the payload for a credential which is validated according to a comparison of the signature created from the challenge using a private key against the same challenge signed using a public key. Its content is as follows. 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | publicKey | 0..1 | BinaryString | The public key to be used in checking the signature. Only required if the public key has not already been registered. |
 | signature | 1 | BinaryString | The signature to be checked against the public key. |
 
-##### 3.2.1.18 Money
+##### 3.2.1.17 Money
 The Money type used in these definitions is a defined in [Section 7.4.10](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7410-money) of Ref. 1 above.
-##### 3.2.1.19 Note
+##### 3.2.1.18 Note
 The Note data type used in these definitions is as defined in [Section 7.3.23](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7323-note) of Ref. 1 above.
-##### 3.2.1.20 Party
+##### 3.2.1.19 Party
 
 The Note data type used in these definitions is as defined in [Section 7.4.11](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7411-party) of Ref. 1 above.
 
-##### 3.2.1.21 PartyIdInfo
+##### 3.2.1.20 PartyIdInfo
 The PartyIdInfo data type used in these definitions is as defined in [Section 7.4.13](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7413-partyidinfo) of Ref. 1 above.
 
 
-##### 3.2.1.22 Scope
+##### 3.2.1.21 Scope
 The Scope element contains an identifier defining, in the terms of a DFSP, an account on which access types can be requested or granted. It also defines the access types which are requested or granted.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
@@ -790,30 +790,30 @@ The Scope element contains an identifier defining, in the terms of a DFSP, an ac
 | actions | 1..32 |ScopeAction | The action that the PISP wants permission to take in relation to the customer’s account, or that it has been granted in relation to the customer’s account|
 | credential | 0..1 |Credential | The credential which is to be applied to the scope.|
 | partyIdInfo | 0..1 |PartyIdInfo | The identifier which the PISP should use to access the account.|
-##### 3.2.1.23 ScopeAction
+##### 3.2.1.22 ScopeAction
 The ScopeAction element contains an access type which a PISP can request from a DFSP, or which a DFSP can grant to a PISP. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | scopeAction | 1 | Enum of String(1..32)| See [Section 3.2.2.9](#3228-scopeenumeration) below (ScopeEnumeration) for more information on allowed values. |
-##### 3.2.1.24 ServiceType
+##### 3.2.1.23 ServiceType
 The ServiceType element contains a type of service where the requester wants a list of the participants in the scheme which provide that service. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | serviceType | 1 | Enum of String(1..32) | See [Section 3.2.2.10](#3229-servicetype) below (ServiceType) for more information on allowed values. |
 
-##### 3.2.1.25 TransactionType
+##### 3.2.1.24 TransactionType
 The TransactionType type used in these definitions is as defined in [Section 7.4.18](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7418-transactiontype) of Ref. 1 above.
-##### 3.2.1.26 TransactionState
+##### 3.2.1.25 TransactionState
 The TransactionState type used in these definitions is as defined in [Section 7.3.33](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7333-transactionstate) of Ref. 1 above.
-##### 3.2.1.27 Uri
+##### 3.2.1.26 Uri
 The API data type Uri is a JSON string in a canonical format that is restricted by a regular expression for interoperability reasons. The regular expression for restricting the Uri type is as follows:
 `^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))? `
 
-##### 3.2.1.28 ErrorInformation
+##### 3.2.1.27 ErrorInformation
 
 For details, see section [7.4.2 ErrorInformation](../fspiop-api/documents/API-Definition_v1.1.md#742-errorinformation) in the Mojaloop FSPIOP API Definition.
 
-##### 3.2.1.29 FIDOPublicKeyCredentialAttestation
+##### 3.2.1.28 FIDOPublicKeyCredentialAttestation
 
 A data model representing a FIDO Attestation result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential).
 
@@ -827,7 +827,7 @@ For this API, we represent ArrayBuffers as base64 encoded utf-8 strings.
 | rawId    | 0..1 | String(59..118) | The identifier of a keypair created by an authenticator, base64 encoded |
 | response | 1    | AuthenticatorAttestationResponse | The attestation response from the authenticator |
 
-##### 3.2.1.30 FIDOPublicKeyCredentialAssertion
+##### 3.2.1.29 FIDOPublicKeyCredentialAssertion
 
 A data model representing a FIDO Assertion result. Derived from [`PublicKeyCredential` Interface](https://w3c.github.io/webauthn/#iface-pkcredential) in [WebAuthN](https://w3c.github.io/webauthn/).
 
@@ -840,7 +840,7 @@ For this API, we represent ArrayBuffers as base64 encoded utf-8 strings.
 | rawId    | 0..1 | String(59..118) | The identifier of a keypair created by an authenticator, base64 encoded |
 | response | 1    | AuthenticatorAssertionResponse | The assertion response from the authenticator |
 
-##### 3.2.1.31 AuthenticatorAttestationResponse
+##### 3.2.1.30 AuthenticatorAttestationResponse
 
 A data model representing an [AttestationStatement](https://w3c.github.io/webauthn/#attestation-statement) from [WebAuthN](https://w3c.github.io/webauthn/).
 
@@ -849,7 +849,7 @@ A data model representing an [AttestationStatement](https://w3c.github.io/webaut
 | clientDataJSON    | 1 | String(121...512) | JSON string with client data |
 | attestationObject | 1 | String(306...2048) | Object encoded in Concise Binary Object Representation(CBOR), as defined in [RFC-8949](https://www.rfc-editor.org/rfc/rfc8949)|
 
-##### 3.2.1.32 AuthenticatorAssertionResponse
+##### 3.2.1.31 AuthenticatorAssertionResponse
 
 A data model representing an [AuthenticatorAssertionResponse](https://w3c.github.io/webauthn/#authenticatorassertionresponse).
 
@@ -860,7 +860,7 @@ A data model representing an [AuthenticatorAssertionResponse](https://w3c.github
 | signature         | 1 | String(59..256) | The signature generated by the private key associated with this credential. |
 | userHandle        | 0..1 | String(1..88) | This field is optionally provided by the authenticator, and represents the user.id that was supplied during registration, as defined in [WebAuthN's user.id](https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-id).|
 
-##### [todo] SignedPayload
+##### 3.2.1.32 SignedPayload
 
 A data model representing a Third Party Transaction request signature.
 
@@ -869,7 +869,6 @@ A data model representing a Third Party Transaction request signature.
 | signedPayloadType     | 1 | SignedPayloadType | `FIDO` or `GENERIC` |
 | genericSignedPayload  | 0..1 | BinaryString(256) | Required if signedPayloadType is of type `GENERIC`. A BinaryString(256) of a signature of a sha-256 hash of the challenge. |
 | fidoSignedPayload     | 0..1 | FIDOPublicKeyCredentialAssertion | Required if signedPayloadType is of type `FIDO`. |
-
 
 #### 3.2.2 Enumerations
 ##### 3.2.2.1 AuthenticationResponse
@@ -948,8 +947,10 @@ The SignedPayloadType enumeration contains the allowed values for the type of a 
 | FIDO | The signed payload is based on a FIDO Assertion Response. Its payload is a FIDOPublicKeyCredentialAssertion object. |
 | GENERIC | The signed payload is based on a simple public key validation. Its payload is a BinaryString object |
 
+##### 3.2.2.11 AmountType
+See [7.3.1 Amount Type](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#731-amounttype)
 
-##### ConsentStatus
+##### 3.2.2.12 ConsentStatus
 The ConsentStatus Enumeration describes the possible states of a Consent object.
 
 | Name | Description |
@@ -957,9 +958,3 @@ The ConsentStatus Enumeration describes the possible states of a Consent object.
 | ISSUED | The Consent has been issued by the DFSP |
 | REVOKED | The Consent has been revoked  |
 
-
-
-
-##### 3.2.2.11 AmountType
-
-See [7.3.1 Amount Type](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#731-amounttype)
