@@ -9,12 +9,12 @@ payments, while allowing for the strong authentication of users.
 The following terms are commonly used across the Third Party API Documentation
 
 | **Term** | **Alternative and Related Terms** | **Definition** | **Source** |
+| --- | --- | --- | --- |
 | **Payment Initiation Service Provider** | PISP, 3rd Party Payment Initiator (3PPI) | "Regulated entities like retail banks or third parties, that allow customers to make payments without accessing bank accounts or cards | [PSD2](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32015L2366&qid=1633311418487) |
 | **FSP** | Provider, Financial Service Provider (FSP), Payment Service Provider, Digital Financial Services Provider (DFSP) | The entity that provides a digital financial service to an end user (either a consumer, a business, or a government.) In a closed-loop payment system, the Payment System Operator is also the provider. In an open- loop payment system, the providers are the banks or non-banks which participate in that system. | [ITU-T](https://www.itu.int/dms_pub/itu-t/opb/tut/T-TUT-ECOPO-2018-PDF-E.pdf) |
 | **User**                                | End User                                 | An end user that is shared between a PISP and DFSP. Mostly used in the context of a real human being, but this could also be a machine user, or a business for example |
 | **Consent**                             | Account Link                             | A representation of an agreement between the DFSP, PISP and User | |
-| **Auth-Service**                        |                                          | A service run by the Mojaloop Hub that is responsible for verifying and storing Consents, and verifying transaction request signatures | N/A |
-
+| **Auth-Service**                        |                                          | A service run by the Mojaloop Hub that is responsible for verifying and storing Consents, and verifying transaction request signatures | |
 
 ## API Definitions
 

@@ -6,9 +6,9 @@ Mojaloop Third Party API
 ### Table Of Contents
 
 1. [Preface](#Preface)  
-   1.1. [Conventions Used in This Document](#ConventionsUsedinThisDocument)  
-   1.2. [Document Version Information](#DocumentVersionInformation)  
-   1.3. [References](#References)  
+   1.1 [Conventions Used in This Document](#ConventionsUsedinThisDocument)  
+   1.2 [Document Version Information](#DocumentVersionInformation)  
+   1.3 [References](#References)  
 2. [Introduction](#Introduction)  
    2.1 [Third Party API Specification](#ThirdPartyAPISpecification)  
 3. [Linking](#Linking)  
@@ -108,7 +108,7 @@ by the PISP Server. The reason for this is simply that new DFSPs don't typically
 join the Mojaloop network all that frequently, so calling this multiple times on
 the same day (or even the same month) would likely yield the same results.
 
-Additionally, a Mojaloop switch can send a `PUT /services/<ID>` whenever a new 
+Additionally, a Mojaloop switch can send a **PUT /services/{ID}** whenever a new 
 DFSP is added to the network to effectively broadcast an update to the list of
 DFSPs available for linking.
 
@@ -119,7 +119,7 @@ begin the linking process.
 The PISP can display this list of DFSPs to their user, and the user can select
 which DFSP they hold an account with for linking.
 
-![Pre-linking](./assets/linking/0-pre-linking.svg)
+![Pre-linking](./assets/diagrams/linking/0-pre-linking.svg)
 
 ##  3.2 <a id='Discovery'></a>Discovery
 
@@ -143,7 +143,7 @@ that they actually would like to link a different account than those chosen at
 the very beginning. This is perfectly acceptable and should be expected from
 time to time.
 
-![Discovery](./assets/linking/1-discovery.svg)
+![Discovery](./assets/diagrams/linking/1-discovery.svg)
 
 ##  3.3 <a id='Requestconsent'></a>Request consent
 
@@ -176,16 +176,16 @@ In the web authentication channel, the result is the PISP being instructed on
 a specific URL where this supposed user should be redirected. This URL should be
 a place where the user can prove their identity (e.g., by logging in).
 
-![Request consent](./assets/linking/2-request-consent-web.svg)
+![Request consent](./assets/diagrams/linking/2-request-consent-web.svg)
 
 ### 3.3.2 <a id='OTPSMS'></a>OTP / SMS
 
 In the OTP authentication channel, the DFSP sends an 'out of bound' OTP message
 to their user (e.g. over SMS or Email). The PISP prompts the user for this OTP
-message, and includes it in the `authToken` field in the `PATCH /consentRequests/<ID>`
+message, and includes it in the `authToken` field in the **PATCH /consentRequests/{ID}**
 callback.
 
-![Request consent](./assets/linking/2-request-consent-otp.svg)
+![Request consent](./assets/diagrams/linking/2-request-consent-otp.svg)
 
 ## 3.4 <a id='Authentication'></a>Authentication
 
@@ -209,11 +209,10 @@ channel being used:
 
 ### 3.4.1 <a id='Web-1'></a>Web
 
-In the web authentication channel, the user is actually redirected to the DFSP's
+In the web authentication channel, the PISP uses the `authUri` field from
+the **PUT /consentRequests/{ID}** callback to redirect the user to the DFSP's
 website where they can prove their identity (likely by a typical username and
 password style login).
-
-<!-- TODO: add a comment about using the authUri field -->
 
 
 **Note:** Keep in mind that at this stage, the User may update their choices of
@@ -221,18 +220,17 @@ which accounts to link with. The result of this will be seen later on when
 during the Grant consent phase, where the DFSP will provide the correct values
 to the PISP in the `scopes` field.
 
-![Authentication (Web)](./assets/linking/3-authentication-web.svg)
+![Authentication (Web)](./assets/diagrams/linking/3-authentication-web.svg)
 
 
 ### 3.4.2 <a id='OTP'></a>OTP
 
-<!-- TODO: add a comment about using the PATCH /consentRequest/{id} call -->
-
 When using the OTP authentication channel, the DFSP will send the User some sort
-of one-time password over a pre-established channel (most likely SMS). The PISP
-should prompt the user for this one-time password and then provide that back to the DFSP.
+of one-time password over a pre-established channel (such as SMS). The PISP
+should prompt the user for this one-time password and then provide it back
+to the DFSP using the API call **PATCH /consentRequests/{ID}**.
 
-![Authentication (OTP)](./assets/linking/3-authentication-otp.svg)
+![Authentication (OTP)](./assets/diagrams/linking/3-authentication-otp.svg)
 ## 3.5 <a id='Grantconsent'></a>Grant consent
 
 Now that mutual trust has been established between all three parties, the DFSP
@@ -245,7 +243,7 @@ future.
 This phase consists exclusively of the DFSP requesting that a new consent be
 created.
 
-![Grant consent](./assets/linking/4-grant-consent.svg)
+![Grant consent](./assets/diagrams/linking/4-grant-consent.svg)
 
 
 ## 3.6 <a id='Credentialregistration'></a>Credential registration
@@ -269,8 +267,8 @@ Registration step. This challenge must not be guessable ahead of time by
 the PISP.
 
 
-1. _let `consentId` be the value of the `body.consentId` in the `POST /consents` request_
-2. _let `scopes` be the value of `body.scopes` in the `POST /consents` request_
+1. _let `consentId` be the value of the `body.consentId` in the **POST /consents** request_
+2. _let `scopes` be the value of `body.scopes` in the **POST /consents** request_
 
 3. The PISP must build the JSON object `rawChallenge`
 ```
@@ -313,39 +311,39 @@ information about the credential on the Consent resource:
 > }
 >```
 
-The DFSP receives the `PUT /consents/{id}` call from the PISP, and optionally
+The DFSP receives the **PUT /consents/{ID}** call from the PISP, and optionally
 validates the Credential object included in the request body. The DFSP then
 asks the Auth-Service to create the `Consent` object, and validate the Credential.
 
-If the DFSP recieves a `PUT /consents/{id}` callback from the Auth-Service, with a
+If the DFSP recieves a **PUT /consents/{ID}** callback from the Auth-Service, with a
 `credential.status` of `VERIFIED`, it knows that the credential is valid according
 to the Auth Service.
 
-Otherwise, if it recieves a `PUT /consents/{id}/error` callback, it knows that something
+Otherwise, if it recieves a **PUT /consents/{ID}/error** callback, it knows that something
 went wrong with registering the Consent and associated credential, and can inform
 the PISP accordingly.
 
 
-The Auth service is then responsible for calling `POST /participants/CONSENTS/{id}`.
+The Auth service is then responsible for calling **POST /participants/CONSENTS/{ID}**.
 This call will associate the `consentId` with the auth-service's `participantId` and
 allows us to look up the Auth service given a `consentId` at a later date.
 
-![Credential registration: Register](./assets/linking/5a-credential-registration.svg)
+![Credential registration: Register](./assets/diagrams/linking/5a-credential-registration.svg)
 
 
 ### 3.6.3 <a id='FinalizingtheConsent'></a>Finalizing the Consent
 
 Once the DFSP is satisfied that the credential is valid, it calls
-`POST /participants/THIRD_PARTY_LINK/{id}` for each account in the
+**POST /participants/THIRD_PARTY_LINK/{ID}** for each account in the
 `Consent.scopes` list. This entry is a representation of the account
 link between the PISP and DFSP, which the PISP can use to specify
 the _source of funds_ for the transaction request.
 
-Finally, the DFSP calls `PUT /consent/{id}` with the finalized Consent
+Finally, the DFSP calls **PUT /consent/{ID}** with the finalized Consent
 object it received from the Auth Service.
 
 
-![Credential registration: Finalize](./assets/linking/5b-finalize_consent.svg)
+![Credential registration: Finalize](./assets/diagrams/linking/5b-finalize_consent.svg)
 
 
 # 4. <a id='Unlinking'></a>Unlinking
@@ -360,53 +358,56 @@ To make this work, we simply need to provide a way for a member on the network
 to remove the Consent resourse and notify the other parties about the removal.
 
 
-There are 2 scenarios we need to cater for with a `DELETE /consents/{id}` request:
+There are 2 scenarios we need to cater for with a **DELETE /consents/{ID}** request:
 1. A DFSP-hosted Auth Service, where no details about the Consent are stored in the Switch, and
 2. A Switch hosted Auth Service, where the Switch hosted auth service is considered the Authoritative source on the `Consent` object
 
 
 ## 4.1 <a id='UnlinkingwithoutaSwitchHostedAuthService'></a>Unlinking without a Switch Hosted Auth Service
-In this case, the switch passes on the `DELETE /consents/123` request to the DFSP in the `FSPIOP-Destination` header.
+In this case, the switch passes on the **DELETE /consents/22222222-0000-0000-0000-000000000000** request to the DFSP in the `FSPIOP-Destination` header.
 
-![Unlinking-DFSP-Hosted](./assets/linking/6a-unlinking-dfsp-hosted.svg)
+![Unlinking-DFSP-Hosted](./assets/diagrams/linking/6a-unlinking-dfsp-hosted.svg)
 
 In the case where Unlinking is requested from the DFSP's side, the DFSP can
-simply call `PATCH /consents/123` to inform the PISP of an update to the
+simply call **PATCH /consents/22222222-0000-0000-0000-000000000000** to inform the PISP of an update to the
 `Consent` object.
 
 ## 4.2 <a id='UnlinkingwithaSwitchHostedAuthService'></a>Unlinking with a Switch Hosted Auth Service
 
-In this instance, the PISP still addresses it's `DELETE /consents/123` call to the
-DFSP, since it knows nothing
+In this instance, the PISP still addresses it's **DELETE /consents/22222222-0000-0000-0000-000000000000** call to the
+DFSP in the `FSPIOP-Destination` header.
 
 Internally, the switch will lookup the Authoritative source of the `Consent` object,
-using the ALS Call, `GET /participants/CONSENT/{id}`. If it is determined that there
-is a Switch hosted Auth Service which 'owns' this `Consent`, the HTTP call `DELETE /consents/{id}`
+using the ALS Call, **GET /participants/CONSENT/{ID}**. If it is determined that there
+is a Switch hosted Auth Service which 'owns' this `Consent`, the HTTP call **DELETE /consents/{ID}**
 will be redirected to the Auth Service.
 
-![Unlinking-Switch-Hosted](./assets/linking/6b-unlinking-swtch-hosted.svg)
+![Unlinking-Switch-Hosted](./assets/diagrams/linking/6b-unlinking-hub-hosted.svg)
 
 # 5.<a id='ErrorScenarios'></a>Error Scenarios
 
 ## 5.1 <a id='Discovery-1'></a>Discovery
-![Accounts error](./assets/linking/error_scenarios/1-discovery-error.svg)
 
-## 5.2 <a id='BadconsentRequests'></a>Bad consentRequests
-When the DFSP receives the `POST /consentRequests` request from the PISP, any number of processing or validation errors could occur, such as:
+When the DFSP is unable to find a user for the identifier in **GET /accounts/{ID}**,
+the DFSP responds with error code `6205` in **PUT /accounts/{ID}/error**.
 
-1. FSP does not support any requested authentication channels (Error code: `7203`)
-2. FSP does not support any requested scope actions (Error code: `7204`)
-3. FSP does not find scopes suitable (Error code: `7209`)
-4. FSP does not trust PISP callback URI (Error code: `7210`)
-5. FSP does not allow consent requests for specified username (Error code: `7211`)
-6. Any other checks or validation of the consentRequests on the DFSP's side fail (Error code: `7208`)
+![Accounts error](./assets/diagrams/linking/error_scenarios/1-discovery-error.svg)
 
-In this case, the DFSP must inform the PISP of the failure by sending a `PUT /consentRequests/{ID}/error` callback to the PISP.
+## 5.2 <a id='BadconsentRequests'></a>ConsentRequest Errors
+When the DFSP receives the **POST /consentRequests** request from the PISP, the following processing errors
+could occur:
 
-![consentRequests error](./assets/linking/error_scenarios/2-request-consent-error.svg)
+1. DFSP does not support the specified scopes: `6101`. For example, the `userId` specified does not match the specified accounts, or the `scope.actions` field contains permissions that this DFSP does not support.
+2. The PISP sent a bad callbackUri: `6204`. For example, the scheme of the callbackUri could be http, which
+the DFSP may choose to not trust.
+3. Any other checks or validation of the consentRequests on the DFSP's side fail: `6104`. For example, the user's account may be inactive or suspended.
+
+In this case, the DFSP must inform the PISP of the failure by sending a **PUT /consentRequests/{ID}/error** callback to the PISP.
+
+![consentRequests error](./assets/diagrams/linking/error_scenarios/2-request-consent-error.svg)
 
 ## 5.3 <a id='Authentication-1'></a>Authentication
-![Authentication Invalid OTP](./assets/linking/error_scenarios/3-authentication-otp-invalid.svg)
 
-## 5.4 <a id='Grantconsent-1'></a>Grant consent
-![Grant consent scope error](./assets/linking/error_scenarios/4-grant-consent-scope-error.svg)
+When a PISP sends a **PATCH /consentRequests/{ID}** to the DFSP, the `authToken` may be expired or invalid:
+
+![Authentication Invalid OTP](./assets/diagrams/linking/error_scenarios/3-authentication-otp-invalid.svg)
