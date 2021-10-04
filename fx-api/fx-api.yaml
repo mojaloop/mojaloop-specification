@@ -26,7 +26,7 @@ paths:
 
   #Parties
   #This resource is part of the FSPIOP API but the /parties resource is listed here only to show the changes needed
-  /parties/{Type}/{ID}:
+  /fxParties/{Type}/{ID}:
     parameters:
       #Path
       - $ref: "#/components/parameters/Type"
@@ -42,11 +42,11 @@ paths:
       - $ref: "#/components/parameters/FSPIOP-URI"
       - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
     get:
-      description: The HTTP request `GET /parties/{Type}/{ID}` (or `GET /parties/{Type}/{ID}/{SubId}`) is used to look up information regarding the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}` (for example, `GET /parties/MSISDN/123456789`, or `GET /parties/BUSINESS/shoecompany/employee1`).
+      description: The HTTP request `GET /fxParties/{Type}/{ID}` (or `GET /fxParties/{Type}/{ID}/{SubId}`) is used to look up information regarding the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}` (for example, `GET /fxParties/MSISDN/123456789`, or `GET /fxParties/BUSINESS/shoecompany/employee1`).
       summary: Look up party information
       tags:
-        - parties
-      operationId: PartiesByTypeAndID
+        - fxParties
+      operationId: FxPartiesByTypeAndID
       parameters:
         #Headers
         - $ref: "#/components/parameters/Accept"
@@ -70,11 +70,11 @@ paths:
         503:
           $ref: "#/components/responses/503"
     put:
-      description: The callback `PUT /parties/{Type}/{ID}` (or `PUT /parties/{Type}/{ID}/{SubId}`) is used to inform the client of a successful result of the Party information lookup.
+      description: The callback `PUT /fxParties/{Type}/{ID}` (or `PUT /fxParties/{Type}/{ID}/{SubId}`) is used to inform the client of a successful result of the Party information lookup.
       summary: Return party information
       tags:
-        - parties
-      operationId: PartiesByTypeAndID2
+        - fxParties
+      operationId: FxPartiesByTypeAndID2
       parameters:
         #Headers
         - $ref: "#/components/parameters/Content-Length"
@@ -104,13 +104,13 @@ paths:
           $ref: "#/components/responses/501"
         503:
           $ref: "#/components/responses/503"
-  /parties/{Type}/{ID}/error:
+  /fxParties/{Type}/{ID}/error:
     put:
-      description: If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback `PUT /parties/{Type}/{ID}/error` (or `PUT /parties/{Type}/{ID}/{SubI}/error`) is used.
+      description: If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback `PUT /fxParties/{Type}/{ID}/error` (or `PUT /fxParties/{Type}/{ID}/{SubI}/error`) is used.
       summary: Return party information error
       tags:
-        - parties
-      operationId: PartiesErrorByTypeAndID
+        - fxParties
+      operationId: FxPartiesErrorByTypeAndID
       parameters:
         #Path
         - $ref: "#/components/parameters/Type"
@@ -152,7 +152,7 @@ paths:
           $ref: "#/components/responses/501"
         503:
           $ref: "#/components/responses/503"
-  /parties/{Type}/{ID}/{SubId}:
+  /fxParties/{Type}/{ID}/{SubId}:
     parameters:
       #Path
       - $ref: "#/components/parameters/Type"
@@ -169,11 +169,11 @@ paths:
       - $ref: "#/components/parameters/FSPIOP-URI"
       - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
     get:
-      description: The HTTP request `GET /parties/{Type}/{ID}` (or `GET /parties/{Type}/{ID}/{SubId}`) is used to look up information regarding the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}` (for example, `GET /parties/MSISDN/123456789`, or `GET /parties/BUSINESS/shoecompany/employee1`).
+      description: The HTTP request `GET /fxParties/{Type}/{ID}` (or `GET /fxParties/{Type}/{ID}/{SubId}`) is used to look up information regarding the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}` (for example, `GET /fxParties/MSISDN/123456789`, or `GET /fxParties/BUSINESS/shoecompany/employee1`).
       summary: Look up party information
       tags:
-        - parties
-      operationId: PartiesSubIdByTypeAndID
+        - fxParties
+      operationId: FxPartiesSubIdByTypeAndID
       parameters:
         #Headers
         - $ref: "#/components/parameters/Accept"
@@ -231,13 +231,13 @@ paths:
           $ref: "#/components/responses/501"
         503:
           $ref: "#/components/responses/503"
-  /parties/{Type}/{ID}/{SubId}/error:
+  /fxParties/{Type}/{ID}/{SubId}/error:
     put:
-      description: If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback `PUT /parties/{Type}/{ID}/error` (or `PUT /parties/{Type}/{ID}/{SubId}/error`) is used.
+      description: If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback `PUT /fxParties/{Type}/{ID}/error` (or `PUT /fxParties/{Type}/{ID}/{SubId}/error`) is used.
       summary: Return party information error
       tags:
-        - parties
-      operationId: PartiesSubIdErrorByTypeAndID
+        - fxParties
+      operationId: FxPartiesSubIdErrorByTypeAndID
       parameters:
         #Path
         - $ref: "#/components/parameters/Type"
@@ -405,10 +405,10 @@ paths:
   #FxQuotes
   /fxQuotes:
     post:
-      description: The HTTP request POST /fxQuotes  is used to ask an FXP to provide a quotation for a currency conversion.
-      summary: Calculate fx quote
+      description: The HTTP request POST /fxQuotes is used to ask an FXP to provide a quotation for a currency conversion.
+      summary: Calculate FX Quote
       tags:
-        - fxquotes
+        - fxQuotes
       operationId: FxQuotes
       parameters:
         #Headers
@@ -493,7 +493,7 @@ paths:
       description: The callback PUT /fxQuotes/{ID} is used to inform the requester about the outcome of a request for quotation for a currency conversion. The {ID} field in the URI should contain the conversionRequestId that was used when the quotation for the currency conversion was requested.
       summary: Return fxQuote information
       tags:
-        - fxquotes
+        - fxQuotes
       operationId: PutFxQuotesById
       parameters:
         #Headers
@@ -578,8 +578,8 @@ paths:
       description: The HTTP request POST /fxTransfers is used to ask an FXP to confirm the execution of an agreed currency conversion.
       summary: Perform fxTransfer
       tags:
-        - fxtransfers
-      operationId: fxtransfers
+        - fxTransfers
+      operationId: fxTransfers
       parameters:
         #Headers
         - $ref: "#/components/parameters/Accept"
@@ -637,7 +637,7 @@ paths:
       description: The HTTP request GET /fxTransfers/{ID} is used to request information regarding a request for confirmation of a currency conversion which the sender has previously issued. The {{ID} in the URI should contain the commitRequestId that was used to request the confirmation.
       summary: Callback to an fxtransfer request
       tags:
-        - fxtransfers
+        - fxTransfers
       operationId: FxTransfersByIDGet
       parameters:
         #Headers
@@ -665,7 +665,7 @@ paths:
       description: The callback PATCH /fxTransfers/{ID} is used to inform the requester about the final determination by the switch of the transfer related to a request for execution of a currency conversion. The {ID} field in the URI should contain the commitRequestId that was used when the execution of the currency conversion was requested.
       summary: FxTransfer notification
       tags:
-        - fxtransfers
+        - fxTransfers
       operationId: FxTransfersByIDPatch
       parameters:
         #Headers
@@ -700,7 +700,7 @@ paths:
       description: The callback PUT /fxTransfers/{ID} is used to inform the requester about the outcome of a request for execution of a currency conversion. The {ID} field in the URI should contain the commitRequestId that was used when the execution of the currency conversion was requested.
       summary: Return fxtransfer information
       tags:
-        - fxtransfers
+        - fxTransfers
       operationId: FxTransfersByIDPut
       parameters:
         #Headers
@@ -736,7 +736,7 @@ paths:
       description: If the FXP is unable to find or create a currency conversion execution, or another processing error occurs, the error callback PUT /fxTransfers/<ID>/error is used. The <ID> in the URI should contain the commitRequestId that was used for the creation of the execution request, or the <ID> that was used in the GET /fxTransfers/<ID>. 
       summary: Return fxtransfer information error
       tags:
-        - fxtransfers
+        - fxTransfers
       operationId: FxTransfersByIDAndError
       parameters:
         #Path
@@ -1433,7 +1433,7 @@ components:
     FxQuotesPostRequest:
       title: FxQuotesPostRequest
       type: object
-      description: The object sent in the POST /fxquotes request.
+      description: The object sent in the POST /fxQuotes request.
       properties:
         fxQuoteId:
           allOf:
