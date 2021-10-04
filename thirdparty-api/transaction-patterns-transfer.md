@@ -1,62 +1,18 @@
 # Transaction Patterns - Transfer
 
-Third Party API
+Mojaloop Third Party API
 
 ### Table Of Contents
 
-<!-- todo -->
+1. [Preface](#Preface)  
+   1.1. [Conventions Used in This Document](#ConventionsUsedinThisDocument)  
+   1.2. [Document Version Information](#DocumentVersionInformation)  
+   1.3. [References](#References)  
+2. [Introduction](#Introduction)  
+   2.1 [Third Party API Specification](#ThirdPartyAPISpecification)  
 
 
-## 1. Preface
-
-This section contains information about how to use this document.
-
-### 1.1 Conventions Used in This Document
-
-The following conventions are used in this document to identify the
-specified types of information.
-
-|Type of Information|Convention|Example|
-|---|---|---|
-|**Elements of the API, such as resources**|Boldface|**/authorization**|
-|**Variables**|Italics with in angle brackets|_{ID}_|
-|**Glossary terms**|Italics on first occurrence; defined in _Glossary_|The purpose of the API is to enable interoperable financial transactions between a _Payer_ (a payer of electronic funds in a payment transaction) located in one _FSP_ (an entity that provides a digital financial service to an end user) and a _Payee_ (a recipient of electronic funds in a payment transaction) located in another FSP.|
-|**Library documents**|Italics|User information should, in general, not be used by API deployments; the security measures detailed in _API Signature and API Encryption_ should be used instead.|
-
-### 1.2 Document Version Information
-
-| Version | Date | Change Description |
-| --- | --- | --- | --- |
-| **1.0** | 2021-10-03    | Initial Version
-
-### 1.3 References
-
-The following references are used in this specification:
-
-| Reference | Description | Version | Link |
-| --- | --- | --- | --- |
-| Ref. 1 | Open API for FSP Interoperability | `1.1` | [API Definition v1.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md)|
-
-
-## 2. Introduction
-
-This document introduces the transaction patterns supported by the Third Party API relating
-to the initiation of a Transaction Request from a PISP.
-
-## 2.1 Third Party API Specification
-
-The Mojaloop Third Party API Specification includes the following documents:
-
-- [Data Models](./data-models.md)
-- [Transaction Patterns - Linking](./transaction-patterns-linking.md)
-- [Transaction Patterns - Transfer](./transaction-patterns-transfer.md)
-- [Third Party Open API Definition - DFSP](./thirdparty-dfsp-v1.0.yaml)
-- [Third Party Open API Definition - PISP](./thirdparty-dfsp-v1.0.yaml)
-
-
-# Transfer API
-
-<!-- vscode-markdown-toc -->
+<!-- todo - iupdate-->
 * [1. Transfers](#Transfers)
 	* [1.1 Discovery](#Discovery)
 	* [1.2 Agreement](#Agreement)
@@ -70,18 +26,58 @@ The Mojaloop Third Party API Specification includes the following documents:
 * [4. Appendix](#Appendix)
     * [4.1 Deriving the Challenge](#DerivingtheChallenge)
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
 
+#  1. <a id='Preface'></a>Preface
+
+This section contains information about how to use this document.
+
+##  1.1. <a id='ConventionsUsedinThisDocument'></a>Conventions Used in This Document
+
+The following conventions are used in this document to identify the
+specified types of information.
+
+|Type of Information|Convention|Example|
+|---|---|---|
+|**Elements of the API, such as resources**|Boldface|**/authorization**|
+|**Variables**|Italics with in angle brackets|_{ID}_|
+|**Glossary terms**|Italics on first occurrence; defined in _Glossary_|The purpose of the API is to enable interoperable financial transactions between a _Payer_ (a payer of electronic funds in a payment transaction) located in one _FSP_ (an entity that provides a digital financial service to an end user) and a _Payee_ (a recipient of electronic funds in a payment transaction) located in another FSP.|
+|**Library documents**|Italics|User information should, in general, not be used by API deployments; the security measures detailed in _API Signature and API Encryption_ should be used instead.|
+
+##  1.2. <a id='DocumentVersionInformation'></a>Document Version Information
+
+| Version | Date | Change Description |
+| --- | --- | --- |
+| **1.0** | 2021-10-03    | Initial Version
+
+##  1.3. <a id='References'></a>References
+
+The following references are used in this specification:
+
+| Reference | Description | Version | Link |
+| --- | --- | --- | --- |
+| Ref. 1 | Open API for FSP Interoperability | `1.1` | [API Definition v1.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md)|
+
+
+#  2. <a id='Introduction'></a>Introduction
+
+This document introduces the transaction patterns supported by the Third Party API relating
+to the initiation of a Transaction Request from a PISP.
+
+##  2.1 <a id='ThirdPartyAPISpecification'></a>Third Party API Specification
+
+The Mojaloop Third Party API Specification includes the following documents:
+
+- [Data Models](./data-models.md)
+- [Transaction Patterns - Linking](./transaction-patterns-linking.md)
+- [Transaction Patterns - Transfer](./transaction-patterns-transfer.md)
+- [Third Party Open API Definition - DFSP](./thirdparty-dfsp-v1.0.yaml)
+- [Third Party Open API Definition - PISP](./thirdparty-dfsp-v1.0.yaml)
 
 
 ## <a name='Transfers'></a>1. Transfers
 
 Transfers is broken down into the separate sections:
-1. **Discovery**: PISP looks up the Payee Party who they wish to recieve the funds
+1. **Discovery**: PISP looks up the Payee Party to send funds to
 
 2. **Agreement** PISP confirms the Payee Party, and looks up the terms of the transaction. If the User accepts the terms of the transaction, they sign the transaction with the credential established in the Linking API flow
 
@@ -91,7 +87,7 @@ Transfers is broken down into the separate sections:
 
 In this phase, a user enters the identifer of the user they wish to send funds to. The PISP executes a `GET /parties/{Type}/{ID}` (or `GET /parties/{Type}/{ID}/{SubId}`) call with the FSPIOP-API, and awaits a callback from the Mojaloop switch.
 
-If the response is successful, the PISP will recieve a `PUT /parties` callback from the Mojaloop switch. The PISP then confirms the recieving party with their user.
+If the `GET /parties/{Type}/{ID}` request is successful, the PISP will recieve a `PUT /parties` callback from the Mojaloop switch. The PISP then confirms the Payee with their user.
 
 Should the PISP receive a `PUT /parties/{Type}/{ID}/error` (or `PUT /parties/{Type}/{ID}/{SubId}/error`) callback, the PISP should display the relevant error to their user.
 
@@ -116,16 +112,18 @@ The PISP then generates a random `transactionRequestId` of type UUID (see [RFC 4
 Upon receiving the `POST /thirdpartyRequests/transactions` call from the PISP, the DFSP performs some validation such as:
 1. Determine that the `payer` identifer exists, and is one that was issued by this DFSP to the PISP specified in the `FSPIOP-Source`.
 2. Confirms that the `Consent` that is identified by the `payer` identifier exists, and is valid.
-3. Confirm that the User's account is open and holds enough funds to complete the transaction.
+3. Confirm that the User's account is active and holds enough funds to complete the transaction.
 4. Any other validation that the DFSP wishes to do.
 
-Should this validation succeed, the DFSP will generate a unique `transactionId` for the request, and call `PUT /thirdpartyRequests/transactions/{ID}` with this `transactionId` and a `transactionRequestState` of recieved. 
+Should this validation succeed, the DFSP will generate a unique `transactionId` for the request, and call `PUT /thirdpartyRequests/transactions/{ID}` with this `transactionId` and a `transactionRequestState` of `RECEIVED`. 
 
 This call informs the PISP that the Thirdparty Transaction Request was accepted, and informs them of the final `transactionId` to watch for at a later date.
 
 If the above validation fail, the DFSP should send a `PUT /thirdpartyRequests/transactions/{ID}/error` call to the PISP, with an error message communicating the failure to the PISP. See [Error Codes](../error_codes.md) for more information.
 
 #### <a name='ThirdpartyAuthorizationRequest'></a>1.2.2 Thirdparty Authorization Request
+
+<!-- TODO: state who the Payee and Payer DFSP are before this step -->
 
 The DFSP will then issue a quotation request (`POST /quotes`) to the Payee DFSP. Upon receiving the `PUT /quotes/{Id}` callback from the Payee DFSP, the Payer DFSP needs to confirm the details of the transaction with the PISP.
 
@@ -147,7 +145,7 @@ could be derived.
 
 #### <a name='SignedAuthorization'></a>1.2.3 Signed Authorization
 
-Upon receiving the `POST /thirdpartyRequests/authorizations` request from the DFSP, the PISP presents the terms of the proposed
+Upon receiving the `POST /thirdpartyRequests/authorizations` request from the Payer DFSP, the PISP presents the terms of the proposed
 transaction to the user, and asks them if they want to proceed. 
 
 The results of the authorization request are returned to the DFSP via the `PUT /thirdpartyRequests/authorizations/{ID}`, where
@@ -193,6 +191,8 @@ FIDOPublicKeyCredentialAssertion {
 
 The final payload of the `PUT /thirdpartyRequests/authorizations/{ID}` is then:
 
+<!-- TODO: update with data model change -->
+
 ```json
 {
     "responseType": "ACCEPTED",
@@ -225,6 +225,7 @@ The response from the PISP to the DFSP then uses this _signature_ as the `signed
 
 The final payload of the `PUT /thirdpartyRequests/authorizations/{ID}` is then:
 
+<!-- TODO: update with data model change -->
 ```json
 {
     "responseType": "ACCEPTED",
@@ -264,6 +265,7 @@ and sends a `PATCH /thirdpartyRequests/transactions/{ID}` call to the PISP.
 
 Upon receiving this callback, the PISP knows that the transfer has completed successfully, and can inform their user.
 
+<!-- TODO: update to remove quoteId -->
 ![1-3-transfer](./assets/transfer/1-3-transfer.svg)
 
 
@@ -271,16 +273,17 @@ Upon receiving this callback, the PISP knows that the transfer has completed suc
 
 A PISP can issue a `GET /thirdpartyRequests/transactions/{ID}` to find the status of a transaction request.
 
+<!-- TODO: remove scheme adapter stuff from here -->
 ![PISPTransferSimpleAPI](./assets/transfer/get_transaction_request.svg)
 
 1. PISP issues a `GET /thirdpartyRequests/transactions/{ID}`
 1. Switch validates request and responds with `202 Accepted`
 1. Switch looks up the endpoint for `dfspa` for forwards to DFSP A
 1. DFSPA validates the request and responds with `202 Accepted`
-1. DFSP looks up the transaction request based on it's `transactionRequestId` (`123` in this case)
+1. DFSP looks up the transaction request based on its `transactionRequestId` (`123` in this case)
     - If it can't be found, it calls `PUT /thirdpartyRequests/transactions/{ID}/error` to the Switch, with a relevant error message
 
-1. DFSP Ensures that the `FSPIOP-Source` header matches that of the originator of the `POST //thirdpartyRequests/transactions`
+1. DFSP Ensures that the `FSPIOP-Source` header matches that of the originator of the `POST /thirdpartyRequests/transactions`
     - If it does not match, it calls `PUT /thirdpartyRequests/transactions/{ID}/error` to the Switch, with a relevant error message
 
 1. DFSP calls `PUT /thirdpartyRequests/transactions/{ID}` with the following request body:
@@ -291,7 +294,7 @@ A PISP can issue a `GET /thirdpartyRequests/transactions/{ID}` to find the statu
     }
     ```
 
-    Where `transactionId` is the DFSP-generated id of the transaction, and `TransactionRequestState` is `RECEIVED`, `PENDING`, `ACCEPTED`, `REJECTED`, as defined in [7.5.10 TransactionRequestState](https://docs.mojaloop.io/mojaloop-specification/documents/API%20Definition%20v1.0.html#7510-transactionrequeststate) of the API Definition
+    Where `transactionId` is the DFSP-generated id of the transaction, and `TransactionRequestState` is `RECEIVED`, `PENDING`, `ACCEPTED`, `REJECTED`, as defined in [7.5.10 TransactionRequestState](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7510-transactionrequeststate) of the API Definition
 
 
 1. Switch validates request and responds with `200 OK`
@@ -309,7 +312,7 @@ After the PISP initiates the Thirdparty Transaction Request with `POST /thirdpar
 
 ### 3.1 Bad Payee Lookup
 
-When the PISP performs a Payee lookup (`GET /parties/{Type}/{Id}`), they may recieve back a response `PUT /parties/{Type}/{Id}/error`. 
+When the PISP performs a Payee lookup (`GET /parties/{Type}/{Id}`), they may recieve the callback `PUT /parties/{Type}/{Id}/error`. 
 
 See [6.3.4 Parties Error Callbacks](https://docs.mojaloop.io/mojaloop-specification/documents/API%20Definition%20v1.0.html#634-error-callbacks) of the FSPIOP API Definition for details on how to interpret use this error callback.
 
@@ -378,6 +381,6 @@ If a PISP doesn't recieve either of the above callbacks within the `expiration` 
 
 1. _let `quote` be the value of the response body from the `PUT /quotes/{ID}` call_
 2. _let the function `CJSON()` be the implementation of a Canonical JSON to string, as specified in [RFC-8785 - Canonical JSON format](https://tools.ietf.org/html/rfc8785)_
-3. _let the function `SHA256()` be the implementation of a SHA-256 one way hash function, as specified in [RFC-6234](https://tools.ietf.org/html/rfc6234)
+3. _let the function `SHA256()` be the implementation of a SHA-256 one way hash function, as specified in [RFC-6234](https://tools.ietf.org/html/rfc6234)_
 4. The DFSP must generate the value `jsonString` from the output of `CJSON(quote)`
 5. The `challenge` is the value of `SHA256(jsonString)`

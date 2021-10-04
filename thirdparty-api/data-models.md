@@ -946,7 +946,7 @@ The SignedPayloadType enumeration contains the allowed values for the type of a 
 | GENERIC | The signed payload is based on a simple public key validation. Its payload is a BinaryString object |
 
 ##### 3.2.2.11 AmountType
-See [7.3.1 Amount Type](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#731-amounttype)
+See [7.3.1 AmountType](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#731-amounttype)
 
 ##### 3.2.2.12 ConsentStatus
 The ConsentStatus Enumeration describes the possible states of a Consent object.
@@ -956,3 +956,6 @@ The ConsentStatus Enumeration describes the possible states of a Consent object.
 | ISSUED | The Consent has been issued by the DFSP |
 | REVOKED | The Consent has been revoked  |
 
+
+##### 3.2.2.13 TransactionRequestState
+See [7.5.10 TransactionRequestState](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#7510-transactionrequeststate)
