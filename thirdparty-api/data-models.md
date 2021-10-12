@@ -206,7 +206,7 @@ particular authorization request. The data model for this call is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| scopes       | 1..n | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
+| scopes       | 1..256 | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
 | authChannels | 1 | ConsentRequestChannelType | A list of one element, which the DFSP uses to inform the PISP of the selected authorization channel. |
 | callbackUri  | 0..1 | Uri |The callback URI that the user will be redirected to after completing verification via the WEB authorization channel |
 | authUri      | 0..1 | Uri | The URI that the PISP should call to complete the linking procedure if completion is required. |
@@ -273,7 +273,7 @@ Used by: DFSP
 The **POST /consents** request is used to request the creation of a consent for interactions between
 a PISP and the DFSP who owns the account which a PISP’s customer wants to allow the PISP access to.
 
-Callback and data model information for **POST /consents/**_{ID}_:
+Callback and data model information for **POST /consents/**:
 
 - Callback – **PUT /consents/**_{ID}_
 - Error Callback – **PUT /consents/**_{ID}_**/error**
@@ -562,7 +562,7 @@ Callback and data model information for **POST /thirdpartyRequests/transactions*
 | amountType           | 1 | AmountType | SEND for send amount, RECEIVE for receive amount. |
 | amount               | 1 | Money | Requested amount to be transferred from the Payer to Payee. |
 | transactionType      | 1 | TransactionType |Type of transaction |
-| note                 | 0..1 | Note |Reason for the transaction request, intended for the Payer. |
+| note                 | 0..1 | Note | Memo assigned to Transaction. |
 | expiration           | 0..1 | DateTime |Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
 | extensionList        | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 #### <a id='Callbacks-1'></a>3.1.7.2 Callbacks
@@ -670,7 +670,7 @@ used in the **GET /thirdpartyRequests/verifications/**_{ID}_. The data model for
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| authorizationResponse | 1 | AuthenticationResponse | The result of the authorization check. |
+| authenticationResponse | 1 | AuthenticationResponse | The result of the authorization check. |
 #### <a id='Errorcallbacks-1'></a>3.1.8.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
 **/thirdpartyRequests/verifications**.
@@ -720,8 +720,8 @@ The AccountList data model is used to hold information about the accounts that a
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | account | 1..256 | Account | Information relating to an account that a party controls. |
-#### <a id='AuthenticationInfo'></a>3.2.1.4 AuthenticationInfo
-The AuthenticationInfo data type used in these definitions is as defined in [Section 7.4.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#741-authenticationinfo) of Ref. 1 above.
+
+<!-- TODO update these numbers! -->
 #### <a id='AuthenticationResponse'></a>3.2.1.5 AuthenticationResponse
 
 | Name | Cardinality | Type | Description |
@@ -735,11 +735,11 @@ The ConsentRequestChannelType is used to hold an instance of the ConsentRequestC
 | --- | --- | --- | --- |
 | ConsentRequestChannelType | 1 | Enum of String(1..32) | See [Section 3.2.2.4](#3223-consentrequestchanneltype) below ( ConsentRequestChannelType) for more information on allowed values. |
 
-#### <a id='ConsentState'></a>3.2.1.8 ConsentState
-The ConsentState type stores the status of a consent request, as described in [Section 3.1.3.2.2](#31322-put-consentsid) above. Its data model is as follows:
+#### <a id='ConsentStatus'></a>3.2.1.8 ConsentStatus
+The ConsentStatus type stores the status of a consent request, as described in [Section 3.1.3.2.2](#31322-put-consentsid) above. Its data model is as follows:
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| ConsentState | 1 | Enum of String(1..32) | See [Section 3.2.2.5](#3224-consentstatustype) below (ConsentStatusType) for more information on allowed values.|
+| ConsentStatus | 1 | Enum of String(1..32) | See [Section 3.2.2.5](#3224-consentstatustype) below (ConsentStatusType) for more information on allowed values.|
  
 #### <a id='CorrelationId'></a>3.2.1.9 CorrelationId
 The CorrelationId type used in these definitions is as defined in [Section 7.3.8](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#738-correlationid) of Ref. 1 above.
@@ -777,7 +777,7 @@ The FspId data type used in these definitions is as defined in [Section 7.3.16](
 The GenericCredential object stores the payload for a credential which is validated according to a comparison of the signature created from the challenge using a private key against the same challenge signed using a public key. Its content is as follows. 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| publicKey | 0..1 | BinaryString | The public key to be used in checking the signature. Only required if the public key has not already been registered. |
+| publicKey | 1 | BinaryString | The public key to be used in checking the signature. |
 | signature | 1 | BinaryString | The signature to be checked against the public key. |
 
 ##### 3.2.1.17 Money

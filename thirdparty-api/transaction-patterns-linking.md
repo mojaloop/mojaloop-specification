@@ -63,6 +63,8 @@ The following references are used in this specification:
 This document introduces the transaction patterns supported by the Third Party API relating
 to the establishment of a relationship between a User, a DFSP and a PISP.
 
+The API design and architectural style of this API are based on [Section 3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#3-api-definition) of Ref 1. above.
+
 ##  2.1 <a id='ThirdPartyAPISpecification'></a>Third Party API Specification
 
 The Mojaloop Third Party API Specification includes the following documents:

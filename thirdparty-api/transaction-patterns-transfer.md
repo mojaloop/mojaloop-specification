@@ -60,6 +60,8 @@ The following references are used in this specification:
 This document introduces the transaction patterns supported by the Third Party API relating
 to the initiation of a Transaction Request from a PISP.
 
+The API design and architectural style of this API are based on [Section 3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#3-api-definition) of Ref 1. above.
+
 ##  2.1 <a id='ThirdPartyAPISpecification'></a>Third Party API Specification
 
 The Mojaloop Third Party API Specification includes the following documents:
@@ -82,11 +84,14 @@ Transfers is broken down into the separate sections:
 
 ##  <a id='Discovery'></a>3.1 Discovery
 
-In this phase, a user enters the identifier of the user they wish to send funds to. The PISP executes a **GET /parties/**_{Type}/{ID}_** (or **GET /parties/**_{Type}/{ID}/{SubId}_) call with the FSPIOP-API, and awaits a callback from the Mojaloop switch.
+In this phase, a user enters the identifier of the user they wish to send funds to. The PISP executes a **GET /parties/**_{Type}/{ID}_** (or **GET /parties/**_{Type}/{ID}/{SubId}_) call and awaits a callback from the Mojaloop switch. [Section 6.3](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#63-api-resource-parties)
+of Ref 1. above describes the **/parties** resource in detail.
 
 If the **GET /parties/**_{Type}/{ID}_ request is successful, the PISP will receive a **PUT /parties** callback from the Mojaloop switch. The PISP then confirms the Payee with their user.
 
 Should the PISP receive a **PUT /parties/**_{Type}/{ID}_**/error** (or **PUT /parties/**_{Type}/{ID}/{SubId}_**/error**) callback, the PISP should display the relevant error to their user.
+
+
 
 ![Discovery](./assets/diagrams/transfer/1-1-discovery.svg)
 
