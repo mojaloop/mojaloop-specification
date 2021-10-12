@@ -653,8 +653,8 @@ Callback and data model information for **POST /thirdpartyRequests/verifications
 | challenge | 1 | BinaryString |The challenge originally sent to the PISP |
 | consentId | 1 | CorrelationId |Common Id between the DFSP and the authentication service for the agreement against which the authentication service is to evaluate the signature |
 | signedPayloadType | 1 | SignedPayloadType | The type of the SignedPayload, depending on the type of credential registered by the PISP |
-| genericValue | 0..1 | BinaryString | Required if signedPayloadType is GENERIC. The signed challenge returned by the PISP. A BinaryString representing a signature of the challenge + private key of the credential. |
-| fidoValue | 0..1 | FIDOPublicKeyCredentialAssertion | Required if signedPayloadType is FIDO. The signed challenge returned by the PISP in the form of a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
+| genericSignedPayload | 0..1 | BinaryString | Required if signedPayloadType is GENERIC. The signed challenge returned by the PISP. A BinaryString representing a signature of the challenge + private key of the credential. |
+| fidoSignedPayload | 0..1 | FIDOPublicKeyCredentialAssertion | Required if signedPayloadType is FIDO. The signed challenge returned by the PISP in the form of a [`FIDOPublicKeyCredentialAssertion` Object](https://w3c.github.io/webauthn/#iface-pkcredential) |
 
 #### <a id='Callbacks-1'></a>3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource
@@ -796,10 +796,8 @@ The PartyIdInfo data type used in these definitions is as defined in [Section 7.
 The Scope element contains an identifier defining, in the terms of a DFSP, an account on which access types can be requested or granted. It also defines the access types which are requested or granted.
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| accountId | 1 |AccountAddress | The address of the account to which the PISP wishes to be permitted access, or is being granted access  |
+| address | 1 |AccountAddress | The address of the account to which the PISP wishes to be permitted access, or is being granted access  |
 | actions | 1..32 |ScopeAction | The action that the PISP wants permission to take in relation to the customer’s account, or that it has been granted in relation to the customer’s account|
-| credential | 0..1 |Credential | The credential which is to be applied to the scope.|
-| partyIdInfo | 0..1 |PartyIdInfo | The identifier which the PISP should use to access the account.|
 ##### 3.2.1.22 ScopeAction
 The ScopeAction element contains an access type which a PISP can request from a DFSP, or which a DFSP can grant to a PISP. It must be a member of the appropriate enumeration.
 | Name | Cardinality | Type | Description |
@@ -931,9 +929,9 @@ The PartyIdType enumeration is extended for PISPs to include a definition for th
 
 | Name | Description |
 | ---  | ----------- |
-| ACCOUNTS_GET_BALANCE | PISP can request a balance for the linked account|
-| ACCOUNTS_TRANSFER   | PISP can request a transfer of funds from the linked account in the DFSP|
-| ACCOUNTS_STATEMENT  | PISP can request a statement of individual transactions on a user’s account|
+| ACCOUNTS_GET_BALANCE | PISP can request a balance for the linked account |
+| ACCOUNTS_TRANSFER   | PISP can request a transfer of funds from the linked account in the DFSP |
+| ACCOUNTS_STATEMENT  | PISP can request a statement of individual transactions on a user’s account |
 
 #### <a id='ServiceType'></a>3.2.2.9 ServiceType
 The ServiceType enumeration describes the types of role for which a DFSP may query using the /services resource.
