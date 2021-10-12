@@ -267,8 +267,8 @@ Registration step. This challenge must not be guessable ahead of time by
 the PISP.
 
 
-1. _let `consentId` be the value of the `body.consentId` in the **POST /consents** request_
-2. _let `scopes` be the value of `body.scopes` in the **POST /consents** request_
+1. _Let `consentId` be the value of the `body.consentId` in the **POST /consents** request_
+2. _Let `scopes` be the value of `body.scopes` in the **POST /consents** request_
 
 3. The PISP must build the JSON object `rawChallenge`
 ```
@@ -294,7 +294,7 @@ information about the credential on the Consent resource:
 
 1. The `PublicKeyCredential` object - which contains the key's Id, and an [AuthenticatorAttestationResponse](https://w3c.github.io/webauthn/#iface-authenticatorattestationresponse) which contains the public key
 2. A `credentialType` field set to `FIDO`
-3. a `status` field set to `PENDING`
+3. A `status` field set to `PENDING`
 
 > **Note:** Generic `Credential` objects
 > While we are focused on FIDO first, we don't want to exclude PISPs who want

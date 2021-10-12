@@ -205,12 +205,12 @@ For a `GENERIC` credential, the PISP will perform the following steps:
 
 
 1. Given the inputs:
-    - _challenge_ (`authorizationRequest.challenge`) as a base64 encoded utf-8 string
-    - _privatekey_ (stored by the PISP when creating the credential), as a base64 encoded utf-8 string
+    - `challenge` (`authorizationRequest.challenge`) as a base64 encoded utf-8 string
+    - `privatekey` (stored by the PISP when creating the credential), as a base64 encoded utf-8 string
     - SHA256() is a one way hash function, as defined in [RFC6234](https://datatracker.ietf.org/doc/html/rfc6234)
     - sign(data, key) is a signature function that takes some data and a private key to produce a signature
-2. let _challengeHash_ be the result of applying the SHA256() function over the _challenge_
-3. let _signature_ be the result of applying the sign() function to the _challengeHash_ and _privateKey_
+2. _Let `challengeHash` be the result of applying the SHA256() function over the `challenge`_
+3. _Let `signature` be the result of applying the sign() function to the `challengeHash` and `privateKey`_
 
 The response from the PISP to the DFSP then uses this _signature_ as the `signedPayload.genericSignedPayload` field:
 
@@ -301,8 +301,6 @@ After the PISP initiates the Thirdparty Transaction Request with **POST /thirdpa
 
 ## <a id='badpayeelookup'></a> 5.1 Unsuccessful Payee Lookup
 
-<!-- TODO: update these sequences with updated error codes -->
-
 When the PISP performs a Payee lookup (**GET /parties/{Type}/{Id}**), they may recieve the callback **PUT /parties/{Type}/{Id}/error**. 
 
 See [6.3.4 Parties Error Callbacks](https://docs.mojaloop.io/mojaloop-specification/documents/API%20Definition%20v1.0.html#634-error-callbacks) of the FSPIOP API Definition for details on how to interpret use this error callback.
@@ -370,8 +368,8 @@ If a PISP doesn't recieve either of the above callbacks within the `expiration` 
 
 ## <a id='DerivingtheChallenge'></a>6.1 Deriving the Challenge
 
-1. let `quote` be the value of the response body from the **PUT /quotes/{ID}** call
-2. let the function `CJSON()` be the implementation of a Canonical JSON to string, as specified in [RFC-8785 - Canonical JSON format](https://tools.ietf.org/html/rfc8785)
-3. let the function `SHA256()` be the implementation of a SHA-256 one way hash function, as specified in [RFC-6234](https://tools.ietf.org/html/rfc6234)
+1. _Let `quote` be the value of the response body from the **PUT /quotes/{ID}** call_
+2. _Let the function `CJSON()` be the implementation of a Canonical JSON to string, as specified in [RFC-8785 - Canonical JSON format](https://tools.ietf.org/html/rfc8785)_
+3. _Let the function `SHA256()` be the implementation of a SHA-256 one way hash function, as specified in [RFC-6234](https://tools.ietf.org/html/rfc6234)_
 4. The DFSP must generate the value `jsonString` from the output of `CJSON(quote)`
 5. The `challenge` is the value of `SHA256(jsonString)`

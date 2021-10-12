@@ -435,9 +435,9 @@ client that an error has occurred.
 | --- | --- | --- | --- |
 | errorInformation | 1 | ErrorInformation | Information describing the error and error code. |
 
-### <a id='thirdpartyRequestsauthorizations'></a>3.1.6 `thirdpartyRequests/authorizations`
+### <a id='thirdpartyRequestsauthorizations'></a>3.1.6 **thirdpartyRequests/authorizations**
 
-The **/thirdpartyRequests/authorizations` resource is analogous to the `/authorizations** resource
+The **/thirdpartyRequests/authorizations** resource is analogous to the **/authorizations** resource
  described in [Section 6.6](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#66-api-resource-authorizations) of Ref. 1 above. The DFSP uses it to request the PISP to:
 
 1. Display the information defining the terms of a proposed transfer to its customer;
@@ -925,8 +925,6 @@ The PartyIdType enumeration is extended for PISPs to include a definition for th
 | THIRD_PARTY_LINK | A third-party link which represents an agreement between a specific PISP and a customer’s account at a DFSP. The content of the link is created by the DFSP at the time when it gives permission to the PISP for specific access to a given account.|
 
 #### <a id='ScopeEnumeration'></a>3.2.2.8 ScopeEnumeration
-
-<!-- TODO: update other references! -->
 
 | Name | Description |
 | ---  | ----------- |
