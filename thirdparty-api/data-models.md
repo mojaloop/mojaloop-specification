@@ -65,7 +65,7 @@ This section describes the content of the API which will be used by PISPs and DF
 
 The content of the API falls into two sections: 
 
-1. [Transaction Patterns - Linking](./transaction-patterns-linking.md) desribes the process for linking customer accounts and providing a general permission mechanism for PISPs to perform operations on those accounts
+1. [Transaction Patterns - Linking](./transaction-patterns-linking.md) describes the process for linking customer accounts and providing a general permission mechanism for PISPs to perform operations on those accounts
 2. [Transaction Patterns - Transfer](./transaction-patterns-transfer.md) describes the transfer of funds at the instigation of a PISP.
 
 The API is used by the following different types of participant, as follows:
@@ -83,8 +83,11 @@ The API contains the following resources:
 ### <a id='accounts'></a>3.1.1 **/accounts**
 
 The **/accounts** resource is used to request information from a DFSP relating to the accounts 
-it holds for a given identifier. The identifier is given to the PISP by the user, and the 
-DFSP returns a set of information about the accounts it is prepared to divulge to the PISP.
+it holds for a given identifier. The identifier is a user-provided value which the user
+uses to access their account with the DFSP, such as a phone number, email address, or
+some other identifier previously provided by the DFSP.
+
+The DFSP returns a set of information about the accounts it is prepared to divulge to the PISP.
 The PISP can then display the names of the accounts to the user, and allow the user to select
 the accounts with which they wish to link via the PISP.
 
@@ -94,29 +97,29 @@ The **/accounts** resource supports the endpoints described below.
 
 This section describes the services that a PISP can request on the /accounts resource.
 
-##### 3.1.1.1.1  **GET /accounts/{ID}**
+##### 3.1.1.1.1  **GET /accounts/**_{ID}_
 
 Used by: PISP
 
-The HTTP request **GET /accounts/{ID}** is used to lookup information about the requested
+The HTTP request **GET /accounts/**_{ID}_ is used to lookup information about the requested
 user's accounts, defined by an identifier *{ID}*, where *{ID}* is an identifier a user
 uses to access their account with the DFSP, such as a phone number, email address, or
 some other identifier previously provided by the DFSP.
 
-Callback and data model information for **GET /accounts/{ID}**:
-- Callback - **PUT /accounts/{ID}**
-- Error Callback - **PUT /accounts/{ID}/error**
+Callback and data model information for **GET /accounts/**_{ID}_:
+- Callback - **PUT /accounts/**_{ID}_
+- Error Callback - **PUT /accounts/**_{ID}_**/error**
 - Data Model – Empty body
 
 #### <a id='Callbacks'></a>3.1.1.2 Callbacks 
 
 The responses for the **/accounts** resource are as follows
 
-##### 3.1.1.2.1  **PUT /accounts/{ID}**
+##### 3.1.1.2.1  **PUT /accounts/**_{ID}_
 
 Used by: DFSP
 
-The **PUT /accounts/{ID}** response is used to inform the requester of the result of a request
+The **PUT /accounts/**_{ID}_ response is used to inform the requester of the result of a request
 for accounts information.  The identifier ID given in the call are the 
 values given in the original request (see Section 3.1.1.1.1 above.)
 
@@ -126,11 +129,11 @@ The data content of the message is given below.
 | --- | --- | --- | --- |
 | accountList | 1 | AccountList | Information about the accounts that the DFSP associates with the identifier sent by the PISP. |
 
-##### 3.1.1.2.2  **PUT /accounts/{ID}/error**
+##### 3.1.1.2.2  **PUT /accounts/**_{ID}_**/error**
 
 Used by: DFSP
 
-The **PUT /accounts/{ID}/error** response is used to inform the requester that an account list
+The **PUT /accounts/**_{ID}_**/error** response is used to inform the requester that an account list
 request has given rise to an error. The identifier ID given in the call are
 the values given in the original request (see Section 3.1.1.1.1 above.)
 
@@ -150,17 +153,17 @@ it wants to obtain and the accounts for which it wants permission.
 
 This section describes the services that can be requested by a client on the API resource 
 **/consentRequests**.
-##### 3.1.2.1.1 **GET /consentRequests/{ID}**
+##### 3.1.2.1.1 **GET /consentRequests/**_{ID}_
 
 Used by: PISP
 
-The HTTP request **GET /consentRequests/{ID}** is used to get information about a previously 
+The HTTP request **GET /consentRequests/**_{ID}_ is used to get information about a previously 
 requested consent. The *{ID}* in the URI should contain the consentRequestId that was assigned to the 
 request by the PISP when the PISP originated the request.
 
-Callback and data model information for **GET /consentRequests/{ID}**:
-- Callback – **PUT /consentRequests/{ID}**
-- Error Callback – **PUT /consentRequests/{ID}/error**
+Callback and data model information for **GET /consentRequests/**_{ID}_:
+- Callback – **PUT /consentRequests/**_{ID}_
+- Error Callback – **PUT /consentRequests/**_{ID}_**/error**
 - Data Model – Empty body
 
 ##### 3.1.2.1.2 **POST /consentRequests**
@@ -171,14 +174,14 @@ The HTTP request **POST /consentRequests** is used to request a DFSP to grant ac
 accounts owned by a customer of the DFSP for the PISP who sends the request.
 
 Callback and data model for **POST /consentRequests**:
-- Callback: **PUT /consentRequests/{ID}**
-- Error callback: **PUT /consentRequests/{ID}/error**
+- Callback: **PUT /consentRequests/**_{ID}_
+- Error callback: **PUT /consentRequests/**_{ID}_**/error**
 - Data model – see below
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | consentRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the consent request object. The ID should be reused for resends of the same consent request. A new ID should be generated for each new consent request. |
-| userId           | 1 | String(1..128) | The identifier used in the **GET /accounts/{ID}**. Used by the DFSP to correlate an account lookup to a `consentRequest` |
+| userId           | 1 | String(1..128) | The identifier used in the **GET /accounts/**_{ID}_. Used by the DFSP to correlate an account lookup to a `consentRequest` |
 | scopes           | 1..256 | Scope | One or more requests for access to a particular account. In each case, the address of the account and the types of access required are given. |
 | authChannels     | 1..256 | ConsentRequestChannelType | A collection of the types of authentication that the DFSP may use to verify that its customer has in fact requested access for the PISP to the accounts requested. |
 | callbackUri      | 1 | Uri | The callback URI that the user will be redirected to after completing verification via the WEB authorization channel. This field is mandatory as the PISP does not know ahead of time which AuthChannel the DSFP will use to authenticate their user.  |
@@ -187,7 +190,7 @@ Callback and data model for **POST /consentRequests**:
 
 This section describes the callbacks that are used by the server under the resource /consentRequests.
 
-##### 3.1.2.2.1 **PUT /consentRequests/{ID}**
+##### 3.1.2.2.1 **PUT /consentRequests/**_{ID}_
 
 Used by: DFSP
 
@@ -198,7 +201,7 @@ with.
 When a PISP requests a series of permissions from a DFSP on behalf of a DFSP’s customer, not all 
 the permissions requested may be granted by the DFSP. Conversely, the out-of-band authorization 
 process  may result in additional privileges being granted by the account holder to the PISP. The
-**PUT /consentRequests/{ID}** resource returns the current state of the permissions relating to a 
+**PUT /consentRequests/**_{ID}_ resource returns the current state of the permissions relating to a 
 particular authorization request. The data model for this call is as follows:
 
 | Name | Cardinality | Type | Description |
@@ -209,7 +212,7 @@ particular authorization request. The data model for this call is as follows:
 | authUri      | 0..1 | Uri | The URI that the PISP should call to complete the linking procedure if completion is required. |
 
 
-##### 3.1.2.2.2 **PATCH /consentRequests/{ID}**
+##### 3.1.2.2.2 **PATCH /consentRequests/**_{ID}_
 
 Used by: PISP
 
@@ -225,13 +228,13 @@ a token which they can use to prove to the DFSP that the user trusts this PISP.
 This section describes the error callbacks that are used by the server under the resource 
 **/consentRequests**.
 
-##### 3.1.2.3.1 **PUT /consentRequests/{ID}/error**
+##### 3.1.2.3.1 **PUT /consentRequests/**_{ID}_**/error**
 
 Used by: DFSP
 
 If the server is unable to complete the consent request, or if an out-of-band processing error or 
-another processing error occurs, the error callback **PUT /consentRequests/{ID}/error** is used. The
-*{ID}* in the URI should contain the *{ID}* that was used in the **GET /consentRequests/{ID}** 
+another processing error occurs, the error callback **PUT /consentRequests/**_{ID}_**/error** is used. The
+*{ID}* in the URI should contain the *{ID}* that was used in the **GET /consentRequests/**_{ID}_ 
 request or the **POST /consentRequests** request. The data model for this resource is as follows:
 
 | Name | Cardinality | Type | Description |
@@ -251,17 +254,17 @@ requested that the PISP be allowed access to their accounts, and will have defin
 question and the type of access which is to be granted.
 #### <a id='Requests-1'></a>3.1.3.1 Requests 
 The **/consents** resource will support the following requests.
-##### 3.1.3.1.1 **GET /consents/{ID}**
+##### 3.1.3.1.1 **GET /consents/**_{ID}_
 
 Used by: DFSP
 
-The **GET /consents/{ID}** resource allows a party to enquire after the status of a consent. The 
+The **GET /consents/**_{ID}_ resource allows a party to enquire after the status of a consent. The 
 *{ID}* used in the URI of the request should be the consent request ID which was used to identify
 the consent when it was created.
 
-Callback and data model information for **GET /consents/{ID}**:
-- Callback – **PUT /consents/{ID}**
-- Error Callback – **PUT /consents/{ID}/error**
+Callback and data model information for **GET /consents/**_{ID}_:
+- Callback – **PUT /consents/**_{ID}_
+- Error Callback – **PUT /consents/**_{ID}_**/error**
 - Data Model – Empty body
 ##### 3.1.3.1.2 **POST /consents**
 
@@ -270,10 +273,10 @@ Used by: DFSP
 The **POST /consents** request is used to request the creation of a consent for interactions between
 a PISP and the DFSP who owns the account which a PISP’s customer wants to allow the PISP access to.
 
-Callback and data model information for **POST /consents/{ID}**:
+Callback and data model information for **POST /consents/**_{ID}_:
 
-- Callback – **PUT /consents/{ID}**
-- Error Callback – **PUT /consents/{ID}/error**
+- Callback – **PUT /consents/**_{ID}_
+- Error Callback – **PUT /consents/**_{ID}_**/error**
 - Data Model – defined below
 
 | Name | Cardinality | Type | Description |
@@ -284,11 +287,11 @@ Callback and data model information for **POST /consents/{ID}**:
 | status | 1 | ConsentStatus | The status of the Consent. |
 | credential | 0..1 | Credential | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList |Optional extension, specific to deployment |
-##### 3.1.3.1.3 **DELETE /consents/{ID}**
+##### 3.1.3.1.3 **DELETE /consents/**_{ID}_
 
 Used by PISP, DFSP
 
-The **DELETE /consents/{ID}** request is used to request the revokation of a previously agreed consent.
+The **DELETE /consents/**_{ID}_ request is used to request the revocation of a previously agreed consent.
 For tracing and auditing purposes, the switch should be sure not to delete the consent physically; 
 instead, information relating to the consent should be marked as deleted and requests relating to the
 consent should not be honoured.
@@ -297,30 +300,30 @@ consent should not be honoured.
 > initiator named in the consent or the account holding institution named in the consent. If any 
 > other party attempts to delete a consent, the request should be rejected, and an error raised.
 
-Callback and data model information for **DELETE /consents/{ID}**:
-- Callback – **PATCH /consents/{ID}**
-- Error Callback – **PUT /consents/{ID}/error**
+Callback and data model information for **DELETE /consents/**_{ID}_:
+- Callback – **PATCH /consents/**_{ID}_
+- Error Callback – **PUT /consents/**_{ID}_**/error**
 
 #### <a id='Callbacks-1'></a>3.1.3.2 Callbacks 
 The **/consents** resource supports the following callbacks: 
-##### 3.1.3.2.1 **PATCH/consents/{ID}**
+##### 3.1.3.2.1 **PATCH/consents/**_{ID}_
 
 Used by: Auth-Service, DFSP
 
-**PATCH /consents/{ID}** is used in 2 places:
-1. To inform the PISP that the `consent.credential` is valid and the account linking process compeleted
-   successfuly.
+**PATCH /consents/**_{ID}_ is used in 2 places:
+1. To inform the PISP that the `consent.credential` is valid and the account linking process completed
+   successfully.
 2. To inform the PISP or the DFSP that the Consent has been revoked.
 
-In the first case, a DFSP sends a **PATCH/consents/{ID}** request to the PISP with a `credential.status`
+In the first case, a DFSP sends a **PATCH/consents/**_{ID}_ request to the PISP with a `credential.status`
 of `VERIFIED`.
 
-In the second case, an Auth-Service or DFSP sends a **PATCH/consents/{ID}** request with a `status` of
+In the second case, an Auth-Service or DFSP sends a **PATCH/consents/**_{ID}_ request with a `status` of
 `REVOKED`, and the `revokedAt` field set.
 
 The syntax of this call complies with the JSON Merge Patch specification [RFC-7386](https://datatracker.ietf.org/doc/html/rfc7386) 
 rather than the JSON Patch specification [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902). 
-The **PATCH /consents/{ID}** resource contains a set of proposed changes to the current state of the 
+The **PATCH /consents/**_{ID}_ resource contains a set of proposed changes to the current state of the 
 permissions relating to a particular authorization grant. The data model 
 for this call is as follows:
 
@@ -331,11 +334,11 @@ for this call is as follows:
 | credential | 0..1 | Credential | The credential which is being used to support the consents. |
 | extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
 
-##### 3.1.3.2.2 **PUT /consents/{ID}**
+##### 3.1.3.2.2 **PUT /consents/**_{ID}_
 
 Used by: PISP
 
-The **PUT /consents/{ID}** resource is used to return information relating to the consent object 
+The **PUT /consents/**_{ID}_ resource is used to return information relating to the consent object 
 whose `consentId` is given in the URI. And for registering a credential for the consent. The 
 data returned by the call is as follows:
 
@@ -347,13 +350,13 @@ data returned by the call is as follows:
 | extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
 #### <a id='Errorcallbacks-1'></a>3.1.3.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource **/consents**.
-##### 3.1.3.3.1 **PUT /consents/{ID}/error**
+##### 3.1.3.3.1 **PUT /consents/**_{ID}_**/error**
 
 Used by: PISP, DFSP, Auth-Service
 
 If the server is unable to complete the consent, or if an out-of-loop processing error or another
-processing error occurs, the error callback **PUT /consents/{ID}/error** is used. The *{ID}* in the
-URI should contain the *{ID}* that was used in the **GET /consents/{ID}** request or the 
+processing error occurs, the error callback **PUT /consents/**_{ID}_**/error** is used. The *{ID}* in the
+URI should contain the *{ID}* that was used in the **GET /consents/**_{ID}_ request or the 
 **POST /consents** request. The data model for this resource is as follows:
 
 | Name | Cardinality | Type | Description |
@@ -396,39 +399,39 @@ respond with a list of the current DFSPs in the scheme which are registered as p
 service.
 #### <a id='Requests-1'></a>3.1.5.1 Requests 
 The services resource will support the following requests.
-#### <a id='GETservicesServiceType'></a>3.1.5.2 **GET /services/{ServiceType}**
+#### <a id='GETservicesServiceType'></a>3.1.5.2 **GET /services/**_{ServiceType}_
 
 Used by: DFSP, PISP
 
-The HTTP request **GET /services/{ServiceType}** is used to find out the names of the participants in a 
+The HTTP request **GET /services/**_{ServiceType}_ is used to find out the names of the participants in a 
 scheme which provide the type of service defined in the *{ServiceType}* parameter. The *{ServiceType}* parameter
 should specify a value from the ServiceType enumeration. If it does not, the request will be 
 rejected with an error.
 
-Callback and data model information for **GET /services/{ServiceType}**:
-- Callback - **PUT /services/{ServiceType}**
-- Error Callback - **PUT /services/{ServiceType}/error**
+Callback and data model information for **GET /services/**_{ServiceType}_:
+- Callback - **PUT /services/**_{ServiceType}_
+- Error Callback - **PUT /services/**_{ServiceType}_**/error**
 - Data Model – Empty body
 #### <a id='Callbacks-1'></a>3.1.5.3 Callbacks
 This section describes the callbacks that are used by the server for services provided by the 
 resource **/services**.
-##### 3.1.5.3.1 **PUT /services/{ServiceType}**
+##### 3.1.5.3.1 **PUT /services/**_{ServiceType}_
 
 Used by: Switch
 
-The callback **PUT /services/{ServiceType}** is used to inform the client of a successful result of 
+The callback **PUT /services/**_{ServiceType}_ is used to inform the client of a successful result of 
 the service information lookup. The information is returned in the following form:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
 | providers | 0...256 | FspId | A list of the Ids of the participants who provide the service requested. |
 
-##### 3.1.5.3.2 **PUT /services/{ServiceType}/error**
+##### 3.1.5.3.2 **PUT /services/**_{ServiceType}_**/error**
 
 Used by: Switch
 
 If the server encounters an error in fulfilling a request for a list of participants who 
-provide a service, the error callback **PUT /services/{ServiceType}/error** is used to inform the 
+provide a service, the error callback **PUT /services/**_{ServiceType}_**/error** is used to inform the 
 client that an error has occurred.
 
 | Name | Cardinality | Type | Description |
@@ -449,17 +452,17 @@ The **/thirdpartyRequests/authorizations** resource supports the endpoints descr
 
 This section describes the services that a client can request on the 
 **/thirdpartyRequests/authorizations** resource.
-##### 3.1.6.1.1 **GET /thirdpartyRequests/authorizations/{ID}**
+##### 3.1.6.1.1 **GET /thirdpartyRequests/authorizations/**_{ID}_
 
 Used by: DFSP
 
-The HTTP request **GET /thirdpartyRequests/authorizations/{ID}** is used to get information relating 
+The HTTP request **GET /thirdpartyRequests/authorizations/**_{ID}_ is used to get information relating 
 to a previously issued authorization request. The *{ID}* in the request should match the 
 `authorizationRequestId` which was given when the authorization request was created.
 
-Callback and data model information for **GET /thirdpartyRequests/authorizations/{ID}**:
-- Callback - **PUT /thirdpartyRequests/authorizations/{ID}**
-- Error Callback - **PUT /thirdpartyRequests/authorizations/{ID}/error**
+Callback and data model information for **GET /thirdpartyRequests/authorizations/**_{ID}_:
+- Callback - **PUT /thirdpartyRequests/authorizations/**_{ID}_
+- Error Callback - **PUT /thirdpartyRequests/authorizations/**_{ID}_**/error**
 - Data Model – Empty body
 ##### 3.1.6.1.2 **POST /thirdpartyRequests/authorizations**
 
@@ -470,14 +473,14 @@ The HTTP request **POST /thirdpartyRequests/authorizations** is used to request 
 
 Callback and data model information for **POST /thirdpartyRequests/authorizations:**
 
-- Callback - **PUT /thirdpartyRequests/authorizations/{ID}**
-- Error Callback - **PUT /thirdpartyRequests/authorizations/{ID}/error**
+- Callback - **PUT /thirdpartyRequests/authorizations/**_{ID}_
+- Error Callback - **PUT /thirdpartyRequests/authorizations/**_{ID}_**/error**
 - Data Model – See Table below
 
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
-| authorizationRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the authoriztion request object. The ID should be reused for resends of the same authoriztion request. A new ID should be generated for each new authoriztion request. |
+| authorizationRequestId | 1 | CorrelationId | Common ID between the PISP and the Payer DFSP for the authorization request object. The ID should be reused for resends of the same authorization request. A new ID should be generated for each new authorization request. |
 | transactionRequestId   | 1 | CorrelationId | The unique identifier of the transaction request for which authorization is being requested. |
 | challenge              | 1 | BinaryString | The challenge that the PISP’s client is to sign. |
 | transferAmount         | 1 | Money | The amount that will be debited from the sending customer’s account as a consequence of the transaction. |
@@ -491,7 +494,7 @@ Callback and data model information for **POST /thirdpartyRequests/authorization
 
 #### <a id='Callbacks-1'></a>3.1.6.2 Callbacks
 The following callbacks are supported for the **/thirdpartyRequests/authorizations** resource
-##### 3.1.6.2.1 **PUT /thirdpartyRequests/authorizations/{ID}**
+##### 3.1.6.2.1 **PUT /thirdpartyRequests/authorizations/**_{ID}_
 
 Used by: PISP
 
@@ -499,7 +502,7 @@ After receiving the **POST /thirdpartyRequests/authorizations**, the PISP will p
 transaction to their user, and request that the client sign the `challenge` field using the credential
 they previously registered.
 
-The signed challenge will be sent back by the PISP in **PUT /thirdpartyRequests/authorizations/{ID}**:
+The signed challenge will be sent back by the PISP in **PUT /thirdpartyRequests/authorizations/**_{ID}_:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
@@ -509,12 +512,12 @@ The signed challenge will be sent back by the PISP in **PUT /thirdpartyRequests/
 #### <a id='Errorcallbacks-1'></a>3.1.6.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
 **/thirdpartyRequests/authorizations**.
-##### 3.1.6.3.1 **PUT /thirdpartyRequests/authorizations/{ID}/error**
+##### 3.1.6.3.1 **PUT /thirdpartyRequests/authorizations/**_{ID}_**/error**
 
 Used by: DFSP
 
-The **PUT /thirdpartyRequests/authorizations/{ID}/error** resource will have the same content
-as the **PUT /authorizations/{ID}/error** resource described in [Section 6.6.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6651-put-authorizationsiderror) 
+The **PUT /thirdpartyRequests/authorizations/**_{ID}_**/error** resource will have the same content
+as the **PUT /authorizations/**_{ID}_**/error** resource described in [Section 6.6.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6651-put-authorizationsiderror) 
 of Ref. 1 above.
 ### <a id='thirdpartyRequeststransactions'></a>3.1.7 **/thirdpartyRequests/transactions**
 The **/thirdpartyRequests/transactions` resource is analogous to the `/transactionRequests** 
@@ -527,17 +530,17 @@ The **/thirdpartyRequests/transactions** resource supports the endpoints describ
 
 This section describes the services that a client can request on the 
 **/thirdpartyRequests/transactions** resource.
-##### 3.1.7.1.1 **GET /thirdpartyRequests/transactions/{ID}**
+##### 3.1.7.1.1 **GET /thirdpartyRequests/transactions/**_{ID}_
 
 Used by: PISP
 
-The HTTP request **GET /thirdpartyRequests/transactions/{ID}** is used to get information 
+The HTTP request **GET /thirdpartyRequests/transactions/**_{ID}_ is used to get information 
 relating to a previously issued transaction request. The *{ID}* in the request should 
 match the `transactionRequestId` which was given when the transaction request was created.
 
-Callback and data model information for **GET /thirdpartyRequests/transactions/{ID}**:
-- Callback - **PUT /thirdpartyRequests/transactions/{ID}**
-- Error Callback - **PUT /thirdpartyRequests/transactions/{ID}/error**
+Callback and data model information for **GET /thirdpartyRequests/transactions/**_{ID}_:
+- Callback - **PUT /thirdpartyRequests/transactions/**_{ID}_
+- Error Callback - **PUT /thirdpartyRequests/transactions/**_{ID}_**/error**
 - Data Model – Empty body
 ##### 3.1.7.1.2 **POST /thirdpartyRequests/transactions**
 
@@ -547,8 +550,8 @@ The HTTP request **POST /thirdpartyRequests/transactions** is used to request th
 of a transaction request on the server for the transfer described in the request.
 
 Callback and data model information for **POST /thirdpartyRequests/transactions**:
-- Callback - **PUT /thirdpartyRequests/transactions/{ID}**
-- Error Callback - **PUT /thirdpartyRequests/transactions/{ID}/error**
+- Callback - **PUT /thirdpartyRequests/transactions/**_{ID}_
+- Error Callback - **PUT /thirdpartyRequests/transactions/**_{ID}_**/error**
 - Data Model – See Table below
 
 | Name | Cardinality | Type | Description |
@@ -564,13 +567,13 @@ Callback and data model information for **POST /thirdpartyRequests/transactions*
 | extensionList        | 0..1 | ExtensionList |Optional extension, specific to deployment. |
 #### <a id='Callbacks-1'></a>3.1.7.2 Callbacks
 The following callbacks are supported for the **/thirdpartyRequests/transactions** resource
-##### 3.1.7.2.1 **PUT /thirdpartyRequests/transactions/{ID}**
+##### 3.1.7.2.1 **PUT /thirdpartyRequests/transactions/**_{ID}_
 
 Used by: DFSP
 
 After a PISP requests the creation of a Third Party Transaction request (**POST /thirdpartyRequests/transactions**)
 or the status of a previously created Third Party Transaction request 
-(**GET /thirdpartyRequests/transactions/{ID}**), the DFSP will send this callback.
+(**GET /thirdpartyRequests/transactions/**_{ID}_), the DFSP will send this callback.
 
 The data model for this endpoint is as follows:
 | Name | Cardinality | Type | Description |
@@ -578,13 +581,13 @@ The data model for this endpoint is as follows:
 | transactionRequestState | 1 | TransactionRequestState | State of the transaction request. |
 | extensionList | 0..1 | ExtensionList | Optional extension, specific to deployment |
 
-##### 3.1.7.2.2 **PATCH /thirdpartyRequests/transactions/{ID}**
+##### 3.1.7.2.2 **PATCH /thirdpartyRequests/transactions/**_{ID}_
 
 Used by: DFSP
 
 The issuing PISP will expect a response to their request for a transfer which describes 
 the finalised state of the requested transfer. This response will be given by a `PATCH` call on the
-**/thirdpartyRequests/transactions/{ID}** resource. The *{ID}* given in the query string should be 
+**/thirdpartyRequests/transactions/**_{ID}_ resource. The *{ID}* given in the query string should be 
 the `transactionRequestId` which was originally used by the PISP to identify the transaction 
 request (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above.)
 
@@ -599,12 +602,12 @@ The data model for this endpoint is as follows:
 #### <a id='Errorcallbacks-1'></a>3.1.7.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource
 **/thirdpartyRequests/transactions**.
-##### 3.1.7.3.1 **PUT /thirdpartyRequests/transactions/{ID}/error**
+##### 3.1.7.3.1 **PUT /thirdpartyRequests/transactions/**_{ID}_**/error**
 
 Used by: DFSP
 
-The **PUT /thirdpartyRequests/transactions/{ID}/error** resource will have the same content as 
-the **PUT /transactionRequests/{ID}/error** resource described in [Section 6.4.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6451-put-transactionrequestsiderror) of Ref. 1 above.
+The **PUT /thirdpartyRequests/transactions/**_{ID}_**/error** resource will have the same content as 
+the **PUT /transactionRequests/**_{ID}_**/error** resource described in [Section 6.4.5.1](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#6451-put-transactionrequestsiderror) of Ref. 1 above.
 
 ### <a id='thirdpartyRequestsverifications'></a>3.1.8 **/thirdpartyRequests/verifications**
 
@@ -620,17 +623,17 @@ The **/thirdpartyRequests/verifications** resource supports the endpoints descri
 #### <a id='Requests-1'></a>3.1.8.1 Requests
 This section describes the services that a client can request on the **/thirdpartyRequests/verifications**
 resource.
-##### 3.1.8.1.1 **GET /thirdpartyRequests/verifications/{ID}**
+##### 3.1.8.1.1 **GET /thirdpartyRequests/verifications/**_{ID}_
 
 Used by: DFSP
 
-The HTTP request **/thirdpartyRequests/verifications/{ID}** is used to get information regarding a previously
+The HTTP request **/thirdpartyRequests/verifications/**_{ID}_ is used to get information regarding a previously
 created or requested authorization. The *{ID}* in the URI should contain the verification request ID 
 (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) below) that was used for the creation of the transfer.Callback and data model
-information for **GET /thirdpartyRequests/verifications/{ID}**:
+information for **GET /thirdpartyRequests/verifications/**_{ID}_:
 
-- Callback – **PUT /thirdpartyRequests/verifications/{ID}**
-- Error Callback – **PUT /thirdpartyRequests/verifications/{ID}/error**
+- Callback – **PUT /thirdpartyRequests/verifications/**_{ID}_
+- Error Callback – **PUT /thirdpartyRequests/verifications/**_{ID}_**/error**
 - Data Model – Empty body
 ##### 3.1.8.1.2 **POST /thirdpartyRequests/verifications**
 
@@ -640,8 +643,8 @@ The **POST /thirdpartyRequests/verifications** resource is used to request confi
 service that a challenge has been signed using the correct private key.
 
 Callback and data model information for **POST /thirdpartyRequests/verifications**:
-- Callback - **PUT /thirdpartyRequests/verifications/{ID}**
-- Error Callback - **PUT /thirdpartyRequests/verifications /{ID}/error**
+- Callback - **PUT /thirdpartyRequests/verifications/**_{ID}_
+- Error Callback - **PUT /thirdpartyRequests/verifications /**_{ID}_**/error**
 - Data Model – See Table below
 
 | Name | Cardinality | Type | Description |
@@ -656,14 +659,14 @@ Callback and data model information for **POST /thirdpartyRequests/verifications
 #### <a id='Callbacks-1'></a>3.1.8.2 Callbacks 
 This section describes the callbacks that are used by the server under the resource
 **/thirdpartyRequests/verifications**
-##### 3.1.8.2.1 **PUT /thirdpartyRequests/verifications/{ID}**
+##### 3.1.8.2.1 **PUT /thirdpartyRequests/verifications/**_{ID}_
 
 Used by: Auth Service
 
-The callback **PUT /thirdpartyRequests/verifications/{ID}** is used to inform the client of the result 
+The callback **PUT /thirdpartyRequests/verifications/**_{ID}_ is used to inform the client of the result 
 of an authorization check. The *{ID}* in the URI should contain the `authorizationRequestId`
 (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above) which was used to request the check, or the *{ID}* that was 
-used in the **GET /thirdpartyRequests/verifications/{ID}**. The data model for this resource is as follows:
+used in the **GET /thirdpartyRequests/verifications/**_{ID}_. The data model for this resource is as follows:
 
 | Name | Cardinality | Type | Description |
 | --- | --- | --- | --- |
@@ -671,14 +674,14 @@ used in the **GET /thirdpartyRequests/verifications/{ID}**. The data model for t
 #### <a id='Errorcallbacks-1'></a>3.1.8.3 Error callbacks
 This section describes the error callbacks that are used by the server under the resource 
 **/thirdpartyRequests/verifications**.
-##### 3.1.8.3.1 **PUT /thirdpartyRequests/verifications/{ID}/error**
+##### 3.1.8.3.1 **PUT /thirdpartyRequests/verifications/**_{ID}_**/error**
 
 Used by: Auth Service
 
 If the server is unable to complete the authorization request, or another processing error occurs, the 
-error callback **PUT /thirdpartyRequests/verifications/{ID}/error** is used.The *{ID}* in the URI should 
+error callback **PUT /thirdpartyRequests/verifications/**_{ID}_**/error** is used.The *{ID}* in the URI should 
 contain the `verificationRequestId` (see [Section 3.1.8.1.2](#31812-post-thirdpartyrequestsverifications) above) which was used to request the 
-check, or the *{ID}* that was used in the **GET /thirdpartyRequests/verifications/{ID}**.
+check, or the *{ID}* that was used in the **GET /thirdpartyRequests/verifications/**_{ID}_.
 
 The data model for this resource is as follows:
 | Name | Cardinality | Type | Description |
@@ -741,7 +744,7 @@ The ConsentState type stores the status of a consent request, as described in [S
 #### <a id='CorrelationId'></a>3.2.1.9 CorrelationId
 The CorrelationId type used in these definitions is as defined in [Section 7.3.8](https://github.com/mojaloop/mojaloop-specification/blob/master/fspiop-api/documents/v1.1-document-set/API%20Definition%20v1.1.md#738-correlationid) of Ref. 1 above.
 ##### 3.2.1.10 Credential
-The Credential object is used to store information about a publicKey and signature that has been regsitered with a Consent.
+The Credential object is used to store information about a publicKey and signature that has been registered with a Consent.
 This publicKey can be used to verify that transaction authorizations have been signed by the previously-registered privateKey, 
 which resides on a User's device.
 
@@ -941,7 +944,7 @@ The ServiceType enumeration describes the types of role for which a DFSP may que
 | AUTH_SERVICE    | Participants which provide Authentication Services |
 
 ##### 3.2.2.10 SignedPayloadType
-The SignedPayloadType enumeration contains the allowed values for the type of a signed playoad
+The SignedPayloadType enumeration contains the allowed values for the type of a signed payload
 | Name | Description |
 | ---  | ----------- |
 | FIDO | The signed payload is based on a FIDO Assertion Response. Its payload is a FIDOPublicKeyCredentialAssertion object. |
@@ -985,6 +988,6 @@ In addition, the Third Party API adds the following error codes, starting with t
 | **6200** | Invalid Consent Credential            | The signature of the credential submitted by the PISP is invalid        |   |   | X |   |   |   |   |   |
 | **6201** | Invalid transaction signature         | The signature of the verification response doesn't match the credential |   |   |   |   |   | X |   | X |
 | **6203** | Invalid authentication token          | DFSP receives invalid authentication token from PISP.                   |   | X |   |   |   |   |   |   |
-| **6204** | Bad callbackUri                       | The callbackUri is deemed invalid or untrustworty.                      |   | X |   |   |   |   |   |   |
+| **6204** | Bad callbackUri                       | The callbackUri is deemed invalid or untrustworthy.                      |   | X |   |   |   |   |   |   |
 | **6205** | No accounts found                     | No accounts were found for the given identifier                         | X |   |   |   |   |   |   |   |
 
