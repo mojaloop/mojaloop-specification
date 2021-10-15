@@ -108,7 +108,8 @@ with. This is *unlikely* to be done on-demand (e.g., when a User clicks "link"
 in the PISP mobile App), and far more likely to be done periodically and cached
 by the PISP Server. The reason for this is simply that new DFSPs don't typically
 join the Mojaloop network all that frequently, so calling this multiple times on
-the same day (or even the same month) would likely yield the same results.
+the same day would likely yield the same results. We recommend that the PISP
+calls this request once per day to keep the list of available DFSPs up to date.
 
 The end-goal of this phase is for the PISP Server to have a final list of DFSPs
 available and any relevant metadata about those DFPSs that are necessary to
