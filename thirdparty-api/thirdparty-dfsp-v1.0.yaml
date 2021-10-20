@@ -262,6 +262,8 @@ paths:
                           - XDR
                           - XOF
                           - XPF
+                          - XTS
+                          - XXX
                           - YER
                           - ZAR
                           - ZMW
@@ -475,29 +477,13 @@ paths:
                   minLength: 1
                   maxLength: 512
                   description: |
-                    The API data type Uri is a JSON string in a canonical format that is restricted by a \ regular expression for interoperability reasons.
+                    The API data type Uri is a JSON string in a canonical format that is restricted by a regular expression for interoperability reasons.
               required:
                 - consentRequestId
                 - userId
                 - scopes
                 - authChannels
                 - callbackUri
-            example:
-              id: '456'
-              initiatorId: pispA
-              authChannels:
-                - WEB
-                - OTP
-              scopes:
-                - accountId: dfspa.username.1234
-                  actions:
-                    - accounts.transfer
-                    - accounts.getBalance
-                - accountId: dfspa.username.5678
-                  actions:
-                    - accounts.transfer
-                    - accounts.getBalance
-              callbackUri: 'pisp-app://callback.com'
       responses:
         '202':
           $ref: '#/paths/~1consents/post/responses/202'
@@ -854,17 +840,15 @@ paths:
                 - title: ConsentPostRequestAUTH
                   type: object
                   description: |
-                    The object sent in a `POST /consents` request to AUTH-SERVICE by DFSP to store registered consent with PublicKey
-                    and whatever needed to perform authorization validation later
+                    The object sent in a `POST /consents` request to the Auth-Service
+                    by a DFSP to store registered Consent and credential
                   properties:
                     consentId:
                       allOf:
                         - $ref: '#/paths/~1consentRequests/post/requestBody/content/application~1json/schema/properties/consentRequestId'
                       description: |
                         Common ID between the PISP and FSP for the Consent object
-                        decided by the DFSP who creates the Consent
-                        This field is REQUIRED for POST /consent.
-                        creation of this Consent.
+                        determined by the DFSP who creates the Consent.
                     scopes:
                       minLength: 1
                       maxLength: 256
@@ -892,7 +876,8 @@ paths:
                   additionalProperties: false
                 - title: ConsentPostRequestPISP
                   type: object
-                  description: The object sent in a `POST /consents` request to PISP by DFSP to ask for delivering the credential object.
+                  description: |
+                    The provisional Consent object sent by the DFSP in `POST /consents`.
                   properties:
                     consentId:
                       allOf:
@@ -1957,9 +1942,6 @@ paths:
                             - CONSENT
                             - THIRD_PARTY_LINK
                           description: |
-                            This is a variant based on FSPIOP `PartyIdType` specification.
-                            Main difference being the CONSENT and THIRD_PARTY_LINK enums.
-
                             Below are the allowed values for the enumeration.
                             - MSISDN - An MSISDN (Mobile Station International Subscriber Directory
                             Number, that is, the phone number) is used as reference to a participant.
@@ -1972,7 +1954,7 @@ paths:
                             [RFC 3696](https://tools.ietf.org/html/rfc3696).
                             - PERSONAL_ID - A personal identifier is used as reference to a participant.
                             Examples of personal identification are passport number, birth certificate
-                            number, and national registration number. The identifier number is added in
+                            number, and national registration number. The identifier number is added in 
                             the PartyIdentifier element. The personal identifier type is added in the
                             PartySubIdOrType element.
                             - BUSINESS - A specific Business (for example, an organization or a company)
@@ -1995,8 +1977,14 @@ paths:
                             The ALIAS identifier can be in any format. It is also possible to use the
                             PartySubIdOrType element for identifying an account under an Alias defined
                             by the PartyIdentifier.
-                            - CONSENT - TBD
-                            - THIRD_PARTY_LINK - TBD
+                            - CONSENT - A Consent represents an agreement between a PISP, a Customer and
+                            a DFSP which allows the PISP permission to perform actions on behalf of the 
+                            customer. A Consent has an authoritative source: either the DFSP who issued 
+                            the Consent, or an Auth Service which administers the Consent.
+                            - THIRD_PARTY_LINK - A Third Party Link represents an agreement between a PISP,
+                            a DFSP, and a specific Customer's account at the DFSP. The content of the link 
+                            is created by the DFSP at the time when it gives permission to the PISP for 
+                            specific access to a given account.
                           example: PERSONAL_ID
                         partyIdentifier:
                           title: PartyIdentifier
