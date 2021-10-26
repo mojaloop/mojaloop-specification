@@ -22,8 +22,9 @@ specified types of information.
 |Version|Date|Change Description|
 |---|---|---|
 |**1.0**|2018-03-13|Initial version|
-|**1.1**|2020-05-19|1. This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request **PATCH /transfers/**_{ID}_. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the **transfers** resource has been updated with the new **PATCH** request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for **PATCH** is described in Section 3.2.3.5. <br>c. Table 5 in Section 6.1.1 has been updated to include **PATCH** as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the **transfers** resource. <br>e. Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new **PATCH /transfers**/_{ID}_ request. <br><br>2. In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a. Updated Figure 6 as it contained a copy-paste error. <br>b. Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3. The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context<br>a. The description for the **FSPIOP-Destination** header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the **FSPIOP-URI** header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 83. This doesn’t imply any change as such. <br>a. Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the **PartyIdInfo** complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7. A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in **PUT /transfers/**_{ID}_ callbacks.|
-|**2.0**|2021-03-19|1. The element named **initiatorType** has been removed from the complex type **TransactionType** (see [Section 7.4.18](#7418-transactiontype)). This information is now supposed to be carried as part of the complex type **Party** (see [7.4.11 Party](#7411-party)) instead, to be able to have more detail of the transaction by allowing to state the type of both the Payer and Payee. Section [5.3 Mapping of Use Cases to Transaction Types](#53-mapping-of-use-cases-to-transaction-types), has been updated to reflect this change.
+|**1.1**|2020-05-19|1. This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request **PATCH /transfers/**_{ID}_. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the **transfers** resource has been updated with the new **PATCH** request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for **PATCH** is described in Section 3.2.3.5. <br>c. Table 6 in Section 6.1.1 has been updated to include **PATCH** as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the **transfers** resource. <br>e. Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new **PATCH /transfers**/_{ID}_ request. <br><br>2. In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a. Updated Figure 6 as it contained a copy-paste error. <br>b. Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3. The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context<br>a. The description for the **FSPIOP-Destination** header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the **FSPIOP-URI** header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 84. This doesn’t imply any change as such. <br>a. Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the **PartyIdInfo** complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 103 has been updated. For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 10 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7. A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in **PUT /transfers/**_{ID}_ callbacks.|
+|**1.1.1**|2021-09-22|This document version only adds information about optional HTTP headers regarding tracing support in [Table 2](#table-2), see _Distributed Tracing Support for OpenAPI Interoperability_ for more information. There are no changes in any resources as part of this version.|
+|**2.0**|2021-10-26|- The element named **initiatorType** has been removed from the complex type [**TransactionType**](#7418-transactiontype). This information is now supposed to be carried as part of the complex type [**Party**](#7411-party) instead, to be able to have more detail of the transaction by allowing to state the type of both the Payer and Payee. Section [5.3 Mapping of Use Cases to Transaction Types](#53-mapping-of-use-cases-to-transaction-types), has been updated to reflect this change. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/25.<br>- Two new types of a [**Party**](#7411-party) have been added to represent a government and a non-governmental organization in [**PartyType**](#759-partytype). This change is based on https://github.com/mojaloop/mojaloop-specification/issues/24.<br>- Two new possible [**PartyIdType**](#7325-partyidtype)s have been added in the enumeration [**PartyIdType**](#756-partyidtype) to support third party use cases. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/100.
 
 ## 2. Introduction
 
@@ -151,7 +152,7 @@ The path points to an actual API resource or service. The resources in the API a
 - **bulkQuotes**
 - **bulkTransfers**
 
-All resources found above are also organized further in a hierarchical form, separated by one or more forward slashes (**'/'**). Resources support different services depending on the HTTP method used. All supported API resources and services, tabulated with URI and HTTP method, appear in [Table 5](#table-5).
+All resources found above are also organized further in a hierarchical form, separated by one or more forward slashes (**'/'**). Resources support different services depending on the HTTP method used. All supported API resources and services, tabulated with URI and HTTP method, appear in [Table 6](#table-6).
 
 #### 3.1.3.4 Query
 
@@ -215,20 +216,31 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 |**FSPIOP-URI**|**/parties/msisdn/123456789**|0..1|The **FSPIOP-URI** header field is a non- HTTP standard field used by the API for signature verification, should contain the service URI. Required if signature verification is used, for more information see _API Signature_. <br> In the context of the Mojaloop FSPIOP API, the value for FSPIOP-URI starts with the **_service_** in the URI value. For example, if a URL is http://stg-simulator.moja.live/payerfsp/participants/MSISDN/123456789, then the FSPIOP-URI value is “/participants/MSISDN/123456789”.|
 |**FSPIOP- HTTP- Method**|**GET**|0..1|The **FSPIOP-HTTP-Method** header field is a non-HTTP standard field used by the API for signature verification, should contain the service HTTP method. Required if signature verification is used, for more information see API Signature.|
 
-**Table 1 -- HTTP request header fields**
+**Table 1 -- HTTP request header fields that must be supported**
+
+[Table 2](#table-2) contains the HTTP request header fields that are optional to support by implementers of the API.
+
+###### Table 2
+
+|Field|Example Values|Cardinality|Description|
+|---|---|---|---|
+|**traceparent**|**00-91e502e28cd723686e9940bd3f378f85-b0f903d000944947-01**|0..1|The traceparent header represents the incoming request in a tracing system in a common format. See _Distributed Tracing Support for OpenAPI Interoperability_ for more information.|
+|**tracestate**|**banknrone=b0f903d0009449475**|0..1|Provides optional vendor-specific trace information, and support for multiple distributed traces. See _Distributed Tracing Support for OpenAPI Interoperability_ for more information.|
+
+**Table 2 -- HTTP request header fields that are optional to support**
 
 #### 3.2.1.2 HTTP Response Header Fields
 
-[Table 2](#table-2) contains the HTTP response header fields that must be supported by implementers of the API. An implementation should also expect other standard and non-standard HTTP response header fields that are not listed here.
+[Table 3](#table-3) contains the HTTP response header fields that must be supported by implementers of the API. An implementation should also expect other standard and non-standard HTTP response header fields that are not listed here.
 
-###### Table 2
+###### Table 3
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
 |**Content-Length**|**3495**|0..1|The **Content-Length**<sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
 |**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>17</sup> header field indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
 
-**Table 2 -- HTTP response header fields**
+**Table 3 -- HTTP response header fields**
 
 #### 3.2.2 HTTP Methods
 
@@ -254,7 +266,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 #### 3.2.3.1 HTTP POST Call Flow
 
-[Figure 1](#figure-1) shows the normal API call flow for a request to create an object in a Peer FSP using HTTP **POST**. The service **_/service_** in the flow should be renamed to any of the services in [Table 5](#table-5) that support the HTTP **POST** method.
+[Figure 1](#figure-1) shows the normal API call flow for a request to create an object in a Peer FSP using HTTP **POST**. The service **_/service_** in the flow should be renamed to any of the services in [Table 6](#table-6) that support the HTTP **POST** method.
 
 ###### Figure 1
 
@@ -265,7 +277,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 #### 3.2.3.2 HTTP GET Call Flow
 
-[Figure 2](#figure-2) shows the normal API call flow for a request to get information about an object in a Peer FSP using HTTP **GET**. The service **/service/**_{ID}_ in the flow should be renamed to any of the services in [Table 5](#table-5) that supports the HTTP **GET** method.
+[Figure 2](#figure-2) shows the normal API call flow for a request to get information about an object in a Peer FSP using HTTP **GET**. The service **/service/**_{ID}_ in the flow should be renamed to any of the services in [Table 6](#table-6) that supports the HTTP **GET** method.
 
 ###### Figure 2
 
@@ -276,7 +288,7 @@ All the sequences and related services use an asynchronous call flow. No service
 
 #### 3.2.3.3 HTTP DELETE Call Flow
 
-[Figure 3](#figure-3) contains the normal API call flow to delete FSP information about a Party in an ALS using HTTP **DELETE**. The service **/service/**_{ID}_ in the flow should be renamed to any of the services in [Table 5](#table-5) that supports the HTTP DELETE method. HTTP DELETE is only supported in a common ALS, which is why the figure shows the ALS entity as a server only.
+[Figure 3](#figure-3) contains the normal API call flow to delete FSP information about a Party in an ALS using HTTP **DELETE**. The service **/service/**_{ID}_ in the flow should be renamed to any of the services in [Table 6](#table-6) that supports the HTTP DELETE method. HTTP DELETE is only supported in a common ALS, which is why the figure shows the ALS entity as a server only.
 
 ###### Figure 3
 
@@ -328,9 +340,9 @@ For some services when a Switch is used, the destination FSP might be unknown. A
 
 #### 3.2.4 HTTP Response Status Codes
 
-The API supports the HTTP response status codes<sup>19</sup> in [Table 3](#table-3).
+The API supports the HTTP response status codes<sup>19</sup> in [Table 4](#table-4).
 
-###### Table 3
+###### Table 4
 
 |Status Code|Reason|Description|
 |---|---|---|
@@ -340,18 +352,18 @@ The API supports the HTTP response status codes<sup>19</sup> in [Table 3](#table
 |**401**|Unauthorized|The request requires authentication in order to be processed.|
 |**403**|Forbidden|The request was denied and will be denied in the future.|
 |**404**|Not Found|The resource specified in the URI was not found.|
-|**405**|Method Not Allowed|An unsupported HTTP method for the request was used; see Table 5 for information on which HTTP methods are allowed in which services.|
+|**405**|Method Not Allowed|An unsupported HTTP method for the request was used; see Table 6 for information on which HTTP methods are allowed in which services.|
 |**406**|Not acceptable|The server is not capable of generating content according to the Accept headers sent in the request. Used in the API to indicate that the server does not support the version that the client is requesting.|
 |**501**|Not Implemented|The server does not support the requested service. The client should not retry.|
 |**503**|Service Unavailable|The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.|
 
- **Table 3 -- HTTP response status codes supported in the API**
+ **Table 4 -- HTTP response status codes supported in the API**
 
 Any HTTP status codes 3*xx*<sup>20</sup> returned by the server should not be retried and require manual investigation.
 
 An implementation of the API should also be capable of handling other errors not defined above as the request could potentially be routed through proxy servers.
 
-As all requests in the API are asynchronous, additional HTTP error codes for server errors (error codes starting with 5*xx*21 that are *not* defined in [Table 3](#table-3)) are not used by the API itself. Any error on the server during actual processing of a request will be sent as part of an error callback to the client (see [Section 9.2](#92-error-in-server-during-processing-of-request)).
+As all requests in the API are asynchronous, additional HTTP error codes for server errors (error codes starting with 5*xx*21 that are *not* defined in [Table 4](#table-4)) are not used by the API itself. Any error on the server during actual processing of a request will be sent as part of an error callback to the client (see [Section 9.2](#92-error-in-server-during-processing-of-request)).
 
 #### 3.2.4.1 Error Information in HTTP Response
 
@@ -439,7 +451,7 @@ application/vnd.interoperability.{resource}+json
 
 Regarding the example in [Listing 3](#listing-3):
 
-- The **_POST /service_** should be changed to any HTTP method and related service or resource that is supported by the API (see [Table 5](#table-5)).
+- The **_POST /service_** should be changed to any HTTP method and related service or resource that is supported by the API (see [Table 6](#table-6)).
 - The **Accept** header field is used to indicate the API resource version the client would like to use. If several versions are supported by the client, more than one version can be requested separated by a comma (**,**) as in the example above.
   - The application type is always **application/vnd.interoperability.**_{resource}_, where _{resource}_ is the actual resource (for example, **participants** or **quotes**).
   - The only data exchange format currently supported is **json**.
@@ -553,9 +565,9 @@ The basic prerequisites for an ILP payment are the Payee ILP address (see [Secti
 
 A key component of the ILP standard is the ILP addressing<sup>28</sup> scheme. It is a hierarchical scheme that defines one or more addresses for every account on a ledger.
 
-[Table 4](#table-4) shows some examples of ILP addresses that could be used in different scenarios, for different accounts. Note that while the structure of addresses is standardized, the content is not, except for the first segment (up to the first period (**.**)).
+[Table 5](#table-5) shows some examples of ILP addresses that could be used in different scenarios, for different accounts. Note that while the structure of addresses is standardized, the content is not, except for the first segment (up to the first period (**.**)).
 
-###### Table 4
+###### Table 5
 
 |ILP Address|Description|
 |---|---|
@@ -563,7 +575,7 @@ A key component of the ILP standard is the ILP addressing<sup>28</sup> scheme. I
 |**g.pk.fsp2.ac03396c-4dba-4743**|A mobile money account at **FSP2** identified by an opaque account id.|
 |**g.us.bank1.bob**|A bank account at **Bank1** for the user **bob**.|
 
-**Table 4 -- ILP address examples**
+**Table 5 -- ILP address examples**
 
 The primary purpose of an ILP addresses is to identify an account in order to route a financial transaction to that account.
 
@@ -692,7 +704,7 @@ In this example, the Payee FSP decides to give commission to the Payer FSP since
 
 **Figure 9 -- Simplified view of money movement for non-disclosing receive amount example**
 
-To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
+To calculate the element **transferAmount** in the Payee FSP for a non-disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Quote_ _Amount_ is **amount** in [Table 23](#table-23), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 24](#table-24), and Payee FSP commission is payeeFspCommission in [Table 24](#table-24).
 
 ###### Listing 7
 
@@ -723,7 +735,7 @@ In the example, the Payer FSP and the Payee FSP would like to have 1 USD each in
 
 **Figure 11 -- Simplified view of money movement for non-disclosing send amount example**
 
-To calculate the element **transferAmount** in the Payee FSP for a non-disclosing send amount quote, the equation in [Listing 8](#listing-8) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), and Payee FSP commission is **payeeFspCommission** in [Table 23](#table-23).
+To calculate the element **transferAmount** in the Payee FSP for a non-disclosing send amount quote, the equation in [Listing 8](#listing-8) should be used, where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Quote_ _Amount_ is **amount** in [Table 24](#table-24), and Payee FSP commission is **payeeFspCommission** in [Table 24](#table-24).
 
 ###### Listing 8
 
@@ -754,18 +766,22 @@ See [Section 5.1.3](#513-fee-types) for more information on the fee types sent i
 
 [Figure 13](#figure-13) shows an example of disclosing receive amount where the Payer would like the Payee to receive exactly 100 USD. For disclosing receive amount, the Payer FSP must internally rate the transaction before the quote request is sent to the Payee FSP, because the fees are disclosed. In this example, the Payer FSP would like to have 1 USD in fees from the Payer. The Payee FSP decides to give 1 USD in commission to subsidize the transaction, so that the transaction is free for the Payer.
 
+###### Figure 13
+
 {% uml src="assets/diagrams/sequence/figure13.plantuml" %}
 {% enduml %}
 
 **Figure 13 -- Example of disclosing receive amount**
 
-###### Figure 14
-
 [Figure 14](#figure-14) shows a simplified view of the movement of money for the disclosing receive amount example.
+
+###### Figure 14
 
 ![Figure 14](/assets/diagrams/images/figure14.svg)
 
-To calculate the element **transferAmount** in the Payee FSP for a disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
+**Figure 14 -- Simplified view of money movement for disclosing receive amount example**
+
+To calculate the element **transferAmount** in the Payee FSP for a disclosing receive amount quote, the equation in [Listing 9](#listing-9) should be used, where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Quote_ _Amount_ is **amount** in [Table 24](#table-24), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 24](#table-24), and Payee FSP commission is **payeeFspCommission** in [Table 24](#table-24).
 
 ###### Listing 9
 
@@ -793,7 +809,7 @@ Transfer amount = Quote Amount + Payee FSP Fee -- Payee FSP Commission
 
 **Figure 16 -- Simplified view of money movement for disclosing send amount example**
 
-To calculate the element **transferAmount** in the Payee FSP for a disclosing send amount quote, the equation in [Listing 10](#listing-10) should be used, where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Quote_ _Amount_ is **amount** in [Table 22](#table-22), _Payer_ _Fee_ is **fees** in [Table 22](#table-22), and Payee FSP commission is **payeeFspCommission** in [Table 23](#table-23).
+To calculate the element **transferAmount** in the Payee FSP for a disclosing send amount quote, the equation in [Listing 10](#listing-10) should be used, where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Quote_ _Amount_ is **amount** in [Table 24](#table-24), _Payer_ _Fee_ is **fees** in [Table 24](#table-24), and Payee FSP commission is **payeeFspCommission** in [Table 24](#table-24).
 
 ###### Listing 10
 
@@ -843,7 +859,7 @@ This section contains useful equations for quoting that have not already been me
 
 #### 5.1.4.1 Payee Receive Amount Relation to Transfer Amount
 
-The amount that the Payee should receive, excluding any internal Payee FSP fees, bonus, or commission, can be calculated by the Payer FSP using the equation in [Listing 11](#listing-11), where _Transfer Amount_ is **transferAmount** in [Table 23](#table-23), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 23](#table-23), and Payee FSP commission is payeeFspCommission in [Table 23](#table-23).
+The amount that the Payee should receive, excluding any internal Payee FSP fees, bonus, or commission, can be calculated by the Payer FSP using the equation in [Listing 11](#listing-11), where _Transfer Amount_ is **transferAmount** in [Table 24](#table-24), _Payee_ _FSP fee_ is **payeeFspFee** in [Table 24](#table-24), and Payee FSP commission is payeeFspCommission in [Table 24](#table-24).
 
 ###### Listing 11
 
@@ -853,7 +869,7 @@ Payee Receive Amount = Transfer Amount - Payee FSP Fee + Payee FSP Commission
 
 **Listing 11 -- Relation between transfer amount and Payee receive amount**
 
-The Payee receive amount including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 23](#table-23).
+The Payee receive amount including any internal Payee FSP fees can optionally be sent by the Payee FSP to the Payer FSP in the Quote callback, see element **payeeReceiveAmount** in [Table 24](#table-24).
 
 #### 5.1.5 Tax Information
 
@@ -969,9 +985,9 @@ A Customer-Initiated Merchant Payment is typically a receive amount, where the P
 
 #### 5.1.6.4.1 Simplified View of Money Movement
 
-###### Figure 26
-
 See [Figure 26](#figure-26) for a highly simplified view of the movement of money for the Customer-Initiated Merchant Payment example.
+
+###### Figure 26
 
 ![Figure 26](/assets/diagrams/images/figure26.svg)
 
@@ -981,6 +997,8 @@ See [Figure 26](#figure-26) for a highly simplified view of the movement of mone
 
 A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP is not disclosing any fees to the Payee FSP. See [Figure 27](#figure-27) for an example. In the example, the Payer would like to Cash-Out so that they will receive 100 USD in cash. The Payee FSP would like to have 2 USD in fees to cover the agent commission and the Payer FSP would like to have 1 USD in fee. 102 USD is transferred from the Payer FSP to the Payee FSP.
 
+###### Figure 27
+
 {% uml src="assets/diagrams/sequence/figure27.plantuml" %}
 {% enduml %}
 
@@ -988,9 +1006,9 @@ A Customer-Initiated Cash-Out is typically a receive amount, where the Payer FSP
 
 #### 5.1.6.5.1 Simplified View of Money Movement
 
-###### Figure 28
-
 See [Figure 28](#figure-28) for a highly simplified view of the movement of money for the Customer-Initiated Cash-Out with receive amount example.
+
+###### Figure 28
 
 ![Figure 28](/assets/diagrams/images/figure28.svg)
 
@@ -1167,7 +1185,7 @@ Because the _Party ID_ and the _Party Sub ID or Type_ are used as part of the UR
 
 - Forward slash (**/**) is not allowed in the ID, as it is used by the Path (see [Section 3.1.3.3](#3133-path)), to indicate a separation of the Path.
 
-- Question mark (**?**) is not allowed in the ID, as it is used to indicate the Query (see [Section 3.1.3.4](#3133-query)) part of the URI.
+- Question mark (**?**) is not allowed in the ID, as it is used to indicate the Query (see [Section 3.1.3.4](#3134-query)) part of the URI.
 
 ### 5.3 Mapping of Use Cases to Transaction Types
 
@@ -1211,6 +1229,7 @@ To perform an Agent-Initiated Cash Out on POS, set elements as follows:
 - **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
 - **Payee**.[**PartyType**](#7330-partytype) to **DEVICE**
 
+
 #### 5.3.5 Customer-Initiated Cash Out
 
 To perform a Customer-Initiated Cash Out, set elements as follows:
@@ -1247,7 +1266,7 @@ follows:
 
 - [**TransactionScenario**](#7332-transactionscenario) to **PAYMENT**
 - [**TransactionInitiator**](#7329-transactioninitiator) to **PAYEE**
-- - **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
+- **Payer**.[**PartyType**](#7330-partytype) to **CONSUMER**
 - **Payee**.[**PartyType**](#7330-partytype) to **DEVICE**
 
 #### 5.3.9 ATM-Initiated Cash Out
@@ -1310,9 +1329,9 @@ On a high level, the API can be used to perform the following actions:
 
 #### 6.1.1 Supported API services
 
-###### Table 5
+[Table 6](#table-6) includes high-level descriptions of the services that the API provides. For more detailed information, see the sections that follow.
 
-[Table 5](#table-5) includes high-level descriptions of the services that the API provides. For more detailed information, see the sections that follow.
+###### Table 6
 
 |URI|HTTP method GET|HTTP method PUT|HTTP method POST|HTTP method DELETE|HTTP method PATCH|
 |---|---|---|---|---|---|
@@ -1332,23 +1351,28 @@ On a high level, the API can be used to perform the following actions:
 |**/bulkQuotes/**_{ID}_|Get information about a previously-requested bulk transaction quote.|Callback to inform a Peer FSP about a previously-requested bulk transaction quote.|Not supported|Not supported|Not Supported|
 |**/bulkTransfers**|Not supported|Not supported|Request that a Peer FSP create a bulk transfer.|Not supported|Not Supported|
 |**/bulkTransfers/**_{ID}_|Get information about a previously-sent bulk transfer.|Callback to inform a Peer FSP about a previously-sent bulk transfer.|Not supported|Not supported|Not supported|
-**Table 5 – API-supported services**
+
+**Table 6 – API-supported services**
 
 #### 6.1.2 Current Resource Versions
-[Table 6](#table-6) contains the version for each resource that this document version describes.
 
-|Resource|Current Version|Last Update|
+[Table 7](#table-7) contains the version for each resource that this document version describes.
+
+###### Table 7
+
+|Resource|Current Version|Last Updated|
 |---|---|---|
-|/participants|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-|/parties|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
-|/transactionRequests|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
-|/quotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/participants|2.0|The data model is updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100.|
+|/parties|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+|/transactionRequests|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+|/quotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
 |/authorizations|1.0|Initial version
-|/transfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/transfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
 |/transactions|1.0|Initial version
-/bulkQuotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
-|/bulkTransfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
-**Table 6 – Current resource versions**
+/bulkQuotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+|/bulkTransfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+
+**Table 7 – Current resource versions**
 
 ### 6.2 API Resource /participants
 
@@ -1360,13 +1384,18 @@ If a common service (for example, an ALS) is supported in the scheme, the servic
 
 #### 6.2.1 Resource Version History
 
-[Table 7](#table-7) contains a description of each different version of the **/participants** resource.
+[Table 8](#table-8) contains a description of each different version of the **/participants** resource.
+
+###### Table 8
 
 |Version|Date|Description|
 |---|---|---|
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.<br>For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 9 has been updated to include the optional ExtensionList element as well. |
-**Table 7 – Version history for resource /participants**
+|**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.
+For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 10 has been updated to include the optional ExtensionList element as well.|
+|**2.0**|2021-10-26|The data model is updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100.|
+
+**Table 8 – Version history for resource /participants**
 
 #### 6.2.2 Service Details
 
@@ -1389,7 +1418,7 @@ If this model is used, all FSPs should support being both client and server of t
 
 [Figure 42](#figure-42) shows how an account lookup can be performed if there is a common ALS in a scheme. The process is to ask the common Account Lookup service which FSP owns the Party with the provided identity. The common service is depicted as "Account Lookup" in the flows; this service could either be implemented by the switch or as a separate service, depending on the setup in the market.
 
-The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.3.2](#6232-post-participants) and [Section 6.2.2.3](#6223-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.3.4](#6234-delete-participantstypeid)) methods.
+The FSPs do not need to support the server side of the different HTTP **GET** services under the **/participants** resource; the server side of the service should be handled by the ALS. Instead, the FSPs (clients) should provide FSP information regarding its accounts and account holders (parties) to the ALS (server) using the HTTP **POST** (to create or update FSP information, see [Section 6.2.3.2](#6232-post-participants) and [Section 6.2.3.3](#6233-post-participantstypeid)) and HTTP **DELETE** (to delete existing FSP information, see [Section 6.2.3.4](#6234-delete-participantstypeid)) methods.
 
 ###### Figure 42
 
@@ -1408,7 +1437,7 @@ Alternative URI: **GET /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_
 
 Logical API service: **Lookup Participant Information**
 
-The HTTP request **GET /participants/**_{Type}_**/**_{ID}_ (or **GET /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to find out in which FSP the requested Party, defined by _{Type}_, _{ID}_ and optionally _{SubId}_, is located (for example, **GET** **/participants/MSISDN/123456789**, or **GET /participants/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
+The HTTP request **GET /participants/**_{Type}_**/**_{ID}_ (or **GET /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to find out in which FSP the requested Party, defined by _{Type}_, _{ID}_ and optionally _{SubId}_, is located (for example, **GET** **/participants/MSISDN/123456789**, or **GET /participants/BUSINESS/shoecompany/employee1**). See [Section 5.2](#52-party-addressing) for more information regarding addressing of a Party.
 
 This HTTP request should support a query string (see [Section 3.1.3](#313-uri-syntax) for more information regarding URI syntax) for filtering of currency. To use filtering of currency, the HTTP request **GET /participants/**_{Type}_**/**_{ID}_**?currency=**_XYZ_ should be used, where _XYZ_ is the requested currency.
 
@@ -1430,9 +1459,9 @@ Callback and data model information for **POST /participants**:
 
 - Callback -- [**PUT /participants/**_{ID}_](#6241-put-participantstypeid)
 - Error Callback -- [**PUT /participants/**_{ID}_ **/error**](#6251-put-participantstypeiderror)
-- Data Model -- See [Table 8](#table-8)
+- Data Model -- See [Table 9](#table-9)
 
-###### Table 8
+###### Table 9
 
 |Name|Cardinality|Type|Description|
 |---|---|---|---|
@@ -1440,7 +1469,7 @@ Callback and data model information for **POST /participants**:
 |**partyList**|1..10000|PartyIdInfo|List of PartyIdInfo elements that the client would like to update or create FSP information about.|
 |**currency**|0..1|Currency|Indicate that the provided Currency is supported by each PartyIdInfo in the list.|
 
-**Table 8 - POST /participants data model**
+**Table 9 - POST /participants data model**
 
 #### 6.2.3.3 POST /participants/_{Type}_/_{ID}_
 
@@ -1448,23 +1477,23 @@ Alternative URI: **POST /participants/**_{Type}_/_{ID}_/_{SubId}_
 
 Logical API service: **Create Participant Information**
 
-The HTTP request **POST /participants/**_{Type}_**/**_{ID}_ (or **POST /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to create information on the server regarding the provided identity, defined by _{Type}_, _{ID}_, and optionally _{SubId}_ (for example, **POST** **/participants/MSISDN/123456789** or **POST /participants/BUSINESS/shoecompany/employee1**). See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
+The HTTP request **POST /participants/**_{Type}_**/**_{ID}_ (or **POST /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to create information on the server regarding the provided identity, defined by _{Type}_, _{ID}_, and optionally _{SubId}_ (for example, **POST** **/participants/MSISDN/123456789** or **POST /participants/BUSINESS/shoecompany/employee1**). See [Section 5.2](#52-party-addressing) for more information regarding addressing of a Party.
 
 Callback and data model information for **POST /participants**/_{Type}_**/**_{ID}_ (alternative **POST** **/participants/**_{Type}_**/**_{ID}_**/**_{SubId}_):
 
 - Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_](#6241-put-participantstypeid)
 - Error Callback -- [**PUT /participants/**_{Type}_**/**_{ID}_**/error**](#6251-put-participantstypeiderror)
-- Data Model -- See [Table 9](#table-9)
+- Data Model -- See [Table 10](#table-10)
 
-###### Table 9
+###### Table 10
 
 |Name|Cardinality|Type|Description|
 |---|---|---|---|
 |**fspId**|1|FspId|FSP Identifier that the Party belongs to.|
 |**currency**|0..1|Currency|Indicate that the provided Currency is supported by the Party.|
-|**extensionList**| 0..1 | ExtensionList | Optional extension, specific to deployment. |
+|**extensionList**|0..1|ExtensionList|Optional extension, specific to deployment.|
 
-**Table 9 -- POST /participants/_{Type}_/_{ID}_ (alternative POST /participants/_{Type}_/_{ID}_/_{SubId}_) data model**
+**Table 10 -- POST /participants/_{Type}_/_{ID}_ (alternative POST /participants/_{Type}_/_{ID}_/_{SubId}_) data model**
 
 #### 6.2.3.4 DELETE /participants/_{Type}_/_{ID}_
 
@@ -1472,7 +1501,7 @@ Alternative URI: **DELETE /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_
 
 Logical API service: **DELETE Participant Information**
 
-The HTTP request **DELETE /participants/**_{Type}_**/**_{ID}_ (or **DELETE /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to delete information on the server regarding the provided identity, defined by _{Type}_ and _{ID}_) (for example, **DELETE** **/participants/MSISDN/123456789**), and optionally _{SubId}_. See [Section 5.1.6.11](#51611-refund) for more information regarding addressing of a Party.
+The HTTP request **DELETE /participants/**_{Type}_**/**_{ID}_ (or **DELETE /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to delete information on the server regarding the provided identity, defined by _{Type}_ and _{ID}_) (for example, **DELETE** **/participants/MSISDN/123456789**), and optionally _{SubId}_. See [Section 5.2](#52-party-addressing) for more information regarding addressing of a Party.
 
 This HTTP request should support a query string (see [Section 3.1.3](#313-uri-syntax) for more information regarding URI syntax) to delete FSP information regarding a specific currency only. To delete a specific currency only, the HTTP request **DELETE** **/participants/**_{Type}_**/**_{ID}_**?currency**_=XYZ_ should be used, where _XYZ_ is the requested currency.
 
@@ -1499,15 +1528,15 @@ Logical API service: **Return Participant Information**
 
 The callback **PUT /participants/**_{Type}_**/**_{ID}_ (or **PUT /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to inform the client of a successful result of the lookup, creation, or deletion of the FSP information related to the Party. If the FSP information is deleted, the **fspId** element should be empty; otherwise the element should include the FSP information for the Party.
 
-See [Table 10](#table-10) for data model.
+See [Table 11](#table-11) for data model.
 
-###### Table 10
+###### Table 11
 
 |Name|Cardinality|Type|Description|
 |---|---|---|---|
 |**fspId**|0..1|FspId|FSP Identifier that the Party belongs to.|
 
-**Table 10 -- PUT /participants/_{Type}_/_{ID}_ (alternative PUT /participants/_{Type}_/_{ID}_/_{SubId}_) data model**
+**Table 11 -- PUT /participants/_{Type}_/_{ID}_ (alternative PUT /participants/_{Type}_/_{ID}_/_{SubId}_) data model**
 
 #### 6.2.4.2 PUT /participants/_{ID}_
 
@@ -1517,16 +1546,16 @@ Logical API service: **Return Bulk Participant Information**
 
 The callback **PUT /participants/**_{ID}_ is used to inform the client of the result of the creation of the provided list of identities.
 
-See [Table 11](#table-11) for data model.
+See [Table 12](#table-12) for data model.
 
-###### Table 11
+###### Table 12
 
 |Name|Cardinality|Type|Description|
 |---|---|---|---|
 |**partyList**|1..10000|PartyResults|List of PartyResult elements that were either created or failed to be created.|
 |**currency**|0..1|Currency|Indicate that the provided Currency was set to be supported by each successfully added PartyIdInfo.|
 
-**Table 11 -- PUT /participants/_{ID}_ data model**
+**Table 12 -- PUT /participants/_{ID}_ data model**
 
 #### 6.2.5 Error Callbacks
 
@@ -1538,15 +1567,15 @@ Alternative URI: **PUT /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error
 
 Logical API service: **Return Participant Information Error**
 
-If the server is unable to find, create or delete the associated FSP of the provided identity, or another processing error occurred, the error callback **PUT /participants/**_{Type}_**/**_{ID}_**/error** (or **PUT /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**) is used. See [Table 12](#table-12) for data model.
+If the server is unable to find, create or delete the associated FSP of the provided identity, or another processing error occurred, the error callback **PUT /participants/**_{Type}_**/**_{ID}_**/error** (or **PUT /participants/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**) is used. See [Table 13](#table-13) for data model.
 
-###### Table 12
+###### Table 13
 
 |Name|Cardinality|Type|Description|
 |---|---|---|---|
 |**errorInformation**|1|ErrorInformation|Error code, category description.|
 
-**Table 12 -- PUT /participants/_{Type}_/_{ID}_/error (alternative PUT /participants/_{Type}_/_{ID}_/_{SubId}_/error) data model**
+**Table 13 -- PUT /participants/_{Type}_/_{ID}_/error (alternative PUT /participants/_{Type}_/_{ID}_/_{SubId}_/error) data model**
 
 #### 6.2.5.2 PUT /participants/_{ID}_/error
 
@@ -1554,15 +1583,15 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Participant Information Error**
 
-If there is an error during FSP information creation on the server, the error callback **PUT /participants/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **requestId** (see [Table 8](#table-8)) that was used for the creation of the participant information. See [Table 13](#table-13) for data model.
+If there is an error during FSP information creation on the server, the error callback **PUT /participants/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **requestId** (see [Table 9](#table-9)) that was used for the creation of the participant information. See [Table 14](#table-14) for data model.
 
-###### Table 13
+###### Table 14
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **error Information** | 1 | ErrorInformation | Error code, category description. |
 
-**Table 13 -- PUT /participants/_{ID}_/error data model**
+**Table 14 -- PUT /participants/_{ID}_/error data model**
 
 #### 6.2.6 States
 
@@ -1576,15 +1605,17 @@ The services provided by the resource **/parties** is used for finding out infor
 
 #### 6.3.1 Resource Version History
 
-[Table 14](#table-14) contains a description of each different version of the **/parties** resource.
+[Table 15](#table-15) contains a description of each different version of the **/parties** resource.
+
+###### Table 15
 
 |Version|Date|Description|
 |---|---|---|
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. |
-| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
+|**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
+|**2.0**|2021-10-26|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
 
-**Table 14 – Version history for resource /parties**
+**Table 15 – Version history for resource /parties**
 
 #### 6.3.2 Service Details
 
@@ -1625,15 +1656,15 @@ Alternative URI: **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_
 
 Logical API service: **Return Party Information**
 
-The callback **PUT /parties/**_{Type}_**/**_{ID}_ (or **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to inform the client of a successful result of the Party information lookup. See [Table 15](#table-15) for data model.
+The callback **PUT /parties/**_{Type}_**/**_{ID}_ (or **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_) is used to inform the client of a successful result of the Party information lookup. See [Table 16](#table-16) for data model.
 
-###### Table 15
+###### Table 16
 
 | **Name** | **Cardinal** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **party** | 1 | Party | Information regarding the requested Party. |
 
-**Table 15 -- PUT /parties/_{Type}_/_{ID}_ (alternative PUT /parties/_{Type}_/_{ID}_/_{SubId}_) data model**
+**Table 16 -- PUT /parties/_{Type}_/_{ID}_ (alternative PUT /parties/_{Type}_/_{ID}_/_{SubId}_) data model**
 
 #### 6.3.5 Error Callbacks
 
@@ -1645,15 +1676,15 @@ Alternative URI: **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**
 
 Logical API service: **Return Party Information Error**
 
-If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback **PUT /parties/**_{Type}_**/**_{ID}_**/error** (or **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**) is used. See [Table 16](#table-16) for data model.
+If the server is unable to find Party information of the provided identity, or another processing error occurred, the error callback **PUT /parties/**_{Type}_**/**_{ID}_**/error** (or **PUT /parties/**_{Type}_**/**_{ID}_**/**_{SubId}_**/error**) is used. See [Table 17](#table-17) for data model.
 
-###### Table 16
+###### Table 17
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 |---|---|---|---|
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
 
-**Table 16 -- PUT /parties/_{Type}_/_{ID}_/error (alternative PUT /parties/_{Type}_/_{ID}_/_{SubId}_/error) data model**
+**Table 17 -- PUT /parties/_{Type}_/_{ID}_/error (alternative PUT /parties/_{Type}_/_{ID}_/_{SubId}_/error) data model**
 
 #### 6.3.6 States
 
@@ -1673,14 +1704,17 @@ Alternatively, the Payer could make the decision manually.
 
 #### 6.4.1 Resource Version History
 
-[Table 17](#table-17) contains a description of each different version of the **/transactionRequests** resource.
+[Table 18](#table-18) contains a description of each different version of the **/transactionRequests** resource.
+
+###### Table 18
 
 |Version|Date|Description|
 |---|---|---|
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. |
-| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
-**Table 17 – Version history for resource /transactionRequests**
+|**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
+|**2.0**|2021-10-26|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+
+**Table 18 – Version history for resource /transactionRequests**
 
 #### 6.4.2 Service Details
 
@@ -1716,12 +1750,12 @@ Alternative URI: N/A
 
 Logical API service: **Retrieve Transaction Request Information**
 
-The HTTP request **GET /transactionRequests/**_{ID}_ is used to get information regarding a previously-created or requested transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 14](#table-14)) that was used for the creation of the transaction request.
+The HTTP request **GET /transactionRequests/**_{ID}_ is used to get information regarding a previously-created or requested transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 15](#table-15)) that was used for the creation of the transaction request.
 
 Callback and data model information for **GET /transactionRequests/**_{ID}_:
 
-- Callback - [**PUT /transactionRequests/**_{ID}_](#6431-put-transactionrequestsid)
-- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6441-put-transactionrequestsiderror)
+- Callback - [**PUT /transactionRequests/**_{ID}_](#6441-put-transactionrequestsid)
+- Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6451-put-transactionrequestsiderror)
 - Data Model -- Empty body
 
 #### 6.4.3.2 POST /transactionRequests
@@ -1736,9 +1770,9 @@ Callback and data model information for **POST /transactionRequests**:
 
 - Callback - [**PUT /transactionRequests/**_{ID}_](#6441-put-transactionrequestsid)
 - Error Callback - [**PUT /transactionRequests/**_{ID}_**/error**](#6451-put-transactionrequestsiderror)
-- Data Model -- See [Table 18](#table-18)
+- Data Model -- See [Table 19](#table-19)
 
-###### Table 18
+###### Table 19
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -1752,7 +1786,8 @@ Callback and data model information for **POST /transactionRequests**:
 | **authenticationType** | 0.11 | AuthenticationType | OTP or QR Code, otherwise empty. |
 | **expiration** | 0..1 | DateTime | Can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, Merchant to know that their request has a time limit. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 18 -- POST /transactionRequests data model**
+
+**Table 19 -- POST /transactionRequests data model**
 
 #### 6.4.4 Callbacks
 
@@ -1764,16 +1799,17 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Request Information**
 
-The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of a requested or created transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 18](#table-18)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 19](#table-19) for data model.
+The callback **PUT /transactionRequests/**_{ID}_ is used to inform the client of a requested or created transaction request. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 19](#table-19)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 20](#table-20) for data model.
 
-###### Table 19
+###### Table 20
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **transactionId** | 0..1 | CorrelationId | Identifies a related transaction (if a transaction has been created). |
 | **transactionRequestState** | 1 | TransactionRequestState | State of the transaction request. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 19 -- PUT /transactionRequests/_{ID}_ data model**
+
+**Table 20 -- PUT /transactionRequests/_{ID}_ data model**
 
 #### 6.4.5 Error Callbacks
 
@@ -1785,20 +1821,23 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Request Information Error**
 
-If the server is unable to find or create a transaction request, or another processing error occurs, the error callback **PUT** **/transactionRequests/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 18](#table-18)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 20](#table-20) for data model.
+If the server is unable to find or create a transaction request, or another processing error occurs, the error callback **PUT** **/transactionRequests/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transactionRequestId** (see [Table 19](#table-19)) that was used for the creation of the transaction request, or the _{ID}_ that was used in the [**GET /transactionRequests/**_{ID}_](#6431-get-transactionrequestsid). See [Table 21](#table-21) for data model.
 
-###### Table 20
+###### Table 21
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | ---| --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-**Table 20 -- PUT /transactionRequests/_{ID}_/error data model**
+
+**Table 21 -- PUT /transactionRequests/_{ID}_/error data model**
 
 #### 6.4.6 States
 
 The possible states of a transaction request can be seen in [Figure 46](#figure-46).
 
 **Note:** A server does not need to keep transaction request objects that have been rejected in their database. This means that a client should expect that an error callback could be received for a rejected transaction request.
+
+###### Figure 46
 
 ![Figure 46](/assets/diagrams/images/figure46.svg)
 
@@ -1818,15 +1857,17 @@ For more information regarding Quoting, see [Section 5.1](#51-quoting).
 
 #### 6.5.1 Resource Version History
 
-[Table 21](#table-21) contains a description of each different version of the **/quotes** resource.
+[Table 22](#table-22) contains a description of each different version of the **/quotes** resource.
+
+###### Table 22
 
 |Version|Date|Description|
 |---|---|---|
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated. |
-| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
+|**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
+|**2.0**|2021-10-26|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
 
-**Table 21 – Version history for resource /quotes**
+**Table 22 – Version history for resource /quotes**
 
 #### 6.5.2 Service Details
 
@@ -1862,7 +1903,7 @@ Payee FSP must:
 - Determine the ILP Address (see [Section 4.3](#43-ILP-addressing) for more information) of the Payee and the amount that the Payee will receive. Note that since the **amount** element in the ILP Packet is defined as an UInt64, which is an Integer value, the amount should be multiplied with the currency's exponent (for example, USD's exponent is 2, which means the amount should be multiplied by 10<sup>2</sup>, and JPY's exponent is 0, which means the amount should be multiplied by 10<sup>0</sup>). Both the ILP Address and the amount should be populated in the ILP Packet (see [Section 4.5](#45-ilp-packet) for more information).
 
 - Populate the **data** element in the ILP Packet by the Transaction ([Section 7.4.17](#7417-transaction)) data model.
-- Generate the fulfilment and the condition (see [Section 4.4](#44-conditional-transfers) for more information). Populate the **condition** element in the **PUT /quotes/**_{ID}_ (see [Section 6.5.3.1](#6531-put-quotesid)). [Table 18](#table-18) shows data model with the generated condition.
+- Generate the fulfilment and the condition (see [Section 4.4](#44-conditional-transfers) for more information). Populate the **condition** element in the **PUT /quotes/**_{ID}_ (see [Section 6.5.4.1](#6541-put-quotesid)). [Table 19](#table-19) shows data model with the generated condition.
 
 The fulfilment is a temporary secret that is generated for each financial transaction by the Payee FSP and used as the trigger to commit the transfers that make up an ILP payment.
 
@@ -1904,12 +1945,12 @@ Alternative URI: N/A
 
 Logical API service: **Retrieve Quote Information**
 
-The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a previously-created or requested quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote.
+The HTTP request **GET /quotes/**_{ID}_ is used to get information regarding a previously-created or requested quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 23](#table-23)) that was used for the creation of the quote.
 
 Callback and data model information for **GET /quotes/**_{ID}_:
 
 - Callback -- [**PUT /quotes/**_{ID}_](#6541-put-quotesid)
-- Error Callback -- [**PUT /quotes/**_{ID}_**/_error_**](#6541-put-quotesiderror)
+- Error Callback -- [**PUT /quotes/**_{ID}_**/_error_**](#6551-put-quotesiderror)
 - Data Model -- Empty body
 
 #### 6.5.3.2 POST /quotes
@@ -1924,9 +1965,9 @@ Callback and data model information for **POST /quotes**:
 
 - Callback -- [**PUT /quotes/**_{ID}_](#6541-put-quotesid)
 - Error Callback -- [**PUT /quotes/**_{ID}_**/error**](#6551-put-quotesiderror)
-- Data Model -- See [Table 22](#table-22)
+- Data Model -- See [Table 23](#table-23)
 
-###### Table 22
+###### Table 23
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -1943,7 +1984,8 @@ Callback and data model information for **POST /quotes**:
 | **note** | 0..1 | Note | A memo that will be attached to the transaction. |
 | **expiration** | 0..1 | DateTime | Expiration is optional. It can be set to get a quick failure in case the peer FSP takes too long to respond. Also, it may be beneficial for Consumer, Agent, and Merchant to know that their request has a time limit. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 22 -- POST /quotes data model**
+
+**Table 23 -- POST /quotes data model**
 
 #### 6.5.4 Callbacks
 
@@ -1955,9 +1997,9 @@ Alternative URI: N/A
 
 Logical API service: **Return Quote Information**
 
-The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested or created quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 23](#table-23) for data model.
+The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested or created quote. The _{ID}_ in the URI should contain the **quoteId** (see [Table 23](#table-23)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 24](#table-24) for data model.
 
-###### Table 23
+###### Table 24
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -1970,7 +2012,8 @@ The callback **PUT /quotes/**_{ID}_ is used to inform the client of a requested 
 | **ilpPacket** | 1 | IlpPacket | The ILP Packet that must be attached to the transfer by the Payer. |
 | **condition** | 1 | IlpCondition | The condition that must be attached to the transfer by the Payer. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment |
-**Table 23 -- PUT /quotes/_{ID}_ data model**
+
+**Table 24 -- PUT /quotes/_{ID}_ data model**
 
 #### 6.5.5 Error Callbacks
 
@@ -1983,14 +2026,15 @@ Alternative URI: N/A
 
 Logical API service: **Return Quote Information Error**
 
-If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/quotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **quoteId** (see [Table 22](#table-22)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 24](#table-24) for data model.
+If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/quotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **quoteId** (see [Table 23](#table-23)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /quotes/**_{ID}_](#6531-get-quotesid). See [Table 25](#table-25) for data model.
 
-###### Table 24
+###### Table 25
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description.|
-**Table 24 -- PUT /quotes/_{ID}_/error data model**
+
+**Table 25 -- PUT /quotes/_{ID}_/error data model**
 
 #### 6.5.6 States
 
@@ -2012,13 +2056,15 @@ The API resource **/authorizations** is used to request the Payer to enter the a
 
 #### 6.6.1 Resource Version History
 
-[Table 25](#table-25) contains a description of each different version of the **/authorizations** resource.
+[Table 26](#table-26) contains a description of each different version of the **/authorizations** resource.
+
+###### Table 26
 
 |Version|Date|Description|
 |---|---|---|
-|1.0|2018-03-13|Initial version|
+|**1.0**|2018-03-13|Initial version|
 
-**Table 25 – Version history for resource /authorizations**
+**Table 26 – Version history for resource /authorizations**
 
 #### 6.6.2 Service Details
 
@@ -2067,7 +2113,7 @@ Alternative URI: N/A
 
 Logical API service: **Perform Authorization**
 
-The HTTP request **GET /authorizations/**_{ID}_ is used to request the Payer to enter the applicable credentials in the Payee FSP system. The _{ID}_ in the URI should contain the **transactionRequestID** (see [Table 14](#table-14)), received from the **POST** **/transactionRequests** (see [Section 6.4.3.2](#6432-post-transactionrequests)) service earlier in the process.
+The HTTP request **GET /authorizations/**_{ID}_ is used to request the Payer to enter the applicable credentials in the Payee FSP system. The _{ID}_ in the URI should contain the **transactionRequestID** (see [Table 15](#table-15)), received from the **POST** **/transactionRequests** (see [Section 6.4.3.2](#6432-post-transactionrequests)) service earlier in the process.
 
 This request requires a query string (see [Section 3.1.3](#313-uri-syntax) for more information regarding URI syntax) to be included in the URI, with the following key-value pairs:
 
@@ -2096,15 +2142,16 @@ Alternative URI: N/A
 
 Logical API service: **Return Authorization Result**
 
-The callback **PUT /authorizations/** _{ID}_ is used to inform the client of the result of a previously-requested authorization. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6631-get-authorizationsid). **See** [Table 26](#table-26) **for** data model.
+The callback **PUT /authorizations/** _{ID}_ is used to inform the client of the result of a previously-requested authorization. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6631-get-authorizationsid). **See** [Table 27](#table-27) **for** data model.
 
-###### Table 26
+###### Table 27
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **authenticationInfo** | 0..1 | AuthenticationInfo | OTP or QR Code if entered, otherwise empty. |
 | **responseType** | 1 | AuthorizationResponse | Enum containing response information; if the customer entered the authentication value, rejected the transaction, or requested a resend of the authentication value. |
-**Table 26 – PUT /authorizations/{ID} data model**
+
+**Table 27 – PUT /authorizations/{ID} data model**
 
 #### 6.6.5 Error Callbacks
 
@@ -2116,14 +2163,15 @@ Alternative URI: N/A
 
 Logical API service: **Return Authorization Error**
 
-If the server is unable to find the transaction request, or another processing error occurs, the error callback **PUT** **/authorizations/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6631-get-authorizationsid). **See** [Table 27](#table-27) **for** data model.
+If the server is unable to find the transaction request, or another processing error occurs, the error callback **PUT** **/authorizations/**_{ID}_ **/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /authorizations/**_{ID}_](#6631-get-authorizationsid). **See** [Table 28](#table-28) **for** data model.
 
-###### Table 27
+###### Table 28
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description |
-**Table 27 -- PUT /authorizations/_{ID}_/error data model**
+
+**Table 28 -- PUT /authorizations/_{ID}_/error data model**
 
 #### 6.6.6 States
 
@@ -2143,14 +2191,15 @@ When the Payee FSP presents the fulfilment to the common ledger, the transfer is
 
 #### 6.7.1 Resource Version History
 
-Table 28 contains a description of each different version of the **/transfers** resource.
+Table 29 contains a description of each different version of the **/transfers** resource.
 
 | Version | Date | Description|
 | ---- | ---- | ---- |
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The resource is updated to support commit notifications using HTTP Method **PATCH**. The new request **PATCH /transfers/{ID}** is described in Section 6.7.3.3. The process of using commit notifications is described in Section 6.7.2.6. <br><br> The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: [https://github.com/mojaloop/mojaloop-specification/issues/30](https://github.com/mojaloop/mojaloop-specification/issues/30). Following this, the data model as specified in Table 92 has been updated.|
-| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
-**Table 28 –- Version history for resource /transfers**
+|**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|The resource is updated to support commit notifications using HTTP Method **PATCH**. The new request **PATCH /transfers/{ID}** is described in Section 6.7.3.3. The process of using commit notifications is described in Section 6.7.2.6. The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: [https://github.com/mojaloop/mojaloop-specification/issues/30](https://github.com/mojaloop/mojaloop-specification/issues/30). Following this, the data model as specified in Table 93 has been updated.|
+|**2.0**|2021-10-26|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+
+**Table 29 –- Version history for resource /transfers**
 
 #### 6.7.2 Service Details
 
@@ -2260,12 +2309,12 @@ Alternative URI: N/A
 
 Logical API service: **Retrieve Transfer Information**
 
-The HTTP request **GET /transfers/**_{ID}_ is used to get information regarding a previously-created or requested transfer. The _{ID}_ in the URI should contain the **transferId** (see [Table 22](#table-22)) that was used for the creation of the transfer.
+The HTTP request **GET /transfers/**_{ID}_ is used to get information regarding a previously-created or requested transfer. The _{ID}_ in the URI should contain the **transferId** (see [Table 23](#table-23)) that was used for the creation of the transfer.
 
 Callback and data model information for **GET /transfer/**_{ID}_:
 
-- Callback -- [**PUT /transfers/**_{ID}_](#6731-put-transfersid)
-- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror)
+- Callback -- [**PUT /transfers/**_{ID}_](#6741-put-transfersid)
+- Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror)
 - Data Model -- Empty body
 
 #### 6.7.3.2 POST /transfers
@@ -2280,9 +2329,9 @@ Callback and data model information for **POST /transfers**:
 
 - Callback -- [**PUT /transfers/**_{ID}_](#6741-put-transfersid)
 - Error Callback -- [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror)
-- Data Model -- See [Table 29](#table-29)
+- Data Model -- See [Table 30](#table-30)
 
-###### Table 29
+###### Table 30
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -2294,7 +2343,8 @@ Callback and data model information for **POST /transfers**:
 | **condition** | 1 | IlpCondition | The condition that must be fulfilled to commit the transfer. |
 | **expiration** | 1 | DateTime | Expiration can be set to get a quick failure expiration of the transfer. The transfer should be rolled back if no fulfilment is delivered before this time. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 29 – POST /transfers data model**
+
+**Table 30 – POST /transfers data model**
 
 #### 6.7.3.3 PATCH /transfers/_{ID}_
 
@@ -2302,16 +2352,17 @@ Alternative URI: N/A
 
 Logical API service: **Commit Notification**
 
-The HTTP request **PATCH /transfers/**_{ID}_ is use d by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The _{ID}_ in the URI should contain the transferId (see Table 29) that was used for the creation of the transfer. Please note that this request does not generate a callback. See Table 30 for data model.
+The HTTP request **PATCH /transfers/**_{ID}_ is used by a Switch to update the state of an earlier reserved transfer, if the Payee FSP has requested a commit notification when the Switch has completed processing of the transfer. The _{ID}_ in the URI should contain the transferId (see Table 30) that was used for the creation of the transfer. Please note that this request does not generate a callback. See Table 31 for data model.
 
-###### Table 30
+###### Table 31
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **completedTimestamp** | 1| DateTime | Time and date when the transaction was completed |
 | **transferState** | 1 | TransferState | State of the transfer |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 30 –- PATCH /transfers/_{ID}_ data model**
+
+**Table 31 –- PATCH /transfers/_{ID}_ data model**
 
 #### 6.7.4 Callbacks
 
@@ -2323,11 +2374,11 @@ Alternative URI: N/A
 
 Logical API service: **Return Transfer Information**
 
-The callback **PUT /transfers/**_{ID}_ is used to inform the client of a requested or created transfer. The _{ID}_ in the URI should contain the **transferId** (see [Table 29](#table-29)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET** **/transfers/**_{ID}_](#6731-get-transfersid). **See** [Table 31](#table-31) **for** data model.
+The callback **PUT /transfers/**_{ID}_ is used to inform the client of a requested or created transfer. The _{ID}_ in the URI should contain the **transferId** (see [Table 30](#table-30)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET** **/transfers/**_{ID}_](#6731-get-transfersid). **See** [Table 32](#table-32) **for** data model.
 
-**Note**: For **PUT /transfers/**_{ID}_ callbacks, the state ABORTED is not a valid enumeration option as **transferState** in Table 31. If a transfer is to be rejected, then the FSP making the callback should use an error callback, i.e., a callback on the /error endpoint. At the same time, it should be noted that a **transerState** value ‘ABORTED’ is valid for a callback to a **GET /transfers/**_{ID}_ call.
+**Note**: For **PUT /transfers/**_{ID}_ callbacks, the state ABORTED is not a valid enumeration option as **transferState** in Table 32. If a transfer is to be rejected, then the FSP making the callback should use an error callback, i.e., a callback on the /error endpoint. At the same time, it should be noted that a **transferState** value ‘ABORTED’ is valid for a callback to a **GET /transfers/**_{ID}_ call.
 
-###### Table 31
+###### Table 32
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -2335,7 +2386,8 @@ The callback **PUT /transfers/**_{ID}_ is used to inform the client of a request
 | **completedTimestamp** | 0..1 | DateTime | Time and date when the transaction was completed |
 | **transferState** | 1 | TransferState | State of the transfer |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment |
-**Table 31 -- PUT /transfers/_{ID}_ data model**
+
+**Table 32 -- PUT /transfers/_{ID}_ data model**
 
 #### 6.7.5 Error Callbacks
 
@@ -2349,14 +2401,15 @@ Logical API service: **Return Transfer Information Error**
 
 If the server is unable to find or create a transfer, or another processing error occurs, the error callback **PUT**
 
-**/transfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 29](#table-29)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6731-get-transfersid). See [Table 32](#table-32) for data model.
+**/transfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 30](#table-30)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6731-get-transfersid). See [Table 33](#table-33) for data model.
 
-###### Table 32
+###### Table 33
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-**Table 32 -- PUT /transfers/_{ID}_/error data model**
+
+**Table 33 -- PUT /transfers/_{ID}_/error data model**
 
 **6.7.6 States**
 
@@ -2379,12 +2432,15 @@ The actual financial transaction is performed using the services provided by the
 
 #### 6.8.1 Resource Version History
 
-[Table 33](#table-33) contains a description of each different version of the **/transactions** resource.
+[Table 34](#table-34) contains a description of each different version of the **/transactions** resource.
+
+###### Table 34
 
 |Version|Date|Description|
 |---|---|---|
-|1.0|2018-03-13|Initial version|
-**Table 33 – Version history for resource /transactions**
+|**1.0**|2018-03-13|Initial version|
+
+**Table 34 – Version history for resource /transactions**
 
 #### 6.8.2 Service Details
 
@@ -2407,7 +2463,7 @@ Alternative URI: N/A
 
 Logical API service: **Retrieve Transaction Information**
 
-The HTTP request **GET /transactions/**_{ID}_ is used to get transaction information regarding a previously-created financial transaction. The _{ID}_ in the URI should contain the **transactionId** that was used for the creation of the quote (see [Table 22](#table-22)), as the transaction is created as part of another process (the transfer process, see [Section 6.7](#67-api-resource-transfers)).
+The HTTP request **GET /transactions/**_{ID}_ is used to get transaction information regarding a previously-created financial transaction. The _{ID}_ in the URI should contain the **transactionId** that was used for the creation of the quote (see [Table 23](#table-23)), as the transaction is created as part of another process (the transfer process, see [Section 6.7](#67-api-resource-transfers)).
 
 Callback and data model information for **GET /transactions/**_{ID}_:
 
@@ -2425,9 +2481,9 @@ Alternative URI: N/A
 
 Logical API service: **Return Transaction Information**
 
-The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requested transaction. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6831-get-transactionsid). See [Table 34](#table-34) for data model.
+The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requested transaction. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6831-get-transactionsid). See [Table 35](#table-35) for data model.
 
-###### Table 34
+###### Table 35
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -2435,26 +2491,28 @@ The callback **PUT /transactions/**_{ID}_ is used to inform the client of a requ
 | **transactionState** | 1 | TransactionState | State of the transaction. |
 | **code** | 0..1 | Code | Optional redemption information provided to Payer after transaction has been completed. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 34 -- PUT /transactions/_{ID}_ data model**
+
+**Table 35 -- PUT /transactions/_{ID}_ data model**
 
 #### 6.8.5 Error Callbacks
 
 This section describes the error callbacks that are used by the server under the resource **/transactions**.
 
-#### 6.8.5.1 PUT /transactions/{ID}/error
+#### 6.8.5.1 PUT /transactions/_{ID}_/error
 
 Alternative URI: N/A
 
 Logical API service: **Return Transaction Information Error**
 
-If the server is unable to find or create a transaction, or another processing error occurs, the error callback **PUT** **/transactions/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6831-get-transactionsid). See [Table 35](#table-35) for data model.
+If the server is unable to find or create a transaction, or another processing error occurs, the error callback **PUT** **/transactions/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the _{ID}_ that was used in the [**GET /transactions/**_{ID}_](#6831-get-transactionsid). See [Table 36](#table-36) for data model.
 
-###### Table 35
+###### Table 36
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-**Table 35 -- PUT /transactions/_{ID}_/error data model**
+
+**Table 36 -- PUT /transactions/_{ID}_/error data model**
 
 #### 6.8.6 States
 
@@ -2480,14 +2538,15 @@ A created bulk quote object contains a quote for each individual transaction in 
 
 #### 6.9.1 Resource Version History
 
-Table 36 contains a description of each different version of the **/bulkQuotes** resource.
+Table 37 contains a description of each different version of the **/bulkQuotes** resource.
 
 | Version | Date | Description|
 | ---- | ---- | ---- |
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
-**Table 36 –- Version history for resource /bulkQuotes**
+|**1.0**|2018-03-13|Initial version |
+|**1.1**|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
+|**2.0**|2021-10-26|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+
+**Table 37 –- Version history for resource /bulkQuotes**
 
 #### 6.9.2 Service Details
 
@@ -2516,7 +2575,7 @@ Logical API service: **Retrieve Bulk Quote Information**
 
 The HTTP request **GET /bulkQuotes/**_{ID}_ is used to get information regarding a previously-created or requested bulk quote.
 
-The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote.
+The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 38](#table-38)) that was used for the creation of the bulk quote.
 
 Callback and data model information for **GET /bulkQuotes/**_{ID}_:
 
@@ -2536,16 +2595,20 @@ Callback and data model information for **POST /bulkQuotes**:
 
 - Callback -- [**PUT /bulkQuotes/**_{ID}_](#6941-put-bulkquotesid)
 - Error Callback -- [**PUT /bulkQuotes/**_{ID}_**/error**](#6951-put-bulkquotesiderror)
-- Data Model -- See [Table 37](#table-37)
+- Data Model -- See [Table 38](#table-38)
 
-###### Table 37
+###### Table 38
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
-| **individualQuoteResults** | 0..1000 | IndividualQuoteResult | Fees for each individual transaction, if any of them are charged per transaction. |
-| **expiration** | 1 | DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction request. |
+| **bulkQuoteId** | 1 | CorrelationId | Common ID between the FSPs for the bulk quote object, decided by the Payer FSP. The ID should be reused for resends of the same bulk quote. A new ID should be generated for each new bulk quote. |
+| **payer** | 1 | Party | Information about the Payer in the proposed financial transaction. |
+| **geoCode** | 0..1 | GeoCode | Longitude and Latitude of the initiating Party. Can be used to detect fraud. |
+| **expiration** | 0..1 | DateTime | Expiration is optional to let the Payee FSP know when a quote no longer needs to be returned. |
+| **individualQuotes** | 1..1000 | IndividualQuote | List of quotes elements. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 37 -- POST /bulkQuotes data model**
+
+**Table 38 -- POST /bulkQuotes data model**
 
 #### 6.9.4 Callbacks
 
@@ -2557,16 +2620,17 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Quote Information**
 
-The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a requested or created bulk quote. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 38](#table-38) for data model.
+The callback **PUT /bulkQuotes/**_{ID}_ is used to inform the client of a requested or created bulk quote. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 38](#table-38)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 39](#table-39) for data model.
 
-###### Table 38
+###### Table 39
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **individualQuoteResults** | 0..1000 | IndividualQuoteResult | Fees for each individual transaction, if any of them are charged per transaction. |
 | **expiration** | 1 |  DateTime | Date and time until when the quotation is valid and can be honored when used in the subsequent transaction request. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 38 -- PUT /bulkQuotes/_{ID}_ data model**
+
+**Table 39 -- PUT /bulkQuotes/_{ID}_ data model**
 
 #### 6.9.5 Error Callbacks
 
@@ -2578,14 +2642,15 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Quote Information Error**
 
-If the server is unable to find or create a bulk quote, or another processing error occurs, the error callback **PUT** **/bulkQuotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 37](#table-37)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 39](#table-39) for data model.
+If the server is unable to find or create a bulk quote, or another processing error occurs, the error callback **PUT** **/bulkQuotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkQuoteId** (see [Table 38](#table-38)) that was used for the creation of the bulk quote, or the _{ID}_ that was used in the [**GET /bulkQuotes/**_{ID}_](#6931-get-bulkquotesid). See [Table 40](#table-40) for data model.
 
-###### Table 39
+###### Table 40
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-**Table 39 -- PUT /bulkQuotes/_{ID}_/error data model**
+
+**Table 40 -- PUT /bulkQuotes/_{ID}_/error data model**
 
 #### 6.9.6 States
 
@@ -2609,14 +2674,15 @@ A bulk transfer is irrevocable; it cannot be changed, cancelled, or reversed aft
 
 #### 6.10.1 Resource Version History
 
-Table 40 contains a description of each different version of the **/bulkTransfers** resource.
+Table 41 contains a description of each different version of the **/bulkTransfers** resource.
 
 | Version | Date | Description|
 | ---- | ---- | ---- |
-| **1.0** | 2018-03-13 | Initial version |
-| **1.1** | 2020-05-19 | The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 92 has been updated.|
-| **2.0** | 2021-03-19 | The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25 |
-**Table 40 –- Version history for resource /bulkTransfers**
+|**1.0**|2018-03-13|Initial version|
+|**1.1**|2020-05-19|The data model is updated to add an optional ExtensioinList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
+|**2.0**|2021-10-26|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25. It is also updated to add two new [**PartyIDType**](#Table-103)s based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/100, and two new [**PartyType**](#7330-partytype)s based on https://github.com/mojaloop/mojaloop-specification/issues/24.|
+
+**Table 41 –- Version history for resource /bulkTransfers**
 
 #### 6.10.2 Service Details
 
@@ -2643,7 +2709,7 @@ Alternative URI: N/A
 
 Logical API service: **Retrieve Bulk Transfer Information**
 
-The HTTP request **GET /bulkTransfers/**_{ID}_ is used to get information regarding a previously-created or requested bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer.
+The HTTP request **GET /bulkTransfers/**_{ID}_ is used to get information regarding a previously-created or requested bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 42](#table-42)) that was used for the creation of the bulk transfer.
 
 Callback and data model information for **GET /bulkTransfers/**_{ID}_:
 
@@ -2661,9 +2727,9 @@ The HTTP request **POST /bulkTransfers** is used to request the creation of a bu
 
 - Callback - [**PUT /bulkTransfers/**_{ID}_](#61041-put-bulktransfersid)
 - Error Callback - [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror)
-- Data Model -- See [Table 41](#table-41)
+- Data Model -- See [Table 42](#table-42)
 
-###### Table 41
+###### Table 42
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -2674,7 +2740,8 @@ The HTTP request **POST /bulkTransfers** is used to request the creation of a bu
 | **individualTransfers** | 1..1000 | IndividualTransfer | List of IndividualTransfer elements. |
 | **expiration** | 1 | DateTime | Expiration time of the transfers. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 41 -- POST /bulkTransfers data model**
+
+**Table 42 -- POST /bulkTransfers data model**
 
 #### 6.10.4 Callbacks
 
@@ -2686,9 +2753,9 @@ Alternative URI: N/A
 
 Logical API service: **Return Bulk Transfer Information**
 
-The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a requested or created bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 42](#table-42) for data model.
+The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a requested or created bulk transfer. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 42](#table-42)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 43](#table-43) for data model.
 
-###### Table 42
+###### Table 43
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
@@ -2696,26 +2763,28 @@ The callback **PUT /bulkTransfers/**_{ID}_ is used to inform the client of a req
 | **individualTransferResults** | 0..1000 | **Error! Reference source not found.** | List of **Error! Reference source not found.** elements. |
 | **bulkTransferState** | 1 | BulkTransferState | The state of the bulk transfer. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 42 -- PUT /bulkTransfers/_{ID}_ data model**
+
+**Table 43 -- PUT /bulkTransfers/_{ID}_ data model**
 
 #### 6.10.5 Error Callbacks
 
 This section describes the error callbacks that are used by the server under the resource **/bulkTransfers**.
 
-#### 6.10.4.1 PUT /bulkTransfers/_{ID}_/error
+#### 6.10.5.1 PUT /bulkTransfers/_{ID}_/error
 
 Alternative URI: N/A
 
 Logical API service: **Return Bulk Transfer Information Error**
 
-If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback **PUT** **/bulkTransfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 41](#table-41)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 43](#table-43) for data model.
+If the server is unable to find or create a bulk transfer, or another processing error occurs, the error callback **PUT** **/bulkTransfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **bulkTransferId** (see [Table 42](#table-42)) that was used for the creation of the bulk transfer ([**POST /bulkTransfers**](#61032-post-bulktransfers)), or the _{ID}_ that was used in the [**GET /bulkTransfers/**_{ID}_](#61031-get-bulktransfersid). See [Table 44](#table-44) for data model.
 
-###### Table 43
+###### Table 44
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
-**Table 43 -- PUT /bulkTransfers/_{ID}_/error data model**
+
+**Table 44 -- PUT /bulkTransfers/_{ID}_/error data model**
 
 #### 6.10.6 States
 
@@ -2843,6 +2912,8 @@ The API data type **Integer** is a JSON String consisting of digits only. Negati
 
 The regular expression for restricting an Integer appears in [Listing 15](#listing-15).
 
+###### Listing 15
+
 ```
 ^[1-9]\d*$
 ```
@@ -2899,6 +2970,8 @@ The API data type **ErrorCode** is a JSON String of four characters, consisting 
 
 The regular expression for restricting the **ErrorCode** type appears in [Listing 18](#listing-18).
 
+###### Listing 18
+
 ```
 ^[1-9]\d{3}$
 ```
@@ -2913,6 +2986,8 @@ The API data type **TokenCode** is a JSON String between four and 32 characters.
 
 The regular expression for restricting the **TokenCode** appears in [Listing 19](#listing-19).
 
+###### Listing 19
+
 ```
 ^[0-9a-zA-Z]{4,32}$
 ```
@@ -2926,6 +3001,8 @@ The API data type **MerchantClassificationCode** is a JSON String consisting of 
 ##### 7.2.10.1 Regular Expression
 
 The regular expression for restricting the **MerchantClassificationCode** type appears in [Listing 20](#listing-20).
+
+###### Listing 20
 
 ```
 ^[\d]{1,4}$
@@ -2973,6 +3050,8 @@ The API data type **Amount** is a JSON String in a canonical format that is rest
 
 The regular expression for restricting the **Amount** type appears in [Listing 23](#listing-23). This pattern does not allow any trailing zeroes at all, but allows an amount without a minor currency unit. It also only allows four digits in the minor currency unit; a negative value is not allowed. Using more than 18 digits in the major currency unit is not allowed.
 
+###### Listing 23
+
 ```
 ^([0]|([1-9][0-9]{0,17}))([.][0-9]{0,3}[1-9])?$
 ```
@@ -2981,9 +3060,9 @@ The regular expression for restricting the **Amount** type appears in [Listing 2
 
 ##### 7.2.13.2 Example Values
 
-See [Table 44](#table-44) for validation results for some example **Amount** values using the regular expression in [Section 7.2.13.1](#72131-regular-expression).
+See [Table 45](#table-45) for validation results for some example **Amount** values using the regular expression in [Section 7.2.13.1](#72131-regular-expression).
 
-###### Table 33
+###### Table 45
 
 | **Value** | **Validation result** |
 | --- | --- |
@@ -3002,7 +3081,8 @@ See [Table 44](#table-44) for validation results for some example **Amount** val
 | **.5** | Rejected |
 | **00.5** | Rejected |
 | **0** | Accepted |
-**Table 44 -- Example results for different values for Amount type**
+
+**Table 45 -- Example results for different values for Amount type**
 
 #### 7.2.14 DateTime
 
@@ -3129,388 +3209,423 @@ This section defines elements types used by the API.
 
 #### 7.3.1 AmountType
 
-[Table 45](#table-45) contains the data model for the element **AmountType**.
-
-###### Table 45
-
-| **Name** | **Cardinality** | **Format** | **Description** |
-| --- | --- | --- | --- |
-| **AmountType** | 1 | Enum of String(1..32) | Contains the amount type. See [Section 7.5.1](#751-amounttype) (AmountType) for possible enumeration values. |
-**Table 45 -- Element AmountType**
-
-#### 7.3.2 AuthenticationType
-
-[Table 46](#table-46) contains the data model for the element **AuthenticationType**.
+[Table 46](#table-46) contains the data model for the element **AmountType**.
 
 ###### Table 46
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **Authentication** | 1 | Enum of String(1..32) | Contains the authentication type. See [Section 7.5.2](#752-authenticationtype) (AuthenticationType) for possible enumeration values. |
-**Table 46 -- Element AuthenticationType**
+| **AmountType** | 1 | Enum of String(1..32) | Contains the amount type. See [Section 7.5.1](#751-amounttype) (AmountType) for possible enumeration values. |
 
-#### 7.3.3 AuthenticationValue
+**Table 46 -- Element AmountType**
 
-[Table 47](#table-47) contains the data model for the element **AuthenticationValue**.
+#### 7.3.2 AuthenticationType
+
+[Table 47](#table-47) contains the data model for the element **AuthenticationType**.
 
 ###### Table 47
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **AuthenticationValues** | 1 | Depending on AuthenticationType:<br>If OTP: OtpValue<br>If QRCODE: String(1..64) | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. |
-**Table 47  -- Element AuthenticationValue**
+| **Authentication** | 1 | Enum of String(1..32) | Contains the authentication type. See [Section 7.5.2](#752-authenticationtype) (AuthenticationType) for possible enumeration values. |
 
-#### 7.3.4 AuthorizationResponse
+**Table 47 -- Element AuthenticationType**
 
-[Table 48](#table-48) contains the data model for the element **AuthorizationResponse**.
+#### 7.3.3 AuthenticationValue
+
+[Table 48](#table-48) contains the data model for the element **AuthenticationValue**.
 
 ###### Table 48
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **AuthorizationResponse** | 1 | Enum of String(1..32) | Contains the authorization response. See [Section 7.5.3](#753-authorizationresponse) (AuthorizationResponse) for possible enumeration values. |
-**Table 48 -- Element AuthorizationResponse**
+| **AuthenticationValues** | 1 | Depending on AuthenticationType:<br>If OTP: OtpValue<br>If QRCODE: String(1..64) | Contains the authentication value. The format depends on the authentication type used in the AuthenticationInfo complex type. |
 
-#### 7.3.5 BalanceOfPayments
+**Table 48  -- Element AuthenticationValue**
 
-[Table 49](#table-49) contains the data model for the element **BalanceOfPayment**.
+#### 7.3.4 AuthorizationResponse
+
+[Table 49](#table-49) contains the data model for the element **AuthorizationResponse**.
 
 ###### Table 49
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| BalanceOfPayments | 1 | BopCode | Possible values and meaning are defined in https://www.imf.org/external/np/sta/bopcode/. |
-**Table 49 -- Element BalanceOfPayments**
+| **AuthorizationResponse** | 1 | Enum of String(1..32) | Contains the authorization response. See [Section 7.5.3](#753-authorizationresponse) (AuthorizationResponse) for possible enumeration values. |
 
-#### 7.3.6 BulkTransferState
+**Table 49 -- Element AuthorizationResponse**
 
-[Table 50](#table-50) contains the data model for the element **BulkTransferState**.
+#### 7.3.5 BalanceOfPayments
+
+[Table 50](#table-50) contains the data model for the element **BalanceOfPayment**.
 
 ###### Table 50
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| BulkTransferState | 1 | Enum of String(1..32) | See [Section 7.5.4](#754-bulktransferstate) (BulkTransferState) for more information on allowed values. |
-**Table 50 -- Element BulkTransferState**
+| BalanceOfPayments | 1 | BopCode | Possible values and meaning are defined in https://www.imf.org/external/np/sta/bopcode/. |
 
-#### 7.3.7 Code
+**Table 50 -- Element BalanceOfPayments**
 
-[Table 51](#table-51) contains the data model for the element **Code**.
+#### 7.3.6 BulkTransferState
+
+[Table 51](#table-51) contains the data model for the element **BulkTransferState**.
 
 ###### Table 51
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **Code** | 1 | TokenCode | Any code or token returned by the Payee FSP. |
-**Table 51 -- Element Code**
+| BulkTransferState | 1 | Enum of String(1..32) | See [Section 7.5.4](#754-bulktransferstate) (BulkTransferState) for more information on allowed values. |
 
-#### 7.3.8 CorrelationId
+**Table 51 -- Element BulkTransferState**
 
-[Table 52](#table-52) contains the data model for the element **CorrelationId**.
+#### 7.3.7 Code
+
+[Table 52](#table-52) contains the data model for the element **Code**.
 
 ###### Table 52
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **CorrelationId** | 1 | UUID | Identifier that correlates all messages of the same sequence. |
-**Table 52 -- Element Correlation Id**
+| **Code** | 1 | TokenCode | Any code or token returned by the Payee FSP. |
 
-#### 7.3.9 Currency
+**Table 52 -- Element Code**
 
-[Table 53](#table-53) contains the data model for the element **Currency**.
+#### 7.3.8 CorrelationId
+
+[Table 53](#table-53) contains the data model for the element **CorrelationId**.
 
 ###### Table 53
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **Currency** | 1 | Enum of String(3) | See [Section 7.5.5](#755-currencycode) (CurrencyCode) for more information on allowed values. |
-**Table 53 -- Element Currency**
+| **CorrelationId** | 1 | UUID | Identifier that correlates all messages of the same sequence. |
 
-#### 7.3.10 DateOfBirth
+**Table 53 -- Element Correlation Id**
 
-[Table 54](#table-54) contains the data model for the element **DateOfBirth**.
+#### 7.3.9 Currency
+
+[Table 54](#table-54) contains the data model for the element **Currency**.
 
 ###### Table 54
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **DateOfBirth** | 1 | Date | Date of Birth of the Party.|
-**Table 54 -- Element DateOfBirth**
+| **Currency** | 1 | Enum of String(3) | See [Section 7.5.5](#755-currencycode) (CurrencyCode) for more information on allowed values. |
 
-#### 7.3.11 ErrorCode
+**Table 54 -- Element Currency**
 
-[Table 55](#table-55) contains the data model for the element **ErrorCode**.
+#### 7.3.10 DateOfBirth
+
+[Table 55](#table-55) contains the data model for the element **DateOfBirth**.
 
 ###### Table 55
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **ErrorCode** | 1 | ErrorCode | Four-digit error code; see [Section 7.6](#76-error-codes) for more information.|
-**Table 55 -- Element ErrorCode**
+| **DateOfBirth** | 1 | Date | Date of Birth of the Party.|
 
-#### 7.3.12 ErrorDescription
+**Table 55 -- Element DateOfBirth**
 
-[Table 56](#table-56) contains the data model for the element **ErrorDescription**.
+#### 7.3.11 ErrorCode
+
+[Table 56](#table-56) contains the data model for the element **ErrorCode**.
 
 ###### Table 56
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **ErrorDescription** | 1 | String(1..128) | Error description string. |
-**Table 56 -- Element ErrorDescription**
+| **ErrorCode** | 1 | ErrorCode | Four-digit error code; see [Section 7.6](#76-error-codes) for more information.|
 
-#### 7.3.13 ExtensionKey
+**Table 56 -- Element ErrorCode**
 
-[Table 57](#table-57) contains the data model for the element **ExtensionKey**.
+#### 7.3.12 ErrorDescription
+
+[Table 57](#table-57) contains the data model for the element **ErrorDescription**.
 
 ###### Table 57
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **ExtensionKey** | 1 | String(1..32) | Extension Key |
-**Table 57 -- Element ExtensionKey**
+| **ErrorDescription** | 1 | String(1..128) | Error description string. |
 
-#### 7.3.14 ExtensionValue
+**Table 57 -- Element ErrorDescription**
 
-[Table 58](#table-58) contains the data model for the element **ExtensionValue**.
+#### 7.3.13 ExtensionKey
 
-###### Table-58
+[Table 58](#table-58) contains the data model for the element **ExtensionKey**.
+
+###### Table 58
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **ExtensionValue** | 1 | String(1..128) | Extension Value |
-**Table 58 -- Element ExtensionValue**
+| **ExtensionKey** | 1 | String(1..32) | Extension Key |
 
-#### 7.3.15 FirstName
+**Table 58 -- Element ExtensionKey**
 
-[Table 59](#table-59) contains the data model for the element **FirstName**.
+#### 7.3.14 ExtensionValue
+
+[Table 59](#table-59) contains the data model for the element **ExtensionValue**.
 
 ###### Table 59
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **FirstName** | 1 | Name | First name of Party |
-**Table 59 -- Element FirstName**
+| **ExtensionValue** | 1 | String(1..128) | Extension Value |
 
-#### 7.3.16 FspId
+**Table 59 -- Element ExtensionValue**
 
-[Table 60](#table-60) contains the data model for the element **FspId**.
+#### 7.3.15 FirstName
+
+[Table 60](#table-60) contains the data model for the element **FirstName**.
 
 ###### Table 60
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **FspId** | 1 | String(1..32) | FSP identifier |
-**Table 60 -- Element FspId**
+| **FirstName** | 1 | Name | First name of Party |
 
-#### 7.3.17 IlpCondition
+**Table 60 -- Element FirstName**
 
-[Table 61](#table-61) contains the data model for the element **IlpCondition**.
+#### 7.3.16 FspId
+
+[Table 61](#table-61) contains the data model for the element **FspId**.
 
 ###### Table 61
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **IlpCondition** | 1 | BinaryString32 |  Condition that must be attached to the transfer by the Payer. |
-**Table 61 -- Element IlpCondition**
+| **FspId** | 1 | String(1..32) | FSP identifier |
 
-#### 7.3.18 IlpFulfilment
+**Table 61 -- Element FspId**
 
-[Table 62](#table-62) contains the data model for the element **IlpFulfilment**.
+#### 7.3.17 IlpCondition
+
+[Table 62](#table-62) contains the data model for the element **IlpCondition**.
 
 ###### Table 62
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **IlpFulfilment** | 1 | BinaryString(1..32) | Fulfilment that must be attached to the transfer by the Payee.|
-**Table 62 -- Element IlpFulfilment**
+| **IlpCondition** | 1 | BinaryString32 |  Condition that must be attached to the transfer by the Payer. |
 
-#### 7.3.19 IlpPacket
+**Table 62 -- Element IlpCondition**
 
-[Table 63](#table-63) contains the data model for the element **IlpPacket**.
+#### 7.3.18 IlpFulfilment
+
+[Table 63](#table-63) contains the data model for the element **IlpFulfilment**.
 
 ###### Table 63
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **IlpPacket** | 1 | BinaryString(1..32768) | Information for recipient (transport layer information). |
-**Table 63 -- Element IlpPacket**
+| **IlpFulfilment** | 1 | BinaryString(1..32) | Fulfilment that must be attached to the transfer by the Payee.|
 
-#### 7.3.20 LastName
+**Table 63 -- Element IlpFulfilment**
 
-[Table 64](#table-64) contains the data model for the element **LastName**.
+#### 7.3.19 IlpPacket
+
+[Table 64](#table-64) contains the data model for the element **IlpPacket**.
 
 ###### Table 64
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **LastName** | 1 | Name | Last name of the Party |
-**Table 64 -- Element LastName**
+| **IlpPacket** | 1 | BinaryString(1..32768) | Information for recipient (transport layer information). |
 
-#### 7.3.21 MerchantClassificationCode
+**Table 64 -- Element IlpPacket**
 
-[Table 65](#table-65) contains the data model for the element **MechantClassificationCode**.
+#### 7.3.20 LastName
+
+[Table 65](#table-65) contains the data model for the element **LastName**.
 
 ###### Table 65
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **MerchantClassificationCode** | 1 | MerchantClassificationCode | A limited set of pre-defined numbers. This list would identify a set of popular merchant types like School Fees, Pubs and Restaurants, Groceries, and so on. |
-**Table 65 -- Element MerchantClassificationCode**
+| **LastName** | 1 | Name | Last name of the Party |
 
-#### 7.3.22 MiddleName
+**Table 65 -- Element LastName**
 
-[Table 66](#table-66) contains the data model for the element **MiddleName**.
+#### 7.3.21 MerchantClassificationCode
+
+[Table 66](#table-66) contains the data model for the element **MechantClassificationCode**.
 
 ###### Table 66
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **MiddleName** | 1 | Name | Middle name of the Party |
-**Table 66 -- Element MiddleName**
+| **MerchantClassificationCode** | 1 | MerchantClassificationCode | A limited set of pre-defined numbers. This list would identify a set of popular merchant types like School Fees, Pubs and Restaurants, Groceries, and so on. |
 
-#### 7.3.23 Note
+**Table 66 -- Element MerchantClassificationCode**
 
-[Table 67](#table-67) contains the data model for the element **Note**.
+#### 7.3.22 MiddleName
+
+[Table 67](#table-67) contains the data model for the element **MiddleName**.
 
 ###### Table 67
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **Note** | 1 | String(1..128) | Memo assigned to Transaction. |
-**Table 67 -- Element Note**
+| **MiddleName** | 1 | Name | Middle name of the Party |
 
-#### 7.3.24 PartyIdentifier
+**Table 67 -- Element MiddleName**
 
-[Table 68](#table-68) contains the data model for the element **PartyIdentifier**.
+#### 7.3.23 Note
+
+[Table 68](#table-68) contains the data model for the element **Note**.
 
 ###### Table 68
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **PartyIdentifier** | 1 | String(1..128) | Identifier of the Party. |
-**Table 68 -- Element PartyIdentifier**
+| **Note** | 1 | String(1..128) | Memo assigned to Transaction. |
 
-#### 7.3.25 PartyIdType
+**Table 68 -- Element Note**
 
-[Table 69](#table-69) contains the data model for the element **PartyIdType**.
+#### 7.3.24 PartyIdentifier
+
+[Table 69](#table-69) contains the data model for the element **PartyIdentifier**.
 
 ###### Table 69
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **PartyIdType** | 1 | Enum of String(1..32) | See [Section 7.5.6](#756-partyidtype) (PartyIdType) for more information on allowed values.|
-**Table 69 -- Element PartyIdType**
+| **PartyIdentifier** | 1 | String(1..128) | Identifier of the Party. |
 
-#### 7.3.26 PartyName
+**Table 69 -- Element PartyIdentifier**
 
-[Table 70](#table-70) contains the data model for the element **PartyName**.
+#### 7.3.25 PartyIdType
+
+[Table 70](#table-70) contains the data model for the element **PartyIdType**.
 
 ###### Table 70
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **PartyName** | 1 | Name | Name of the Party. Could be a real name or a nickname.|
-**Table 70 -- Element PartyName**
+| **PartyIdType** | 1 | Enum of String(1..32) | See [Section 7.5.6](#756-partyidtype) (PartyIdType) for more information on allowed values.|
 
-#### 7.3.27 PartySubIdOrType
+**Table 70 -- Element PartyIdType**
 
-[Table 71](#table-71) contains the data model for the element **PartySubIdOrType**.
+#### 7.3.26 PartyName
+
+[Table 71](#table-71) contains the data model for the element **PartyName**.
 
 ###### Table 71
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **PartySubIdOrType** | 1 | String(1..128) | Either a sub-identifier of a PartyIdentifier, or a sub- type of the PartyIdType, normally a PersonalIdentifierType. |
-**Table 71 -- Element PartySubIdOrType**
+| **PartyName** | 1 | Name | Name of the Party. Could be a real name or a nickname.|
 
-#### 7.3.28 RefundReason
+**Table 71 -- Element PartyName**
 
-[Table 72](#table-72) contains the data model for the element **RefundReason**.
+#### 7.3.27 PartySubIdOrType
+
+[Table 72](#table-72) contains the data model for the element **PartySubIdOrType**.
 
 ###### Table 72
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **RefundReason** | 1 | String(1..128) | Reason for the refund |
-**Table 72 -- Element RefundReason**
+| **PartySubIdOrType** | 1 | String(1..128) | Either a sub-identifier of a PartyIdentifier, or a sub- type of the PartyIdType, normally a PersonalIdentifierType. |
 
-#### 7.3.29 TransactionInitiator
+**Table 72 -- Element PartySubIdOrType**
 
-[Table 73](#table-73) contains the data model for the element **TransactionInitiator**.
+#### 7.3.28 RefundReason
+
+[Table 73](#table-73) contains the data model for the element **RefundReason**.
 
 ###### Table 73
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionInitiator** | 1 | Enum of String(1..32) | |
-**Table 73 -- Element TransactionInitiator**
+| **RefundReason** | 1 | String(1..128) | Reason for the refund |
 
-#### 7.3.30 PartyType
+**Table 73 -- Element RefundReason**
 
-[Table 74](#table-74) contains the data model for the element **PartyType**.
+#### 7.3.29 TransactionInitiator
+
+[Table 74](#table-74) contains the data model for the element **TransactionInitiator**.
 
 ###### Table 74
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **PartyType** | 1 | Enum of String(1..32) | See [Section 7.5.9](#759-partytype) (PartyType) for more information on allowed values. |
-**Table 74 -- Element PartyType**
+| **TransactionInitiator** | 1 | Enum of String(1..32) | |
 
-#### 7.3.31 TransactionRequestState
+**Table 74 -- Element TransactionInitiator**
 
-[Table 75](#table-75) contains the data model for the element **TransactionRequestState**.
+#### 7.3.30 PartyType
+
+[Table 75](#table-75) contains the data model for the element **PartyType**.
 
 ###### Table 75
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionRequestState** | 1 | Enum of String(1..32) | See [Section 7.5.10](#7510-transactionrequeststate) (TransactionRequestState) for more information on allowed values. |
-**Table 75 -- Element TransactionRequestState**
+| **PartyType** | 1 | Enum of String(1..32) | See [Section 7.5.9](#759-partytype) (PartyType) for more information on allowed values. |
 
-#### 7.3.32 TransactionScenario
+**Table 75 -- Element PartyType**
 
-[Table 76](#table-76) contains the data model for the element **TransactionScenario**.
+#### 7.3.31 TransactionRequestState
+
+[Table 76](#table-76) contains the data model for the element **TransactionRequestState**.
 
 ###### Table 76
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionScenario** | 1 | Enum of String(1..32) | See [Section 7.5.11](#7511-transactionscenario) (TransactionScenario) for more information on allowed values. |
-**Table 76 -- Element TransactionScenario**
+| **TransactionRequestState** | 1 | Enum of String(1..32) | See [Section 7.5.10](#7510-transactionrequeststate) (TransactionRequestState) for more information on allowed values. |
 
-#### 7.3.33 TransactionState
+**Table 76 -- Element TransactionRequestState**
 
-[Table 77](#table-77) contains the data model for the element **TransactionState**.
+#### 7.3.32 TransactionScenario
+
+[Table 77](#table-77) contains the data model for the element **TransactionScenario**.
 
 ###### Table 77
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionState** | 1 | Enum of String(1..32) | See [Section 7.5.12](#7512-transactionstate) (TransactionState) for more information on allowed values. |
-**Table 77 -- Element TransactionState**
+| **TransactionScenario** | 1 | Enum of String(1..32) | See [Section 7.5.11](#7511-transactionscenario) (TransactionScenario) for more information on allowed values. |
 
-#### 7.3.34 TransactionSubScenario
+**Table 77 -- Element TransactionScenario**
 
-[Table 78](#table-78) contains the data model for the element **TransactionSubScenario**.
+#### 7.3.33 TransactionState
+
+[Table 78](#table-78) contains the data model for the element **TransactionState**.
 
 ###### Table 78
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **TransactionSubScenario** | 1 | UndefinedEnum | Possible sub-scenario, defined locally within the scheme. |
-**Table 78 -- Element TransactionSubScenario**
+| **TransactionState** | 1 | Enum of String(1..32) | See [Section 7.5.12](#7512-transactionstate) (TransactionState) for more information on allowed values. |
 
-#### 7.3.35 TransferState
+**Table 78 -- Element TransactionState**
 
-[Table 79](#table-79) contains the data model for the element **TransferState**.
+#### 7.3.34 TransactionSubScenario
+
+[Table 79](#table-79) contains the data model for the element **TransactionSubScenario**.
 
 ###### Table 79
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
+| **TransactionSubScenario** | 1 | UndefinedEnum | Possible sub-scenario, defined locally within the scheme. |
+
+**Table 79 -- Element TransactionSubScenario**
+
+#### 7.3.35 TransferState
+
+[Table 80](#table-80) contains the data model for the element **TransferState**.
+
+###### Table 80
+
+| **Name** | **Cardinality** | **Format** | **Description** |
+| --- | --- | --- | --- |
 | **TransferState** | 1 | Enum of String(1..32) | See [Section 7.5.13](#7513-transferstate) (TransferState) for more information on allowed values. |
-**Table 79 -- Element TransferState**
+
+**Table 80 -- Element TransferState**
 
 ### 7.4 Complex Types
 
@@ -3518,57 +3633,61 @@ This section describes complex types used by the API.
 
 #### 7.4.1 AuthenticationInfo
 
-[Table 80](#table-80) contains the data model for the complex type **AuthenticationInfo**.
+[Table 81](#table-81) contains the data model for the complex type **AuthenticationInfo**.
 
-###### Table 80
+###### Table 81
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **authentication** | 1 | AuthenticationType | Type of authentication. | 
 | **authenticationValue** | 1 | AuthenticationValue | Authentication value. | 
-**Table 80 -- Complex type AuthenticationInfo**
+
+**Table 81 -- Complex type AuthenticationInfo**
 
 #### 7.4.2 ErrorInformation
 
-[Table 81](#table-81) contains the data model for the complex type **ErrorInformation**.
+[Table 82](#table-82) contains the data model for the complex type **ErrorInformation**.
 
-###### Table 81
+###### Table 82
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **errorCode** | 1 | Errorcode | Specific error number. |
 | **errorDescription** | 1 | ErrorDescription | Error description string. |
 | **extensionList** | 1 | ExtensionList | Optional list of extensions, specific to deployment. |
-**Table 81 -- Complex type ErrorInformation**
+
+**Table 82 -- Complex type ErrorInformation**
 
 #### 7.4.3 Extension
 
-[Table 82](#table-82) contains the data model for the complex type **Extension**.
-
-###### Table 82
-
-| **Name** | **Cardinality** | **Format** | **Description** |
-| --- | --- | --- | --- |
-| **key** | 1 | ExtensionKey | Extension key. |
-| **value** | 1 | ExtensionValue | Extension value. |
-**Table 82 -- Complex type Extension**
-
-#### 7.4.4 ExtensionList
-
-[Table 83](#table-83) contains the data model for the complex type **ExtensionList**.
+[Table 83](#table-83) contains the data model for the complex type **Extension**.
 
 ###### Table 83
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
+| **key** | 1 | ExtensionKey | Extension key. |
+| **value** | 1 | ExtensionValue | Extension value. |
+
+**Table 83 -- Complex type Extension**
+
+#### 7.4.4 ExtensionList
+
+[Table 84](#table-84) contains the data model for the complex type **ExtensionList**.
+
+###### Table 84
+
+| **Name** | **Cardinality** | **Format** | **Description** |
+| --- | --- | --- | --- |
 | **extension** | 1..16 | Extension | Number of Extension elements. |
-**Table 83 -- Complex type ExtensionList**
+
+**Table 84 -- Complex type ExtensionList**
 
 #### 7.4.5 IndividualQuote
 
-[Table 84](#table-84) contains the data model for the complex type **IndividualQuote**.
+[Table 85](#table-85) contains the data model for the complex type **IndividualQuote**.
 
-###### Table 84
+###### Table 85
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3581,13 +3700,14 @@ This section describes complex types used by the API.
 | **transactionType** | 1 | TransactionType | Type of transaction that the quote is requested for. |
 | **note** | 0..1 | Note | Memo that will be attached to the transaction.|
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 84 -- Complex type IndividualQuote**
+
+**Table 85 -- Complex type IndividualQuote**
 
 #### 7.4.6 IndividualQuoteResult
 
-[Table 85](#table-85) contains the data model for the complex type **IndividualQuoteResult**.
+[Table 86](#table-86) contains the data model for the complex type **IndividualQuoteResult**.
 
-###### Table 85
+###### Table 86
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3601,13 +3721,14 @@ This section describes complex types used by the API.
 | **condition** | 0..1 | IlpCondition | Condition that must be attached to the transfer by the Payer. |
 | **errorInformation** | 0..1 | ErrorInformation | Error code, category description. <br>**Note: payee, transferAmount, payeeReceiveAmount, payeeFspFee, payeeFspCommission, ilpPacket,** and **condition** should not be set if **errorInformation** is set.</br>
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment |
-**Table 85 -- Complex type IndividualQuoteResult**
+
+**Table 86 -- Complex type IndividualQuoteResult**
 
 #### 7.4.7 IndividualTransfer
 
-[Table 86](#table-86) contains the data model for the complex type **IndividualTransfer**.
+[Table 87](#table-87) contains the data model for the complex type **IndividualTransfer**.
 
-###### Table 86
+###### Table 87
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3616,13 +3737,14 @@ This section describes complex types used by the API.
 | **ilpPacket** | 1 | IlpPacket | ILP Packet containing the amount delivered to the Payee and the ILP Address of the Payee and any other end-to-end data. |
 | **condition** | 1 | IlpCondition | Condition that must be fulfilled to commit the transfer. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 86 -- Complex type IndividualTransfer**
+
+**Table 87 -- Complex type IndividualTransfer**
 
 #### 7.4.8 IndividualTransferResult
 
-[Table 87](#table-87) contains the data model for the complex type **IndividualTransferResult**.
+[Table 88](#table-88) contains the data model for the complex type **IndividualTransferResult**.
 
-###### Table 87
+###### Table 88
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3630,37 +3752,40 @@ This section describes complex types used by the API.
 | **fulfilment** | 0..1 | IlpFulfilment | Fulfilment of the condition specified with the transaction.<br>**Note:** Either **fulfilment** or **errorInformation** should be set, not both. |
 | **errorInformation** | 0..1 | ErrorInformation | If transfer is REJECTED, error information may be provided. <br>**Note:** Either **fulfilment** or **errorInformation** should be set, not both.|
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment.|
-**Table 87 -- Complex type IndividualTransferResult**
+
+**Table 88 -- Complex type IndividualTransferResult**
 
 #### 7.4.9 GeoCode
 
-[Table 88](#table-88) contains the data model for the complex type **GeoCode**.
-
-###### Table 88
-
-| **Name** | **Cardinality** | **Format** | **Description** |
-| --- | --- | --- | --- |
-| **latitude** | 1 | Latitude | Latitude of the Party. |
-| **longitude** | 1 | Longitude | Longitude of the Party. |
-**Table 88 -- Complex type GeoCode**
-
-#### 7.4.10 Money
-
-[Table 89](#table-89) contains the data model for the complex type **Money**.
+[Table 89](#table-89) contains the data model for the complex type **GeoCode**.
 
 ###### Table 89
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
+| **latitude** | 1 | Latitude | Latitude of the Party. |
+| **longitude** | 1 | Longitude | Longitude of the Party. |
+
+**Table 89 -- Complex type GeoCode**
+
+#### 7.4.10 Money
+
+[Table 90](#table-90) contains the data model for the complex type **Money**.
+
+###### Table 90
+
+| **Name** | **Cardinality** | **Format** | **Description** |
+| --- | --- | --- | --- |
 | **currency** | 1 | Currency | Currency of the amount. |
 | **amount** | 1 | Amount | Amount of money. |
-**Table 89 -- Complex type Money**
+
+**Table 90 -- Complex type Money**
 
 #### 7.4.11 Party
 
-[Table 90](#table-90) contains the data model for the complex type **Party**.
+[Table 91](#table-91) contains the data model for the complex type **Party**.
 
-###### Table 90
+###### Table 91
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3669,26 +3794,28 @@ This section describes complex types used by the API.
 | **name** | 0..1 | PartyName | Display name of the Party, could be a real name or a nick name. |
 | **personalInfo** | 0..1 | PartyPersonalInfo | Personal information used to verify identity of Party such as first, middle, last name and date of birth. |
 | **type** | 0..1 | PartyType | The type of the Party, for example Consumer, Business, or Agent. |
-**Table 90 -- Complex type Party**
+
+**Table 91 -- Complex type Party**
 
 #### 7.4.12 PartyComplexName
 
-[Table 91](#table-91) contains the data model for the complex type **PartyComplexName**.
+[Table 92](#table-92) contains the data model for the complex type **PartyComplexName**.
 
-###### Table 91
+###### Table 92
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
 | **firstName** | 0..1 | FirstName | Party's first name. |
 | **middleName** | 0..1 | MiddleName | Party's middle name. |
 | **lastName** | 0..1 | LastName | Party's last name. |
-**Table 91 -- Complex type PartyComplexName**
+
+**Table 92 -- Complex type PartyComplexName**
 
 #### 7.4.13 PartyIdInfo
 
-[Table 92](#table-92) contains the data model for the complex type **PartyIdInfo**.
+[Table 93](#table-93) contains the data model for the complex type **PartyIdInfo**.
 
-###### Table 92
+###### Table 93
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3697,49 +3824,53 @@ This section describes complex types used by the API.
 | **partySubIdOrType** | 0..1 | PartySubIdOrType | A sub-identifier or sub-type for the Party. |
 | **fspId** | 0..1 | FspId | FSP ID (if know) |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 92 -- Complex type PartyIdInfo**
+
+**Table 93 -- Complex type PartyIdInfo**
 
 #### 7.4.14 PartyPersonalInfo
 
-[Table 93](#table-93) contains the data model for the complex type **PartyPersonalInfo**.
-
-###### Table 93
-
-| **Name** | **Cardinality** | **Format** | **Description** |
-| --- | --- | --- | --- |
-| **complexName** | 0..1 | PartyComplexName | First, middle and last name for the Party. |
-| **dateOfBirth** | 0..1 | DateOfBirth | Date of birth for the Party. |
-**Table 93 -- Complex type PartyPersonalInfo**
-
-#### 7.4.15 PartyResult
-
-[Table 94](#table-94) contains the data model for the complex type **PartyResult**.
+[Table 94](#table-94) contains the data model for the complex type **PartyPersonalInfo**.
 
 ###### Table 94
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **partyId** | 1 | PartyIdInfo | Party Id type, id, sub ID or type, and FSP Id. |
-| **errorInformation** | 0..1 | ErrorInformation | If the Party failed to be added, error information should be provided. Otherwise, this parameter should be empty to indicate success. |
-**Table 94 -- Complex type PartyResult**
+| **complexName** | 0..1 | PartyComplexName | First, middle and last name for the Party. |
+| **dateOfBirth** | 0..1 | DateOfBirth | Date of birth for the Party. |
 
-#### 7.4.16 Refund
+**Table 94 -- Complex type PartyPersonalInfo**
 
-[Table 95](#table-95) contains the data model for the complex type **Refund**.
+#### 7.4.15 PartyResult
+
+[Table 95](#table-95) contains the data model for the complex type **PartyResult**.
 
 ###### Table 95
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
+| **partyId** | 1 | PartyIdInfo | Party Id type, id, sub ID or type, and FSP Id. |
+| **errorInformation** | 0..1 | ErrorInformation | If the Party failed to be added, error information should be provided. Otherwise, this parameter should be empty to indicate success. |
+
+**Table 95 -- Complex type PartyResult**
+
+#### 7.4.16 Refund
+
+[Table 96](#table-96) contains the data model for the complex type **Refund**.
+
+###### Table 96
+
+| **Name** | **Cardinality** | **Format** | **Description** |
+| --- | --- | --- | --- |
 | **originalTransactionId** | 1 | CorrelationId | Reference to the original transaction ID that is requested to be refunded. |
 | **refundReason** | 0..1 | RefundReason | Free text indicating the reason for the refund. |
-**Table 95 -- Complex type Refund**
+
+**Table 96 -- Complex type Refund**
 
 #### 7.4.17 Transaction
 
-[Table 96](#table-96) contains the data model for the complex type Transaction. The Transaction type is used to carry end-to-end data between the Payer FSP and the Payee FSP in the ILP Packet, see [Section 4.5](#45-ilp-packet). Both the **transactionId** and the **quoteId** in the data model is decided by the Payer FSP in the [**POST /quotes**](#6532-post-quotes), see [Table 22](#table-22).
+[Table 97](#table-97) contains the data model for the complex type Transaction. The Transaction type is used to carry end-to-end data between the Payer FSP and the Payee FSP in the ILP Packet, see [Section 4.5](#45-ilp-packet). Both the **transactionId** and the **quoteId** in the data model is decided by the Payer FSP in the [**POST /quotes**](#6532-post-quotes), see [Table 23](#table-23).
 
-###### Table 96
+###### Table 97
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3751,13 +3882,14 @@ This section describes complex types used by the API.
 | **transactionType** | 1 | TransactionType | Type of the transaction. |
 | **note** | 0..1 | Note | Memo associated to the transaction, intended to the Payee. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
-**Table 96 -- Complex type Transaction**
+
+**Table 97 -- Complex type Transaction**
 
 #### 7.4.18 TransactionType
 
-[Table 97](#table-97) contains the data model for the complex type **TransactionType**.
+[Table 98](#table-98) contains the data model for the complex type **TransactionType**.
 
-###### Table 97
+###### Table 98
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
@@ -3766,7 +3898,8 @@ This section describes complex types used by the API.
 | **initiator** | 1 | TransactionInitiator | Who is initiating the transaction: Payer or Payee |
 | **refundInfo** | 0..1 | Refund | Extra information specific to a refund scenario. Should only be populated if scenario is REFUND. |
 | **balanceOfPayments** | 0..1 | BalanceOfPayments | Balance of Payments code. |
-**Table 97 -- Complex type TransactionType**
+
+**Table 98 -- Complex type TransactionType**
 
 ### 7.5 Enumerations
 
@@ -3774,46 +3907,49 @@ This section contains the enumerations that are used by the API.
 
 #### 7.5.1 AmountType
 
-[Table 98](#table-98) contains the allowed values for the enumeration **AmountType**.
-
-###### Table 98
-
-| **Name** | **Description** |
-| --- | --- |
-| **SEND** | Amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. |
-| **RECEIVE** | Amount the Payer would like the Payee to receive; that is, the amount that should be sent to the receiver exclusive fees. |
-**Table 98 -- Enumeration AmountType**
-
-#### 7.5.2 AuthenticationType
-
-[Table 99](#table-99) contains the allowed values for the enumeration **AuthenticationType**.
+[Table 99](#table-99) contains the allowed values for the enumeration **AmountType**.
 
 ###### Table 99
 
 | **Name** | **Description** |
 | --- | --- |
+| **SEND** | Amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. |
+| **RECEIVE** | Amount the Payer would like the Payee to receive; that is, the amount that should be sent to the receiver exclusive fees. |
+
+**Table 99 -- Enumeration AmountType**
+
+#### 7.5.2 AuthenticationType
+
+[Table 100](#table-100) contains the allowed values for the enumeration **AuthenticationType**.
+
+###### Table 100
+
+| **Name** | **Description** |
+| --- | --- |
 | **OTP** | One-time password generated by the Payer FSP. |
 | **QRCODE** | QR code used as One Time Password. |
-**Table 99 -- Enumeration AuthenticationType**
+
+**Table 100 -- Enumeration AuthenticationType**
 
 #### 7.5.3 AuthorizationResponse
 
-[Table 100](#table-100) contains the allowed values for the enumeration **AuthorizationResponse**.
+[Table 101](#table-101) contains the allowed values for the enumeration **AuthorizationResponse**.
 
-###### Table 100
+###### Table 101
 
 | **Name** | **Description** |
 | --- | --- |
 | **ENTERED** | Consumer entered the authentication value. |
 | **REJECTED** | Consumer rejected the transaction. |
 | **RESEND** | Consumer requested to resend the authentication value. |
-**Table 100 -- Enumeration AuthorizationResponse**
+
+**Table 101 -- Enumeration AuthorizationResponse**
 
 #### 7.5.4 BulkTransferState
 
-[Table 101](#table-101) contains the allowed values for the enumeration **BulkTransferState**.
+[Table 102](#table-102) contains the allowed values for the enumeration **BulkTransferState**.
 
-###### Table 101
+###### Table 102
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3823,7 +3959,8 @@ This section contains the enumerations that are used by the API.
 | **PROCESSING** | Payee FSP has started to transfer fund to the Payees. |
 | **COMPLETED** | Payee FSP has completed transfer of funds to the Payees. |
 | **REJECTED** | Payee FSP has rejected processing the bulk transfer. |
-**Table 101 -- Enumeration BulkTransferState**
+
+**Table 102 -- Enumeration BulkTransferState**
 
 #### 7.5.5 CurrencyCode
 
@@ -3831,9 +3968,9 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 
 #### 7.5.6 PartyIdType
 
-[Table 102](#Table-102) contains the allowed values for the enumeration PartyIdType.
+[Table 103](#Table-103) contains the allowed values for the enumeration PartyIdType.
 
-###### Table 102
+###### Table 103
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3845,12 +3982,16 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **ACCOUNT_ID** | A bank account number or FSP account ID should be used in reference to a participant. The ACCOUNT_ID identifier can be in any format, as formats can greatly differ depending on country and FSP.
 | **IBAN** | A bank account number or FSP account ID is used in reference to a participant. The IBAN identifier can consist of up to 34 alphanumeric characters and should be entered without whitespace. |
 | **ALIAS** | An alias is used in reference to a participant. The alias should be created in the FSP as an alternative reference to an account owner. Another example of an alias is a username in the FSP system. The ALIAS identifier can be in any format. It is also possible to use the **PartySubIdOrType** element for identifying an account under an Alias defined by the **PartyIdentifier**. |
-**Table 102 -- Enumeration PartyIdType**
+| **CONSENT** | A Consent represents an agreement between a PISP, a Customer and a DFSP which allows the PISP permission to perform actions on behalf of the customer. A Consent has an authoritative source: either the DFSP who issued the Consent, or an Auth Service which administers the Consent. |
+| **THIRD_PARTY_LINK** | A Third Party Link represents an agreement between a PISP, a DFSP, and a specific Customer's account at the DFSP. The content of the link is created by the DFSP at the time when it gives permission to the PISP for specific access to a given account. |
 
-####7.5.7 PersonalIdentifierType
+**Table 103 -- Enumeration PartyIdType**
 
-[Table 103](#table-103) contains the allowed values for the enumeration **PersonalIdentifierType**.
-###### Table 92
+#### 7.5.7 PersonalIdentifierType
+
+[Table 104](#table-104) contains the allowed values for the enumeration **PersonalIdentifierType**.
+
+###### Table 104
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3867,39 +4008,44 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **VOTERS_ID** | A voter’s identification number is used in reference to a Party. |
 | **UNITED_NATIONS** | An UN (United Nations) number is used in reference to a Party. |
 | **OTHER_ID** | Any other type of identification type number is used in reference to a Party. |
-**Table 103 -- Enumeration PersonalIdentifierType**
+
+**Table 104 -- Enumeration PersonalIdentifierType**
 
 #### 7.5.8 TransactionInitiator
 
-[Table 104](#table-104) describes valid values for the enumeration **TransactionInitiator**.
+[Table 105](#table-105) describes valid values for the enumeration **TransactionInitiator**.
 
-###### Table 104
+###### Table 105
 
 | **Name** | **Description** |
 | --- | --- |
 | **PAYER** | Sender of funds is initiating the transaction. The account to send from is either owned by the Payer or is connected to the Payer in some way. |
 | **PAYEE** | Recipient of the funds is initiating the transaction by sending a transaction request. The Payer must approve the transaction, either automatically by a pre-generated OTP or by pre-approval of the Payee, or manually by approving on their own Device. |
-**Table 104 -- Enumeration TransactionInitiator**
+
+**Table 105 -- Enumeration TransactionInitiator**
 
 #### 7.5.9 PartyType
 
-[Table 105](#table-105) contains the allowed values for the enumeration **PartyType**.
+[Table 106](#table-106) contains the allowed values for the enumeration **PartyType**.
 
-###### Table 105
+###### Table 106
 
 | **Name** | **Description** |
 | --- | --- |
 | **CONSUMER** | The Party is of type Consumer. |
 | **AGENT** | The Party is of type Agent. |
 | **BUSINESS** | The Party is of type Business. |
-| **DEVICE** | The Party is of type. |
-**Table 105 -- Enumeration PartyType**
+| **DEVICE** | The Party is of type Device. |
+| **GOVERNMENT** | The Party is of type Government. |
+| **NGO** | The Party is of type NGO (Non-Governmental Organization). |
+
+**Table 106 -- Enumeration PartyType**
 
 #### 7.5.10 TransactionRequestState
 
-[Table 106](#table-106) contains the allowed values for the enumeration **TransactionRequestState**.
+[Table 107](#table-107) contains the allowed values for the enumeration **TransactionRequestState**.
 
-###### Table 106
+###### Table 107
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3907,13 +4053,14 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **PENDING** | Payer FSP has sent the transaction request to the Payer. |
 | **ACCEPTED** | Payer has approved the transaction. |
 | **REJECTED** | Payer has rejected the transaction. |
-**Table 106 -- Enumeration TransactionRequestState**
+
+**Table 107 -- Enumeration TransactionRequestState**
 
 #### 7.5.11 TransactionScenario
 
-[Table 107](#table-107) contains the allowed values for the enumeration **TransactionScenario**.
+[Table 108](#table-108) contains the allowed values for the enumeration **TransactionScenario**.
 
-###### Table 107
+###### Table 108
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3922,13 +4069,14 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **TRANSFER** | Used for performing a P2P (Peer to Peer, or Consumer to Consumer) transaction. |
 | **PAYMENT** | Usually used for performing a transaction from a Consumer to a Merchant or Organization, but could also be for a B2B (Business to Business) payment. The transaction could be online for a purchase in an Internet store, in a physical store where both the Consumer and Business User are present, a bill payment, a donation, and so on. |
 | **REFUND** | Used for performing a refund of transaction. |
-**Table 107 -- Enumeration TransactionScenario**
+
+**Table 108 -- Enumeration TransactionScenario**
 
 #### 7.5.12 TransactionState
 
-[Table 108](#table-108) contains the allowed values for the enumeration **TransactionState**.
+[Table 109](#table-109) contains the allowed values for the enumeration **TransactionState**.
 
-###### Table 108
+###### Table 109
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3936,13 +4084,14 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **PENDING** | Payee FSP has validated the transaction. |
 | **COMPLETED** | Payee FSP has successfully performed the transaction. |
 | **REJECTED** | Payee FSP has failed to perform the transaction. |
-**Table 108 -- Enumeration TransactionState**
+
+**Table 109 -- Enumeration TransactionState**
 
 #### 7.5.13 TransferState
 
-[Table 109](#table-109) contains the allowed values for the enumeration **TransferState**.
+[Table 110](#table-110) contains the allowed values for the enumeration **TransferState**.
 
-###### Table 109
+###### Table 110
 
 | **Name** | **Description** |
 | --- | --- |
@@ -3950,7 +4099,8 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **RESERVED** | Next ledger has reserved the transfer. |
 | **COMMITTED** | Next ledger has successfully performed the transfer. |
 | **ABORTED** | Next ledger has aborted the transfer due a rejection or failure to perform the transfer. |
-**Table 109 -- Enumeration TransferState**
+
+**Table 110 -- Enumeration TransferState**
 
 ### 7.6 Error Codes
 
@@ -3974,15 +4124,16 @@ Low level categories defined under Communication Errors:
 
 - **Generic Communication Error** -- **10**_xx_
 
-See [Table 110](#table-110) for all communication errors defined in the API.
+See [Table 111](#table-111) for all communication errors defined in the API.
 
-###### Table 110
+###### Table 111
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **1000** | Communication error | Generic communication error. | X | X | X | X | X | X | X | X | X |
 | **1001** | Destination communication error | Destination of the request failed to be reached. This usually indicates that a Peer FSP failed to respond from an intermediate entity. | X | X | X | X | X | X | X | X | X |
-**Table 110 -- Communication errors -- 1_xxx_**
+
+**Table 111 -- Communication errors -- 1_xxx_**
 
 #### 7.6.2 Server Errors -- 2_xxx_
 
@@ -3992,9 +4143,9 @@ Low-level categories defined under server errors:
 
 - **Generic server error** -- **20**_xx_
 
-See [Table 111](#Table-111) for server errors defined in the API.
+See [Table 112](#Table-112) for server errors defined in the API.
 
-###### Table 111
+###### Table 112
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4004,7 +4155,8 @@ See [Table 111](#Table-111) for server errors defined in the API.
 | **2003** | Service currently unavailable | Service requested is currently unavailable on the server. This could be because maintenance is taking place, or because of a temporary failure. | X | X | X | X | X | X | X | X | X |
 | **2004** | Server timed out | Timeout has occurred, meaning the next Party in the chain did not send a callback in time. This could be because a timeout is set too low or because something took longer than expected. | X | X | X | X | X | X | X | X | X |
 | **2005** | Server busy | Server is rejecting requests due to overloading. Try again later. | X | X | X | X | X | X | X | X | X |
-**Table 111 -- Server errors -- 2_xxx_**
+
+**Table 112 -- Server errors -- 2_xxx_**
 
 #### 7.6.3 Client Errors -- 3_xxx_
 
@@ -4014,21 +4166,21 @@ Low level categories defined under client Errors:
 
 - **Generic Client Error** -- **30**_xx_
 
-  - See [Table 112](#table-112) for generic client errors defined in the API.
+  - See [Table 113](#table-113) for generic client errors defined in the API.
 
 - **Validation Error** -- **31**_xx_
 
-  - See [Table 113](#table-113) the validation errors defined in the API.
+  - See [Table 114](#table-114) the validation errors defined in the API.
 
 - **Identifier Error** -- **32**_xx_
 
-  - See [Table 114](#table-114) for identifier errors defined in the API.
+  - See [Table 115](#table-115) for identifier errors defined in the API.
 
 - **Expired Error** -- **33**_xx_
 
-  - See [Table 115](#table-115) for expired errors defined in the API.
+  - See [Table 116](#table-116) for expired errors defined in the API.
 
-###### Table 112
+###### Table 113
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4036,9 +4188,10 @@ Low level categories defined under client Errors:
 | **3001** | Unacceptable version requested | Client requested to use a protocol version which is not supported by the server. | X | X | X | X | X | X | X | X | X |
 | **3002** | Unknown URI | Provided URI was unknown to the server. | X | X | X | X | X | X | X | X | X |
 | **3003** | Add Party information error | Error occurred while adding or updating information regarding a Party. | X | X | X | X | X | X | X | X | X |
-**Table 112 -- Generic client errors -- 30_xx_**
 
-###### Table 113
+**Table 113 -- Generic client errors -- 30_xx_**
+
+###### Table 114
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4050,9 +4203,10 @@ Low level categories defined under client Errors:
 | **3105** | Invalid signature | Some parameters have changed in the message, making the signature invalid. This may indicate that the message may have been modified maliciously. | X | X | X | X | X | X | X | X | X |
 | **3106** | Modified request | Request with the same ID has previously been processed in which the parameters are not the same. ||| X | X | X | X | X | X | X |
 | **3107** | Missing mandatory extension parameter | Scheme-mandatory extension parameter was missing. ||| X | X | X | X | X | X | X |
-**Table 113 -- Validation errors -- 31_xx_**
 
-###### Table 114
+**Table 114 -- Validation errors -- 31_xx_**
+
+###### Table 115
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4067,9 +4221,10 @@ Low level categories defined under client Errors:
 | **3208** | Transfer ID not found |Provided Transfer ID was not found on the server. |||||| X ||||
 | **3209** | Bulk quote ID not found |Provided Bulk Quote ID was not found on the server. |||||||| X | X |
 | **3210** | Bulk transfer ID not found |Provided Bulk Transfer ID was not found on the server. ||||||||| X |
-**Table 114 -- Identifier errors -- 32_xx_**
 
-###### Table 115
+**Table 115 -- Identifier errors -- 32_xx_**
+
+###### Table 116
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4077,7 +4232,8 @@ Low level categories defined under client Errors:
 | **3301** | Transaction request expired | Client requested to use a transaction request that has already expired. |||| X ||||||
 | **3302** | Quote expired | Client requested to use a quote that has already expired. ||||| X | X ||| X |
 | **3303** | Transfer expired | Client requested to use a transfer that has already expired. | X | X | X | X | X | X | X | X | X |
-**Table 115 -- Expired errors -- 33_xx_**
+
+**Table 116 -- Expired errors -- 33_xx_**
 
 #### 7.6.4 Payer Errors -- 4_xxx_
 
@@ -4095,9 +4251,9 @@ Low level categories defined under Payer Errors:
 
 - **Payer Blocked Error** -- **44**_xx_
 
-See [Table 116](#table-116) for Payer errors defined in the API.
+See [Table 117](#table-117) for Payer errors defined in the API.
 
-###### Table 116
+###### Table 117
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4110,7 +4266,8 @@ See [Table 116](#table-116) for Payer errors defined in the API.
 | **4200** | Payer limit error | Generic limit error, for example, the Payer is making more payments per day or per month than they are allowed to, or is making a payment which is larger than the allowed maximum per transaction. ||| X | X || X || X | X |
 | **4300** | Payer permission error | Generic permission error, the Payer or Payer FSP does not have the access rights to perform the service. ||| X | X | X | X | X | X | X |
 | **4400** | Generic Payer blocked error | Generic Payer blocked error; the Payer is blocked or has failed regulatory screenings. ||| X | X | X | X | X | X | X |
-**Table 116 -- Payer errors -- 4_xxx_**
+
+**Table 117 -- Payer errors -- 4_xxx_**
 
 #### 7.6.5 Payee Errors -- 5_xxx_
 
@@ -4128,9 +4285,9 @@ Low level categories defined under Payee Errors:
 
 - **Payee Blocked Error** -- **54**_xx_
 
-See [Table 117](#table-117) for all Payee errors defined in the API.
+See [Table 118](#table-118) for all Payee errors defined in the API.
 
-###### Table 117
+###### Table 118
 
 | **Error Code** | **Name** | **Description** | /participants | /parties | /transactionRequests | /quotes  | /authorizations |  /transfers | /transactions | /bulkQuotes | /bulkTransfers |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -4146,7 +4303,8 @@ See [Table 117](#table-117) for all Payee errors defined in the API.
 | **5200** | Payee limit error | Generic limit error, for example, the Payee is receiving more payments per day or per month than they are allowed to, or is receiving a payment that is larger than the allowed maximum per transaction. ||| X | X || X || X | X |
 | **5300** |Payee permission error | Generic permission error, the Payee or Payee FSP does not have the access rights to perform the service. ||| X | X | X | X | X | X | X |
 | **5400** | Generic Payee blocked error | Generic Payee Blocked error, the Payee is blocked or has failed regulatory screenings. ||| X | X | X | X | X | X | X |
-**Table 117 -- Payee errors -- 5_xxx_**
+
+**Table 118 -- Payee errors -- 5_xxx_**
 
 <sup>30</sup> [https://perldoc.perl.org/perlre.html\#Regular-Expressions](https://perldoc.perl.org/perlre.html#Regular-Expressions) -- perlre - Perl regular expressions
 
@@ -4186,7 +4344,7 @@ The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction 
 
 The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payee would like to request that Payer transfer funds to a Payee. The Payer and the Payee are assumed to be in different FSPs, and the approval of the transaction is performed in the Payer FSP. If the transaction information and approval occur on a Payee device instead, use the related _Payee Initiated Transaction using OTP_ pattern described in [Section 8.3](#83-payee-initiated-transaction-using-otp) instead. [Figure 65](#figure-65) shows the sequence diagram for a _Payee Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
-###### Figure-65
+###### Figure 65
 
 {% uml src="assets/diagrams/sequence/figure65.plantuml" %}
 {% enduml %}
@@ -4221,7 +4379,7 @@ This section describes how to handle missing responses or callbacks, as well as 
 
 ### 9.1 Erroneous Request
 
-If a server receives an erroneous service request that can be handled immediately (for example, malformed syntax or resource not found), a valid HTTP client error code (starting with **4_xx_**<sup>39</sup>) should be returned to the client in the response. The HTTP error codes defined in the API appear in [Table 3](#table-3). The HTTP response may also contain an [**ErrorInformation**](#742-errorinformation) element for the purpose of describing the error in more detail (for more information, see [Section 3.2.4.1](#3241-error-information-in-http-response)).
+If a server receives an erroneous service request that can be handled immediately (for example, malformed syntax or resource not found), a valid HTTP client error code (starting with **4_xx_**<sup>39</sup>) should be returned to the client in the response. The HTTP error codes defined in the API appear in [Table 4](#table-4). The HTTP response may also contain an [**ErrorInformation**](#742-errorinformation) element for the purpose of describing the error in more detail (for more information, see [Section 3.2.4.1](#3241-error-information-in-http-response)).
 
 ### 9.2 Error in Server During Processing of Request
 
@@ -4285,15 +4443,15 @@ The typical error from the **/transfers** service is that either the hop-to-hop 
 
 The following list provides a detailed description of all the steps in the sequence (see [Figure 69](#figure-69)).
 
-1. The transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After the transfer has been successfully reserved, the request [**POST /transfers**](#6722-post-transfers) is used on the Switch. The transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
+1. The transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After the transfer has been successfully reserved, the request [**POST /transfers**](#6732-post-transfers) is used on the Switch. The transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
-2. The Switch receives the request [**POST /transfers**](#6722-post-transfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, a transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfer has been successfully reserved, the request [**POST /transfers**](#6722-post-transfers) is used on the Payee FSP. The transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
+2. The Switch receives the request [**POST /transfers**](#6732-post-transfers) and immediately sends an **accepted** response to the Payer FSP. The Switch then performs all applicable internal transfer validations. If the validations are successful, a transfer is reserved from a Payer FSP account to a Payee FSP account. After the transfer has been successfully reserved, the request [**POST /transfers**](#6732-post-transfers) is used on the Payee FSP. The transfer is now irrevocable from the Switch. The Switch then waits for an **accepted** response from the Payee FSP.
 
-3. The Payee FSP receives the [**POST /transfers**](#6722-post-transfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal transaction validations. The validation is assumed to fail at this point, for example, due to a limit breach. The error callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the transfer process.
+3. The Payee FSP receives the [**POST /transfers**](#6732-post-transfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal transaction validations. The validation is assumed to fail at this point, for example, due to a limit breach. The error callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the transfer process.
 
-4. The Switch receives the error callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) and immediately responds with an **OK** response. The Switch then cancels the earlier reserved transfer, as it has received an error callback. The Switch will then use the callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) to the Payer FSP, using the same parameters, and wait for an **OK** response to complete the transfer process.
+4. The Switch receives the error callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) and immediately responds with an **OK** response. The Switch then cancels the earlier reserved transfer, as it has received an error callback. The Switch will then use the callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) to the Payer FSP, using the same parameters, and wait for an **OK** response to complete the transfer process.
 
-5. The Payer FSP receives the callback [**PUT /transfers/**_{ID}_**/error**](#6741-put-transfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels the earlier reserved transfer because it has received an error callback.
+5. The Payer FSP receives the callback [**PUT /transfers/**_{ID}_**/error**](#6751-put-transfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels the earlier reserved transfer because it has received an error callback.
 
 #### 9.3.7 API Resource /transactions
 
@@ -4324,7 +4482,7 @@ The following list describes the steps in the sequence (see [Figure 70](#figure-
 
 3. The Payee FSP receives [**POST /bulkTransfers**](#61032-post-bulktransfers) and immediately sends an **accepted** response to the Switch. The Payee FSP then performs all applicable internal bulk transfer validations. The validation is assumed to fail due to some reason; for example, a validation failure that prevents the entire bulk transfer from being performed. The error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) is used on the Switch to inform the Payer FSP about the error. The Payee FSP then waits for an **OK** response from the Switch to complete the bulk transfer process.
 
-4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderrorr) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
+4. The Switch receives the error callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Switch then cancels all the previous reserved transfers, because it has received an error callback. The Switch then uses the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) to the Payer FSP, using the same parameters, and waits for an **OK** response to complete the bulk transfer process.
 
 5. The Payer FSP receives the callback [**PUT /bulkTransfers/**_{ID}_**/error**](#61051-put-bulktransfersiderror) and immediately responds with an **OK** response. The Payer FSP then cancels all the earlier reserved transfers, as it has received an error callback.
 
@@ -4392,7 +4550,7 @@ The following list provides a detailed description of all the steps in the seque
 
 ## 10. End-to-End Example
 
-This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see [_Signature_](/documents/Signature.md)) and field level encryption using JWE (see [_Encryption_]((/documents/Encryption.md))).
+This section contains an end-to-end example in which an account holder is provisioned, and then a P2P Transfer from a Payer located in one FSP to a Payee located in another FSP is performed. The example includes both HTTP requests and responses, HTTP headers, and data models in JSON, but without additional security features of using JWS (see [_Signature_](./Signature_v1.1.md)) and field level encryption using JWE (see [_Encryption_](./Encryption_v1.1.md)).
 
 ### 10.1 Example Setup
 
@@ -4448,7 +4606,7 @@ Before the Payee Henrik Karlsson can be found by the Payer FSP **BankNrOne**, He
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request,
 and [Section 6.2.3.3](#6233-post-participantstypeid) for more information about the service [**POST /participants/**_{Type}_**/**_{ID}_](#6233-post-participantstypeid). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
-###### Listing 29 
+###### Listing 29
 
 ```
 POST /participants/MSISDN/123456789 HTTP/1.1
@@ -4469,7 +4627,7 @@ FSPIOP-Destination: Switch
 
 [Listing 30](#listing-30) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 29](#listing-29).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 30
 
@@ -4493,7 +4651,7 @@ When the Switch has successfully stored the information that the account holder 
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request. In the callback, the **Accept** header should not be used as this is a callback to an earlier requested service. The HTTP headers **FSPIOP-Destination** and **FSPIOP-Source** are now inverted compared to the HTTP request in [Listing 29](#listing-29), as detailed in [Section 6.2.4.1](#6241-put-participantstypeid). See [Section 6.2.4.1](#6241-put-participantstypeid) for more information about the callback [**PUT /participants/**_{Type}_**/**_{ID}_](#6241-put-participantstypeid).
 
-###### Listing 31 
+###### Listing 31
 
 ```
 PUT /participants/MSISDN/123456789 HTTP/1.1
@@ -4512,7 +4670,7 @@ FSPIOP-Destination: Switch
 
 [Listing 32](#listing-32) shows the synchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 31](#listing-31).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 32
 
@@ -4534,7 +4692,7 @@ Mats Hagman knows that Henrik Karlsson has phone number **123456789**, so he inp
 
 #### 10.4.2 Request Party Information from Switch -- Step 5 in End-to-End Flow
 
-In Step 5 in the end-to-end flow, **BankNrOne** receives the request from Mats Hagman that he would like the phone number 123456789 to receive 100 USD. **BankNrOne** performs an internal search to see if 123456789 exists within the bank, but fails to find the account internally. **BankNrOne** then uses the service [**GET /parties/**_{Type}_**/**_{ID}_](#6321-get-partiestypeid) in the Switch to see if the Switch knows anything about the account.
+In Step 5 in the end-to-end flow, **BankNrOne** receives the request from Mats Hagman that he would like the phone number 123456789 to receive 100 USD. **BankNrOne** performs an internal search to see if 123456789 exists within the bank, but fails to find the account internally. **BankNrOne** then uses the service [**GET /parties/**_{Type}_**/**_{ID}_](#6331-get-partiestypeid) in the Switch to see if the Switch knows anything about the account.
 
 [Listing 33](#listing-33) shows the HTTP request where the FSP **BankNrOne** asks the Switch for Party information regarding the account identified by **MSISDN** and **123456789**.
 
@@ -4554,7 +4712,7 @@ FSPIOP-Source: BankNrOne
 
 [Listing 34](#listing-34) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 33](#listing-33).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 34
 
@@ -4586,7 +4744,7 @@ FSPIOP-Destination: MobileMoney
 
 [Listing 36](#listing-36) shows the synchronous HTTP response where the FSP **MobileMoney** immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 35](#listing-35).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 36
 
@@ -4635,7 +4793,7 @@ FSPIOP-Destination: BankNrOne
 
 [Listing 38](#listing-38) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 37](#listing-37).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 38
 
@@ -4713,7 +4871,7 @@ FSPIOP-Destination: MobileMoney
 
 [Listing 40](#listing-40) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 39](#listing-39).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 40
 
@@ -4866,7 +5024,7 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 [Listing 46](#listing-46) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 45](#listing-45).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 46
 
@@ -4895,9 +5053,9 @@ In this example, Mats Hagman accepts to perform the transaction. How the accepta
 
 #### 10.4.12 Send Transfer Request from FSP BankNrOne -- Step 15 in End-to-End Flow
 
-When Mats Hagman has accepted the transaction, FSP **BankNrOne** reserves the internal transfers needed to perform the transaction. This means that 100 USD will be reserved from Mats Hagman's account, where 1 USD will end up as income for the FSP and 99 USD will be transferred to the prefunded Switch account. After the reservations are successfully performed, the FSP **BankNrOne** sends a [**POST /transfers**](#6722-post-transfers) to the Switch as in [Listing 47](#listing-47). The same ilpPacket and condition elements are sent as was received in the quote callback and the **amount** is the same as the received **transferAmount**, see [Listing 45](#listing-45).
+When Mats Hagman has accepted the transaction, FSP **BankNrOne** reserves the internal transfers needed to perform the transaction. This means that 100 USD will be reserved from Mats Hagman's account, where 1 USD will end up as income for the FSP and 99 USD will be transferred to the prefunded Switch account. After the reservations are successfully performed, the FSP **BankNrOne** sends a [**POST /transfers**](#6732-post-transfers) to the Switch as in [Listing 47](#listing-47). The same ilpPacket and condition elements are sent as was received in the quote callback and the **amount** is the same as the received **transferAmount**, see [Listing 45](#listing-45).
 
-See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6722-post-transfers) for more information about the service [**POST /transfers**](#6722-post-transfers). More information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
+See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.7.2.2](#6732-post-transfers) for more information about the service [**POST /transfers**](#6732-post-transfers). More information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
 ###### Listing 47
 
@@ -4947,9 +5105,9 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 [Listing 48](#listing-48) shows the synchronous HTTP response where the Switch immediately (after basic verification of for example required headers) acknowledges the HTTP request in [Listing 47](#listing-47).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
-###### Figure 48
+###### Listing 48
 
 ```
 HTTP/1.1 202 Accepted
@@ -5014,7 +5172,7 @@ CAibm90ZSI6ICJGcm9tIE1hdHMiDQp9DQo\u003d\u003d",
 
 When the FSP **MobileMoney** has received the transfer request in [Listing 47](#listing-47), it should perform the transfer as detailed in the earlier quote request, this means that 100 USD should be transferred to Henrik Karlsson's account, where 99 USD is from the prefunded Switch account and 1 USD is from an FSP commission account.
 
-As proof of performing the transaction, the FSP **MobileMoney** then retrieves the stored fulfilment [(Listing 43](#listing-43)) from the database (stored in [Section 10.4.8](#1048-determine-fees-and-fsp-commission-in-fsp-mobilemoney----step-11-in-end-to-end-flow)) and enters that in the **fulfilment** element in the callback [**PUT /transfers/**_{ID}_](#6731-put-transfersid). The **transferState** is set to COMMITTED and the **completedTimestamp** is set to when the transaction was completed; see [Listing 50](#listing-50) for the complete HTTP request.
+As proof of performing the transaction, the FSP **MobileMoney** then retrieves the stored fulfilment [(Listing 43](#listing-43)) from the database (stored in [Section 10.4.8](#1048-determine-fees-and-fsp-commission-in-fsp-mobilemoney----step-11-in-end-to-end-flow)) and enters that in the **fulfilment** element in the callback [**PUT /transfers/**_{ID}_](#6741-put-transfersid). The **transferState** is set to COMMITTED and the **completedTimestamp** is set to when the transaction was completed; see [Listing 50](#listing-50) for the complete HTTP request.
 
 At the same time, a notification is sent to the Payee Henrik Karlsson to
 say that he has received 100 USD from Mats Hagman.
@@ -5034,7 +5192,7 @@ FSPIOP-Source: MobileMoney
 FSPIOP-Destination: BankNrOne
 {
     "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
-    "completedTimestamp": "2017- 11-16T04:15:35.513+01:00",
+    "completedTimestamp": "2017-11-16T04:15:35.513+01:00",
     "transferState": "COMMITTED"
 }
 ```
@@ -5043,7 +5201,7 @@ FSPIOP-Destination: BankNrOne
 
 [Listing 51](#listing-51) shows the synchronous HTTP response in which the Switch immediately (after basic verification of for example required headers) acknowledges the completion of the process, after receiving the callback in [Listing 50](#listing-50).
 
-See [Table 2](#table-2) for the required HTTP headers in a HTTP response.
+See [Table 3](#table-3) for the required HTTP headers in a HTTP response.
 
 ###### Listing 51
 
