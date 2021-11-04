@@ -1346,7 +1346,7 @@ On a high level, the API can be used to perform the following actions:
 |/authorizations|1.0|Initial version
 |/transfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
 |/transactions|1.0|Initial version
-/bulkQuotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
+|/bulkQuotes|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
 |/bulkTransfers|2.0|The data model for a [**Party**](#7411-party) is updated to add an optional type of the [**Party**](#7411-party) in the element [**PartyType**](#7330-partytype)). This change is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/25|
 **Table 6 – Current resource versions**
 
