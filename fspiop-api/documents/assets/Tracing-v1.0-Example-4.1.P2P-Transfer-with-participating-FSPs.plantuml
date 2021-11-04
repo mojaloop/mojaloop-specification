@@ -1,0 +1,258 @@
+
+/'*****
+ License
+ --------------
+ Copyright © 2017 Bill & Melinda Gates Foundation
+ The Mojaloop files are made available by the Bill & Melinda Gates Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, the Mojaloop files are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ Contributors
+ --------------
+ This is the official list of the Mojaloop project contributors for this file.
+ Names of the original copyright holders (individuals or organizations)
+ should be listed with a '*' in the first column. People who have
+ contributed from an organization can be listed under the organization
+ that actually holds the copyright for their contributions (see the
+ Gates Foundation organization for an example). Those individuals should have
+ their names indented and be marked with a '-'. Email address can be added
+ optionally within square brackets <email>.
+ * Gates Foundation
+ - Name Surname <name.surname@gatesfoundation.com>
+
+ * Miguel de Barros <miguel.debarros@modusbox.com>
+ --------------
+ ******'/
+
+@startuml
+' declate title
+title Tracing v1.0 - Example 4.1. P2P Transfer with participating FSPs
+
+autonumber
+
+' define actor image
+sprite $actor [25x48/16] {
+  0000000000010000000000000
+  0000000006CAC910000000000
+  0000000095101292000000000
+  0000000651000119000000000
+  0000000B10000018400000000
+  0000001A10000016600000000
+  0000000B10000017510000000
+  000000083100001A210000000
+  0000000191000176110000000
+  000000003A866A61100000000
+  0000000000466211100000000
+  0003333333334443333310000
+  0088888888888888888892000
+  0821111111111111111118200
+  8311111111111111111111A00
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111551111111111138111A20
+  A111661111111111139111A20
+  A211661111111111139111A20
+  A211661111111111139111A20
+  A211661111161111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A7669611111A211113A666B20
+  36669611111A211113A666610
+  00016611111A2111139111110
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006966666B7666679100000
+  0000266666666666664100000
+  0000000111111111111100000
+  0000000000000000000000000
+}
+
+' declaring skinparam
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam defaultFontName Verdana
+skinparam monochrome true
+skinparam SequenceLifeLineBackgroundColor WhiteSmoke
+skinparam SequenceLifeLineBorderColor Black
+skinparam ActorFontStyle Bold
+skinparam ActorFontSize 20
+skinparam ParticipantFontStyle Bold
+skinparam ParticipantFontSize 20
+skinparam ParticipantBackgroundColor WhiteSmoke
+skinparam ArrowColor Black
+
+skinparam actor {
+  Bordercolor none
+  Backgroundcolor none
+  shadowing false
+}
+
+skinparam participant {
+  shadowing true
+}
+
+hide footbox
+
+' Actor Keys:
+'   actor - Payer DFSP, Payee DFSP
+'   boundary - APIs/Interfaces, etc
+'   collections - Kafka Topics
+'   control - Kafka Consumers
+'   entity - Database Access Objects
+'   database - Database Persistance Store
+
+' declare actors
+actor "<$actor>\nBankNrOne\nFSP\n(banknrone)" as PAYER
+participant "Mojaloop\nSwitch\n(moja)" as MOJA
+actor "<$actor>\nMobileMoney\nFSP\n(mobilemoney)" as PAYEE
+
+' start flow
+group Trace
+activate PAYER
+PAYER -> PAYER: Generate new trace
+note right of PAYER #yellow
+    traceparent: **00**-**91e502e28cd723686e9940bd3f378f85**-**b0f903d000944947**-**01**
+    tracestate: **banknrone**=**b0f903d000944947**
+end note
+
+group Request Party
+    PAYER -> MOJA: GET /parties/MSISDN/123456789
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        MOJA -> MOJA: Internal GET /participants/MSISDN/123456789 \nlookup
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**f86425c1a005e5e2**-01
+            tracestate: **moja**=**f86425c1a005e5e2**,banknrone=b0f903d000944947
+        end note
+
+        MOJA -> PAYEE: GET /parties/MSISDN/123456789
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**619d4c9d431ca708**-01
+                tracestate: **mobilemoney**=**619d4c9d431ca708**,moja=f86425c1a005e5e2,banknrone=b0f903d000944947
+            end note
+
+            PAYEE -> PAYEE: Process GET parties request
+
+            PAYEE -> MOJA: PUT /parties/MSISDN/123456789
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**e5687db76842fe36**-01
+                        tracestate: **moja**=**e5687db76842fe36**,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947
+                    end note
+
+                MOJA -> PAYER: PUT /parties/MSISDN/123456789
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Party response
+
+end
+
+group Request Quote
+    PAYER -> PAYER: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+    note right of PAYER #yellow
+        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**0c3e9f44f921ca06**-01
+        tracestate: **banknrone**=**0c3e9f44f921ca06**,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708
+    end note
+
+    PAYER -> MOJA: POST /quotes
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**379cc3faa566cf90**-01
+            tracestate: **moja**=**379cc3faa566cf90**,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708
+        end note
+
+        MOJA -> PAYEE: POST /quotes
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**06a441483c4f238e**-01
+                tracestate: **mobilemoney**=**06a441483c4f238e**,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06
+            end note
+
+            PAYEE -> PAYEE: Process Quote Request
+
+            PAYEE -> MOJA: PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**765457baab44a0fd**-01
+                        tracestate: **moja**=**765457baab44a0fd**,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06
+                    end note
+
+                MOJA -> PAYER: PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Quote response
+end
+
+group Request Transfer
+    PAYER -> PAYER: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+    note right of PAYER #yellow
+        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**82f942e2566117c0**-01
+        tracestate: **banknrone**=**82f942e2566117c0**,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e
+    end note
+
+    PAYER -> MOJA: POST /transfers
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**bb68d98a0840aa99**-01
+            tracestate: **moja**=**bb68d98a0840aa99**,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e
+        end note
+
+        MOJA -> PAYEE: POST /transfers
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**da6dbe3af96ed639**-01
+                tracestate: **mobilemoney**=**da6dbe3af96ed639**,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0
+            end note
+
+            PAYEE -> PAYEE: Process Transfer Request
+
+            PAYEE -> MOJA: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**a6467a7068235c33**-01
+                        tracestate: **moja**=**a6467a7068235c33**,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0
+                    end note
+
+                MOJA -> PAYER: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Transfer response
+end
+deactivate PAYER
+end
+@enduml

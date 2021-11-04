@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="2532px" preserveAspectRatio="none" style="width:1862px;height:2532px;" version="1.1" viewBox="0 0 1862 2532" width="1862px" zoomAndPan="magnify"><defs><filter height="300%" id="f8121nso4v1wz" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="Verdana" font-size="18" lengthAdjust="spacing" textLength="582" x="642" y="30.0967">Tracing v1.0 - Example 4.1. P2P Transfer with participating FSPs</text><rect fill="#F4F4F4" height="165.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="234.7959"/><rect fill="#F4F4F4" height="230.3945" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="969.3774"/><rect fill="#F4F4F4" height="230.3945" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="1709.959"/><rect fill="#F4F4F4" height="57.7993" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="2450.5405"/><rect fill="#F4F4F4" height="214.3945" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="400.5918"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="813.5815"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="1199.772"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="1554.1631"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="1940.3535"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="2294.7446"/><rect fill="#F4F4F4" height="198.5952" style="stroke:#000000;stroke-width:1.0;" width="10" x="1086.5" y="614.9863"/><rect fill="#F4F4F4" height="198.5952" style="stroke:#000000;stroke-width:1.0;" width="10" x="1086.5" y="1355.5679"/><rect fill="#F4F4F4" height="198.5952" style="stroke:#000000;stroke-width:1.0;" width="10" x="1086.5" y="2096.1494"/><rect fill="#FFFFFF" height="2266.5439" style="stroke:#000000;stroke-width:2.0;" width="1846" x="10" y="241.7959"/><rect fill="#FFFFFF" height="659.1836" style="stroke:#000000;stroke-width:2.0;" width="1825" x="20" y="360.9932"/><rect fill="#FFFFFF" height="726.5815" style="stroke:#000000;stroke-width:2.0;" width="1812" x="20" y="1034.1768"/><rect fill="#FFFFFF" height="726.5815" style="stroke:#000000;stroke-width:2.0;" width="1826" x="20" y="1774.7583"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="103" x2="103" y1="224.7959" y2="2525.3398"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="597" x2="597" y1="224.7959" y2="2525.3398"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1091" x2="1091" y1="224.7959" y2="2525.3398"/><image height="48" width="25" x="88" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAwCAIAAABrKEbKAAABSElEQVR4Xu2WWxGDMBBF6wkLWMACFmIBC1jAAhawgIVYSC+5sLPdJjzSL6acD6Zss6e7eUBf4QjvvQ1leNmAou/7qqqapsG1bdtDadaF5GEYmI/rPM+I4GrHKdIuVCQi4iPQqVGWtKuu6++OEHHOjeNo4kLChRzMUdLVR0xcSLhCvq6u60zvmrQLvUzTZHJYL6b/movTrHNYFBpcluCSC6AuVIECOUf4vC8KOy6CVaOLrZ11TXnGDRM33tXlijAnYXEhqlu4BHNXl9uWvxgsy+riFv8FbrrHdZb/dQ0RNSwN9jZ2uNymXXwkyG0OuPh0Ix8uOYy3cn1Hyl16ALmjiy8rgBEnXU18LRG8mFcXvpBomYspiyts+NIeyYcrxL9Kl1w6Nzwu8rg0d3HxSGpwdOXwE9weu/D7OmcH/Ec8cAm6ox1MVtpVxhuJZSVRxbciVgAAAABJRU5ErkJggg==" y="103.876"/><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="126" x="37.5" y="171.9834">BankNrOne</text><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="42" x="79.5" y="196.29">FSP</text><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="141" x="30" y="220.5967">(banknrone)</text><ellipse cx="103.5" cy="50.876" fill="#FFFFFF" rx="8" ry="8" style="stroke:#FFFFFF;stroke-width:2.0;"/><path d="M103.5,58.876 L103.5,85.876 M90.5,66.876 L116.5,66.876 M103.5,85.876 L90.5,100.876 M103.5,85.876 L116.5,100.876 " fill="none" style="stroke:#FFFFFF;stroke-width:2.0;"/><rect fill="#F4F4F4" filter="url(#f8121nso4v1wz)" height="86.9199" style="stroke:#383838;stroke-width:1.5;" width="117" x="537" y="132.876"/><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="103" x="544" y="159.9834">Mojaloop</text><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="76" x="557.5" y="184.29">Switch</text><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="78" x="556.5" y="208.5967">(moja)</text><image height="48" width="25" x="1076" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAwCAIAAABrKEbKAAABSElEQVR4Xu2WWxGDMBBF6wkLWMACFmIBC1jAAhawgIVYSC+5sLPdJjzSL6acD6Zss6e7eUBf4QjvvQ1leNmAou/7qqqapsG1bdtDadaF5GEYmI/rPM+I4GrHKdIuVCQi4iPQqVGWtKuu6++OEHHOjeNo4kLChRzMUdLVR0xcSLhCvq6u60zvmrQLvUzTZHJYL6b/movTrHNYFBpcluCSC6AuVIECOUf4vC8KOy6CVaOLrZ11TXnGDRM33tXlijAnYXEhqlu4BHNXl9uWvxgsy+riFv8FbrrHdZb/dQ0RNSwN9jZ2uNymXXwkyG0OuPh0Ix8uOYy3cn1Hyl16ALmjiy8rgBEnXU18LRG8mFcXvpBomYspiyts+NIeyYcrxL9Kl1w6Nzwu8rg0d3HxSGpwdOXwE9weu/D7OmcH/Ec8cAm6ox1MVtpVxhuJZSVRxbciVgAAAABJRU5ErkJggg==" y="103.876"/><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="147" x="1015" y="171.9834">MobileMoney</text><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="42" x="1067.5" y="196.29">FSP</text><text fill="#000000" font-family="Verdana" font-size="20" font-weight="bold" lengthAdjust="spacing" textLength="173" x="1002" y="220.5967">(mobilemoney)</text><ellipse cx="1091.5" cy="50.876" fill="#FFFFFF" rx="8" ry="8" style="stroke:#FFFFFF;stroke-width:2.0;"/><path d="M1091.5,58.876 L1091.5,85.876 M1078.5,66.876 L1104.5,66.876 M1091.5,85.876 L1078.5,100.876 M1091.5,85.876 L1104.5,100.876 " fill="none" style="stroke:#FFFFFF;stroke-width:2.0;"/><rect fill="#F4F4F4" height="165.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="234.7959"/><rect fill="#F4F4F4" height="230.3945" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="969.3774"/><rect fill="#F4F4F4" height="230.3945" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="1709.959"/><rect fill="#F4F4F4" height="57.7993" style="stroke:#000000;stroke-width:1.0;" width="10" x="98.5" y="2450.5405"/><rect fill="#F4F4F4" height="214.3945" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="400.5918"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="813.5815"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="1199.772"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="1554.1631"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="1940.3535"/><rect fill="#F4F4F4" height="155.7959" style="stroke:#000000;stroke-width:1.0;" width="10" x="592.5" y="2294.7446"/><rect fill="#F4F4F4" height="198.5952" style="stroke:#000000;stroke-width:1.0;" width="10" x="1086.5" y="614.9863"/><rect fill="#F4F4F4" height="198.5952" style="stroke:#000000;stroke-width:1.0;" width="10" x="1086.5" y="1355.5679"/><rect fill="#F4F4F4" height="198.5952" style="stroke:#000000;stroke-width:1.0;" width="10" x="1086.5" y="2096.1494"/><path d="M10,241.7959 L96,241.7959 L96,248.7959 L86,258.7959 L10,258.7959 L10,241.7959 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="2266.5439" style="stroke:#000000;stroke-width:2.0;" width="1846" x="10" y="241.7959"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="41" x="25" y="255.8657">Trace</text><line style="stroke:#000000;stroke-width:1.0;" x1="108.5" x2="150.5" y1="281.3945" y2="281.3945"/><line style="stroke:#000000;stroke-width:1.0;" x1="150.5" x2="150.5" y1="281.3945" y2="294.3945"/><line style="stroke:#000000;stroke-width:1.0;" x1="109.5" x2="150.5" y1="294.3945" y2="294.3945"/><polygon fill="#000000" points="119.5,290.3945,109.5,294.3945,119.5,298.3945,115.5,294.3945" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="115.5" y="276.665">1</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="132" x="128.5" y="276.665">Generate new trace</text><path d="M113,307.3945 L113,348.3945 L695,348.3945 L695,317.3945 L685,307.3945 L113,307.3945 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M685,307.3945 L685,317.3945 L695,317.3945 L685,307.3945 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="83" x="119" y="325.4644">traceparent:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="207" y="325.4644">00</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="6" x="225" y="325.4644">-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="279" x="231" y="325.4644">91e502e28cd723686e9940bd3f378f85</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="6" x="510" y="325.4644">-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="516" y="325.4644">b0f903d000944947</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="6" x="656" y="325.4644">-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="662" y="325.4644">01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="119" y="341.2637">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="78" x="197" y="341.2637">banknrone</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="275" y="341.2637">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="286" y="341.2637">b0f903d000944947</text><path d="M20,360.9932 L168,360.9932 L168,367.9932 L158,377.9932 L20,377.9932 L20,360.9932 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="659.1836" style="stroke:#000000;stroke-width:2.0;" width="1825" x="20" y="360.9932"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="103" x="35" y="375.063">Request Party</text><polygon fill="#000000" points="580.5,396.5918,590.5,400.5918,580.5,404.5918,584.5,400.5918" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="103.5" x2="586.5" y1="400.5918" y2="400.5918"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="231" y="395.8623">2</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="221" x="244" y="395.8623">GET /parties/MSISDN/123456789</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="461.9897" y2="461.9897"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="461.9897" y2="474.9897"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="474.9897" y2="474.9897"/><polygon fill="#000000" points="613.5,470.9897,603.5,474.9897,613.5,478.9897,609.5,474.9897" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="609.5" y="441.4609">3</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="622.5" y="425.6616">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="622.5" y="441.4609">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="958.5" y="441.4609">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1025.5" y="441.4609">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="622.5" y="457.2603">- Update tracestate</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="520.5884" y2="520.5884"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="520.5884" y2="533.5884"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="533.5884" y2="533.5884"/><polygon fill="#000000" points="613.5,529.5884,603.5,533.5884,613.5,537.5884,609.5,533.5884" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="609.5" y="507.9592">4</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="310" x="622.5" y="500.0596">Internal GET /participants/MSISDN/123456789</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="44" x="622.5" y="515.8589">lookup</text><path d="M607,546.5884 L607,587.5884 L1154,587.5884 L1154,556.5884 L1144,546.5884 L607,546.5884 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1144,546.5884 L1144,556.5884 L1154,556.5884 L1144,546.5884 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="613" y="564.6582">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="978" y="564.6582">f86425c1a005e5e2</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1117" y="564.6582">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="613" y="580.4575">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="37" x="691" y="580.4575">moja</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="728" y="580.4575">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="739" y="580.4575">f86425c1a005e5e2</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="211" x="878" y="580.4575">,banknrone=b0f903d000944947</text><polygon fill="#000000" points="1074.5,610.9863,1084.5,614.9863,1074.5,618.9863,1078.5,614.9863" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="597.5" x2="1080.5" y1="614.9863" y2="614.9863"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="725" y="610.2568">5</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="221" x="738" y="610.2568">GET /parties/MSISDN/123456789</text><line style="stroke:#000000;stroke-width:1.0;" x1="1096.5" x2="1138.5" y1="676.3843" y2="676.3843"/><line style="stroke:#000000;stroke-width:1.0;" x1="1138.5" x2="1138.5" y1="676.3843" y2="689.3843"/><line style="stroke:#000000;stroke-width:1.0;" x1="1097.5" x2="1138.5" y1="689.3843" y2="689.3843"/><polygon fill="#000000" points="1107.5,685.3843,1097.5,689.3843,1107.5,693.3843,1103.5,689.3843" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="1103.5" y="655.8555">6</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="1116.5" y="640.0562">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="1116.5" y="655.8555">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="1452.5" y="655.8555">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1519.5" y="655.8555">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="1116.5" y="671.6548">- Update tracestate</text><path d="M1101,702.3843 L1101,743.3843 L1835,743.3843 L1835,712.3843 L1825,702.3843 L1101,702.3843 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1825,702.3843 L1825,712.3843 L1835,712.3843 L1825,702.3843 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="1107" y="720.4541">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="142" x="1472" y="720.4541">619d4c9d431ca708</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1614" y="720.4541">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="1107" y="736.2534">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="98" x="1185" y="736.2534">mobilemoney</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="1283" y="736.2534">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="142" x="1294" y="736.2534">619d4c9d431ca708</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="384" x="1436" y="736.2534">,moja=f86425c1a005e5e2,banknrone=b0f903d000944947</text><line style="stroke:#000000;stroke-width:1.0;" x1="1096.5" x2="1138.5" y1="770.7822" y2="770.7822"/><line style="stroke:#000000;stroke-width:1.0;" x1="1138.5" x2="1138.5" y1="770.7822" y2="783.7822"/><line style="stroke:#000000;stroke-width:1.0;" x1="1097.5" x2="1138.5" y1="783.7822" y2="783.7822"/><polygon fill="#000000" points="1107.5,779.7822,1097.5,783.7822,1107.5,787.7822,1103.5,783.7822" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="1103.5" y="766.0527">7</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="188" x="1116.5" y="766.0527">Process GET parties request</text><polygon fill="#000000" points="613.5,809.5815,603.5,813.5815,613.5,817.5815,609.5,813.5815" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="607.5" x2="1090.5" y1="813.5815" y2="813.5815"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="730" y="808.8521">8</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="221" x="743" y="808.8521">PUT /parties/MSISDN/123456789</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="874.9795" y2="874.9795"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="874.9795" y2="887.9795"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="887.9795" y2="887.9795"/><polygon fill="#000000" points="613.5,883.9795,603.5,887.9795,613.5,891.9795,609.5,887.9795" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="609.5" y="854.4507">9</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="622.5" y="838.6514">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="622.5" y="854.4507">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="958.5" y="854.4507">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1025.5" y="854.4507">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="622.5" y="870.25">- Update tracestate</text><path d="M607,900.9795 L607,941.9795 L1337,941.9795 L1337,910.9795 L1327,900.9795 L607,900.9795 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1327,900.9795 L1327,910.9795 L1337,910.9795 L1327,900.9795 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="613" y="919.0493">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="978" y="919.0493">e5687db76842fe36</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1118" y="919.0493">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="613" y="934.8486">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="37" x="691" y="934.8486">moja</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="728" y="934.8486">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="739" y="934.8486">e5687db76842fe36</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="443" x="879" y="934.8486">,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947</text><polygon fill="#000000" points="119.5,965.3774,109.5,969.3774,119.5,973.3774,115.5,969.3774" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="113.5" x2="596.5" y1="969.3774" y2="969.3774"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="231.5" y="964.6479">10</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="221" x="253.5" y="964.6479">PUT /parties/MSISDN/123456789</text><line style="stroke:#000000;stroke-width:1.0;" x1="108.5" x2="150.5" y1="999.1768" y2="999.1768"/><line style="stroke:#000000;stroke-width:1.0;" x1="150.5" x2="150.5" y1="999.1768" y2="1012.1768"/><line style="stroke:#000000;stroke-width:1.0;" x1="109.5" x2="150.5" y1="1012.1768" y2="1012.1768"/><polygon fill="#000000" points="119.5,1008.1768,109.5,1012.1768,119.5,1016.1768,115.5,1012.1768" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="115.5" y="994.4473">11</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="156" x="137.5" y="994.4473">Process Party response</text><path d="M20,1034.1768 L173,1034.1768 L173,1041.1768 L163,1051.1768 L20,1051.1768 L20,1034.1768 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="726.5815" style="stroke:#000000;stroke-width:2.0;" width="1812" x="20" y="1034.1768"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="108" x="35" y="1048.2466">Request Quote</text><line style="stroke:#000000;stroke-width:1.0;" x1="108.5" x2="150.5" y1="1105.374" y2="1105.374"/><line style="stroke:#000000;stroke-width:1.0;" x1="150.5" x2="150.5" y1="1105.374" y2="1118.374"/><line style="stroke:#000000;stroke-width:1.0;" x1="109.5" x2="150.5" y1="1118.374" y2="1118.374"/><polygon fill="#000000" points="119.5,1114.374,109.5,1118.374,119.5,1122.374,115.5,1118.374" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="115.5" y="1084.8452">12</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="137.5" y="1069.0459">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="137.5" y="1084.8452">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="473.5" y="1084.8452">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="540.5" y="1084.8452">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="137.5" y="1100.6445">- Update tracestate</text><path d="M113,1131.374 L113,1172.374 L841,1172.374 L841,1141.374 L831,1131.374 L113,1131.374 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M831,1131.374 L831,1141.374 L841,1141.374 L831,1131.374 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="119" y="1149.4438">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="134" x="484" y="1149.4438">0c3e9f44f921ca06</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="618" y="1149.4438">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="119" y="1165.2432">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="78" x="197" y="1165.2432">banknrone</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="275" y="1165.2432">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="134" x="286" y="1165.2432">0c3e9f44f921ca06</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="406" x="420" y="1165.2432">,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708</text><polygon fill="#000000" points="580.5,1195.772,590.5,1199.772,580.5,1203.772,584.5,1199.772" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="103.5" x2="586.5" y1="1199.772" y2="1199.772"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="292" y="1195.0425">13</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="90" x="314" y="1195.0425">POST /quotes</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="1261.1699" y2="1261.1699"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="1261.1699" y2="1274.1699"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="1274.1699" y2="1274.1699"/><polygon fill="#000000" points="613.5,1270.1699,603.5,1274.1699,613.5,1278.1699,609.5,1274.1699" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="609.5" y="1240.6411">14</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="631.5" y="1224.8418">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="631.5" y="1240.6411">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="967.5" y="1240.6411">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1034.5" y="1240.6411">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="631.5" y="1256.4404">- Update tracestate</text><path d="M607,1287.1699 L607,1328.1699 L1325,1328.1699 L1325,1297.1699 L1315,1287.1699 L607,1287.1699 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1315,1287.1699 L1315,1297.1699 L1325,1297.1699 L1315,1287.1699 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="613" y="1305.2397">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="133" x="978" y="1305.2397">379cc3faa566cf90</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1111" y="1305.2397">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="613" y="1321.0391">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="37" x="691" y="1321.0391">moja</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="728" y="1321.0391">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="133" x="739" y="1321.0391">379cc3faa566cf90</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="438" x="872" y="1321.0391">,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708</text><polygon fill="#000000" points="1074.5,1351.5679,1084.5,1355.5679,1074.5,1359.5679,1078.5,1355.5679" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="597.5" x2="1080.5" y1="1355.5679" y2="1355.5679"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="786" y="1350.8384">15</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="90" x="808" y="1350.8384">POST /quotes</text><line style="stroke:#000000;stroke-width:1.0;" x1="1096.5" x2="1138.5" y1="1416.9658" y2="1416.9658"/><line style="stroke:#000000;stroke-width:1.0;" x1="1138.5" x2="1138.5" y1="1416.9658" y2="1429.9658"/><line style="stroke:#000000;stroke-width:1.0;" x1="1097.5" x2="1138.5" y1="1429.9658" y2="1429.9658"/><polygon fill="#000000" points="1107.5,1425.9658,1097.5,1429.9658,1107.5,1433.9658,1103.5,1429.9658" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1103.5" y="1396.437">16</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="1125.5" y="1380.6377">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="1125.5" y="1396.437">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="1461.5" y="1396.437">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1528.5" y="1396.437">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="1125.5" y="1412.2363">- Update tracestate</text><path d="M1101,1442.9658 L1101,1483.9658 L1822,1483.9658 L1822,1452.9658 L1812,1442.9658 L1101,1442.9658 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1812,1442.9658 L1812,1452.9658 L1822,1452.9658 L1812,1442.9658 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="1107" y="1461.0356">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="1472" y="1461.0356">06a441483c4f238e</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1611" y="1461.0356">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="1107" y="1476.835">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="98" x="1185" y="1476.835">mobilemoney</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="1283" y="1476.835">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="1294" y="1476.835">06a441483c4f238e</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="374" x="1433" y="1476.835">,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06</text><line style="stroke:#000000;stroke-width:1.0;" x1="1096.5" x2="1138.5" y1="1511.3638" y2="1511.3638"/><line style="stroke:#000000;stroke-width:1.0;" x1="1138.5" x2="1138.5" y1="1511.3638" y2="1524.3638"/><line style="stroke:#000000;stroke-width:1.0;" x1="1097.5" x2="1138.5" y1="1524.3638" y2="1524.3638"/><polygon fill="#000000" points="1107.5,1520.3638,1097.5,1524.3638,1107.5,1528.3638,1103.5,1524.3638" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1103.5" y="1506.6343">17</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="153" x="1125.5" y="1506.6343">Process Quote Request</text><polygon fill="#000000" points="613.5,1550.1631,603.5,1554.1631,613.5,1558.1631,609.5,1554.1631" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="607.5" x2="1090.5" y1="1554.1631" y2="1554.1631"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="657.5" y="1549.4336">18</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="357" x="679.5" y="1549.4336">PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="1615.561" y2="1615.561"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="1615.561" y2="1628.561"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="1628.561" y2="1628.561"/><polygon fill="#000000" points="613.5,1624.561,603.5,1628.561,613.5,1632.561,609.5,1628.561" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="609.5" y="1595.0322">19</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="631.5" y="1579.2329">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="631.5" y="1595.0322">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="967.5" y="1595.0322">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1034.5" y="1595.0322">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="631.5" y="1610.8315">- Update tracestate</text><path d="M607,1641.561 L607,1682.561 L1330,1682.561 L1330,1651.561 L1320,1641.561 L607,1641.561 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1320,1641.561 L1320,1651.561 L1330,1651.561 L1320,1641.561 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="613" y="1659.6309">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="978" y="1659.6309">765457baab44a0fd</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1118" y="1659.6309">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="613" y="1675.4302">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="37" x="691" y="1675.4302">moja</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="728" y="1675.4302">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="739" y="1675.4302">765457baab44a0fd</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="436" x="879" y="1675.4302">,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06</text><polygon fill="#000000" points="119.5,1705.959,109.5,1709.959,119.5,1713.959,115.5,1709.959" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="113.5" x2="596.5" y1="1709.959" y2="1709.959"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="163.5" y="1705.2295">20</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="357" x="185.5" y="1705.2295">PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6</text><line style="stroke:#000000;stroke-width:1.0;" x1="108.5" x2="150.5" y1="1739.7583" y2="1739.7583"/><line style="stroke:#000000;stroke-width:1.0;" x1="150.5" x2="150.5" y1="1739.7583" y2="1752.7583"/><line style="stroke:#000000;stroke-width:1.0;" x1="109.5" x2="150.5" y1="1752.7583" y2="1752.7583"/><polygon fill="#000000" points="119.5,1748.7583,109.5,1752.7583,119.5,1756.7583,115.5,1752.7583" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="115.5" y="1735.0288">21</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="160" x="137.5" y="1735.0288">Process Quote response</text><path d="M20,1774.7583 L190,1774.7583 L190,1781.7583 L180,1791.7583 L20,1791.7583 L20,1774.7583 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="726.5815" style="stroke:#000000;stroke-width:2.0;" width="1826" x="20" y="1774.7583"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="125" x="35" y="1788.8281">Request Transfer</text><line style="stroke:#000000;stroke-width:1.0;" x1="108.5" x2="150.5" y1="1845.9556" y2="1845.9556"/><line style="stroke:#000000;stroke-width:1.0;" x1="150.5" x2="150.5" y1="1845.9556" y2="1858.9556"/><line style="stroke:#000000;stroke-width:1.0;" x1="109.5" x2="150.5" y1="1858.9556" y2="1858.9556"/><polygon fill="#000000" points="119.5,1854.9556,109.5,1858.9556,119.5,1862.9556,115.5,1858.9556" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="115.5" y="1825.4268">22</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="137.5" y="1809.6274">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="137.5" y="1825.4268">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="473.5" y="1825.4268">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="540.5" y="1825.4268">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="137.5" y="1841.2261">- Update tracestate</text><path d="M113,1871.9556 L113,1912.9556 L844,1912.9556 L844,1881.9556 L834,1871.9556 L113,1871.9556 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M834,1871.9556 L834,1881.9556 L844,1881.9556 L834,1871.9556 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="119" y="1890.0254">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="484" y="1890.0254">82f942e2566117c0</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="623" y="1890.0254">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="119" y="1905.8247">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="78" x="197" y="1905.8247">banknrone</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="275" y="1905.8247">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="139" x="286" y="1905.8247">82f942e2566117c0</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="404" x="425" y="1905.8247">,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e</text><polygon fill="#000000" points="580.5,1936.3535,590.5,1940.3535,580.5,1944.3535,584.5,1940.3535" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="103.5" x2="586.5" y1="1940.3535" y2="1940.3535"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="284" y="1935.624">23</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="106" x="306" y="1935.624">POST /transfers</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="2001.7515" y2="2001.7515"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="2001.7515" y2="2014.7515"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="2014.7515" y2="2014.7515"/><polygon fill="#000000" points="613.5,2010.7515,603.5,2014.7515,613.5,2018.7515,609.5,2014.7515" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="609.5" y="1981.2227">24</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="631.5" y="1965.4233">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="631.5" y="1981.2227">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="967.5" y="1981.2227">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1034.5" y="1981.2227">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="631.5" y="1997.022">- Update tracestate</text><path d="M607,2027.7515 L607,2068.7515 L1338,2068.7515 L1338,2037.7515 L1328,2027.7515 L607,2027.7515 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1328,2027.7515 L1328,2037.7515 L1338,2037.7515 L1328,2027.7515 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="613" y="2045.8213">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="144" x="978" y="2045.8213">bb68d98a0840aa99</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1122" y="2045.8213">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="613" y="2061.6206">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="37" x="691" y="2061.6206">moja</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="728" y="2061.6206">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="144" x="739" y="2061.6206">bb68d98a0840aa99</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="440" x="883" y="2061.6206">,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e</text><polygon fill="#000000" points="1074.5,2092.1494,1084.5,2096.1494,1074.5,2100.1494,1078.5,2096.1494" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="597.5" x2="1080.5" y1="2096.1494" y2="2096.1494"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="778" y="2091.4199">25</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="106" x="800" y="2091.4199">POST /transfers</text><line style="stroke:#000000;stroke-width:1.0;" x1="1096.5" x2="1138.5" y1="2157.5474" y2="2157.5474"/><line style="stroke:#000000;stroke-width:1.0;" x1="1138.5" x2="1138.5" y1="2157.5474" y2="2170.5474"/><line style="stroke:#000000;stroke-width:1.0;" x1="1097.5" x2="1138.5" y1="2170.5474" y2="2170.5474"/><polygon fill="#000000" points="1107.5,2166.5474,1097.5,2170.5474,1107.5,2174.5474,1103.5,2170.5474" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1103.5" y="2137.0186">26</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="1125.5" y="2121.2192">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="1125.5" y="2137.0186">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="1461.5" y="2137.0186">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1528.5" y="2137.0186">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="1125.5" y="2152.8179">- Update tracestate</text><path d="M1101,2183.5474 L1101,2224.5474 L1836,2224.5474 L1836,2193.5474 L1826,2183.5474 L1101,2183.5474 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1826,2183.5474 L1826,2193.5474 L1836,2193.5474 L1826,2183.5474 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="1107" y="2201.6172">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="1472" y="2201.6172">da6dbe3af96ed639</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1612" y="2201.6172">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="1107" y="2217.4165">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="98" x="1185" y="2217.4165">mobilemoney</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="1283" y="2217.4165">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="140" x="1294" y="2217.4165">da6dbe3af96ed639</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="387" x="1434" y="2217.4165">,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0</text><line style="stroke:#000000;stroke-width:1.0;" x1="1096.5" x2="1138.5" y1="2251.9453" y2="2251.9453"/><line style="stroke:#000000;stroke-width:1.0;" x1="1138.5" x2="1138.5" y1="2251.9453" y2="2264.9453"/><line style="stroke:#000000;stroke-width:1.0;" x1="1097.5" x2="1138.5" y1="2264.9453" y2="2264.9453"/><polygon fill="#000000" points="1107.5,2260.9453,1097.5,2264.9453,1107.5,2268.9453,1103.5,2264.9453" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1103.5" y="2247.2158">27</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="170" x="1125.5" y="2247.2158">Process Transfer Request</text><polygon fill="#000000" points="613.5,2290.7446,603.5,2294.7446,613.5,2298.7446,609.5,2294.7446" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="607.5" x2="1090.5" y1="2294.7446" y2="2294.7446"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="647" y="2290.0151">28</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="378" x="669" y="2290.0151">PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d</text><line style="stroke:#000000;stroke-width:1.0;" x1="602.5" x2="644.5" y1="2356.1426" y2="2356.1426"/><line style="stroke:#000000;stroke-width:1.0;" x1="644.5" x2="644.5" y1="2356.1426" y2="2369.1426"/><line style="stroke:#000000;stroke-width:1.0;" x1="603.5" x2="644.5" y1="2369.1426" y2="2369.1426"/><polygon fill="#000000" points="613.5,2365.1426,603.5,2369.1426,613.5,2373.1426,609.5,2369.1426" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="609.5" y="2335.6138">29</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="103" x="631.5" y="2319.8145">Continue trace:</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="336" x="631.5" y="2335.6138">- Update traceparent with newly generated span (</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="67" x="967.5" y="2335.6138">parent-id</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="40" x="1034.5" y="2335.6138">), and</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="130" x="631.5" y="2351.4131">- Update tracestate</text><path d="M607,2382.1426 L607,2423.1426 L1338,2423.1426 L1338,2392.1426 L1328,2382.1426 L607,2382.1426 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><path d="M1328,2382.1426 L1328,2392.1426 L1338,2392.1426 L1328,2382.1426 " fill="#E2E2E2" style="stroke:#383838;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="365" x="613" y="2400.2124">traceparent: 00-91e502e28cd723686e9940bd3f378f85-</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="143" x="978" y="2400.2124">a6467a7068235c33</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="22" x="1121" y="2400.2124">-01</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="73" x="613" y="2416.0117">tracestate:</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="37" x="691" y="2416.0117">moja</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="11" x="728" y="2416.0117">=</text><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="143" x="739" y="2416.0117">a6467a7068235c33</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="441" x="882" y="2416.0117">,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0</text><polygon fill="#000000" points="119.5,2446.5405,109.5,2450.5405,119.5,2454.5405,115.5,2450.5405" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="113.5" x2="596.5" y1="2450.5405" y2="2450.5405"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="153" y="2445.811">30</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="378" x="175" y="2445.811">PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d</text><line style="stroke:#000000;stroke-width:1.0;" x1="108.5" x2="150.5" y1="2480.3398" y2="2480.3398"/><line style="stroke:#000000;stroke-width:1.0;" x1="150.5" x2="150.5" y1="2480.3398" y2="2493.3398"/><line style="stroke:#000000;stroke-width:1.0;" x1="109.5" x2="150.5" y1="2493.3398" y2="2493.3398"/><polygon fill="#000000" points="119.5,2489.3398,109.5,2493.3398,119.5,2497.3398,115.5,2493.3398" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="115.5" y="2475.6104">31</text><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="177" x="137.5" y="2475.6104">Process Transfer response</text><!--MD5=[470c9778a8fd03d79826e75aa0c9f580]
+@startuml
+' declate title
+title Tracing v1.0 - Example 4.1. P2P Transfer with participating FSPs
+
+autonumber
+
+' define actor image
+sprite $actor [25x48/16] {
+  0000000000010000000000000
+  0000000006CAC910000000000
+  0000000095101292000000000
+  0000000651000119000000000
+  0000000B10000018400000000
+  0000001A10000016600000000
+  0000000B10000017510000000
+  000000083100001A210000000
+  0000000191000176110000000
+  000000003A866A61100000000
+  0000000000466211100000000
+  0003333333334443333310000
+  0088888888888888888892000
+  0821111111111111111118200
+  8311111111111111111111A00
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111551111111111138111A20
+  A111661111111111139111A20
+  A211661111111111139111A20
+  A211661111111111139111A20
+  A211661111161111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A7669611111A211113A666B20
+  36669611111A211113A666610
+  00016611111A2111139111110
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006966666B7666679100000
+  0000266666666666664100000
+  0000000111111111111100000
+  0000000000000000000000000
+}
+
+' declaring skinparam
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam defaultFontName Verdana
+skinparam monochrome true
+skinparam SequenceLifeLineBackgroundColor WhiteSmoke
+skinparam SequenceLifeLineBorderColor Black
+skinparam ActorFontStyle Bold
+skinparam ActorFontSize 20
+skinparam ParticipantFontStyle Bold
+skinparam ParticipantFontSize 20
+skinparam ParticipantBackgroundColor WhiteSmoke
+skinparam ArrowColor Black
+
+skinparam actor {
+  Bordercolor none
+  Backgroundcolor none
+  shadowing false
+}
+
+skinparam participant {
+  shadowing true
+}
+
+hide footbox
+
+' Actor Keys:
+'   actor - Payer DFSP, Payee DFSP
+'   boundary - APIs/Interfaces, etc
+'   collections - Kafka Topics
+'   control - Kafka Consumers
+'   entity - Database Access Objects
+'   database - Database Persistance Store
+
+' declare actors
+actor "<$actor>\nBankNrOne\nFSP\n(banknrone)" as PAYER
+participant "Mojaloop\nSwitch\n(moja)" as MOJA
+actor "<$actor>\nMobileMoney\nFSP\n(mobilemoney)" as PAYEE
+
+' start flow
+group Trace
+activate PAYER
+PAYER -> PAYER: Generate new trace
+note right of PAYER #yellow
+    traceparent: **00**-**91e502e28cd723686e9940bd3f378f85**-**b0f903d000944947**-**01**
+    tracestate: **banknrone**=**b0f903d000944947**
+end note
+
+group Request Party
+    PAYER -> MOJA: GET /parties/MSISDN/123456789
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        MOJA -> MOJA: Internal GET /participants/MSISDN/123456789 \nlookup
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**f86425c1a005e5e2**-01
+            tracestate: **moja**=**f86425c1a005e5e2**,banknrone=b0f903d000944947
+        end note
+
+        MOJA -> PAYEE: GET /parties/MSISDN/123456789
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**619d4c9d431ca708**-01
+                tracestate: **mobilemoney**=**619d4c9d431ca708**,moja=f86425c1a005e5e2,banknrone=b0f903d000944947
+            end note
+
+            PAYEE -> PAYEE: Process GET parties request
+
+            PAYEE -> MOJA: PUT /parties/MSISDN/123456789
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**e5687db76842fe36**-01
+                        tracestate: **moja**=**e5687db76842fe36**,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947
+                    end note
+
+                MOJA -> PAYER: PUT /parties/MSISDN/123456789
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Party response
+
+end
+
+group Request Quote
+    PAYER -> PAYER: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+    note right of PAYER #yellow
+        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**0c3e9f44f921ca06**-01
+        tracestate: **banknrone**=**0c3e9f44f921ca06**,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708
+    end note
+
+    PAYER -> MOJA: POST /quotes
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**379cc3faa566cf90**-01
+            tracestate: **moja**=**379cc3faa566cf90**,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708
+        end note
+
+        MOJA -> PAYEE: POST /quotes
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**06a441483c4f238e**-01
+                tracestate: **mobilemoney**=**06a441483c4f238e**,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06
+            end note
+
+            PAYEE -> PAYEE: Process Quote Request
+
+            PAYEE -> MOJA: PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**765457baab44a0fd**-01
+                        tracestate: **moja**=**765457baab44a0fd**,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06
+                    end note
+
+                MOJA -> PAYER: PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Quote response
+end
+
+group Request Transfer
+    PAYER -> PAYER: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+    note right of PAYER #yellow
+        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**82f942e2566117c0**-01
+        tracestate: **banknrone**=**82f942e2566117c0**,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e
+    end note
+
+    PAYER -> MOJA: POST /transfers
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**bb68d98a0840aa99**-01
+            tracestate: **moja**=**bb68d98a0840aa99**,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e
+        end note
+
+        MOJA -> PAYEE: POST /transfers
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**da6dbe3af96ed639**-01
+                tracestate: **mobilemoney**=**da6dbe3af96ed639**,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0
+            end note
+
+            PAYEE -> PAYEE: Process Transfer Request
+
+            PAYEE -> MOJA: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**a6467a7068235c33**-01
+                        tracestate: **moja**=**a6467a7068235c33**,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0
+                    end note
+
+                MOJA -> PAYER: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Transfer response
+end
+deactivate PAYER
+end
+@enduml
+
+@startuml
+title Tracing v1.0 - Example 4.1. P2P Transfer with participating FSPs
+
+autonumber
+
+sprite $actor [25x48/16] {
+  0000000000010000000000000
+  0000000006CAC910000000000
+  0000000095101292000000000
+  0000000651000119000000000
+  0000000B10000018400000000
+  0000001A10000016600000000
+  0000000B10000017510000000
+  000000083100001A210000000
+  0000000191000176110000000
+  000000003A866A61100000000
+  0000000000466211100000000
+  0003333333334443333310000
+  0088888888888888888892000
+  0821111111111111111118200
+  8311111111111111111111A00
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111111111111111111111A20
+  A111551111111111138111A20
+  A111661111111111139111A20
+  A211661111111111139111A20
+  A211661111111111139111A20
+  A211661111161111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A2116611111A2111139111A20
+  A7669611111A211113A666B20
+  36669611111A211113A666610
+  00016611111A2111139111110
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006611111A2111139100000
+  00006966666B7666679100000
+  0000266666666666664100000
+  0000000111111111111100000
+  0000000000000000000000000
+}
+
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam defaultFontName Verdana
+skinparam monochrome true
+skinparam SequenceLifeLineBackgroundColor WhiteSmoke
+skinparam SequenceLifeLineBorderColor Black
+skinparam ActorFontStyle Bold
+skinparam ActorFontSize 20
+skinparam ParticipantFontStyle Bold
+skinparam ParticipantFontSize 20
+skinparam ParticipantBackgroundColor WhiteSmoke
+skinparam ArrowColor Black
+
+skinparam actor {
+  Bordercolor none
+  Backgroundcolor none
+  shadowing false
+}
+
+skinparam participant {
+  shadowing true
+}
+
+hide footbox
+
+
+actor "<$actor>\nBankNrOne\nFSP\n(banknrone)" as PAYER
+participant "Mojaloop\nSwitch\n(moja)" as MOJA
+actor "<$actor>\nMobileMoney\nFSP\n(mobilemoney)" as PAYEE
+
+group Trace
+activate PAYER
+PAYER -> PAYER: Generate new trace
+note right of PAYER #yellow
+    traceparent: **00**-**91e502e28cd723686e9940bd3f378f85**-**b0f903d000944947**-**01**
+    tracestate: **banknrone**=**b0f903d000944947**
+end note
+
+group Request Party
+    PAYER -> MOJA: GET /parties/MSISDN/123456789
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        MOJA -> MOJA: Internal GET /participants/MSISDN/123456789 \nlookup
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**f86425c1a005e5e2**-01
+            tracestate: **moja**=**f86425c1a005e5e2**,banknrone=b0f903d000944947
+        end note
+
+        MOJA -> PAYEE: GET /parties/MSISDN/123456789
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**619d4c9d431ca708**-01
+                tracestate: **mobilemoney**=**619d4c9d431ca708**,moja=f86425c1a005e5e2,banknrone=b0f903d000944947
+            end note
+
+            PAYEE -> PAYEE: Process GET parties request
+
+            PAYEE -> MOJA: PUT /parties/MSISDN/123456789
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**e5687db76842fe36**-01
+                        tracestate: **moja**=**e5687db76842fe36**,mobilemoney=619d4c9d431ca708,banknrone=b0f903d000944947
+                    end note
+
+                MOJA -> PAYER: PUT /parties/MSISDN/123456789
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Party response
+
+end
+
+group Request Quote
+    PAYER -> PAYER: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+    note right of PAYER #yellow
+        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**0c3e9f44f921ca06**-01
+        tracestate: **banknrone**=**0c3e9f44f921ca06**,moja=e5687db76842fe36,mobilemoney=619d4c9d431ca708
+    end note
+
+    PAYER -> MOJA: POST /quotes
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**379cc3faa566cf90**-01
+            tracestate: **moja**=**379cc3faa566cf90**,banknrone=0c3e9f44f921ca06,mobilemoney=619d4c9d431ca708
+        end note
+
+        MOJA -> PAYEE: POST /quotes
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**06a441483c4f238e**-01
+                tracestate: **mobilemoney**=**06a441483c4f238e**,moja=379cc3faa566cf90,banknrone=0c3e9f44f921ca06
+            end note
+
+            PAYEE -> PAYEE: Process Quote Request
+
+            PAYEE -> MOJA: PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**765457baab44a0fd**-01
+                        tracestate: **moja**=**765457baab44a0fd**,mobilemoney=06a441483c4f238e,banknrone=0c3e9f44f921ca06
+                    end note
+
+                MOJA -> PAYER: PUT /quotes/7c23e80c-d078-4077-8263-2c047876fcf6
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Quote response
+end
+
+group Request Transfer
+    PAYER -> PAYER: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+    note right of PAYER #yellow
+        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**82f942e2566117c0**-01
+        tracestate: **banknrone**=**82f942e2566117c0**,moja=765457baab44a0fd,mobilemoney=06a441483c4f238e
+    end note
+
+    PAYER -> MOJA: POST /transfers
+    deactivate PAYER
+        activate MOJA
+        MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+        note right of MOJA #yellow
+            traceparent: 00-91e502e28cd723686e9940bd3f378f85-**bb68d98a0840aa99**-01
+            tracestate: **moja**=**bb68d98a0840aa99**,banknrone=82f942e2566117c0,mobilemoney=06a441483c4f238e
+        end note
+
+        MOJA -> PAYEE: POST /transfers
+        deactivate MOJA
+            activate PAYEE
+            PAYEE -> PAYEE: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+            note right of PAYEE #yellow
+                traceparent: 00-91e502e28cd723686e9940bd3f378f85-**da6dbe3af96ed639**-01
+                tracestate: **mobilemoney**=**da6dbe3af96ed639**,moja=bb68d98a0840aa99,banknrone=82f942e2566117c0
+            end note
+
+            PAYEE -> PAYEE: Process Transfer Request
+
+            PAYEE -> MOJA: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+            deactivate PAYEE
+                    activate MOJA
+                    MOJA -> MOJA: Continue trace: \n- Update traceparent with newly generated span (**parent-id**), and \n- Update tracestate
+                    note right of MOJA #yellow
+                        traceparent: 00-91e502e28cd723686e9940bd3f378f85-**a6467a7068235c33**-01
+                        tracestate: **moja**=**a6467a7068235c33**,mobilemoney=da6dbe3af96ed639,banknrone=82f942e2566117c0
+                    end note
+
+                MOJA -> PAYER: PUT /transfers/11436b17-c690-4a30-8505-42a2c4eafb9d
+                deactivate MOJA
+
+        activate PAYER
+        PAYER -> PAYER: Process Transfer response
+end
+deactivate PAYER
+end
+@enduml
+
+PlantUML version 1.2021.00(Sun Jan 10 12:25:05 SAST 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: GB
+--></g></svg>

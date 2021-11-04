@@ -1,0 +1,3425 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Central Ledger API v1.0 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-swagger/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-insert-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-collapsible-chapters/collapsible-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-changelog/changelog.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-toc/page-toc.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-api/theme-api.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../fspiop-api/documents/Scheme-Rules.html" />
+    
+    
+    <link rel="prev" href="../fspiop-api/documents/API-Definition_v1.1.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Documents</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Mojaloop Specification Overview
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../fspiop-api/documents/Glossary.html">
+            
+                <a href="../fspiop-api/documents/Glossary.html">
+            
+                    
+                    Glossary
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../fspiop-api/documents/Logical-Data-Model.html">
+            
+                <a href="../fspiop-api/documents/Logical-Data-Model.html">
+            
+                    
+                    Logical Data Model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="../fspiop-api/documents/Generic-Transaction-Patterns.html">
+            
+                <a href="../fspiop-api/documents/Generic-Transaction-Patterns.html">
+            
+                    
+                    Generic Transaction Patterns
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../fspiop-api/documents/Use-Cases.html">
+            
+                <a href="../fspiop-api/documents/Use-Cases.html">
+            
+                    
+                    Use Cases
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="../fspiop-api/documents/API-Definition_v1.1.html">
+            
+                <a href="../fspiop-api/documents/API-Definition_v1.1.html">
+            
+                    
+                    API Definition v1.1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="admin-api-specification-v1.0.html">
+            
+                <a href="admin-api-specification-v1.0.html">
+            
+                    
+                    Central Ledger API v1.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="../fspiop-api/documents/Scheme-Rules.html">
+            
+                <a href="../fspiop-api/documents/Scheme-Rules.html">
+            
+                    
+                    Scheme Rules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="../fspiop-api/documents/JSON-Binding-Rules.html">
+            
+                <a href="../fspiop-api/documents/JSON-Binding-Rules.html">
+            
+                    
+                    JSON Binding Rules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="../fspiop-api/documents/PKI-Best-Practices.html">
+            
+                <a href="../fspiop-api/documents/PKI-Best-Practices.html">
+            
+                    
+                    PKI Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="../fspiop-api/documents/Signature_v1.1.html">
+            
+                <a href="../fspiop-api/documents/Signature_v1.1.html">
+            
+                    
+                    Signature v1.1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="../fspiop-api/documents/Encryption_v1.1.html">
+            
+                <a href="../fspiop-api/documents/Encryption_v1.1.html">
+            
+                    
+                    Encryption v1.1
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../ccb-meetings/">
+            
+                <a href="../ccb-meetings/">
+            
+                    
+                    Change Control Board Overview
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../ccb-meetings/Issue-and-Decision-Log.html">
+            
+                <a href="../ccb-meetings/Issue-and-Decision-Log.html">
+            
+                    
+                    Issue-and-Decision-Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Central Ledger API v1.0</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction">Introduction</h1>
+<p>This document provides detailed information about the Central Ledger API. The Central Ledger API is a Mojaloop API enabling Hub Operators to manage admin processes around:</p>
+<ul>
+<li>creating/activating/deactivating participants in the Hub</li>
+<li>adding and updating participant endpoint information</li>
+<li>managing participant accounts, limits, and positions</li>
+<li>creating Hub accounts</li>
+<li>performing Funds In and Funds Out operations</li>
+<li>creating/updating/viewing settlement models</li>
+<li><p>retrieving transfer details</p>
+<p>For background information about the participant and settlement model details that the Hub Operator can administer using the Central Ledger API, see section <a href="#basic-concepts">Basic concepts</a>.</p>
+</li>
+</ul>
+<h2 id="basic-concepts">Basic concepts</h2>
+<p>To provide context for the admin operations that the Central Ledger API enables, this section gives a brief definition of some basic concepts.</p>
+<h3 id="participant">Participant</h3>
+<p>Either the Hub itself or a Digital Financial Service Provider (DFSP) that is a participant in a Mojaloop scheme.</p>
+<h3 id="endpoint">Endpoint</h3>
+<p>The DFSP callback URL where the Hub routes API callbacks. The URL specified is the endpoint set up in the outbound API gateway.</p>
+<h3 id="limit">Limit</h3>
+<p>Currently, only one type of limit is supported, it is called &quot;Net Debit Cap (NDC)&quot;. In the future, it is possible to add support for further types of limits. </p>
+<p>The Net Debit Cap represents the liquidity cover available for a specific account (the Position account). It is the total amount of good funds which the scheme attests are available to guarantee that a participant is able to settle the liabilities it incurs on the Position account as a consequence of transferring funds. This amount of good funds is represented as the balance of an account (the Settlement account), which is tied to the Position account by a settlement model. The source of the funds in this account can be either funds recorded by the scheme&apos;s administrators as having been deposited to or withdrawn from the Settlement account, or funds which are automatically credited to or debited from the account by the scheme if the account is the Settlement account for an immediate gross settlement model.</p>
+<p>It should also be possible for a participant to specify that an amount, or a proportion, of the funds available in a Settlement account should be excluded from the Net Debit Cap calculation. In cases where a participant is a long-term net beneficiary of funds via settlement, or where participants keep extra funds in their Settlement account to cover periods when it may not be possible to deposit funds to those accounts, it may wish to exclude part of the balance of its Settlement account from use as cover for transfers.</p>
+<h3 id="account">Account</h3>
+<p>Also called &quot;ledger&quot;. The Hub maintains a number of internal accounts to keep track of the movement of money (both e-money and real money) between DFSPs.</p>
+<h3 id="position">Position</h3>
+<p>The Position represents the net of:</p>
+<ul>
+<li>transfers on that account which have cleared but have not yet settled, and </li>
+<li>transfers on that account where: <ul>
+<li>the DFSP is the debtor party, and </li>
+<li>the transfer has been accepted for processing by the Hub, but has not yet cleared.</li>
+</ul>
+</li>
+</ul>
+<p>The Position for a given account is always verifiably up to date.</p>
+<p>When a transfer is requested, the Hub will check that the DFSP has liquidity cover available on that account to cover the amount of the transfer. If it does not, the transfer will be rejected.</p>
+<p>We currently allow liabilities to the participant which have been created as a consequence of transfers on the account where the participant is the beneficiary to reduce the participant&apos;s Position as if the liabilities had already been settled.</p>
+<h3 id="funds-in-and-funds-out">Funds In and Funds Out</h3>
+<p>Funds In and Funds Out operations are used to track (in the Hub accounts) money movements related to deposits and withdrawals, as well as settlements.</p>
+<p>Funds In operations record either the deposit of money into a DFSP&apos;s settlement bank account or the settlement amount for a receiving DFSP.</p>
+<p>Funds Out operations record either the withdrawal of money from a DFSP&apos;s settlement bank account or the settlement amount for a sending DFSP.</p>
+<h3 id="settlement-model">Settlement model</h3>
+<p>Refers to how settlement happens within a scheme. Settlement is the process of transferring funds from one DSFP to another, so that the payer&apos;s DFSP reimburses the payee&apos;s DFSP for funds given to the payee during a transaction. A settlement model specifies if participants settle with each other separately or settle with the scheme, whether transfers are settled one by one or as a batch, whether transfers are settled immediately or with a delay, and so on.</p>
+<h1 id="http-details">HTTP details</h1>
+<p>This section contains detailed information regarding the use of the application-level protocol HTTP in the API.</p>
+<h2 id="http-header-fields">HTTP header fields</h2>
+<p>HTTP headers are generally described in <a href="https://tools.ietf.org/html/rfc7230" target="_blank">RFC 7230</a>. Any headers specific to the Central Ledger API will be standardised in the future.</p>
+<h2 id="http-methods">HTTP methods</h2>
+<p>The following HTTP methods, as defined in <a href="https://tools.ietf.org/html/rfc7231#section-4" target="_blank">RFC 7231</a>, are supported by the API:</p>
+<ul>
+<li><code>GET</code> &#x2013; The HTTP GET method is used from a client to retrieve information about a previously-created object on a server. </li>
+<li><code>POST</code> &#x2013; The HTTP POST method is used from a client to request an object to be created on the server. </li>
+<li><code>PUT</code> &#x2013; The HTTP PUT method is used from a client to request an object already existing on the server to be modified (to replace a representation of the target resource with the request payload).</li>
+</ul>
+<blockquote>
+<p><strong>NOTE:</strong> The <code>DELETE</code> method is not supported.</p>
+</blockquote>
+<h2 id="http-response-status-codes">HTTP response status codes</h2>
+<p><a href="#table-http-response-status-codes">Table &quot;HTTP response status codes&quot;</a> lists the HTTP response status codes that the API supports:</p>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Reason</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>200</strong></td>
+<td>OK</td>
+<td>Standard response for a successful <code>GET</code>, <code>PUT</code>, or <code>POST</code> operation. The response will contain an entity corresponding to the requested resource.</td>
+</tr>
+<tr>
+<td><strong>201</strong></td>
+<td>Created</td>
+<td>The <code>POST</code> request has been fulfilled, resulting in the creation of a new resource. The response will not contain an entity describing or containing the result of the action.</td>
+</tr>
+<tr>
+<td><strong>202</strong></td>
+<td>Accepted</td>
+<td>The request has been accepted for processing, but the processing has not been completed.</td>
+</tr>
+<tr>
+<td><strong>400</strong></td>
+<td>Bad Request</td>
+<td>The server could not understand the request due to invalid syntax.</td>
+</tr>
+<tr>
+<td><strong>401</strong></td>
+<td>Unauthorized</td>
+<td>The request requires authentication in order to be processed.</td>
+</tr>
+<tr>
+<td><strong>403</strong></td>
+<td>Forbidden</td>
+<td>The request was denied and will be denied in the future.</td>
+</tr>
+<tr>
+<td><strong>404</strong></td>
+<td>Not Found</td>
+<td>The requested resource is not available at the moment.</td>
+</tr>
+<tr>
+<td><strong>405</strong></td>
+<td>Method Not Allowed</td>
+<td>An unsupported HTTP method for the request was used.</td>
+</tr>
+<tr>
+<td><strong>406</strong></td>
+<td>Not Acceptable</td>
+<td>The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request.</td>
+</tr>
+<tr>
+<td><strong>500</strong></td>
+<td>Internal Server Error</td>
+<td>A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.</td>
+</tr>
+<tr>
+<td><strong>501</strong></td>
+<td>Not Implemented</td>
+<td>The server does not support the requested service. The client should not retry.</td>
+</tr>
+<tr>
+<td><strong>503</strong></td>
+<td>Service Unavailable</td>
+<td>The server is currently unavailable to accept any new service requests. This should be a temporary state, and the client should retry within a reasonable time frame.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="api-services">API services</h1>
+<p>This section introduces and details all services that the API supports for each resource and HTTP method.</p>
+<h2 id="high-level-api-services">High-level API services</h2>
+<p>On a high level, the API can be used to perform the following actions:</p>
+<ul>
+<li><strong><code>/participants</code></strong>: View, create, update participant-related details, such as limit (Net Debit Cap), position, or endpoints configured.</li>
+<li><strong><code>/settlementModels</code></strong>: View, create, update settlement-model-related details, such as granularity, delay, liquidity check, and so on.</li>
+<li><strong><code>/transactions</code></strong>: View transaction details for a particular transfer.</li>
+</ul>
+<h3 id="supported-api-services">Supported API services</h3>
+<p><a href="#table-supported-api-services">Table &quot;Supported API services&quot;</a> includes high-level descriptions of the services that the API provides. For more detailed information, see the sections that follow.</p>
+<table>
+<thead>
+<tr>
+<th>URI</th>
+<th>HTTP method <code>GET</code></th>
+<th>HTTP method <code>PUT</code></th>
+<th>HTTP method <code>POST</code></th>
+<th>HTTP method <code>DELETE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>/participants</code></strong></td>
+<td>Get information about all participants</td>
+<td>Not supported</td>
+<td>Create participants in the Hub</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/limits</code></td>
+<td>View limits for all participants</td>
+<td>Not supported</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}</code></td>
+<td>Get information about a particular participant</td>
+<td>Update participant details (activate/deactivate a participant)</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/endpoints</code></td>
+<td>View participant endpoints</td>
+<td>Not supported</td>
+<td>Add/Update participant endpoints</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/limits</code></td>
+<td>View participant limits</td>
+<td>Adjust participant limits</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/positions</code></td>
+<td>View participant positions</td>
+<td>Not supported</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/accounts</code></td>
+<td>View participant accounts and balances</td>
+<td>Not supported</td>
+<td>Create Hub accounts</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/accounts/{id}</code></td>
+<td>Not supported</td>
+<td>Update participant accounts</td>
+<td>Record Funds In or Out of participant account</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/accounts/{id}/transfers/{transferId}</code></td>
+<td>Not supported</td>
+<td>Not supported</td>
+<td>Record a Transfer as a Funds In or Out transaction for a participant account</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/participants/{name}/initialPositionAndLimits</code></td>
+<td>Not supported</td>
+<td>Not supported</td>
+<td>Add initial participant limits and position</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><strong><code>/settlementModels</code></strong></td>
+<td>View all settlement models</td>
+<td>Not supported</td>
+<td>Create a settlement model</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>/settlementModels/{name}</code></td>
+<td>View settlement model by name</td>
+<td>Update a settlement model (activate/deactivate a settlement model)</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><strong><code>/transactions/{id}</code></strong></td>
+<td>Retrieve transaction details by <code>transferId</code></td>
+<td>Not supported</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+</tbody>
+</table>
+<h2 id="api-resource-participants">API Resource <code>/participants</code></h2>
+<p>The services provided by the resource <code>/participants</code> are primarily used by the Hub Operator for viewing, creating, and updating participant-related details, such as limit (Net Debit Cap), position, or endpoints configured.</p>
+<h3 id="get-participants"><code>GET /participants</code></h3>
+<p>Retrieves information about all participants.</p>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<blockquote>
+<p><strong>NOTE:</strong> In the example below, <code>dev1-central-ledger.mojaloop.live</code> indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.</p>
+</blockquote>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;name&quot;: &quot;greenbankfsp&quot;,
+    &quot;id&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/greenbankfsp&quot;,
+    &quot;created&quot;: &quot;\&quot;2021-03-04T14:20:17.000Z\&quot;&quot;,
+    &quot;isActive&quot;: 1,
+    &quot;links&quot;: {
+      &quot;self&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/greenbankfsp&quot;
+    },
+    &quot;accounts&quot;: [
+      {
+        &quot;id&quot;: 15,
+        &quot;ledgerAccountType&quot;: &quot;POSITION&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;isActive&quot;: 1,
+        &quot;createdDate&quot;: null,
+        &quot;createdBy&quot;: &quot;unknown&quot;
+      },
+      {
+        &quot;id&quot;: 16,
+        &quot;ledgerAccountType&quot;: &quot;SETTLEMENT&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;isActive&quot;: 1,
+        &quot;createdDate&quot;: null,
+        &quot;createdBy&quot;: &quot;unknown&quot;
+      },
+      {
+        &quot;id&quot;: 21,
+        &quot;ledgerAccountType&quot;: &quot;INTERCHANGE_FEE_SETTLEMENT&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;isActive&quot;: 1,
+        &quot;createdDate&quot;: null,
+        &quot;createdBy&quot;: &quot;unknown&quot;
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;Hub&quot;,
+    &quot;id&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/Hub&quot;,
+    &quot;created&quot;: &quot;\&quot;2021-03-04T13:37:25.000Z\&quot;&quot;,
+    &quot;isActive&quot;: 1,
+    &quot;links&quot;: {
+      &quot;self&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/Hub&quot;
+    },
+    &quot;accounts&quot;: [
+      {
+        &quot;id&quot;: 1,
+        &quot;ledgerAccountType&quot;: &quot;HUB_MULTILATERAL_SETTLEMENT&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;isActive&quot;: 1,
+        &quot;createdDate&quot;: null,
+        &quot;createdBy&quot;: &quot;unknown&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;ledgerAccountType&quot;: &quot;HUB_RECONCILIATION&quot;,
+        &quot;currency&quot;: &quot;USD&quot;,
+        &quot;isActive&quot;: 1,
+        &quot;createdDate&quot;: null,
+        &quot;createdBy&quot;: &quot;unknown&quot;
+      }
+    ]
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The identifier of the participant in the form of a fully qualified domain name combined with the participant&apos;s <code>fspId</code>.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the participant was created.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the participant is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>yes</td>
+<td><a href="#self">Self</a></td>
+<td>List of links for a Hypermedia-Driven RESTful Web Service.</td>
+</tr>
+<tr>
+<td><code>accounts</code></td>
+<td>yes</td>
+<td><a href="#accounts">Accounts</a></td>
+<td>The list of ledger accounts configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-participants"><code>POST /participants</code></h3>
+<p>Creates a participant in the Hub.</p>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{&quot;name&quot;: &quot;payerfsp&quot;, &quot;currency&quot;: &quot;USD&quot;}&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency that the participant will transact in.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<blockquote>
+<p><strong>NOTE:</strong> In the example below, <code>dev1-central-ledger.mojaloop.live</code> indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.</p>
+</blockquote>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;name&quot;: &quot;payerfsp&quot;,
+  &quot;id&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/payerfsp&quot;,
+  &quot;created&quot;: &quot;\&quot;2021-01-12T10:56:30.000Z\&quot;&quot;,
+  &quot;isActive&quot;: 0,
+  &quot;links&quot;: {
+    &quot;self&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/hub&quot;
+  },
+  &quot;accounts&quot;: [
+    {
+      &quot;id&quot;: 30,
+      &quot;ledgerAccountType&quot;: &quot;POSITION&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 0,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    },
+    {
+      &quot;id&quot;: 31,
+      &quot;ledgerAccountType&quot;: &quot;SETTLEMENT&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 0,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    }
+  ]
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The identifier of the participant in the form of a fully qualified domain name combined with the participant&apos;s <code>fspId</code>.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the participant was created.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the participant is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>yes</td>
+<td><a href="#self">Self</a></td>
+<td>List of links for a Hypermedia-Driven RESTful Web Service.</td>
+</tr>
+<tr>
+<td><code>accounts</code></td>
+<td>yes</td>
+<td><a href="#accounts">Accounts</a></td>
+<td>The list of ledger accounts configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-participantslimits"><code>GET /participants/limits</code></h3>
+<p>Retrieves limits information for all participants.</p>
+<h4 id="query-parameters">Query parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>no</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the limit.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>no</td>
+<td><a href="#string">String</a></td>
+<td>Limit type.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/limits&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<blockquote>
+<p><strong>NOTE:</strong> In the example below, <code>dev1-central-ledger.mojaloop.live</code> indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.</p>
+</blockquote>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;name&quot;: &quot;payerfsp&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;limit&quot;: {
+      &quot;type&quot;: &quot;NET_DEBIT_CAP&quot;,
+      &quot;value&quot;: 10000,
+      &quot;alarmPercentage&quot;: 10
+    }
+  },
+  {
+    &quot;name&quot;: &quot;payeefsp&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;limit&quot;: {
+      &quot;type&quot;: &quot;NET_DEBIT_CAP&quot;,
+      &quot;value&quot;: 10000,
+      &quot;alarmPercentage&quot;: 10
+    }
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<p>Each limit in the returned list is applied to the specified participant name and currency in each object.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the participant.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>yes</td>
+<td><a href="#participantlimit">ParticipantLimit</a></td>
+<td>The limit configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-participantsname"><code>GET /participants/{name}</code></h3>
+<p>Retrieves information about a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<blockquote>
+<p><strong>NOTE:</strong> In the example below, <code>dev1-central-ledger.mojaloop.live</code> indicates where the Central Ledger service of the Mojaloop Hub is running. This detail will be different in your implementation.</p>
+</blockquote>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;name&quot;: &quot;payerfsp&quot;,
+  &quot;id&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/payerfsp&quot;,
+  &quot;created&quot;: &quot;\&quot;2021-03-04T13:42:02.000Z\&quot;&quot;,
+  &quot;isActive&quot;: 1,
+  &quot;links&quot;: {
+    &quot;self&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/payerfsp&quot;
+  },
+  &quot;accounts&quot;: [
+    {
+      &quot;id&quot;: 3,
+      &quot;ledgerAccountType&quot;: &quot;POSITION&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 1,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    },
+    {
+      &quot;id&quot;: 4,
+      &quot;ledgerAccountType&quot;: &quot;SETTLEMENT&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 1,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    },
+    {
+      &quot;id&quot;: 24,
+      &quot;ledgerAccountType&quot;: &quot;INTERCHANGE_FEE_SETTLEMENT&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 1,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    }
+  ]
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The identifier of the participant in the form of a fully qualified domain name combined with the participant&apos;s <code>fspId</code>.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the participant was created.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the participant is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>yes</td>
+<td><a href="#self">Self</a></td>
+<td>List of links for a Hypermedia-Driven RESTful Web Service.</td>
+</tr>
+<tr>
+<td><code>accounts</code></td>
+<td>yes</td>
+<td><a href="#accounts">Accounts</a></td>
+<td>The list of ledger accounts configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-participantsname"><code>PUT /participants/{name}</code></h3>
+<p>Updates participant details (activates/deactivates a participant).</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X PUT -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{&quot;isActive&quot;: true}&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the participant is active.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;name&quot;: &quot;payerfsp&quot;,
+  &quot;id&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/payerfsp&quot;,
+  &quot;created&quot;: &quot;\&quot;2021-03-04T13:42:02.000Z\&quot;&quot;,
+  &quot;isActive&quot;: 1,
+  &quot;links&quot;: {
+    &quot;self&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/payerfsp&quot;
+  },
+  &quot;accounts&quot;: [
+    {
+      &quot;id&quot;: 3,
+      &quot;ledgerAccountType&quot;: &quot;POSITION&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 1,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    },
+    {
+      &quot;id&quot;: 4,
+      &quot;ledgerAccountType&quot;: &quot;SETTLEMENT&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 1,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    },
+    {
+      &quot;id&quot;: 24,
+      &quot;ledgerAccountType&quot;: &quot;INTERCHANGE_FEE_SETTLEMENT&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 1,
+      &quot;createdDate&quot;: null,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    }
+  ]
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The identifier of the participant in the form of a fully qualified domain name combined with the participant&apos;s <code>fspId</code>.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the participant was created.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the participant is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>yes</td>
+<td><a href="#self">Self</a></td>
+<td>List of links for a Hypermedia-Driven RESTful Web Service.</td>
+</tr>
+<tr>
+<td><code>accounts</code></td>
+<td>yes</td>
+<td><a href="#accounts">Accounts</a></td>
+<td>The list of ledger accounts configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-participantsnameendpoints"><code>GET /participants/{name}/endpoints</code></h3>
+<p>Retrieves information about the endpoints configured for a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/endpoints&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants///&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_PUT_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants////error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_SUB_ID_DELETE&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants///&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/parties///&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/parties///&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/parties////error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_AUTHORIZATIONS&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants//&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants///error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants/&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/participants//error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTIES_GET&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/parties//&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTIES_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/parties//&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/parties///error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_QUOTES&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_TRX_REQ_SERVICE&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_TRANSFER_POST&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/transfers&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_TRANSFER_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/transfers/&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_TRANSFER_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/transfers//error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_BULK_TRANSFER_POST&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/bulkTransfers&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_BULK_TRANSFER_PUT&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/bulkTransfers/&quot;
+  },
+  {
+    &quot;type&quot;: &quot;FSPIOP_CALLBACK_URL_BULK_TRANSFER_ERROR&quot;,
+    &quot;value&quot;: &quot;http://dev1-sim-payerfsp-scheme-adapter:4000/bulkTransfers//error&quot;
+  },
+  {
+    &quot;type&quot;: &quot;NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL&quot;,
+    &quot;value&quot;: &quot;some.email@gmail.com&quot;
+  },
+  {
+    &quot;type&quot;: &quot;NET_DEBIT_CAP_ADJUSTMENT_EMAIL&quot;,
+    &quot;value&quot;: &quot;some.email@gmail.com&quot;
+  },
+  {
+    &quot;type&quot;: &quot;SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL&quot;,
+    &quot;value&quot;: &quot;some.email@gmail.com&quot;
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of endpoint.</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Endpoint value.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-participantsnameendpoints"><code>POST /participants/{name}/endpoints</code></h3>
+<p>Adds/updates endpoints for a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{&quot;type&quot;: &quot;NET_DEBIT_CAP_ADJUSTMENT_EMAIL&quot;, &quot;value&quot;: &quot;some.email@org.com&quot;}&apos;
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/endpoints
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of endpoint.</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Endpoint value.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 201 Created
+Content-Type: application/json
+</code></pre><h3 id="get-participantsnamelimits"><code>GET /participants/{name}/limits</code></h3>
+<p>Retrieves limits information for a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="query-parameters">Query parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>no</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the limit.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>no</td>
+<td><a href="#string">String</a></td>
+<td>Limit type.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/limits&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;limit&quot;: {
+      &quot;type&quot;: &quot;NET_DEBIT_CAP&quot;,
+      &quot;value&quot;: 10000,
+      &quot;alarmPercentage&quot;: 10
+    }
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<p>Each limit in the returned list is applied to the specified participant name and currency in each object.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the participant.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>yes</td>
+<td><a href="#participantlimit">ParticipantLimit</a></td>
+<td>The limit configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-participantsnamelimits"><code>PUT /participants/{name}/limits</code></h3>
+<p>Adjusts limits for a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X PUT -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{ \
+    &quot;currency&quot;: &quot;USD&quot;, \
+    &quot;limit&quot;: { \
+      &quot;type&quot;: NET_DEBIT_CAP&quot;, \
+      &quot;value&quot;: 10000, \
+      &quot;alarmPercentage&quot;: 20
+    } \
+  }&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/limits
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the participant.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>yes</td>
+<td><a href="#participantlimit">ParticipantLimit</a></td>
+<td>The limit configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;currency&quot;: &quot;USD&quot;,
+  &quot;limit&quot;: {
+    &quot;type&quot;: &quot;NET_DEBIT_CAP&quot;,
+    &quot;value&quot;: 10000,
+    &quot;alarmPercentage&quot;: 20
+  }
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the participant.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>yes</td>
+<td><a href="#participantlimit">ParticipantLimit</a></td>
+<td>The limit configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-participantsnamepositions"><code>GET /participants/{name}/positions</code></h3>
+<p>Retrieves the position of a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="query-parameters">Query parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>no</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the limit.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/positions&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;value&quot;: 150,
+    &quot;changedDate&quot;: &quot;2021-05-10T08:01:38.000Z&quot;
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the participant.</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td><a href="#number">Number</a></td>
+<td>Position value.</td>
+</tr>
+<tr>
+<td><code>changedDate</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the position last changed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-participantsnameaccounts"><code>GET /participants/{name}/accounts</code></h3>
+<p>Retrieves the accounts and balances of a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/accounts&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: 3,
+    &quot;ledgerAccountType&quot;: &quot;POSITION&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;isActive&quot;: 1,
+    &quot;value&quot;: 150,
+    &quot;reservedValue&quot;: 0,
+    &quot;changedDate&quot;: &quot;2021-05-10T08:01:38.000Z&quot;
+  },
+  {
+    &quot;id&quot;: 4,
+    &quot;ledgerAccountType&quot;: &quot;SETTLEMENT&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;isActive&quot;: 1,
+    &quot;value&quot;: -165000,
+    &quot;reservedValue&quot;: 0,
+    &quot;changedDate&quot;: &quot;2021-05-10T14:27:02.000Z&quot;
+  },
+  {
+    &quot;id&quot;: 24,
+    &quot;ledgerAccountType&quot;: &quot;INTERCHANGE_FEE_SETTLEMENT&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;isActive&quot;: 1,
+    &quot;value&quot;: 0,
+    &quot;reservedValue&quot;: 0,
+    &quot;changedDate&quot;: &quot;2021-03-30T12:23:06.000Z&quot;
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Identifier of the ledger account.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountType</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the ledger account.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the ledger account is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td><a href="#number">Number</a></td>
+<td>Account balance value.</td>
+</tr>
+<tr>
+<td><code>reservedValue</code></td>
+<td>yes</td>
+<td><a href="#number">Number</a></td>
+<td>Value reserved in the account.</td>
+</tr>
+<tr>
+<td><code>changedDate</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the ledger account last changed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-participantsnameaccounts"><code>POST /participants/{name}/accounts</code></h3>
+<p>Creates accounts in the Hub.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{&quot;currency&quot;: &quot;USD&quot;, &quot;type&quot;: &quot;HUB_MULTILATERAL_SETTLEMENT&quot;}&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/accounts
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the participant ledger account.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;name&quot;: &quot;hub&quot;,
+  &quot;id&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/hub&quot;,
+  &quot;created&quot;: &quot;2021-01-12T10:56:30.000Z&quot;,
+  &quot;isActive&quot;: 0,
+  &quot;links&quot;: {
+    &quot;self&quot;: &quot;dev1-central-ledger.mojaloop.live/participants/hub&quot;
+  },
+  &quot;accounts&quot;: [
+    {
+      &quot;id&quot;: 1,
+      &quot;ledgerAccountType&quot;: &quot;HUB_MULTILATERAL_SETTLEMENT&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;isActive&quot;: 0,
+      &quot;createdDate&quot;: &quot;2021-01-12T10:56:30.000Z&quot;,
+      &quot;createdBy&quot;: &quot;unknown&quot;
+    }
+  ]
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The identifier of the participant in the form of a fully qualified domain name combined with the participant&apos;s <code>fspId</code>.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the participant was created.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the participant is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>yes</td>
+<td><a href="#self">Self</a></td>
+<td>List of links for a Hypermedia-Driven RESTful Web Service.</td>
+</tr>
+<tr>
+<td><code>accounts</code></td>
+<td>yes</td>
+<td><a href="#accounts">Accounts</a></td>
+<td>The list of ledger accounts configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-participantsnameaccountsid"><code>POST /participants/{name}/accounts/{id}</code></h3>
+<p>Records Funds In or Out of a participant account.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Account identifier.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{ \
+    &quot;transferId&quot;: &quot;bfd38d14-893f-469d-a6ca-a312a0223949&quot;, \
+    &quot;externalReference&quot;: &quot;660616&quot;, \
+    &quot;action&quot;: &quot;recordFundsIn&quot;, \
+    &quot;reason&quot;: &quot;settlement&quot;, \
+    &quot;amount&quot;: { \
+      &quot;amount&quot;: &quot;5000&quot;, \
+      &quot;currency&quot;: &quot;USD&quot; \
+    }, \
+    &quot;extensionList&quot;: { \
+      &quot;extension&quot;: [ \
+        { \
+          &quot;key&quot;: &quot;scheme&quot;, \
+          &quot;value&quot;: &quot;abc&quot; \
+        } \
+      ] \
+    } \
+  }&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/accounts/2
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transferId</code></td>
+<td>yes</td>
+<td><a href="#uuid">UUID</a></td>
+<td>Transfer identifier.</td>
+</tr>
+<tr>
+<td><code>externalReference</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Reference to any external data, such as an identifier from the settlement bank.</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a></td>
+<td>The action performed on the funds. Possible values are: <code>recordFundsIn</code> and <code>recordFundsOutPrepareReserve</code>.</td>
+</tr>
+<tr>
+<td><code>reason</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The reason for the FundsIn or FundsOut action.</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>yes</td>
+<td><a href="#money">Money</a></td>
+<td>The FundsIn or FundsOut amount.</td>
+</tr>
+<tr>
+<td><code>extensionList</code></td>
+<td>no</td>
+<td><a href="#extensionlist">ExtensionList</a></td>
+<td>Additional details.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 202 Accepted
+</code></pre><h3 id="put-participantsnameaccountsid"><code>PUT /participants/{name}/accounts/{id}</code></h3>
+<p>Updates a participant account. Currently, updating only the <code>isActive</code> flag is supported.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Account identifier.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X PUT -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{&quot;isActive&quot;: true}&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/account/2
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the participant account is active.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+</code></pre><h3 id="put-participantsnameaccountsidtransferstransferid"><code>PUT /participants/{name}/accounts/{id}/transfers/{transferId}</code></h3>
+<p>Records a transfer as a Funds In or Out transaction for a participant account. </p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Account identifier.</td>
+</tr>
+<tr>
+<td><code>transferId</code></td>
+<td>yes</td>
+<td><a href="#uuid">UUID</a></td>
+<td>Transfer identifier.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X PUT -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{&quot;action&quot;: &quot;recordFundsOutCommit&quot;, &quot;reason&quot;: &quot;fix&quot;}&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/account/2/transfers/bfd38d14-893f-469d-a6ca-a312a0223949
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a></td>
+<td>The FundsOut action performed. Possible values are: <code>recordFundsOutCommit</code> and <code>recordFundsOutAbort</code>.</td>
+</tr>
+<tr>
+<td><code>reason</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The reason for the FundsOut action.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 202 Accepted
+</code></pre><h3 id="post-participantsnameinitialpositionandlimits"><code>POST /participants/{name}/initialPositionAndLimits</code></h3>
+<p>Adds initial limits and a position for a particular participant.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String(2..30)</a></td>
+<td>The name of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{ \
+    &quot;currency&quot;: &quot;USD&quot;, \
+    &quot;limit&quot;: { \
+      &quot;type&quot;: &quot;NET_DEBIT_CAP&quot;, \
+      &quot;value&quot;: &quot;10000&quot; \
+    }, \
+    &quot;initialPosition&quot;: 0 \
+  }&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/participants/payerfsp/initialPositionAndLimits
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the participant.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>yes</td>
+<td><a href="#participantlimit">ParticipantLimit</a></td>
+<td>The limit configured for the participant.</td>
+</tr>
+<tr>
+<td><code>initialPosition</code></td>
+<td>no</td>
+<td><a href="#number">Number</a></td>
+<td>Initial Position.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 201 Created
+</code></pre><h2 id="api-resource-settlementmodels">API Resource <code>/settlementModels</code></h2>
+<p>The services provided by the resource <code>/settlementModels</code> are used by the Hub Operator for creating, updating, and viewing settlement models.</p>
+<h3 id="get-settlementmodels"><code>GET /settlementModels</code></h3>
+<p>Retrieves information about all settlement models.</p>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/settlementModels&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;settlementModelId&quot;: 1,
+    &quot;name&quot;: &quot;DEFERREDNETUSD&quot;,
+    &quot;isActive&quot;: true,
+    &quot;settlementGranularity&quot;: &quot;NET&quot;,
+    &quot;settlementInterchange&quot;: &quot;MULTILATERAL&quot;,
+    &quot;settlementDelay&quot;: &quot;DEFERRED&quot;,
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;requireLiquidityCheck&quot;: true,
+    &quot;ledgerAccountTypeId&quot;: &quot;POSITION&quot;,
+    &quot;autoPositionReset&quot;: true
+  },
+  {
+    &quot;settlementModelId&quot;: 4,
+    &quot;name&quot;: &quot;DEFERREDNETEUR&quot;,
+    &quot;isActive&quot;: true,
+    &quot;settlementGranularity&quot;: &quot;NET&quot;,
+    &quot;settlementInterchange&quot;: &quot;MULTILATERAL&quot;,
+    &quot;settlementDelay&quot;: &quot;DEFERRED&quot;,
+    &quot;currency&quot;: &quot;EUR&quot;,
+    &quot;requireLiquidityCheck&quot;: true,
+    &quot;ledgerAccountTypeId&quot;: &quot;SETTLEMENT&quot;,
+    &quot;autoPositionReset&quot;: true
+  }
+]
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementModelId</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Settlement model identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Settlement model name.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model is active.</td>
+</tr>
+<tr>
+<td><code>settlementGranularity</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies whether transfers are settled one by one or as a batch. Possible values are: <br> <code>GROSS</code>: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> <code>NET</code>: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.</td>
+</tr>
+<tr>
+<td><code>settlementInterchange</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies the type of settlement arrangement between parties. Possible values are: <br> <code>BILATERAL</code>: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> <code>MULTILATERAL</code>: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.</td>
+</tr>
+<tr>
+<td><code>settlementDelay</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies if settlement happens immediately after a transfer has completed or with a delay. Possible values are: <br> <code>IMMEDIATE</code>: Settlement happens immediately after a transfer has completed. <br> <code>DEFERRED</code>: Settlement is managed by the Hub operator on-demand or via a schedule.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the settlement model.</td>
+</tr>
+<tr>
+<td><code>requireLiquidityCheck</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires liquidity check.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountTypeId</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account. Possible values are: <br> <code>INTERCHANGE_FEE</code>: Tracks the interchange fees charged for transfers. <br> <code>POSITION</code>: Tracks how much a DFSP owes or is owed. <br> <code>SETTLEMENT</code>: The DFSP&apos;s Settlement Bank Account mirrored in the Hub. Acts as a reconciliation account and mirrors the movement of real funds.</td>
+</tr>
+<tr>
+<td><code>autoPositionReset</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires the automatic reset of the position.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-settlementmodels"><code>POST /settlementModels</code></h3>
+<p>Creates a settlement model.</p>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; \
+  -d &apos;{ \
+    &quot;name&quot;: &quot;DEFERREDNET&quot;, \
+    &quot;settlementGranularity&quot;: &quot;NET&quot;, \
+    &quot;settlementInterchange&quot;: &quot;MULTILATERAL&quot;, \
+    &quot;settlementDelay&quot;: &quot;DEFERRED&quot;, \
+    &quot;requireLiquidityCheck&quot;: true, \
+    &quot;ledgerAccountType&quot;: &quot;POSITION&quot;, \
+    &quot;autoPositionReset&quot;: true \
+  }&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/settlementModels
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Settlement model name.</td>
+</tr>
+<tr>
+<td><code>settlementGranularity</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies whether transfers are settled one by one or as a batch. Possible values are: <br> <code>GROSS</code>: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> <code>NET</code>: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.</td>
+</tr>
+<tr>
+<td><code>settlementInterchange</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies the type of settlement arrangement between parties. Possible values are: <br> <code>BILATERAL</code>: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> <code>MULTILATERAL</code>: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.</td>
+</tr>
+<tr>
+<td><code>settlementDelay</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies if settlement happens immediately after a transfer has completed or with a delay. Possible values are: <br> <code>IMMEDIATE</code>: Settlement happens immediately after a transfer has completed. <br> <code>DEFERRED</code>: Settlement is managed by the Hub operator on-demand or via a schedule.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the settlement model.</td>
+</tr>
+<tr>
+<td><code>requireLiquidityCheck</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires liquidity check.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountTypeId</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account. Possible values are: <br> <code>INTERCHANGE_FEE</code>: Tracks the interchange fees charged for transfers. <br> <code>POSITION</code>: Tracks how much a DFSP owes or is owed. <br> <code>SETTLEMENT</code>: The DFSP&apos;s Settlement Bank Account mirrored in the Hub. Acts as a reconciliation account and mirrors the movement of real funds.</td>
+</tr>
+<tr>
+<td><code>settlementAccountType</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>A special type of ledger account into which settlements should be settled. Possible values are: <br> <code>SETTLEMENT</code>: A settlement account for the principal value of transfers (that is, the amount of money that the Payer wants the Payee to receive). <br> <code>INTERCHANGE_FEE_SETTLEMENT</code>: A settlement account for the fees associated with transfers.</td>
+</tr>
+<tr>
+<td><code>autoPositionReset</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires the automatic reset of the position.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 201 Created
+</code></pre><h3 id="get-settlementmodelsname"><code>GET /settlementModels/{name}</code></h3>
+<p>Retrieves information about a particular settlement model.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The name of the settlement model.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/settlementModels/DEFERREDNET&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;settlementModelId&quot;: 1,
+  &quot;name&quot;: &quot;DEFERREDNET&quot;,
+  &quot;isActive&quot;: true,
+  &quot;settlementGranularity&quot;: &quot;NET&quot;,
+  &quot;settlementInterchange&quot;: &quot;MULTILATERAL&quot;,
+  &quot;settlementDelay&quot;: &quot;DEFERRED&quot;,
+  &quot;currency&quot;: &quot;USD&quot;,
+  &quot;requireLiquidityCheck&quot;: true,
+  &quot;ledgerAccountTypeId&quot;: &quot;POSITION&quot;,
+  &quot;autoPositionReset&quot;: true
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementModelId</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Settlement model identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Settlement model name.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model is active.</td>
+</tr>
+<tr>
+<td><code>settlementGranularity</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies whether transfers are settled one by one or as a batch. Possible values are: <br> <code>GROSS</code>: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> <code>NET</code>: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.</td>
+</tr>
+<tr>
+<td><code>settlementInterchange</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies the type of settlement arrangement between parties. Possible values are: <br> <code>BILATERAL</code>: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> <code>MULTILATERAL</code>: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.</td>
+</tr>
+<tr>
+<td><code>settlementDelay</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies if settlement happens immediately after a transfer has completed or with a delay. Possible values are: <br> <code>IMMEDIATE</code>: Settlement happens immediately after a transfer has completed. <br> <code>DEFERRED</code>: Settlement is managed by the Hub operator on-demand or via a schedule.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the settlement model.</td>
+</tr>
+<tr>
+<td><code>requireLiquidityCheck</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires liquidity check.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountTypeId</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account. Possible values are: <br> <code>INTERCHANGE_FEE</code>: Tracks the interchange fees charged for transfers. <br> <code>POSITION</code>: Tracks how much a DFSP owes or is owed. <br> <code>SETTLEMENT</code>: The DFSP&apos;s Settlement Bank Account mirrored in the Hub. Acts as a reconciliation account and mirrors the movement of real funds.</td>
+</tr>
+<tr>
+<td><code>autoPositionReset</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires the automatic reset of the position.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-settlementmodelsname"><code>PUT /settlementModels/{name}</code></h3>
+<p>Updates a settlement model (activates/deactivates a settlement model).</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The name of the settlement model.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl -X PUT -H &quot;Content-Type: application/json&quot; \ 
+  -d &apos;{&quot;isActive&quot;: true}&apos; \
+  http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/settlementModels/DEFERREDNET
+</code></pre><h4 id="request-data-model">Request data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model is active.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;settlementModelId&quot;: 1,
+  &quot;name&quot;: &quot;DEFERREDNET&quot;,
+  &quot;isActive&quot;: true,
+  &quot;settlementGranularity&quot;: &quot;NET&quot;,
+  &quot;settlementInterchange&quot;: &quot;MULTILATERAL&quot;,
+  &quot;settlementDelay&quot;: &quot;DEFERRED&quot;,
+  &quot;currency&quot;: &quot;USD&quot;,
+  &quot;requireLiquidityCheck&quot;: true,
+  &quot;ledgerAccountTypeId&quot;: &quot;POSITION&quot;,
+  &quot;autoPositionReset&quot;: true
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementModelId</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Settlement model identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Settlement model name.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model is active.</td>
+</tr>
+<tr>
+<td><code>settlementGranularity</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies whether transfers are settled one by one or as a batch. Possible values are: <br> <code>GROSS</code>: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> <code>NET</code>: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.</td>
+</tr>
+<tr>
+<td><code>settlementInterchange</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies the type of settlement arrangement between parties. Possible values are: <br> <code>BILATERAL</code>: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> <code>MULTILATERAL</code>: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.</td>
+</tr>
+<tr>
+<td><code>settlementDelay</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies if settlement happens immediately after a transfer has completed or with a delay. Possible values are: <br> <code>IMMEDIATE</code>: Settlement happens immediately after a transfer has completed. <br> <code>DEFERRED</code>: Settlement is managed by the Hub operator on-demand or via a schedule.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the settlement model.</td>
+</tr>
+<tr>
+<td><code>requireLiquidityCheck</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires liquidity check.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountTypeId</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account. Possible values are: <br> <code>INTERCHANGE_FEE</code>: Tracks the interchange fees charged for transfers. <br> <code>POSITION</code>: Tracks how much a DFSP owes or is owed. <br> <code>SETTLEMENT</code>: The DFSP&apos;s Settlement Bank Account mirrored in the Hub. Acts as a reconciliation account and mirrors the movement of real funds.</td>
+</tr>
+<tr>
+<td><code>autoPositionReset</code></td>
+<td>yes</td>
+<td><a href="boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires the automatic reset of the position.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="api-resource-transactions">API Resource <code>/transactions</code></h2>
+<p>The services provided by the resource <code>/transactions</code> are used by the Hub Operator for retrieving transfer details.</p>
+<h3 id="get-transactionsid"><code>GET /transactions/{id}</code></h3>
+<p>Retrieves information about a particular transaction.</p>
+<h4 id="path-parameters">Path parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#uuid">UUID</a></td>
+<td>Transfer identifier.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example request</h4>
+<pre><code>curl &apos;http://&lt;domain-where-hub-central-ledger-service-is-running&gt;/transactions/85feac2f-39b2-491b-817e-4a03203d4f14&apos;
+</code></pre><h4 id="example-response">Example response</h4>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;quoteId&quot;: &quot;7c23e80c-d078-4077-8263-2c047876fcf6&quot;,
+  &quot;transactionId&quot;: &quot;85feac2f-39b2-491b-817e-4a03203d4f14&quot;,
+  &quot;transactionRequestId&quot;: &quot;a8323bc6-c228-4df2-ae82-e5a997baf898&quot;,
+  &quot;payee&quot;: {
+    &quot;partyIdInfo&quot;: {
+      &quot;partyIdType&quot;: &quot;MSISDN&quot;,
+      &quot;partyIdentifier&quot;: &quot;123456789&quot;,
+      &quot;fspId&quot;: &quot;MobileMoneyAbc&quot;
+    },
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;personalInfo&quot;: {
+      &quot;complexName&quot;: {
+        &quot;firstName&quot;: &quot;John&quot;,
+        &quot;middleName&quot;: &quot;William&quot;,
+        &quot;lastName&quot;: &quot;Doe&quot;
+      },
+      &quot;dateOfBirth&quot;: &quot;1966-06-16&quot;
+    }
+  },
+  &quot;payer&quot;: {
+    &quot;partyIdInfo&quot;: {
+      &quot;partyIdType&quot;: &quot;MSISDN&quot;,
+      &quot;partyIdentifier&quot;: &quot;987654321&quot;,
+      &quot;fspId&quot;: &quot;MobileMoneyXyz&quot;
+    },
+    &quot;name&quot;: &quot;Jane Doe&quot;,
+    &quot;personalInfo&quot;: {
+      &quot;complexName&quot;: {
+        &quot;firstName&quot;: &quot;Mary&quot;,
+        &quot;middleName&quot;: &quot;Jane&quot;,
+        &quot;lastName&quot;: &quot;Doe&quot;
+      },
+      &quot;dateOfBirth&quot;: &quot;1975-05-15&quot;
+    }
+  },
+  &quot;amount&quot;: {
+    &quot;currency&quot;: &quot;USD&quot;,
+    &quot;amount&quot;: &quot;50&quot;
+  },
+  &quot;transactionType&quot;: {
+    &quot;scenario&quot;: &quot;DEPOSIT&quot;,
+    &quot;initiator&quot;: &quot;PAYER&quot;,
+    &quot;initiatorType&quot;: &quot;CONSUMER&quot;
+  }
+}
+</code></pre><h4 id="response-data-model">Response data model</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>quoteId</code></td>
+<td></td>
+<td><a href="#uuid">UUID</a></td>
+<td>Quote identifier.</td>
+</tr>
+<tr>
+<td><code>transactionId</code></td>
+<td></td>
+<td><a href="#uuid">UUID</a></td>
+<td>Transaction identifier.</td>
+</tr>
+<tr>
+<td><code>transactionRequestId</code></td>
+<td></td>
+<td><a href="#string">String</a></td>
+<td>Identifies an optional previously-sent transaction request.</td>
+</tr>
+<tr>
+<td><code>payee</code></td>
+<td></td>
+<td><a href="#party">Party</a></td>
+<td>Payee details.</td>
+</tr>
+<tr>
+<td><code>payer</code></td>
+<td></td>
+<td><a href="#party">Party</a></td>
+<td>Payer details.</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td></td>
+<td><a href="#money">Money</a></td>
+<td>Transaction amount.</td>
+</tr>
+<tr>
+<td><code>transactionType</code></td>
+<td></td>
+<td><a href="#transactiontype">TransactionType</a></td>
+<td>Transaction details.</td>
+</tr>
+<tr>
+<td><code>note</code></td>
+<td></td>
+<td><a href="#string">String</a></td>
+<td>A memo that will be attached to the transaction.</td>
+</tr>
+<tr>
+<td><code>extensionList</code></td>
+<td></td>
+<td><a href="#extensionlist">ExtensionList</a></td>
+<td>Additional details.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="data-models-used-by-the-api">Data models used by the API</h1>
+<h2 id="format">Format</h2>
+<p>For details on the formats used for element data types used by the API, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#71-format-introduction">7.1 Format Introduction</a> in the Mojaloop FSPIOP API Definition.</p>
+<h2 id="element-data-type-formats">Element data type formats</h2>
+<p>This section defines element data types used by the API.</p>
+<h3 id="amount">Amount</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7213-amount">7.2.13 Amount</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="boolean">Boolean</h3>
+<p>A <code>&quot;true&quot;</code> or <code>&quot;false&quot;</code> value.</p>
+<h3 id="datetime">DateTime</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7214-datetime">7.2.14 DateTime</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="enum">Enum</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#722-enum">7.2.2 Enum</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="integer">Integer</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#725-integer">7.2.5 Integer</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="number">Number</h3>
+<p>The API data type <strong>Number</strong> is a an arbitrary-precision, base-10 decimal number value.</p>
+<h3 id="string">String</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#721-string">7.2.1 String</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="uuid">UUID</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7216-uuid">7.2.16 UUID</a> in the Mojaloop FSPIOP API Definition.</p>
+<h2 id="element-definitions">Element definitions</h2>
+<p>This section defines element types used by the API.</p>
+<h3 id="isactive">IsActive</h3>
+<p>Data model for the element <strong>IsActive</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not a ledger account / participant is active. Possible values are <code>1</code> (active) and <code>0</code> (not active).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="isactiveboolean">IsActiveBoolean</h3>
+<p>Data model for the element <strong>IsActiveBoolean</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#boolean">Boolean</a></td>
+<td>A flag to indicate whether or not an account / participant / settlement model is active.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="currencyenum">CurrencyEnum</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#739-currency">7.3.9 Currency</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="requireliquiditycheck">RequireLiquidityCheck</h3>
+<p>Data model for the element <strong>RequireLiquidityCheck</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requireLiquidityCheck</code></td>
+<td>yes</td>
+<td><a href="#boolean">Boolean</a></td>
+<td>A flag to indicate whether or not a settlement model requires liquidity check.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="self">Self</h3>
+<p>Data model for the element <strong>Self</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>self</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Fully qualified domain name combined with the <code>fspId</code> of the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="settlementdelay">SettlementDelay</h3>
+<p>Data model for the element <strong>SettlementDelay</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementDelay</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a> of String</td>
+<td>Specifies if settlement happens immediately after a transfer has completed or with a delay. Allowed values for the enumeration are: <br> <code>IMMEDIATE</code>: Settlement happens immediately after a transfer has completed. <br> <code>DEFERRED</code>: Settlement is managed by the Hub operator on-demand or via a schedule.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="settlementgranularity">SettlementGranularity</h3>
+<p>Data model for the element <strong>SettlementGranularity</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementGranularity</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a> of String</td>
+<td>Specifies whether transfers are settled one by one or as a batch. Allowed values for the enumeration are: <br> <code>GROSS</code>: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> <code>NET</code>: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="settlementinterchange">SettlementInterchange</h3>
+<p>Data model for the element <strong>SettlementInterchange</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementInterchange</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a> of String</td>
+<td>Specifies the type of settlement arrangement between parties. Allowed values for the enumeration are: <br> <code>BILATERAL</code>: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> <code>MULTILATERAL</code>: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="complex-types">Complex types</h2>
+<h3 id="accounts">Accounts</h3>
+<p>The list of ledger accounts configured for the participant. For details on the account object, see <a href="#individualaccount">IndividualAccount</a>.</p>
+<h3 id="errorinformation">ErrorInformation</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#742-errorinformation">7.4.2 ErrorInformation</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="errorinformationresponse">ErrorInformationResponse</h3>
+<p>Data model for the complex type object that contains an optional element <a href="#errorinformation">ErrorInformation</a> used along with 4xx and 5xx responses.</p>
+<h3 id="extension">Extension</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#743-extension">7.4.3 Extension</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="extensionlist">ExtensionList</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#744-extensionlist">7.4.4 ExtensionList</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="individualaccount">IndividualAccount</h3>
+<p>Data model for the complex type <strong>IndividualAccount</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Identifier of the ledger account.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountType</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of the ledger account (for example, POSITION).</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency of the account.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the ledger account is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>createdDate</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the ledger account was created.</td>
+</tr>
+<tr>
+<td><code>createdBy</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The entity that created the ledger account.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="limit">Limit</h3>
+<p>Data model for the complex type <strong>Limit</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Limit type.</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td>a positive <a href="#number">Number</a></td>
+<td>Limit value.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="money">Money</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7410-money">7.4.10 Money</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="participant">Participant</h3>
+<p>Data model for the complex type <strong>Participant</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The name of the participant.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The identifier of the participant in the form of a fully qualified domain name combined with the participant&apos;s <code>fspId</code>.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>yes</td>
+<td><a href="#datetime">DateTime</a></td>
+<td>Date and time when the participant was created.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer(1)</a></td>
+<td>A flag to indicate whether or not the participant is active. Possible values are <code>1</code> and <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>links</code></td>
+<td>yes</td>
+<td><a href="#self">Self</a></td>
+<td>List of links for a Hypermedia-Driven RESTful Web Service.</td>
+</tr>
+<tr>
+<td><code>accounts</code></td>
+<td>yes</td>
+<td><a href="#accounts">Accounts</a></td>
+<td>The list of ledger accounts configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="participantfunds">ParticipantFunds</h3>
+<p>Data model for the complex type <strong>ParticipantFunds</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transferId</code></td>
+<td>yes</td>
+<td><a href="#uuid">UUID</a></td>
+<td>Transfer identifier.</td>
+</tr>
+<tr>
+<td><code>externalReference</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Reference to any external data, such as an identifier from the settlement bank.</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a></td>
+<td>The action performed on the funds. Possible values are: <code>recordFundsIn</code> and <code>recordFundsOutPrepareReserve</code>.</td>
+</tr>
+<tr>
+<td><code>reason</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The reason for the FundsIn or FundsOut action.</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>yes</td>
+<td><a href="#money">Money</a></td>
+<td>The FundsIn or FundsOut amount.</td>
+</tr>
+<tr>
+<td><code>extensionList</code></td>
+<td>no</td>
+<td><a href="#extensionlist">ExtensionList</a></td>
+<td>Additional details.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="participantlimit">ParticipantLimit</h3>
+<p>Data model for the complex type <strong>ParticipantLimit</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The type of participant limit (for example, <code>NET_DEBIT_CAP</code>.)</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td><a href="#number">Number</a></td>
+<td>The value of the limit that has been set for the participant.</td>
+</tr>
+<tr>
+<td><code>alarmPercentage</code></td>
+<td>yes</td>
+<td><a href="#number">Number</a></td>
+<td>An alarm notification is triggered when a pre-specified percentage of the limit is reached. Specifying an <code>alarmPercentage</code> is optional. If not specified, it will default to 10 percent, expressed as <code>10</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="participantsnameendpointsobject">ParticipantsNameEndpointsObject</h3>
+<p>Data model for the complex type <strong>ParticipantsNameEndpointsObject</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The endpoint type.</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The endpoint value.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="participantsnamelimitsobject">ParticipantsNameLimitsObject</h3>
+<p>Data model for the complex type <strong>ParticipantsNameLimitsObject</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the participant.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>yes</td>
+<td><a href="#participantlimit">ParticipantLimit</a></td>
+<td>The limit configured for the participant.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="party">Party</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7411-party">7.4.11 Party</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="partycomplexname">PartyComplexName</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7412-partycomplexname">7.4.12 PartyComplexName</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="partyidinfo">PartyIdInfo</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7413-partyidinfo">7.4.13 PartyIdInfo</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="partypersonalinfo">PartyPersonalInfo</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7414-partypersonalinfo">7.4.14 PartyPersonalInfo</a> in the Mojaloop FSPIOP API Definition.</p>
+<h3 id="recordfundsout">RecordFundsOut</h3>
+<p>Data model for the complex type <strong>RecordFundsOut</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action</code></td>
+<td>yes</td>
+<td><a href="#enum">Enum</a></td>
+<td>The FundsOut action performed. Possible values are: <code>recordFundsOutCommit</code> and <code>recordFundsOutAbort</code>.</td>
+</tr>
+<tr>
+<td><code>reason</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>The reason for the FundsOut action.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="refund">Refund</h3>
+<p>Data model for the complex type <strong>Refund</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>originalTransactionId</code></td>
+<td>yes</td>
+<td><a href="#uuid">UUID</a></td>
+<td>Reference to the original transaction id that is requested to be refunded.</td>
+</tr>
+<tr>
+<td><code>refundReason</code></td>
+<td>no</td>
+<td><a href="#string">String(1-128)</a></td>
+<td>Free text indicating the reason for the refund.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="settlementmodelsobject">SettlementModelsObject</h3>
+<p>Data model for the complex type <strong>SettlementModelsObject</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>settlementModelId</code></td>
+<td>yes</td>
+<td><a href="#integer">Integer</a></td>
+<td>Settlement model identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Settlement model name.</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>yes</td>
+<td><a href="#boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model is active.</td>
+</tr>
+<tr>
+<td><code>settlementGranularity</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies whether transfers are settled one by one or as a batch. Possible values are: <br> <code>GROSS</code>: Settlement is executed after each transfer is completed, that is, there is a settlement transaction that corresponds to every transaction. <br> <code>NET</code>: A group of transfers is settled together in a single settlement transaction, with each participant settling the net of all transfers over a given period of time.</td>
+</tr>
+<tr>
+<td><code>settlementInterchange</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies the type of settlement arrangement between parties. Possible values are: <br> <code>BILATERAL</code>: Each participant settles its obligations with each other separately, and the scheme is not a party to the settlement. <br> <code>MULTILATERAL</code>: Each participant settles with the scheme for the net of its obligations, rather than settling separately with each other party.</td>
+</tr>
+<tr>
+<td><code>settlementDelay</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Specifies if settlement happens immediately after a transfer has completed or with a delay. Possible values are: <br> <code>IMMEDIATE</code>: Settlement happens immediately after a transfer has completed. <br> <code>DEFERRED</code>: Settlement is managed by the Hub operator on-demand or via a schedule.</td>
+</tr>
+<tr>
+<td><code>currency</code></td>
+<td>yes</td>
+<td><a href="#currencyenum">CurrencyEnum</a></td>
+<td>The currency configured for the settlement model.</td>
+</tr>
+<tr>
+<td><code>requireLiquidityCheck</code></td>
+<td>yes</td>
+<td><a href="#boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires liquidity check.</td>
+</tr>
+<tr>
+<td><code>ledgerAccountTypeId</code></td>
+<td>yes</td>
+<td><a href="#string">String</a></td>
+<td>Type of ledger account. Possible values are: <br> <code>INTERCHANGE_FEE</code>: Tracks the interchange fees charged for transfers. <br> <code>POSITION</code>: Tracks how much a DFSP owes or is owed. <br> <code>SETTLEMENT</code>: The DFSP&apos;s Settlement Bank Account mirrored in the Hub. Acts as a reconciliation account and mirrors the movement of real funds.</td>
+</tr>
+<tr>
+<td><code>autoPositionReset</code></td>
+<td>yes</td>
+<td><a href="#boolean">Boolean</a></td>
+<td>A flag to indicate whether or not the settlement model requires the automatic reset of the position.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="transactiontype">TransactionType</h3>
+<p>For details, see section <a href="../fspiop-api/documents/API-Definition_v1.1.html#7418-transactiontype">7.4.18 TransactionType</a> in the Mojaloop FSPIOP API Definition.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"showToc":true,"title":"Central Ledger API v1.0","level":"1.1.6","depth":2,"next":{"title":"Scheme Rules","level":"1.1.7","depth":2,"path":"fspiop-api/documents/Scheme-Rules.md","ref":"fspiop-api/documents/Scheme-Rules.md","articles":[]},"previous":{"title":"API Definition v1.1","level":"1.1.5","depth":2,"path":"fspiop-api/documents/API-Definition_v1.1.md","ref":"fspiop-api/documents/API-Definition_v1.1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.x.x","theme":"default","variables":{"importedVars":{"mojaloop":{"spec":{"version":"v1.0","uri":{"doc":"https://github.com/mojaloop/mojaloop-specification/blob/master/API%20Definition%20v1.0.md","api":"https://github.com/mojaloop/mojaloop-specification/blob/master/Supporting%20Files/fspiop-rest-v1.0-OpenAPI-implementation.yaml"}}}}},"plugins":["swagger","editlink","include","insert-logo","plantuml-svg","collapsible-chapters","back-to-top-button","theme-api","variables","changelog","page-toc"],"pluginsConfig":{"plantuml-svg":{},"editlink":{"label":"Edit This Page","multilingual":true,"base":"https://github.com/mojaloop/mojaloop-specification/edit/master"},"theme-gestalt":{"logo":"https://mojaloop.io/images/logo.png","favicon":"https://mojaloop.io/images/logo.png","baseUrl":null,"excludeDefaultStyles":false,"doNotHideChildrenChapters":false},"include":{},"search":{},"collapsible-chapters":{},"page-toc":{"selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4","position":"before-first","showByDefault":true},"swagger":{"file":""},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"uml":{"format":"png","nailgun":false},"changelog":{},"theme-api":{"languages":[],"split":true,"theme":"dark"},"back-to-top-button":{},"variables":{"files":{"importedVars":"book_variables.yml"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"insert-logo":{"url":"https://mojaloop.io/images/logo.png","style":"background: none; max-height: 140px; max-width: 140px;"}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"admin-api/admin-api-specification-v1.0.md","mtime":"2021-10-27T10:43:29.318Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-27T10:44:19.937Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-swagger/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-insert-logo/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-collapsible-chapters/collapsible-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-changelog/changelog.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc/anchor-3.1.1.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-toc/page-toc.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-api/theme-api.js"></script>
+        
+    
+
+    </body>
+</html>
+
