@@ -5,14 +5,8 @@ This folder is to host and publish CCB related information.
 * [Bi-weekly meetings](#biweekly-meetings) 
 
 ## Biweekly meetings
-The CCB typically meets on a bi-weekly basis to discuss Open CCB items, especially Change Requests and Solution Proposals, though actual in-depth discussion on each issue may happen separately. These issues correlate to existing GitHub items on this repo and are used to track progress and discussions. The Link to these meetings will be posted here, one week before the meetings.
-
-Zoom Webinar Link for the next CCB meeting at 3pm GMT (7am Pacific Time), November 19th 2019 (bi-weekly for 2019): 
-[https://modusbox.zoom.us/j/277034055](https://modusbox.zoom.us/j/277034055)
-
+The CCB typically meets on a bi-weekly basis to discuss Open CCB items. The SIGs meet regularly as well on a regular cadence (weekly, bi-weekly or monthly as decided by the SIG) to discuss Change Requests and Solution Proposals and any open items, though actual in-depth discussion on each issue is documented on the issue itself.  [These issues](https://github.com/mojaloop/mojaloop-specification/issues) are used to track progress and discussions. To join any of these meetings as a community member, plesae reach out to the Community Manager or convenor of one of the SIGs or CCB.
 
 ## Issue and Decision Log
-The document can be viewed [here](./Issue-and-Decision-Log.md)
+The issues list can be viewed [here](https://github.com/mojaloop/mojaloop-specification/issues) with discussions correponsding to each issue documented on the issue itself.
 
-**Notes**:
-- This document is a work-in-progress and will be standardized after the initial Pilot work.
