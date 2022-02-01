@@ -24,6 +24,7 @@ specified types of information.
 |**1.0**|2018-03-13|Initial version|
 |**1.1**|2020-05-19|1. This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request **PATCH /transfers/**_{ID}_. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the **transfers** resource has been updated with the new **PATCH** request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for **PATCH** is described in Section 3.2.3.5. <br>c. Table 6 in Section 6.1.1 has been updated to include **PATCH** as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the **transfers** resource. <br>e. Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new **PATCH /transfers**/_{ID}_ request. <br><br>2. In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a. Updated Figure 6 as it contained a copy-paste error. <br>b. Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3. The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context<br>a. The description for the **FSPIOP-Destination** header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the **FSPIOP-URI** header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 84. This doesn’t imply any change as such. <br>a. Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the **PartyIdInfo** complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 103 has been updated. For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 10 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7. A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in **PUT /transfers/**_{ID}_ callbacks.|
 |**1.1.1**|2021-09-22|This document version only adds information about optional HTTP headers regarding tracing support in [Table 2](#table-2), see _Distributed Tracing Support for OpenAPI Interoperability_ for more information. There are no changes in any resources as part of this version.|
+|**1.2**|2022-01-31|This version introduces a new HTTP call using the method **PATCH** on **/transfers/**_{ID}_**/error** to be used when there is an internal validation or processing error (not schema validation) during handling of the **PUT /transfers/**_{ID}_ sent from the Payee FSP, both when RESERVED and COMMITTED is used as transferState. This is based on the acceptance of the change request: https://github.com/mojaloop/mojaloop-specification/issues/103|
 
 ## 2. Introduction
 
@@ -1356,7 +1357,7 @@ On a high level, the API can be used to perform the following actions:
 |/transactionRequests|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
 |/quotes|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
 |/authorizations|1.0|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
-|/transfers|1.1|Added possible commit notification using PATCH /transfers/<ID>. The process of using commit notifications is described in Section 6.7.2.6. The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
+|/transfers|1.2|Added a new method of notification using HTTP PATCH on resource /transfers/{ID}/error, when there is a validation or another processing error (not schema validation) during the processing of a PUT /transfers/{ID} sent from the Payee FSP, both when RESERVED and COMMITTED is used as transferState. //The process of using commit notifications is described in Section 6.7.2.6//. This is based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/103.|
 |/transactions|1.0|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
 |/bulkQuotes|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
 |/bulkTransfers|1.1|The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 93 has been updated.|
@@ -2182,6 +2183,7 @@ Table 29 contains a description of each different version of the **/transfers** 
 | ---- | ---- | ---- |
 | **1.0** | 2018-03-13 | Initial version |
 | **1.1** | 2020-05-19 | The resource is updated to support commit notifications using HTTP Method **PATCH**. The new request **PATCH /transfers/{ID}** is described in Section 6.7.3.3. The process of using commit notifications is described in Section 6.7.2.6. <br><br> The data model is updated to add an optional ExtensionList element to the PartyIdInfo complex type based on the Change Request: [https://github.com/mojaloop/mojaloop-specification/issues/30](https://github.com/mojaloop/mojaloop-specification/issues/30). Following this, the data model as specified in Table 93 has been updated.|
+| **1.2** | 2022-01-31 | The resource is extended to support commit notifications for failures, using the HTTP Method **PATCH** introduced in version **1.1**. This can be used when there is an internal validation or processing error (not schema validation) during handling of the **PUT /transfers/**_{ID}_ sent from the Payee FSP, both when RESERVED and COMMITTED is used as transferState. The new request **PATCH /transfers/{ID}/error** is described in Section 6.7.5.2. The process of using commit notifications is described in Section 6.7.2.6. <br><br> This is based on the acceptance of the change request: https://github.com/mojaloop/mojaloop-specification/issues/103|
 
 **Table 29 –- Version history for resource /transfers**
 
@@ -2259,6 +2261,18 @@ The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from 
 {% enduml %}
 
 **Figure 55 -- Commit notification where commit of transfer in Switch failed**
+
+In case of a validation failure (not schema validation) or another processing error during the processing of a **PUT /transfers/**_{ID}_ callback, a **PATCH /transfers/**_{ID}_**/error** notification is sent from the Switch to the Payee FSP to indicate of the failure. This notification is sent in both cases where the Payee FSP sends the _transferState_ as reserved or committed.
+
+[Figure 56](#figure-56) shows an example in which the validation in the Switch failed due to some reason, for example the a business rule validation caused a failure in the Switch. This is the same example as in [Figure 53](#figure-53), but where no reconciliation is needed as the Payee FSP receives a failure notification before performing the actual transfer to the Payee.
+
+###### Figure 56
+
+{% uml src="assets/diagrams/sequence/figure56.plantuml" %}
+{% enduml %}
+
+**Figure 56 -- Commit notification where commit of transfer in Switch failed**
+
 
 #### 6.7.2.7 Refunds
 
@@ -2394,6 +2408,24 @@ If the server is unable to find or create a transfer, or another processing erro
 | **errorInformation** | 1 | ErrorInformation | Error code, category description. |
 
 **Table 33 -- PUT /transfers/_{ID}_/error data model**
+
+#### 6.7.5.2 PATCH /transfers/_{ID}_/error
+
+Alternative URI: N/A
+
+Logical API service: **Notify Transfer Information Error**
+
+If the server is unable to commit a transfer, or another processing or validation error occurs, during the processing of a **PUT /transfers/**_{ID}_ callbac, the notification **PATCH**
+
+**/transfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **transferId** (see [Table 30](#table-30)) that was used for the creation of the transfer, or the _{ID}_ that was used in the [**GET /transfers/**_{ID}_](#6731-get-transfersid). See [Table 34](#table-34) for data model.
+
+###### Table 34
+
+| **Name** | **Cardinality** | **Type** | **Description** |
+| --- | --- | --- | --- |
+| **errorInformation** | 1 | ErrorInformation | Error code, category description. |
+
+**Table 34 -- PATCH /transfers/_{ID}_/error data model**
 
 **6.7.6 States**
 
