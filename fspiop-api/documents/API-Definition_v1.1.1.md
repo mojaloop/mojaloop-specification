@@ -2413,7 +2413,7 @@ If the server is unable to find or create a transfer, or another processing erro
 
 Alternative URI: N/A
 
-Logical API service: **Notify Transfer Information Error**
+Logical API service: **Commit Error Notification**
 
 If the server is unable to commit a transfer, or another processing or validation error occurs, during the processing of a **PUT /transfers/**_{ID}_ callback with transferState as COMMITTED, the error notification **PATCH** **/transfers/**_{ID}_**/error** can be used (subject to scheme rules). The _{ID}_ in the URI should contain the **transferId** (see [Table 30](#table-30)) that was used for the creation of the transfer. See [Table 34](#table-34) for data model.
 
