@@ -140,14 +140,13 @@ Switch -> Switch: Reserve transfer from\nPayer FSP to Payee FSP
 Switch ->> PayeeFSP: **POST /transfers**\n(Transfer ID, condition, ILP Packet\nincluding transaction details,\nexpiry=20 seconds)
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
-PayeeFSP -> PayeeFSP: Perform (or Reserve) transfer from Switch\naccount to Payee account,\ngenerate fulfilment
-PayeeFSP -> PayeeFSP: (In case of reserved) Request commit notification\nfrom Switch by sending transfer\nstate as RESERVED
+PayeeFSP -> PayeeFSP: Perform transfer from Switch\naccount to Payee account,\ngenerate fulfilment
 Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>\n(Fulfilment,\ntransferState is COMMITTED
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 Switch -> Switch: Validation of **PUT /transfers/**<i><ID></i> failed so\ncommit transfer from\nPayer FSP to Payee FSP\nfailed, notify both FSPs
 Switch ->> PayeeFSP: **PATCH /transfers/**<i><ID></i>**/error**
 Switch <<-- PayeeFSP: **HTTP 200** (OK)
-PayeeFSP -> PayeeFSP: Rollback reserved transfer\nfrom Switch to Payee
+PayeeFSP -> PayeeFSP: This transfer needs to be reversed\nusing either refund pattern\nor by some other means
 PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>/**error**
 deactivate PayeeFSP
 PayerFSP -->> Switch: **HTTP 200** (OK)
