@@ -146,7 +146,7 @@ Switch -->> PayeeFSP: **HTTP 200** (OK)
 Switch -> Switch: Validation of **PUT /transfers/**<i><ID></i> failed so\ncommit transfer from\nPayer FSP to Payee FSP\nfailed, notify both FSPs
 Switch ->> PayeeFSP: **PATCH /transfers/**<i><ID></i>**/error**
 Switch <<-- PayeeFSP: **HTTP 200** (OK)
-PayeeFSP -> PayeeFSP: This transfer needs to be reversed\nusing either refund pattern\nor by some other means
+PayeeFSP -> PayeeFSP: This transfer needs to be reversed\n(internal to the Payee FSP)
 PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>/**error**
 deactivate PayeeFSP
 PayerFSP -->> Switch: **HTTP 200** (OK)
