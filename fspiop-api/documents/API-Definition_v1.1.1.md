@@ -2264,14 +2264,14 @@ The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from 
 
 In case of a validation failure (not schema validation) or another processing error during the processing of a **PUT /transfers/**_{ID}_ callback, a **PATCH /transfers/**_{ID}_**/error** notification can be sent from the Switch to the Payee FSP to indicate of the failure. This notification is sent in cases where the Payee FSP sends the _transferState_ as committed.
 
-[Figure 56a](#figure-56a) shows an example in which the validation in the Switch failed due to some reason, for example a business rule validation caused a failure in the Switch. This is the same example as in [Figure 53](#figure-53), but the Payee FSP receives a commit error notification so that the Payee FSP can take remedial action. The Payee FSP would need to use an internal reversal of the transaction (or similar).
+[Figure 56](#figure-56a) shows an example in which the validation in the Switch failed due to some reason, for example a business rule validation caused a failure in the Switch. This is the same example as in [Figure 53](#figure-53), but the Payee FSP receives a commit error notification so that the Payee FSP can take remedial action. The Payee FSP would need to use an internal reversal of the transaction (or similar).
 
-###### Figure 56a
+###### Figure 56
 
-{% uml src="assets/diagrams/sequence/figure56a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure56.plantuml" %}
 {% enduml %}
 
-**Figure 56a -- Commit error notification where commit of transfer in Switch failed**
+**Figure 56 -- Commit error notification where commit of transfer in Switch failed**
 
 
 #### 6.7.2.7 Refunds
@@ -2427,13 +2427,13 @@ If the server is unable to commit a transfer, or another processing or validatio
 
 **6.7.6 States**
 
-###### Figure 56
+###### Figure 57
 
-The possible states of a transfer can be seen in [Figure 56](#figure-56).
+The possible states of a transfer can be seen in [Figure 57](#figure-57).
 
-![Figure 56](/assets/diagrams/images/figure56.svg)
+![Figure 57](/assets/diagrams/images/figure57.svg)
 
-**Figure 56 -- Possible states of a transfer**
+**Figure 57 -- Possible states of a transfer**
 
 ### 6.8 API Resource /transactions
 
@@ -2458,14 +2458,14 @@ The actual financial transaction is performed using the services provided by the
 
 #### 6.8.2 Service Details
 
-[Figure 57](#figure-57) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{TransactionID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
+[Figure 58](#figure-58) shows an example for the transaction process. The actual transaction will be performed as part of the transfer process. The service **GET /transactions/**_{TransactionID}_ can then be used to get more information about the financial transaction that was performed as part of the transfer process.
 
-###### Figure 57
+###### Figure 58
 
-{% uml src="assets/diagrams/sequence/figure57.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure58.plantuml" %}
 {% enduml %}
 
-**Figure 57 -- Example transaction process**
+**Figure 58 -- Example transaction process**
 
 #### 6.8.3 Requests
 
@@ -2530,15 +2530,15 @@ If the server is unable to find or create a transaction, or another processing e
 
 #### 6.8.6 States
 
-###### Figure 58
+###### Figure 59
 
-The possible states of a transaction can be seen in [Figure 58](#figure-58).
+The possible states of a transaction can be seen in [Figure 59](#figure-59).
 
 **Note:** For reconciliation purposes, a server must keep transaction objects that have been rejected in its database for a scheme-agreed time period. This means that a client should expect a proper callback about a transaction (if it has been received by the server) when requesting information regarding the same.
 
-![Figure 58](/assets/diagrams/images/figure58.svg)
+![Figure 59](/assets/diagrams/images/figure59.svg)
 
-**Figure 58 -- Possible states of a transaction**
+**Figure 59 -- Possible states of a transaction**
 
 ### 6.9 API Resource /bulkQuotes
 
@@ -2563,18 +2563,18 @@ Table 37 contains a description of each different version of the **/bulkQuotes**
 
 #### 6.9.2 Service Details
 
-[Figure 59](#figure-59) shows how the bulk quotes process works, using the **POST /bulkQuotes** service. When receiving the bulk of transactions from the Payer, the Payer FSP should:
+[Figure 60](#figure-60) shows how the bulk quotes process works, using the **POST /bulkQuotes** service. When receiving the bulk of transactions from the Payer, the Payer FSP should:
 
 1. Lookup the FSP in which each Payee is; for example, using the API Resource **/participants**, [Section 6.2](#62-api-resource-participants).
 
 2. Divide the bulk based on Payee FSP. The service **POST /bulkQuotes** is then used for each Payee FSP to get the bulk quotes from each Payee FSP. Each quote result will contain the ILP Packet and condition (see [Section 4.5](#45-ilp-packet) and [Section 4.4](#44-conditional-transfers)) needed to perform each transfer in the bulk transfer (see API Resource **/bulkTransfers**, [Section 6.10](#610-api-resource-bulktransfers)), which will perform the actual financial transaction from the Payer to each Payee.
 
-###### Figure 59
+###### Figure 60
 
-{% uml src="assets/diagrams/sequence/figure59.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure60.plantuml" %}
 {% enduml %}
 
-**Figure 59 -- Example bulk quote process**
+**Figure 60 -- Example bulk quote process**
 
 #### 6.9.3 Requests
 
@@ -2667,15 +2667,15 @@ If the server is unable to find or create a bulk quote, or another processing er
 
 #### 6.9.6 States
 
-###### Figure 60
+###### Figure 61
 
-The possible states of a bulk quote can be seen in [Figure 60](#figure-60).
+The possible states of a bulk quote can be seen in [Figure 61](#figure-61).
 
 **Note:** A server does not need to keep bulk quote objects that have been either rejected or expired in their database. This means that a client should expect that an error callback could be received for a rejected or expired bulk quote.
 
-![Figure 60](/assets/diagrams/images/figure60.svg)
+![Figure 61](/assets/diagrams/images/figure61.svg)
 
-**Figure 60 -- Possible states of a bulk quote**
+**Figure 61 -- Possible states of a bulk quote**
 
 ### 6.10 API Resource /bulkTransfers
 
@@ -2698,18 +2698,18 @@ Table 41 contains a description of each different version of the **/bulkTransfer
 
 #### 6.10.2 Service Details
 
-[Figure 61](#figure-61) shows how the bulk transfer process works, using the **POST /bulkTransfers** service. When receiving the bulk transactions from the Payer, the Payer FSP should perform the following:
+[Figure 62](#figure-62) shows how the bulk transfer process works, using the **POST /bulkTransfers** service. When receiving the bulk transactions from the Payer, the Payer FSP should perform the following:
 
 1. Lookup the FSP in which each Payee is; for example, using the API Resource **/participants**, [Section 6.2](#62-api-resource-participants).
 2. Perform the bulk quote process using the API Resource **/bulkQuotes**, [Section 6.9](#69-api-resource-bulkquotes). The bulk quote callback should contain the required ILP Packets and conditions needed to perform each transfer.
-3. Perform bulk transfer process in [Figure 61](#figure-61) using **POST /bulkTransfers**. This performs each hop-to-hop transfer and the end-to-end financial transaction. For more information regarding hop-to-hop transfers vs end-to-end financial transactions, see [Section 6.7](#67-api-resource-transfers).
+3. Perform bulk transfer process in [Figure 62](#figure-62) using **POST /bulkTransfers**. This performs each hop-to-hop transfer and the end-to-end financial transaction. For more information regarding hop-to-hop transfers vs end-to-end financial transactions, see [Section 6.7](#67-api-resource-transfers).
 
-###### Figure 61
+###### Figure 62
 
-{% uml src="assets/diagrams/sequence/figure61.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure62.plantuml" %}
 {% enduml %}
 
-**Figure 61 -- Example bulk transfer process**
+**Figure 62 -- Example bulk transfer process**
 
 #### 6.10.3 Requests
 
@@ -2800,15 +2800,15 @@ If the server is unable to find or create a bulk transfer, or another processing
 
 #### 6.10.6 States
 
-###### Figure 62
+###### Figure 63
 
-The possible states of a bulk transfer can be seen in [Figure 62](#figure-62).
+The possible states of a bulk transfer can be seen in [Figure 63](#figure-63).
 
 **Note:** A server must keep bulk transfer objects that have been rejected in their database during a market agreed time-period for reconciliation purposes. This means that a client should expect a proper callback about a bulk transfer (if it has been received by the server) when requesting information regarding the same.
 
-![Figure 62](/assets/diagrams/images/figure62.svg)
+![Figure 63](/assets/diagrams/images/figure63.svg)
 
-**Figure 62 -- Possible states of a bulk transfer**
+**Figure 63 -- Possible states of a bulk transfer**
 
 ## 7. API Supporting Data Models
 
@@ -4112,13 +4112,13 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 
 ### 7.6 Error Codes
 
-###### Figure 63
+###### Figure 64
 
 Each error code in the API is a four-digit number, for example, **1234**, where the first number (**1** in the example) represents the high-level error category, the second number (**2** in the example) represents the low-level error category, and the last two numbers (**34** in the example) represents the specific error. [Figure 63](#figure-63) shows the structure of an error code. The following sections contain information about defined error codes for each high-level error category.
 
-![Figure 63](/assets/diagrams/images/figure63.svg)
+![Figure 64](/assets/diagrams/images/figure64.svg)
 
-**Figure 63 -- Error code structure**
+**Figure 64 -- Error code structure**
 
 Each defined high- and low-level category combination contains a generic error (_x_**0**_xx_), which can be used if there is no specific error, or if the server would not like to return information which is considered private.
 
@@ -4339,47 +4339,47 @@ This section provides information about how the logical transaction patterns fro
 
 ### 8.1 Payer Initiated Transaction
 
-The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payer would like to transfer funds to another Party whom is not located in the same FSP as the Payer. [Figure 64](#figure-64) shows the sequence diagram for a _Payer Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
-
-###### Figure 64
-
-{% uml src="assets/diagrams/sequence/figure64.plantuml" %}
-{% enduml %}
-
-**Figure 64 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
-
-### 8.2 Payee Initiated Transaction
-
-The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payee would like to request that Payer transfer funds to a Payee. The Payer and the Payee are assumed to be in different FSPs, and the approval of the transaction is performed in the Payer FSP. If the transaction information and approval occur on a Payee device instead, use the related _Payee Initiated Transaction using OTP_ pattern described in [Section 8.3](#83-payee-initiated-transaction-using-otp) instead. [Figure 65](#figure-65) shows the sequence diagram for a _Payee Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
+The _Payer Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payer would like to transfer funds to another Party whom is not located in the same FSP as the Payer. [Figure 65](#figure-65) shows the sequence diagram for a _Payer Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
 ###### Figure 65
 
 {% uml src="assets/diagrams/sequence/figure65.plantuml" %}
 {% enduml %}
 
-**Figure 65 -- Payee Initiated Transaction pattern using the asynchronous REST binding**
+**Figure 65 -- Payer Initiated Transaction pattern using the asynchronous REST binding**
 
-### 8.3 Payee Initiated Transaction using OTP
+### 8.2 Payee Initiated Transaction
 
-The _Payee Initiated Transaction using OTP_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, this pattern is like the Payee Initiated Transaction described in [Section 8.2](#82-payee-initiated-transaction); however, in this pattern the transaction information and approval for the Payer is shown and entered on a Payee device instead. As in other transaction patterns, the Payer and the Payee are assumed to be in different FSPs. [Figure 66](#figure-66) shows the sequence diagram for a _Payee Initiated Transaction using OTP_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
+The _Payee Initiated Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern should be used whenever a Payee would like to request that Payer transfer funds to a Payee. The Payer and the Payee are assumed to be in different FSPs, and the approval of the transaction is performed in the Payer FSP. If the transaction information and approval occur on a Payee device instead, use the related _Payee Initiated Transaction using OTP_ pattern described in [Section 8.3](#83-payee-initiated-transaction-using-otp) instead. [Figure 66](#figure-66) shows the sequence diagram for a _Payee Initiated Transaction_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
 ###### Figure 66
 
 {% uml src="assets/diagrams/sequence/figure66.plantuml" %}
 {% enduml %}
 
-**Figure 66 -- Payee Initiated Transaction using OTP pattern using the asynchronous REST binding**
+**Figure 66 -- Payee Initiated Transaction pattern using the asynchronous REST binding**
 
-### 8.4 Bulk Transactions
+### 8.3 Payee Initiated Transaction using OTP
 
-The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern is used whenever a Payer would like to transfer funds to multiple Payees using one single transaction. The Payees can be in different FSPs. [Figure 67](#figure-67) shows the sequence diagram for a _Bulk Transactions_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
+The _Payee Initiated Transaction using OTP_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, this pattern is like the Payee Initiated Transaction described in [Section 8.2](#82-payee-initiated-transaction); however, in this pattern the transaction information and approval for the Payer is shown and entered on a Payee device instead. As in other transaction patterns, the Payer and the Payee are assumed to be in different FSPs. [Figure 67](#figure-67) shows the sequence diagram for a _Payee Initiated Transaction using OTP_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
 
 ###### Figure 67
 
 {% uml src="assets/diagrams/sequence/figure67.plantuml" %}
 {% enduml %}
 
-**Figure 67 -- Bulk Transactions pattern using the asynchronous REST binding**
+**Figure 67 -- Payee Initiated Transaction using OTP pattern using the asynchronous REST binding**
+
+### 8.4 Bulk Transactions
+
+The _Bulk Transaction_ pattern is introduced in _Generic Transaction Patterns_. On a high-level, the pattern is used whenever a Payer would like to transfer funds to multiple Payees using one single transaction. The Payees can be in different FSPs. [Figure 68](#figure-68) shows the sequence diagram for a _Bulk Transactions_ using the asynchronous REST binding of the logical version. The process for each number in the sequence diagram is described in _Generic Transaction Patterns_.
+
+###### Figure 68
+
+{% uml src="assets/diagrams/sequence/figure68.plantuml" %}
+{% enduml %}
+
+**Figure 68 -- Bulk Transactions pattern using the asynchronous REST binding**
 
 ## 9. API Error Handling
 
@@ -4391,18 +4391,18 @@ If a server receives an erroneous service request that can be handled immediatel
 
 ### 9.2 Error in Server During Processing of Request
 
-[Figure 68](#figure-68) shows an example of how to handle an error on a server during processing.
+[Figure 69](#figure-69) shows an example of how to handle an error on a server during processing.
 
-###### Figure 68
+###### Figure 69
 
-{% uml src="assets/diagrams/sequence/figure68.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure69.plantuml" %}
 {% enduml %}
 
-**Figure 68 -- Error on server during processing of request**
+**Figure 69 -- Error on server during processing of request**
 
 #### 9.2.1 Internal Processing Steps
 
-The following list describes the steps in the sequence (see [Figure 68](#figure-68)).
+The following list describes the steps in the sequence (see [Figure 69](#figure-69)).
 
 1. The client would like the server to create a new service object and thus uses a **POST** request.
 
@@ -4438,18 +4438,18 @@ The typical error from the **/authorizations** service is that the transaction r
 
 #### 9.3.6 API Resource /transfers
 
-The typical error from the **/transfers** service is that either the hop-to-hop transfer process or the end-to-end financial transaction failed. For example, a limit breach was discovered, or the Payee could not be found. The client (the Payer FSP) should in any error case cancel the reservation for the financial transaction that was performed before requesting the transaction to be performed on the server (the Payee FSP). See [Figure 69](#figure-69) for an example including a financial Switch between the FSPs.
+The typical error from the **/transfers** service is that either the hop-to-hop transfer process or the end-to-end financial transaction failed. For example, a limit breach was discovered, or the Payee could not be found. The client (the Payer FSP) should in any error case cancel the reservation for the financial transaction that was performed before requesting the transaction to be performed on the server (the Payee FSP). See [Figure 70](#figure-70) for an example including a financial Switch between the FSPs.
 
-###### Figure 69
+###### Figure 70
 
-{% uml src="assets/diagrams/sequence/figure69.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure70.plantuml" %}
 {% enduml %}
 
-**Figure 69 -- Handling of error callback from POST /transfers**
+**Figure 70 -- Handling of error callback from POST /transfers**
 
 ##### 9.3.6.1 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in the sequence (see [Figure 69](#figure-69)).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 70](#figure-70)).
 
 1. The transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After the transfer has been successfully reserved, the request [**POST /transfers**](#6732-post-transfers) is used on the Switch. The transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
@@ -4471,18 +4471,18 @@ The typical error from the **/bulkQuotes** service is that a quote could not be 
 
 #### 9.3.9 API Resource /bulkTransfers
 
-The typical error case from the **/bulkTransfers** service is that the bulk transaction was not accepted; for example, due to a validation error. The client (the Payer FSP) should in any error case cancel the reservation for the financial transaction that was performed before requesting that the transaction be performed on the server (the Payee FSP). See [Figure 70](#figure-70) for an example including a financial Switch between the FSPs.
+The typical error case from the **/bulkTransfers** service is that the bulk transaction was not accepted; for example, due to a validation error. The client (the Payer FSP) should in any error case cancel the reservation for the financial transaction that was performed before requesting that the transaction be performed on the server (the Payee FSP). See [Figure 71](#figure-71) for an example including a financial Switch between the FSPs.
 
-###### Figure 70
+###### Figure 71
 
-{% uml src="assets/diagrams/sequence/figure70.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure71.plantuml" %}
 {% enduml %}
 
-**Figure 70 -- Handling of error callback from API Service /bulkTransfers**
+**Figure 71 -- Handling of error callback from API Service /bulkTransfers**
 
 ##### 9.3.9.1 Internal Processing Steps
 
-The following list describes the steps in the sequence (see [Figure 70](#figure-70)).
+The following list describes the steps in the sequence (see [Figure 71](#figure-71)).
 
 1. Each individual transfer in the bulk transfer is reserved from the Payer's account to either a combined Switch account or a Payee FSP account, depending on setup. After each transfer has been successfully reserved, the request [**POST /bulkTransfers**](#61032-post-bulktransfers) is used on the Switch. The bulk transfer is now irrevocable from the Payer FSP. The Payer FSP then waits for an **accepted** response from the Switch.
 
@@ -4496,18 +4496,18 @@ The following list describes the steps in the sequence (see [Figure 70](#figure-
 
 ### 9.4 Client Missing Response from Server - Using Resend of Request
 
-[Figure 71](#figure-71) shows an example UML (Unified Modeling Language) sequence diagram in which a client (FSP or Switch) performs error handling when the client misses a response from a server (Switch or Peer FSP) pertaining to a service request, using resend of the same service request.
+[Figure 72](#figure-72) shows an example UML (Unified Modeling Language) sequence diagram in which a client (FSP or Switch) performs error handling when the client misses a response from a server (Switch or Peer FSP) pertaining to a service request, using resend of the same service request.
 
-###### Figure 71
+###### Figure 72
 
-{% uml src="assets/diagrams/sequence/figure71.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure72.plantuml" %}
 {% enduml %}
 
-**Figure 71 -- Error handling from client using resend of request**
+**Figure 72 -- Error handling from client using resend of request**
 
 #### 9.4.1 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in the sequence (see [Figure 71](#figure-71)).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 72](#figure-72)).
 
 1. The client would like the server to create a new service object. The HTTP request is lost somewhere on the way to the server.
 
@@ -4517,7 +4517,7 @@ The following list provides a detailed description of all the steps in the seque
 
 4. The **accepted** HTTP response from the server is lost on the way to the client, and the client notes that no response has been received from the server within a specified timeout. The client resends the service request.
 
-5. The server receives the resent request. It immediately sends an **accepted** response to the client, and then notes that the service request is the same as in [Step 3](#figure-70). As the service request is a resend, the server should not create a new object based on the service request. The server sends a callback to notify the client about the object created in [Step 3](#figure-70).
+5. The server receives the resent request. It immediately sends an **accepted** response to the client, and then notes that the service request is the same as in [Step 3](#figure-71). As the service request is a resend, the server should not create a new object based on the service request. The server sends a callback to notify the client about the object created in [Step 3](#figure-71).
 
 6. The client receives the callback regarding the created object. The client sends an **OK** HTTP response to the server to complete the process.
 
@@ -4529,18 +4529,18 @@ A server using the API is not responsible for making sure that a callback is pro
 
 #### 9.5.1 Client Missing Callback - Using GET request
 
-[Figure 72](#figure-72) is a UML sequence diagram showing how a client (Switch or Peer FSP) would perform error handling in case of no callback from a client (FSP or Switch) within a reasonable time.
+[Figure 73](#figure-73) is a UML sequence diagram showing how a client (Switch or Peer FSP) would perform error handling in case of no callback from a client (FSP or Switch) within a reasonable time.
 
-###### Figure 72
+###### Figure 73
 
-{% uml src="assets/diagrams/sequence/figure72.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure73.plantuml" %}
 {% enduml %}
 
-**Figure 72 -- Error handling from client using GET request**
+**Figure 73 -- Error handling from client using GET request**
 
 #### 9.5.2 Internal Processing Steps
 
-The following list provides a detailed description of all the steps in the sequence (see [Figure 71](#figure-71)).
+The following list provides a detailed description of all the steps in the sequence (see [Figure 73](#figure-73)).
 
 1. The client would like the server to create a new service object; a service request is sent.
 
@@ -4566,13 +4566,13 @@ This section explains the setup of the example.
 
 #### 10.1.1 Nodes
 
-###### Figure 73
+###### Figure 74
 
-The nodes in the end-to-end example in this section are simplified by having only two FSPs, where one FSP is a bank (identifier **BankNrOne**) and the other FSP is a mobile money operator (identifier **MobileMoney**), and one Switch (identifier **Switch**). The Switch also acts as the Account Lookup System (ALS) in this simplified setup (see [Figure 73](#figure-73)).
+The nodes in the end-to-end example in this section are simplified by having only two FSPs, where one FSP is a bank (identifier **BankNrOne**) and the other FSP is a mobile money operator (identifier **MobileMoney**), and one Switch (identifier **Switch**). The Switch also acts as the Account Lookup System (ALS) in this simplified setup (see [Figure 74](#figure-74)).
 
-![Figure 73](/assets/diagrams/images/figure73.svg)
+![Figure 74](/assets/diagrams/images/figure74.svg)
 
-**Figure 73 -- Nodes in end-to-end example**
+**Figure 74 -- Nodes in end-to-end example**
 
 #### 10.1.2 Account Holders
 
@@ -4594,14 +4594,14 @@ Both FSPs are assumed to have a pre-funded Switch account in their respective FS
 
 ### 10.2 End-to-End Flow
 
-[Figure 74](#figure-74) shows the end-to-end flow of the entire example, from provisioning of FSP information to the actual transaction.
+[Figure 75](#figure-75) shows the end-to-end flow of the entire example, from provisioning of FSP information to the actual transaction.
 
-###### Figure 74
+###### Figure 75
 
-{% uml src="assets/diagrams/sequence/figure74.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure75.plantuml" %}
 {% enduml %}
 
-**Figure 74 -- End-to-end flow, from provision of account holder FSP information to a successful transaction**
+**Figure 75 -- End-to-end flow, from provision of account holder FSP information to a successful transaction**
 
 ### 10.3 Provision Account Holder
 
