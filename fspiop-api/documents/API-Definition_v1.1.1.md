@@ -2262,9 +2262,11 @@ The commit notification is sent in the request **PATCH /transfers/**_{ID}_ from 
 
 **Figure 55 -- Commit notification where commit of transfer in Switch failed**
 
-In case of a validation failure (not schema validation) or another processing error during the processing of a **PUT /transfers/**_{ID}_ callback, a **PATCH /transfers/**_{ID}_**/error** notification can be sent from the Switch to the Payee FSP to indicate of the failure. This notification is sent in cases where the Payee FSP sends the _transferState_ as committed.
+#### 6.7.2.7 Commit Error Notification
 
-[Figure 56](#figure-56a) shows an example in which the validation in the Switch failed due to some reason, for example a business rule validation caused a failure in the Switch. This is the same example as in [Figure 53](#figure-53), but the Payee FSP receives a commit error notification so that the Payee FSP can take remedial action. The Payee FSP would need to use an internal reversal of the transaction (or similar).
+In case of a validation failure (not schema validation) or another error during the processing of a **PUT /transfers/**_{ID}_ callback, a **PATCH /transfers/**_{ID}_**/error** notification can be sent from the Switch to the Payee FSP (subject to Scheme rules) to notify the failure. This notification is sent in cases where the Payee FSP sends the _transferState_ as committed in the **PUT /transfers/**_{ID}_ callback.
+
+[Figure 56](#figure-56) shows an example in which the validation in the Switch failed due to some reason, for example a business rule validation caused a failure in the Switch or validaiton of an FSP ID. This is the same example as in [Figure 53](#figure-53), but the Payee FSP receives a commit error notification so that the Payee FSP can take remedial action. The Payee FSP would need to use an internal reversal of the transaction (or similar).
 
 ###### Figure 56
 
@@ -2274,11 +2276,11 @@ In case of a validation failure (not schema validation) or another processing er
 **Figure 56 -- Commit error notification where commit of transfer in Switch failed**
 
 
-#### 6.7.2.7 Refunds
+#### 6.7.2.8 Refunds
 
 Instead of supporting reversals, the API supports refunds. To refund a transaction using the API, a new transaction should be created by the Payee of the original transaction. The new transaction should revers the original transaction (either the full amount or a partial amount); for example, if customer X sent 100 USD to merchant Y in the original transaction, a new transaction where merchant Y sends 100 USD to customer X should be created. There is a specific transaction type to indicate a refund transaction; for example, if the quote of the transaction should be handled differently than any other type of transaction. The original transaction ID should be sent as part of the new transaction for informational and reconciliation purposes.
 
-#### 6.7.2.8 Interledger Payment Request
+#### 6.7.2.9 Interledger Payment Request
 
 As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the Payer FSP must attach the ILP Packet, the condition, and an expiry to the transfer. The condition and the ILP Packet are the same as those sent by the Payee FSP in the callback of the quote; see [Section 6.5.2.3](#6523-interledger-payment-request) for more information.
 
