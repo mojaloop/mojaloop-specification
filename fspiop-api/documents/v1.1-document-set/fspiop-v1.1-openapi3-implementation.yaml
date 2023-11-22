@@ -7,20 +7,8 @@ info:
     Version
     1.1](https://github.com/mojaloop/mojaloop-specification/blob/main/documents/v1.1-document-set/API%20Definition_v1.1.pdf).
 
-    This is implementation friendly version of the API definition. It excludes
-    the following schemas from the FSPIOP api specification which are not used
-    in any of the complex types or data model of the messages.
-      - BinaryString
-      - BinaryString32
-      - Date
-      - Integer
-      - Name
-      - PersonalIdentifierType
-      - TokenCode
-      - Transaction
-      - UndefinedEnum
-
-    It includes the below definitions needed for third-party functionality. -
+    This is implementation friendly version of the API definition.     It
+    includes the below definitions needed for third-party functionality. -
     AuthenticationType
       - U2F enum
     - AuthenticationValue
