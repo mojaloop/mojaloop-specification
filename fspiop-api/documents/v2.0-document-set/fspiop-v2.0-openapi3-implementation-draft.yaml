@@ -1,14 +1,15 @@
 openapi: 3.0.2
 info:
-  version: "1.1"
+  version: 2.0-draft
   title: Open API for FSP Interoperability (FSPIOP)
   description: >-
     Revision date: 2023-11-23 Based on [API Definition updated on 2020-05-19
     Version
     1.1](https://github.com/mojaloop/mojaloop-specification/blob/main/documents/v1.1-document-set/API%20Definition_v1.1.pdf).
 
-    This is implementation friendly version of the API definition.     It
-    includes the below definitions needed for third-party functionality. -
+    This is implementation friendly version of the API definition.
+
+    It includes the below definitions needed for third-party functionality. -
     AuthenticationType
       - U2F enum
     - AuthenticationValue
@@ -2112,6 +2113,565 @@ paths:
           $ref: "#/components/responses/501"
         "503":
           $ref: "#/components/responses/503"
+  /fxQuotes:
+    post:
+      description: >-
+        The HTTP request `POST /fxQuotes` is used to ask an FXP to provide a
+        quotation for a currency conversion.
+      summary: Calculate FX quote
+      tags:
+        - fxQuotes
+      operationId: FxQuotesPost
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/Content-Length"
+        - $ref: "#/components/parameters/Content-Type"
+        - $ref: "#/components/parameters/Date"
+        - $ref: "#/components/parameters/X-Forwarded-For"
+        - $ref: "#/components/parameters/FSPIOP-Source"
+        - $ref: "#/components/parameters/FSPIOP-Destination"
+        - $ref: "#/components/parameters/FSPIOP-Encryption"
+        - $ref: "#/components/parameters/FSPIOP-Signature"
+        - $ref: "#/components/parameters/FSPIOP-URI"
+        - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+      requestBody:
+        description: Details of the FX quote to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FxQuotesPostRequest"
+      responses:
+        "202":
+          $ref: "#/components/responses/202"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /fxQuotes/{ID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/Content-Type"
+      - $ref: "#/components/parameters/Date"
+      - $ref: "#/components/parameters/X-Forwarded-For"
+      - $ref: "#/components/parameters/FSPIOP-Source"
+      - $ref: "#/components/parameters/FSPIOP-Destination"
+      - $ref: "#/components/parameters/FSPIOP-Encryption"
+      - $ref: "#/components/parameters/FSPIOP-Signature"
+      - $ref: "#/components/parameters/FSPIOP-URI"
+      - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+    get:
+      description: >-
+        The HTTP request `GET /fxQuotes/{ID}` is used to request information
+        regarding a request for quotation for a  currency conversion which the
+        sender has previously issued. The `{ID}` in the URI should contain the
+        `conversionRequestId` that was used for the creation of the quote.
+      summary: Retrieve FX quote information
+      tags:
+        - fxQuotes
+      operationId: FxQuotesByIDGet
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+      responses:
+        "202":
+          $ref: "#/components/responses/202"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+    put:
+      description: >-
+        The callback `PUT /fxQuotes/{ID}` is used to inform the requester about
+        the  outcome of a request for quotation for a currency conversion.  The
+        `{ID}` in the URI should contain the `conversionRequestId` that was used
+        for the  creation of the FX quote, or the `{ID}` that was used in the
+        `GET /fxQuotes/{ID}` request.
+      summary: Return FX quote information
+      tags:
+        - fxQuotes
+      operationId: FxQuotesByIdPut
+      parameters:
+        - $ref: "#/components/parameters/Content-Length"
+      requestBody:
+        description: FX Quote information returned.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FxQuotesIDPutResponse"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /fxQuotes/{ID}/error:
+    put:
+      description: >-
+        If the FXP is unable to find or create a FX quote, or some other
+        processing error occurs, the error callback `PUT /fxQuotes/{ID}/error`
+        is used. The `{ID}` in the URI should contain the `conversionRequestId`
+        that was used for the creation of the FX quote, or the `{ID}` that was
+        used in the `GET /fxQuotes/{ID}` request.
+      summary: Return FX quote information error
+      tags:
+        - fxQuotes
+      operationId: FxQuotesByIDAndErrorPut
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/Content-Length"
+        - $ref: "#/components/parameters/Content-Type"
+        - $ref: "#/components/parameters/Date"
+        - $ref: "#/components/parameters/X-Forwarded-For"
+        - $ref: "#/components/parameters/FSPIOP-Source"
+        - $ref: "#/components/parameters/FSPIOP-Destination"
+        - $ref: "#/components/parameters/FSPIOP-Encryption"
+        - $ref: "#/components/parameters/FSPIOP-Signature"
+        - $ref: "#/components/parameters/FSPIOP-URI"
+        - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+      requestBody:
+        description: Details of the error returned.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorInformationObject"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /fxTransfers:
+    post:
+      description: >-
+        The HTTP request `POST /fxTransfers` is used to ask an FXP to confirm
+        the execution of an agreed currency conversion.
+      summary: Perform FX transfer
+      tags:
+        - fxTransfers
+      operationId: FxTransfersPost
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/Content-Length"
+        - $ref: "#/components/parameters/Content-Type"
+        - $ref: "#/components/parameters/Date"
+        - $ref: "#/components/parameters/X-Forwarded-For"
+        - $ref: "#/components/parameters/FSPIOP-Source"
+        - $ref: "#/components/parameters/FSPIOP-Destination"
+        - $ref: "#/components/parameters/FSPIOP-Encryption"
+        - $ref: "#/components/parameters/FSPIOP-Signature"
+        - $ref: "#/components/parameters/FSPIOP-URI"
+        - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+      requestBody:
+        description: Details of the FX transfer to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FxTransfersPostRequest"
+      responses:
+        "202":
+          $ref: "#/components/responses/202"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /fxTransfers/{ID}:
+    parameters:
+      - $ref: "#/components/parameters/ID"
+      - $ref: "#/components/parameters/Content-Type"
+      - $ref: "#/components/parameters/Date"
+      - $ref: "#/components/parameters/X-Forwarded-For"
+      - $ref: "#/components/parameters/FSPIOP-Source"
+      - $ref: "#/components/parameters/FSPIOP-Destination"
+      - $ref: "#/components/parameters/FSPIOP-Encryption"
+      - $ref: "#/components/parameters/FSPIOP-Signature"
+      - $ref: "#/components/parameters/FSPIOP-URI"
+      - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+    get:
+      description: >-
+        The HTTP request `GET /fxTransfers/{ID}` s used to request information
+        regarding a request for confirmation of a currency conversion which the
+        sender has previously issued. The `{ID}` in the URI should contain the
+        `commitRequestId` that was used for the creation of the FX transfer.
+      summary: Retrieve FX transfer information
+      tags:
+        - fxTransfers
+      operationId: FxTransfersByIDGet
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+      responses:
+        "202":
+          $ref: "#/components/responses/202"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+    patch:
+      description: >-
+        The HTTP request PATCH /fxTransfers/<ID> is used to inform the requester
+        about the final determination by the switch of the transfer a request
+        for execution of a currency conversion. The <ID> in the URI should
+        contain the commitRequestId that was used for the creation of the FX
+        transfer. Please note that this request does not generate a callback.
+      summary: Return FX transfer information
+      tags:
+        - fxTransfers
+      operationId: FxTransfersByIDPatch
+      parameters:
+        - $ref: "#/components/parameters/Content-Length"
+      requestBody:
+        description: Transfer notification upon completion.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FxTransfersIDPatchResponse"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+    put:
+      description: >-
+        The callback `PUT /fxTransfers/{ID}` is used to inform the requester
+        about the outcome of a request for execution of a currency conversion.
+        The `{ID}` in the URI should contain the `commitRequestId` that was used
+        for the creation of the FX transfer, or the `{ID}` that was used in the
+        `GET /fxTransfers/{ID}` request.
+      summary: Return FX transfer information
+      tags:
+        - fxTransfers
+      operationId: FxTransfersByIDPut
+      parameters:
+        - $ref: "#/components/parameters/Content-Length"
+      requestBody:
+        description: Transfer information returned.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FxTransfersIDPutResponse"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /fxTransfers/{ID}/error:
+    put:
+      description: >-
+        If the switch or FXP is unable to find or create a FX transfer, or
+        another processing error occurs, the error callback `PUT
+        /fxTransfers/{ID}/error` is used. The `{ID}` in the URI should contain
+        the `commitRequestId` that was used for the creation of the FX transfer,
+        or the `{ID}` that was used in the `GET /fxTransfers/{ID}`.
+      summary: Return FX transfer information error
+      tags:
+        - fxTransfers
+      operationId: FxTransfersByIDAndErrorPut
+      parameters:
+        - $ref: "#/components/parameters/ID"
+        - $ref: "#/components/parameters/Content-Length"
+        - $ref: "#/components/parameters/Content-Type"
+        - $ref: "#/components/parameters/Date"
+        - $ref: "#/components/parameters/X-Forwarded-For"
+        - $ref: "#/components/parameters/FSPIOP-Source"
+        - $ref: "#/components/parameters/FSPIOP-Destination"
+        - $ref: "#/components/parameters/FSPIOP-Encryption"
+        - $ref: "#/components/parameters/FSPIOP-Signature"
+        - $ref: "#/components/parameters/FSPIOP-URI"
+        - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+      requestBody:
+        description: Details of the error returned.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorInformationObject"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /services/FXP:
+    parameters:
+      - $ref: "#/components/parameters/Content-Type"
+      - $ref: "#/components/parameters/Date"
+      - $ref: "#/components/parameters/X-Forwarded-For"
+      - $ref: "#/components/parameters/FSPIOP-Source"
+      - $ref: "#/components/parameters/FSPIOP-Destination"
+      - $ref: "#/components/parameters/FSPIOP-Encryption"
+      - $ref: "#/components/parameters/FSPIOP-Signature"
+      - $ref: "#/components/parameters/FSPIOP-URI"
+      - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+    get:
+      description: >-
+        The HTTP request `GET /services/FXP` is used to request information
+        about the participants in a scheme who offer currency conversion
+        services.
+      summary: Obtain a list of the DFSPs in the scheme who provide FXP service
+      tags:
+        - servicesFXP
+      operationId: ServicesFXPGet
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+      responses:
+        "202":
+          $ref: "#/components/responses/202"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+    put:
+      description: >-
+        The callback `PUT /services/FXP` is used to inform the requester about
+        participants in a scheme who offer currency conversion services. If no
+        participants offer these services, the return object will be blank.
+      tags:
+        - servicesFXP
+      operationId: ServicesFXPPut
+      parameters:
+        - $ref: "#/components/parameters/Content-Length"
+      requestBody:
+        description: The list of participant(s) who offer currency conversion services.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServicesFXPPutResponse"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+  /services/FXP/{SourceCurrency}/{TargetCurrency}:
+    parameters:
+      - $ref: "#/components/parameters/SourceCurrency"
+      - $ref: "#/components/parameters/TargetCurrency"
+      - $ref: "#/components/parameters/Content-Type"
+      - $ref: "#/components/parameters/Date"
+      - $ref: "#/components/parameters/X-Forwarded-For"
+      - $ref: "#/components/parameters/FSPIOP-Source"
+      - $ref: "#/components/parameters/FSPIOP-Destination"
+      - $ref: "#/components/parameters/FSPIOP-Encryption"
+      - $ref: "#/components/parameters/FSPIOP-Signature"
+      - $ref: "#/components/parameters/FSPIOP-URI"
+      - $ref: "#/components/parameters/FSPIOP-HTTP-Method"
+    get:
+      description: >-
+        The HTTP request `GET /services/FXP/{SourceCurrency}/{TargetCurrency}`
+        is used to request information about the participants in a scheme who
+        offer currency conversion services in a particular currency corridor.
+        The required corridor is specified by giving the ISO 4217 currency code
+        for the SourceCurrency and the TargetCurrency.
+      summary: Obtain a list of the DFSPs in the scheme who provide FXP service
+      tags:
+        - servicesFXP
+      operationId: ServicesFXPSourceCurrencyTargetCurrencyGet
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+      responses:
+        "202":
+          $ref: "#/components/responses/202"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+    put:
+      description: >-
+        The callback `PUT /services/FXP/{SourceCurrency}/{TargetCurrency}` is
+        used to inform the requester about participants in a scheme who offer
+        currency conversion services. If no participants offer these services,
+        the return object will be blank. The required corridor is specified by
+        giving the ISO 4217 currency code for the SourceCurrency and the
+        TargetCurrency.
+      tags:
+        - servicesFXP
+      operationId: ServicesFXPSourceCurrencyTargetCurrencyPut
+      parameters:
+        - $ref: "#/components/parameters/Content-Length"
+      requestBody:
+        description: The list of participant(s) who offer currency conversion services.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/ServicesFXPSourceCurrencyTargetCurrencyPutResponse
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
 components:
   schemas:
     Amount:
@@ -2542,6 +3102,16 @@ components:
         - ZAR
         - ZMW
         - ZWD
+    CurrencyConverter:
+      title: CurrencyConverter
+      type: string
+      enum:
+        - PAYER
+        - PAYEE
+      description: >-
+        Below are the allowed values for the enumeration CurrencyConverter. -
+        PAYER - Currency conversion should be performed by the payer. - PAYEE -
+        Currency conversion should be performed by the payee.
     Date:
       title: Date
       type: string
@@ -2682,6 +3252,267 @@ components:
       minLength: 1
       maxLength: 32
       description: FSP identifier.
+    FxCharge:
+      title: FxCharge
+      type: object
+      description: >-
+        An FXP will be able to specify a charge which it proposes to levy on the
+        currency conversion operation using a FxCharge object.
+      properties:
+        chargeType:
+          type: string
+          minLength: 1
+          maxLength: 32
+          description: A description of the charge which is being levied.
+        sourceAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: >-
+                The amount of the charge which is being levied, expressed in the
+                source currency.
+        targetAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: >-
+                The amount of the charge which is being levied, expressed in the
+                target currency.
+      required:
+        - chargeType
+    FxConversion:
+      title: FxConversion
+      type: object
+      description: >-
+        A DFSP will be able to request a currency conversion, and an FX provider
+        will be able to describe its involvement in a proposed transfer, using a
+        FxConversion object.
+      properties:
+        conversionId:
+          allOf:
+            - $ref: "#/components/schemas/CorrelationId"
+            - description: An end-to-end identifier for the conversion request.
+        determiningTransferId:
+          allOf:
+            - $ref: "#/components/schemas/CorrelationId"
+            - description: >-
+                The transaction ID of the transfer on whose success this
+                currency conversion depends.
+        initiatingFsp:
+          allOf:
+            - $ref: "#/components/schemas/FspId"
+            - description: >-
+                The id of the participant who is requesting a currency
+                conversion.
+        counterPartyFsp:
+          allOf:
+            - $ref: "#/components/schemas/FspId"
+            - description: The ID of the FXP performing the conversion.
+        amountType:
+          allOf:
+            - $ref: "#/components/schemas/AmountType"
+            - description: >-
+                This is the AmountType for the base transaction - If SEND - then
+                any charges levied by the FXP as part of the transaction will be
+                deducted by the FXP from the amount shown for the target party
+                in the conversion. If RECEIVE - then any charges levied by the
+                FXP as part of the transaction will be added by the FXP to the
+                amount shown for the source party in the conversion.
+        sourceAmount:
+          allOf:
+            - $ref: "#/components/schemas/FxMoney"
+            - description: The amount to be converted, expressed in the source currency.
+        targetAmount:
+          allOf:
+            - $ref: "#/components/schemas/FxMoney"
+            - description: The converted amount, expressed in the target currency.
+        expiration:
+          allOf:
+            - $ref: "#/components/schemas/DateTime"
+            - description: >-
+                The end of the period for which the currency conversion is
+                required to remain valid.
+        charges:
+          type: array
+          description: >-
+            One or more charges which the FXP intends to levy as part of the
+            currency conversion, or which the payee DFSP intends to add to the
+            amount transferred.
+          items:
+            $ref: "#/components/schemas/FxCharge"
+          minItems: 0
+          maxItems: 16
+        extensionList:
+          allOf:
+            - $ref: "#/components/schemas/ExtensionList"
+            - description: The extension list for the currency conversion request.
+      required:
+        - conversionId
+        - initiatingFsp
+        - counterPartyFsp
+        - amountType
+        - sourceAmount
+        - targetAmount
+        - expiration
+    FxMoney:
+      title: FxMoney
+      type: object
+      description: >-
+        Data model for the complex type FxMoney; This is based on the type Money
+        but allows the amount to be optional to support FX quotations.
+      properties:
+        currency:
+          $ref: "#/components/schemas/Currency"
+        amount:
+          $ref: "#/components/schemas/Amount"
+      required:
+        - currency
+    FxQuotesIDPutResponse:
+      title: FxQuotesIDPutResponse
+      type: object
+      description: The object sent in the PUT /fxQuotes/{ID} callback.
+      properties:
+        condition:
+          allOf:
+            - $ref: "#/components/schemas/IlpCondition"
+            - description: The ILP condition for the conversion.
+        conversionTerms:
+          allOf:
+            - $ref: "#/components/schemas/FxConversion"
+            - description: >-
+                The terms under which the FXP will undertake the currency
+                conversion proposed by the requester.
+      required:
+        - conversionTerms
+    FxQuotesPostRequest:
+      title: FxQuotesPostRequest
+      type: object
+      description: The object sent in the POST /fxQuotes request.
+      properties:
+        conversionRequestId:
+          allOf:
+            - $ref: "#/components/schemas/CorrelationId"
+            - description: An end-to-end identifier for the conversion quotation request.
+        conversionTerms:
+          allOf:
+            - $ref: "#/components/schemas/FxConversion"
+            - description: >-
+                The terms of the currency conversion for which a quotation is
+                sought.
+      required:
+        - conversionRequestId
+        - conversionTerms
+    FxRate:
+      title: FxRate
+      type: object
+      description: >-
+        The FxRate object contains information about a currency conversion in
+        the transfer. It can be used by parties to the transfer to exchange
+        information with each other about the exchange rate for the transfer, to
+        ensure that the best rate can be agreed on.
+      properties:
+        sourceAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: The amount of the transfer in the source currency.
+        targetAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: The amount of the transfer in the target currency.
+      required:
+        - sourceAmount
+        - targetAmount
+    FxTransfersIDPatchResponse:
+      title: FxTransfersIDPatchResponse
+      type: object
+      description: PATCH /fxTransfers/{ID} object
+      properties:
+        completedTimestamp:
+          allOf:
+            - $ref: "#/components/schemas/DateTime"
+            - description: Time and date when the conversion was executed.
+        conversionState:
+          allOf:
+            - $ref: "#/components/schemas/TransferState"
+            - description: The current status of the conversion request.
+        extensionList:
+          $ref: "#/components/schemas/ExtensionList"
+      required:
+        - conversionState
+    FxTransfersIDPutResponse:
+      title: FxTransfersIDPutResponse
+      type: object
+      description: The object sent in the PUT /fxTransfers/{ID} callback.
+      properties:
+        fulfilment:
+          allOf:
+            - $ref: "#/components/schemas/IlpFulfilment"
+            - description: >-
+                The fulfilment of the condition specified for the currency
+                conversion. Mandatory if the conversion has been executed
+                successfully.
+        completedTimestamp:
+          allOf:
+            - $ref: "#/components/schemas/DateTime"
+            - description: Time and date when the conversion was executed.
+        conversionState:
+          allOf:
+            - $ref: "#/components/schemas/TransferState"
+            - description: The current status of the conversion request.
+        extensionList:
+          $ref: "#/components/schemas/ExtensionList"
+      required:
+        - conversionState
+    FxTransfersPostRequest:
+      title: FxTransfersPostRequest
+      type: object
+      description: The object sent in the POST /fxTransfers request.
+      properties:
+        commitRequestId:
+          allOf:
+            - $ref: "#/components/schemas/CorrelationId"
+            - description: An end-to-end identifier for the confirmation request.
+        determiningTransferId:
+          allOf:
+            - $ref: "#/components/schemas/CorrelationId"
+            - description: >-
+                The transaction ID of the transfer to which this currency
+                conversion relates, if the conversion is part of a transfer. If
+                the conversion is a bulk currency purchase, this field should be
+                omitted.
+        initiatingFsp:
+          allOf:
+            - $ref: "#/components/schemas/FspId"
+            - description: Identifier for the FSP who is requesting a currency conversion.
+        counterPartyFsp:
+          allOf:
+            - $ref: "#/components/schemas/FspId"
+            - description: >-
+                Identifier for the FXP who is performing the currency
+                conversion.
+        sourceAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: The amount being offered for conversion by the requesting FSP.
+        targetAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: >-
+                The amount which the FXP is to credit to the requesting FSP in
+                the target currency.
+        condition:
+          allOf:
+            - $ref: "#/components/schemas/IlpCondition"
+            - description: >-
+                ILP condition received by the requesting FSP when the quote was
+                approved.
+        expiration:
+          $ref: "#/components/schemas/DateTime"
+      required:
+        - commitRequestId
+        - initiatingFsp
+        - counterPartyFsp
+        - sourceAmount
+        - targetAmount
+        - condition
     GeoCode:
       title: GeoCode
       type: object
@@ -2818,6 +3649,42 @@ components:
         The API data type Integer is a JSON String consisting of digits only.
         Negative numbers and leading zeroes are not allowed. The data type is
         always limited to a specific number of digits.
+    KYCInformation:
+      title: KYCInformation
+      type: string
+      minLength: 1
+      maxLength: 2048
+      description: >-
+        KYC information for the party in a form mandated by an individual
+        scheme.
+      example: |-
+        {
+            "metadata": {
+                "format": "JSON",
+                "version": "1.0",
+                "description": "Data containing KYC Information"
+            },
+            "data": {
+                "name": "John Doe",
+                "dob": "1980-05-15",
+                "gender": "Male",
+                "address": "123 Main Street, Anytown, USA",
+                "email": "johndoe@example.com",
+                "phone": "+1 555-123-4567",
+                "nationality": "US",
+                "passport_number": "AB1234567",
+                "issue_date": "2010-02-20",
+                "expiry_date": "2025-02-20",
+                "bank_account_number": "1234567890",
+                "bank_name": "Example Bank",
+                "employer": "ABC Company",
+                "occupation": "Software Engineer",
+                "income": "$80,000 per year",
+                "marital_status": "Single",
+                "dependents": 0,
+                "risk_level": "Low"
+            }
+        }
     LastName:
       title: LastName
       type: string
@@ -2996,6 +3863,13 @@ components:
           $ref: "#/components/schemas/PartyName"
         personalInfo:
           $ref: "#/components/schemas/PartyPersonalInfo"
+        supportedCurrencies:
+          type: array
+          description: Currencies in which the party can receive funds.
+          items:
+            $ref: "#/components/schemas/Currency"
+          minItems: 0
+          maxItems: 16
       required:
         - partyIdInfo
     PartyComplexName:
@@ -3109,6 +3983,8 @@ components:
           $ref: "#/components/schemas/PartyComplexName"
         dateOfBirth:
           $ref: "#/components/schemas/DateOfBirth"
+        kycInformation:
+          $ref: "#/components/schemas/KYCInformation"
     PartyResult:
       title: PartyResult
       type: object
@@ -3240,6 +4116,26 @@ components:
           $ref: "#/components/schemas/Money"
         transactionType:
           $ref: "#/components/schemas/TransactionType"
+        converter:
+          allOf:
+            - $ref: "#/components/schemas/CurrencyConverter"
+            - description: >-
+                An optional field which will allow the payer DFSP to specify
+                which DFSP it wants to undertake currency conversion. This is
+                useful incase of if the sender wants the recipient to receive a
+                specified amount of the target currency, but the payer DFSP does
+                not want to undertake the currency conversion. In this case, the
+                amount of the transfer would be expressed in the target currency
+                and the amountType would be set to RECEIVE.
+        currencyConversion:
+          allOf:
+            - $ref: "#/components/schemas/FxRate"
+            - description: >-
+                Used by the debtor party if it wants to share information about
+                the currency conversion it proposes to make; or if it is
+                required by scheme rules to share this information. This object
+                contains the amount of the transfer in the source and target
+                currencies, but does not identify the FXP being used.
         geoCode:
           $ref: "#/components/schemas/GeoCode"
         note:
@@ -3274,6 +4170,40 @@ components:
       maxLength: 128
       description: Reason for the refund.
       example: Free text indicating reason for the refund.
+    ServicesFXPPutResponse:
+      title: ServicesFXPPutResponse
+      type: object
+      description: The object sent in the PUT /services/FXP callback.
+      properties:
+        providers:
+          type: array
+          description: >-
+            The FSP Id(s) of the participant(s) who offer currency conversion
+            services.
+          items:
+            $ref: "#/components/schemas/FspId"
+          minItems: 0
+          maxItems: 16
+      required:
+        - providers
+    ServicesFXPSourceCurrencyTargetCurrencyPutResponse:
+      title: ServicesFXPSourceCurrencyTargetCurrencyPutResponse
+      type: object
+      description: >-
+        The object sent in the PUT
+        /services/FXP/{SourceCurrency}/{TargetCurrency} callback.
+      properties:
+        providers:
+          type: array
+          description: >-
+            The FSP Id(s) of the participant(s) who offer currency conversion
+            services.
+          items:
+            $ref: "#/components/schemas/FspId"
+          minItems: 0
+          maxItems: 16
+      required:
+        - providers
     TokenCode:
       title: TokenCode
       type: string
@@ -3301,6 +4231,30 @@ components:
           $ref: "#/components/schemas/Party"
         amount:
           $ref: "#/components/schemas/Money"
+        payeeReceiveAmount:
+          allOf:
+            - $ref: "#/components/schemas/Money"
+            - description: The amount that the beneficiary will receive.
+        converter:
+          allOf:
+            - $ref: "#/components/schemas/CurrencyConverter"
+            - description: >-
+                An optional field which will allow the payer DFSP to specify
+                which DFSP it wants to undertake currency conversion. This is
+                useful incase of if the sender wants the recipient to receive a
+                specified amount of the target currency, but the payer DFSP does
+                not want to undertake the currency conversion. In this case, the
+                amount of the transfer would be expressed in the target currency
+                and the amountType would be set to RECEIVE.
+        currencyConversion:
+          allOf:
+            - $ref: "#/components/schemas/FxRate"
+            - description: >-
+                Used by the debtor party if it wants to share information about
+                the currency conversion it proposes to make; or if it is
+                required by scheme rules to share this information. This object
+                contains the amount of the transfer in the source and target
+                currencies, but does not identify the FXP being used.
         transactionType:
           $ref: "#/components/schemas/TransactionType"
         note:
@@ -3726,6 +4680,13 @@ components:
       schema:
         type: string
       description: The identifier value.
+    SourceCurrency:
+      name: SourceCurrency
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ISO 4217 currency code for the source currency.
     SubId:
       name: SubId
       in: path
@@ -3735,6 +4696,13 @@ components:
       description: >-
         A sub-identifier of the party identifier, or a sub-type of the party
         identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
+    TargetCurrency:
+      name: TargetCurrency
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ISO 4217 currency code for the target currency.
     Type:
       name: Type
       in: path
