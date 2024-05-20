@@ -1,13 +1,16 @@
 openapi: 3.0.2
 info:
-  version: '0.1'
-  title: Thirdparty Snippets
+  version: '2.0'
+  title: PISP API
   description: |
     Based on sequence diagrams
     (https://github.com/mojaloop/pisp/tree/main/docs/out).
     This is a work in progress.
   license:
-    name: TBD
+    name: CC BY-ND 4.0
+    url: https://github.com/mojaloop/mojaloop-specification/blob/main/LICENSE.md
+  contact:
+    url: https://github.com/mojaloop/mojaloop-specification/issues
 servers:
   - url: '{protocol}://hostname:<port>/switch/'
     variables:
