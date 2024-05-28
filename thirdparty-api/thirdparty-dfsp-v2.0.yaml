@@ -60,15 +60,11 @@ paths:
                   description: Identifier of the Party.
                   example: '16135551212'
                 authChannels:
-                  title: ConsentRequestChannelType
-                  type: string
-                  enum:
-                    - WEB
-                    - OTP
-                  description: |
-                    The auth channel being used for the consent request.
-                    - WEB - DFSP can support authorization via a web-based login.
-                    - OTP - DFSP can support authorization via a One Time PIN.
+                  type: array
+                  minLength: 1
+                  maxLength: 256
+                  items:
+                    $ref: '#/paths/~1tppAccountRequest~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/authChannel'
                 callbackUri:
                   title: Uri
                   type: string
@@ -114,10 +110,10 @@ paths:
       - $ref: '#/paths/~1tppConsents/parameters/7'
       - $ref: '#/paths/~1tppConsents/parameters/8'
     get:
-      operationId: PostAccountRequest
-      summary: PostAccountRequest
+      operationId: GetAccountRequest
+      summary: GetAccountRequest
       description: |
-        The `POST /tppAccountsRequest/{ID}` is used to request access from the user to distribute account information from the user DFSP to the PISP.
+        The `GET /tppAccountsRequest/{ID}` is used to request status of POST /tppAccountRequest/ call.
         The *{ID}* in the URI should contain the accountRequestId that was assigned to the
         request by the PISP when the PISP originated the request. The result is return via the PUT callback.
       tags:
@@ -166,7 +162,7 @@ paths:
         content:
           application/json:
             schema:
-              title: AccountRequestPostRequest
+              title: AccountRequestPutResponse
               type: object
               description: |-
                 Used by: PISP
@@ -174,8 +170,16 @@ paths:
                 When a PISP requests a series of permissions from a DFSP on behalf of a DFSP's customer,  not all the permissions requested may be granted by the DFSP. Conversely,  the out-of-loop authorization process may result in additional privileges  being granted by the account holder to the PISP. The `PUT /tppAccountsRequest/<ID>`  resource returns the current state of the permissions relating to a particular authorization request. 
                   
               properties:
-                authChannels:
-                  $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/authChannels'
+                authChannel:
+                  title: ConsentRequestChannelType
+                  type: string
+                  enum:
+                    - WEB
+                    - OTP
+                  description: |
+                    The auth channel being used for the consent request.
+                    - WEB - DFSP can support authorization via a web-based login.
+                    - OTP - DFSP can support authorization via a One Time PIN.
                 callbackUri:
                   $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/callbackUri'
                 authUri:
@@ -632,7 +636,7 @@ paths:
                   minLength: 1
                   maxLength: 256
                   items:
-                    $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/authChannels'
+                    $ref: '#/paths/~1tppAccountRequest~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/authChannel'
                 callbackUri:
                   $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/callbackUri'
                 extensionList:

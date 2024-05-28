@@ -107,10 +107,10 @@ paths:
       - $ref: '#/components/parameters/FSPIOP-URI'
       - $ref: '#/components/parameters/FSPIOP-HTTP-Method'
     get:
-      operationId: PostAccountRequest
-      summary: PostAccountRequest
+      operationId: GetAccountRequest
+      summary: GetAccountRequest
       description: |
-        The `POST /tppAccountsRequest/{ID}` is used to request access from the user to distribute account information from the user DFSP to the PISP.
+        The `GET /tppAccountsRequest/{ID}` is used to request status of POST /tppAccountRequest/ call.
         The *{ID}* in the URI should contain the accountRequestId that was assigned to the
         request by the PISP when the PISP originated the request. The result is return via the PUT callback.
       tags:
@@ -159,7 +159,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/tppAccountRequestResponse'
+              $ref: '#/components/schemas/tppAccountRequestPutResponse'
       responses:
         '202':
           $ref: '#/components/responses/202'
@@ -2915,7 +2915,11 @@ components:
         partyItentifier:
           $ref: '#/components/schemas/PartyIdentifier'
         authChannels:
-          $ref: '#/components/schemas/ConsentRequestChannelType'
+          type: array
+          minLength: 1
+          maxLength: 256
+          items:
+            $ref: '#/components/schemas/ConsentRequestChannelType'
         callbackUri:
           $ref: '#/components/schemas/Uri'
       required:
@@ -2934,8 +2938,8 @@ components:
       type: string
       pattern: ^[A-Za-z0-9-_]+[=]{0,2}$
       description: The API data type BinaryString is a JSON String. The string is a base64url  encoding of a string of raw bytes, where padding (character ‘=’) is added at the end of the data if needed to ensure that the string is a multiple of 4 characters. The length restriction indicates the allowed number of characters.
-    tppAccountRequestResponse:
-      title: AccountRequestPostRequest
+    tppAccountRequestPutResponse:
+      title: AccountRequestPutResponse
       type: object
       description: |-
         Used by: PISP
@@ -2943,7 +2947,7 @@ components:
         When a PISP requests a series of permissions from a DFSP on behalf of a DFSP's customer,  not all the permissions requested may be granted by the DFSP. Conversely,  the out-of-loop authorization process may result in additional privileges  being granted by the account holder to the PISP. The `PUT /tppAccountsRequest/<ID>`  resource returns the current state of the permissions relating to a particular authorization request. 
           
       properties:
-        authChannels:
+        authChannel:
           $ref: '#/components/schemas/ConsentRequestChannelType'
         callbackUri:
           $ref: '#/components/schemas/Uri'
