@@ -1981,8 +1981,8 @@ Callback and data model information for **POST /quotes**:
 | **payer** | 1 | Party | Information about the Payer in the proposed financial transaction. |
 | **amountType** | 1 | AmountType |**SEND** for send amount, **RECEIVE** for receive amount. |
 | **amount** | 1 | Money | Depending on **amountType**:<br>If **SEND**: The amount the Payer would like to send; that is, the amount that should be withdrawn from the Payer account including any fees. The amount is updated by each participating entity in the transaction.<br>If **RECEIVE**: The amount the Payee should receive; that is, the amount that should be sent to the receiver exclusive any fees. The amount is not updated by any of the participating entities.</br> |
-|**converter** | 0..1 | CurrencyConverter | **PAYER** if the payer DFSP intends to perform currency conversion; **PAYEE** if the payer DFSP wants the payee DFSP to perform currency conversion. If absent and the transfer requires currency conversion, then the converting institution will be inferred from the currency in which the quotation is requested: if the quotation is requested in the source currency, then the payee DFSP should perform currency conversion. If it is in the target currency, then the payer DFSP will perform currency conversion. | Used by the payer party if it wants to share information about the currency conversion it proposes to make; or if it is required by scheme rules to share this information. This object contains the amount of the transfer in the source and target currencies, but does not identify the FXP being used. |
-| **conversionRate** | 0..1 | FxRate | Used by the debtor party if it wants to share information about the currency conversion it proposes to make; or if it is required by scheme rules to share this information. This object contains the amount of the transfer in the source and target currencies, but does not identify the FXP being used. |
+|**converter** | 0..1 | CurrencyConverter | **PAYER** if the Payer FSP intends to perform currency conversion; **PAYEE** if the Payer FSP wants the Payee FSP to perform currency conversion. If absent and the transfer requires currency conversion, then the converting institution will be inferred from the currency in which the quotation is requested: if the quotation is requested in the source currency, then the Payee FSP should perform currency conversion. If it is in the target currency, then the Payer FSP will perform currency conversion. |
+| **conversionRate** | 0..1 | FxRate | Used by the payer party if it wants to share information about the currency conversion it proposes to make; or if it is required by scheme rules to share this information. This object contains the amount of the transfer in the source and target currencies, but does not identify the FXP being used. An FXP (Foreign Exchange Provider) is a role which an FSP can take on. FSPs which support this role undertake to convert between different currencies at the request of other FSPs. |
 | **fees** | 0..1 | Money | Fees in the transaction. <li>The fees element should be empty if fees should be non-disclosed.</li><li>The fees element should be non-empty if fee should be disclosed.</li> |
 | **transactionType** | 1 | TransactionType | Type of transaction for which the quote is requested. |
 | **geoCode** | 0..1 | GeoCode | Longitude and Latitude of the initiating Party. Can be used to detect fraud. |
@@ -2807,7 +2807,7 @@ The possible states of a bulk transfer can be seen in [Figure 62](#figure-62).
 
 This section defines the logical API resource **Services**.
 
-The services provided by the API resource **/services** are used for retrieving information about the participants in a scheme who can provide particular kinds of service to other DFSPs in the scheme. The type of service provided is specified as part of the request made using the resource.
+The services provided by the API resource **/services** are used for retrieving information about the participants in a scheme who can provide particular kinds of service to other FSPs in the scheme. The type of service provided is specified as part of the request made using the resource.
 
 
 #### 6.11.1 Resource Version History
@@ -2822,23 +2822,23 @@ Table 45 contains a description of each different version of the **/services** r
 
 #### 6.11.2 Service types
 
-The following types of service are supported by the Mojaloop API
+The service types supported by the Mojaloop API are listed in the following sub-sections.
 
 ##### 6.11.2.1 Currency Conversion Services 
 
-A request for participants in a Mojaloop system who support currency conversion services (Foreign Exchange Providers or FXPs) is made using the syntax **services/FXP**
+A request for FSPs who support currency conversion services (that is, FSPs who have the rolw of Foreign Exchange Providers or FXPs) is made using the syntax **services/FXP**
 
-The information is requested by a DFSP, and is provided by the switch, based on information held by the switch. In a peer-to-peer context, a DFSP may make this request of another participant directly.
+The information is requested by an FSP, and is provided by the switch, based on information held by the switch. Where an optional switch is present, an FSP must be registered by the switch as providing the FXP service. In a peer-to-peer context, an FSP may make this request of another participant directly.
 
-The appearance of an FXP in the list of participants who provide a currency conversion service does not imply that the FXP will accept a particular request for currency conversion. A DFSP will still need to make a separate call to each FXP from which it wants a specific conversion, and the FXP may reject this request depending on scheme rules.
+The appearance of an FXP in the list of participants who provide a currency conversion service does not imply that the FXP will accept a particular request for currency conversion. An FSP will still need to make a separate call to each FXP from which it wants a specific conversion, and the FXP may reject this request depending on scheme rules.
 
 #### 6.11.2 Service Details
 
-When requesting a list of FSPs who will provide currency conversion, a DFSP should specify the source and destination currencies for which it requires conversion. This specification is done by giving the ISO 4217 currency code for the source currency, followed by the ISO 4217 currency code for the target currency. So, for instance, a list of FSPs who support currency conversion from Rwandan francs to Kenyan shillings would be requested in the following way:
+When requesting a list of FSPs who will provide currency conversion, an FSP should specify the source and destination currencies for which it requires conversion. This specification is done by giving the ISO 4217 currency code for the source currency, followed by the ISO 4217 currency code for the target currency. So, for instance, a list of FSPs who support currency conversion from Rwandan francs to Kenyan shillings would be requested in the following way:
 
 **GET /services/FXP/RWF/KES**
 
-This will be answered by the switch (or by the DFSP addressed in a peer-to-peer implementation) with the equivalent **PUT /services**
+This will be answered by the switch (or by the FSP addressed in a peer-to-peer implementation) with the equivalent [**PUT /services**](#6114-callbacks)
 
 #### 6.11.3 Requests
 
@@ -2848,7 +2848,7 @@ This section describes the services that can a client can request on the resourc
 
 Alternative URI: N/A
 
-The HTTP request **GET /services/FXP/**_{SourceCurrency}_/_{TargetCurrency}_ is used to request information bout the FSPs in a scheme which offer currency conversion services for the currency pair specified by the _{SourceCurrency}_ and _{TargetCurrency}_ parameters of the request.
+The HTTP request **GET /services/FXP/**_{SourceCurrency}_/_{TargetCurrency}_ is used to request information about the FSPs in a scheme which offer currency conversion services for the currency pair specified by the _{SourceCurrency}_ and _{TargetCurrency}_ parameters of the request.
 
 Callback and data model information for GET /services/FXP_{Source Currency}_/_{Target Currency}_:
 
@@ -2859,19 +2859,19 @@ Callback and data model information for GET /services/FXP_{Source Currency}_/_{T
 
 #### 6.11.4 Callbacks
 
-This section describes the callbacks that are used by the server under the resource **/Services**.
+This section describes the callbacks that are used by the server under the resource **/services**.
 
 #### 6.11.4.1 PUT /services/FXP/_{SourceCurrency}_/_{TargetCurrency}_
 
 Alternative URI: N/A
 
-The callback **PUT /services/FXP/**_{SourceCurrency}_/_{TargetCurrency}_ is used to tell the requester which participants in a scheme offer conversion services in the corridor that was defined in the request. The _{SourceCurrency}_ parameter in the URI should contain the **Currency** (see [Table 53](#table-53)) that defines the currency from which the payment is to be converted, and the _{TargetCurrency}_ in the URI should contain the **Currency** into which the payment is to be converted. If there are no participants who offer the currency conversion requested in the URI, then an empty response should be returned; but this is not an error. See [Table 46](#table-46) for data model.
+The callback **PUT /services/FXP/**_{SourceCurrency}_/_{TargetCurrency}_ is used to tell the client which participants in a scheme offer conversion services in the corridor that was defined in the request. A _corridor_ in this context is a directed movement between two currencies: for instance, conversion from Kenyan shillings (KES) to Zambian kwacha (ZMW) is a corridor; but it is not the same corridor as the conversion from ZMW to KES. The _{SourceCurrency}_ parameter in the URI should contain the **Currency** (see [Table 53](#table-53)) that defines the currency from which the payment is to be converted, and the _{TargetCurrency}_ in the URI should contain the **Currency** into which the payment is to be converted. If there are no participants who offer the currency conversion requested in the URI, then an empty response should be returned; but this is not an error. See [Table 46](#table-46) for data model.
 
 ###### Table 46
 
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
-| **providers** | 0..16 | FspId | The FSP Id(s) of the participant(s) who offer currency conversion services for the currency corridor defined in the URI. |
+| **providers** | 0..32 | FspId | The FSP Id(s) of the participant(s) who offer currency conversion services for the currency corridor defined in the URI. |
 
 
 **Table 46 -- PUT /services/FXP/_{SourceCurrency}_/_{TargetCurrency}_ data model**
@@ -2904,25 +2904,25 @@ A currency conversion quote is irrevocable; it cannot be changed after it has be
 
 **Note**: A currency conversion quote is not a guarantee that the conversion will succeed. The conversion can still fail later in the process. A currency conversion quote only guarantees that the fees, exchange rate and FXP commission involved in performing the specified conversion are applicable until the currency conversion quote expires. It may be thought of as a warranty that the FXP will execute the conversion on the terms agreed, subject to _force majeure_.
 
-Mojaloop supports two forms of currency conversion. The first is stand-alone conversion, in which the converted funds are returned to the requester's account. To use this functionality, the requesting DFSP must maintain a ledger in the target currency. The second form is Payment-versus-Payment (PvP) conversion. In this form, execution of the conversion is dependent on successful completion of a linked payment: if the payment succeeds, then the conversion will also succeed; otherwise, both the payment and the conversion will fail. The distinction between these forms lies in the provision of a unique identifier denominating the determining payment if the conversion is a PvP conversion. Use of this field is discussed in the definition of the **Conversion** data object (see [Section 7.4.3](#743-conversion) below).
+Mojaloop supports two forms of currency conversion. The first is stand-alone conversion, in which the client who requests conversion maintains an account in the target currency and the converted funds are returned directly to the client's account. To use this functionality, the requesting FSP must maintain a ledger in the target currency. The second form is Payment-versus-Payment (PvP) conversion. In this form, execution of the conversion is dependent on successful completion of a linked payment: if the payment succeeds, then the conversion will also succeed; otherwise, both the payment and the conversion will fail. The distinction between these forms lies in the provision of a unique identifier denominating the determining payment if the conversion is a PvP conversion. Use of this field is discussed in the definition of the **Conversion** data object (see [Section 7.4.3](#743-conversion)).
 
 #### 6.12.1 Resource version history
 
-Table 48 contains a description of each different version of the **/fxquotes** resource.
+Table 48 contains a description of each different version of the **/fxQuotes** resource.
 
 | Version | Date | Description|
 | ---- | ---- | ---- |
 |**2.0**|2024-02-26|Initial version|
 
-**Table 48 –- Version history for resource /fxquotes**
+**Table 48 –- Version history for resource /fxQuotes**
 
 #### 6.12.2 Service Details
 
 [Figure FX1](#figure-fx1) shows how the currency quotation process works, using the **POST /fxQuotes** service.
 
-Currency conversion is a process that takes place between two FSPs: the requesting DFSP and the FXP. Although the success or failure of a currency conversion may depend on the outcome of a related payment, the conversion itself is a transaction between the two FSPs. The DFSP is asking the FXP to provide cover for the payment it intends to make. The conversion does not, therefore, require KYC information to support it.
+Currency conversion is a process that takes place between two FSPs: the requesting FSP and the FXP. Although the success or failure of a currency conversion may depend on the outcome of a related payment, the conversion itself is a transaction between the two FSPs. The FSP is asking the FXP to provide cover for the payment it intends to make. The conversion does not, therefore, require KYC information to support it.
 
-Either the payer DFSP or the payee DFSP may request currency conversion. If the payer DFSP requests conversion, then the transfer itself will be denominated in the target currency and the payee DFSP need know nothing about the fact that the conversion was performed: as far as it is concerned, the transfer is in the currency they expect. Conversely, if the payee DFSP is undertaking the conversion, then the transfer will be denominated in the source currency.
+Either the payer FSP or the payee FSP may request currency conversion. If the payer FSP requests conversion, then the transfer itself will be denominated in the target currency and the payee FSP need know nothing about the fact that the conversion was performed: as far as it is concerned, the transfer is in the currency they expect. Conversely, if the payee FSP is undertaking the conversion, then the transfer will be denominated in the source currency.
 
 ###### Figure FX1
 
@@ -2933,22 +2933,20 @@ Either the payer DFSP or the payee DFSP may request currency conversion. If the 
 
 ##### 6.12.2.1 Conversion Quote Expiry Details
 
-In the same way as with an ordinary quotation (see [Section 6.5.2.1](#6521-quote-expiry-details) above), the requesting DFSP should include an expiry time for the quotation.
+In the same way as with an ordinary quotation (see [Section 6.5.2.1](#6521-quote-expiry-details) above), the FSP requesting the quotation should include an expiry time for the quotation.
 
-##### 6.12.2.2 Rejecting a quote
-
-The FXP can reject a request for currency conversion from the DFSP. For instance, it may no longer have sufficient liquidity available in the target currency. Typically, the circumstances under which an FXP may reject a request for currency conversion will be defined in the scheme rules.
+The FXP can reject a request for currency conversion from the FSP. For instance, it may no longer have sufficient liquidity available in the target currency. Typically, the circumstances under which an FXP may reject a request for currency conversion will be defined in the scheme rules.
 
 ##### 6.12.2.3 Interledger Payment Request
 
-Quotations for currency conversion are warranted by the attachment of an ILP condition to the approved quotation, in the same way as requests for the agreement of the terms of a payment. An FXP should construct the condition for a currency conversion in the same way as the cryptographic lock is prepared for the terms of a payment (see [Section 6.5.2.3](#6523-interledger-payment-request) above.)
+Quotations for currency conversion are warranted by the attachment of an ILP condition to the approved quotation, in the same way as requests for the agreement of the terms of a payment. An FXP should construct the condition for a currency conversion in the same way as the cryptographic lock is prepared for the terms of a payment (see [Section 6.5.2.3](#6523-interledger-payment-request).)
 
 #### 6.12.3 Requests
 This section describes the resources that can be requested by a client  in the API on the resource **/fxQuotes**.
 
 ##### 6.12.3.1 **GET /fxQuotes/<ID>**
 
-The HTTP request **GET /fxQuotes/<ID>** is used to get information about a currency conversion request which has previously been requested. The _<ID>_ in the URI should contain the **conversionID** that was used when the currenct conversion request was made (see [Table 83] (#table-83) below.)
+The HTTP request **GET /fxQuotes/<ID>** is used to get information about a currency conversion request which has previously been requested. The _<ID>_ in the URI should contain the **conversionID** that was used when the current conversion request was made (see [Table 83] (#table-83).)
 
 Callback and data model information for **GET /fxQuotes/**_{ID}_:
 
@@ -2964,7 +2962,7 @@ Logical API service: **Calculate Currency Conversion Quote**
 
 The HTTP request **POST /fxQuotes** is used to request the creation of a quote for a currency conversion with the characteristics provided in the body of the message.
 
-Callback and data model information for **POST /quotes**:
+Callback and data model information for **POST /fxQuotes**:
 
 - Callback -- [**PUT /fxQuotes/**_{ID}_](#61241-put-quotesid)
 - Error Callback -- [**PUT /fxQuotes/**_{ID}_**/error**](#61251-put-quotesiderror)
@@ -2997,8 +2995,8 @@ The callback **PUT /fxQuotes/**_{ID}_ is used to inform the client of a requeste
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **condition** | 0..1 | ilpCondition | The ILP condition for the conversion. |
-| **ilpPacket** | 0..1 | ilpPacket | The ILP Packet containing the amount delivered to the Payee, the ILP Address of the Payee and any other end-to-end data. |
-| **conversionTerms** | 1 | Conversion | The terms under which the FXP will undertake the currency conversion proposed by the requester.  |
+| **ilpPacket** | 0..1 | ilpPacket | The ILP Packet containing the amount delivered to the requestingFSP, the ILP Address of the requesting FSP and any other end-to-end data. |
+| **conversionTerms** | 1 | Conversion | The terms under which the FXP will undertake the currency conversion proposed by the FSP that requested the conversion.  |
 
 **Table 50 -- PUT /fxQuotes/_{ID}_ data model**
 
@@ -3011,7 +3009,7 @@ under the resource **/fxQuotes**.
 
 Alternative URI: N/A
 
-Logical API service: **Return Currency conversion Quote Information Error**
+Logical API service: **Return Currency Conversion Quote Information Error**
 
 If the server is unable to find or create a quote, or some other processing error occurs, the error callback **PUT** **/fxQuotes/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **conversionId** (see [Table 49](#table-49)) that was used for the creation of the quote, or the _{ID}_ that was used in the [**GET /fxQuotes/**_{ID}_](#61231-get-fxQuotesid). See [Table 51](#table-51) for data model.
 
@@ -3035,12 +3033,9 @@ An ILP transfer is exchanged between two account holders on either side of a com
 
 When the Payee FSP presents the fulfilment to the common ledger, the transfer is committed in the common ledger. At the same time, the Payer FSP is notified that the transfer has been committed along with the fulfilment.
 
-Mojaloop supports two forms of currency conversion. The first is stand-alone conversion, in which the converted funds are returned to the requester's account. To use this functionality, the requesting DFSP must maintain a ledger in the target currency. The second form is Payment-versus-Payment (PvP) conversion. In this form, execution of the conversion is dependent on successful completion of a linked payment: if the payment succeeds, then the conversion will also succeed; otherwise, both the payment and the conversion will fail. The distinction between these forms lies in the provision of a unique identifier denominating the determining payment if the conversion is a PvP conversion. Use of this field is discussed in the definition of the **Conversion** data object (see [Section 
-7.4.3](#743-conversion) below).
-
 #### 6.13.1 Resource version history
 
-Table 52 contains a description of each different version of the **/services** resource.
+Table 52 contains a description of each different version of the **/fxTransfers** resource.
 
 | Version | Date | Description|
 | ---- | ---- | ---- |
@@ -3052,9 +3047,9 @@ Table 52 contains a description of each different version of the **/services** r
 
 [Figure FX2](#figure-fx2) shows how the currency conversion process works, using the **POST /fxTransfers** service.
 
-Currency conversion is a process that takes place between two FSPs: the requesting DFSP and the FXP. Although the success or failure of a currency conversion may depend on the outcome of a related payment, the conversion itself is a transaction between the two FSPs. The DFSP is asking the FXP to provide cover for the payment it intends to make. The conversion is not, therefore, a transfer between accounts and does not require KYC information to support it.
+Currency conversion is a process that takes place between two FSPs: the FSP requesting the conversion and the FXP. Although the success or failure of a currency conversion may depend on the outcome of a related payment, the conversion itself is a transaction between the two FSPs. The FSP is asking the FXP to provide cover for the payment it intends to make. The conversion is not, therefore, a transfer between accounts and does not require KYC information to support it.
 
-Either the payer DFSP or the payee DFSP may request currency conversion. If the payer DFSP requests conversion, then the transfer itself will be denominated in the target currency and the payee DFSP need know nothing about the fact that the conversion was performed: as far as it is concerned, the transfer is in the currency it expects. Conversely, if the payee DFSP is undertaking the conversion, then the transfer will be denominated in the source currency.
+Either the payer FSP or the payee FSP may request currency conversion. If the payer FSP requests conversion, then the transfer itself will be denominated in the target currency and the payee FSP need know nothing about the fact that the conversion was performed: as far as it is concerned, the transfer is in the currency it expects. Conversely, if the payee FSP is undertaking the conversion, then the transfer will be denominated in the source currency.
 
 ###### Figure FX2
 
@@ -3075,11 +3070,11 @@ If an FSP issues an instruction to execute a conversion using a conversion quota
 
 ##### 6.13.2.3 Timeout and Expiry
 
-The requesting FSP must always set a transfer expiry time to allow for use cases in which a swift completion or failure is needed. If the use case does not require a swift completion, a longer expiry time can be set.
+The FSP requesting the conversion must always set a transfer expiry time to allow for use cases in which a swift completion or failure is needed. If the use case does not require a swift completion, a longer expiry time can be set.
 
-The arbiter of the expiry of a conversion request is the switch; or, in the case where a switch is not present, the FXP. A single point of evaluation for timeout times is required because participants in a Mojaloop system may be relatively small and informal institutions and the implementation of a system to prevent clock drift over a whole Mojaloop scheme may be challenging.
+The arbiter of the expiry of a conversion request is the switch; or, in the case where a switch is not present, the FXP. A single point of evaluation for timeout times is required because the communicating participants may be relatively small and informal institutions and the implementation of a system to prevent clock drift among all participants may be challenging.
 
-No participant in a currency conversion should unilaterally time a conversion out. The requesting FSP MUST request information about the status of a conversion if it suspects that the conversion has been interrupted. The response to this request may be either a finalised state, in which case the requesting FXP MUST act according to that state, or it may be RECEIVED or PENDING. These are non-finalised states which mean that the status of the conversion is indeterminate and the requesting FSP MUST take no action.
+No participant in a currency conversion should unilaterally time a conversion out. The FSP requesting the conversion MUST request information about the status of a conversion if it suspects that the conversion has been interrupted. The response to this request may be either a finalised state, in which case the requesting FXP MUST act according to that state, or it may be RECEIVED or PENDING. These are non-finalised states which mean that the status of the conversion is indeterminate and the requesting FSP MUST take no action.
 
 Short expiry times are often required in retail scenarios, in which a customer may be standing in front of a merchant; both parties need to know if the transaction was successful before the goods or services are given to the customer.
  
@@ -3097,7 +3092,7 @@ If the conversion was a PvP request dependent on a payment, then that conversion
 
 ##### 6.13.2.9 Interledger Payment Request
 
-As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the requesting FSP must attach the ILP Packet, the condition, and an expiry to the conversion. The condition and the ILP Packet are the same as those sent by the FXP in the callback of the quote; see [Section 6.5.2.3](#61223-interledger-payment-request) for more information.
+As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the FSP requsting the conversion must attach the ILP Packet, the condition, and an expiry to the conversion. The condition and the ILP Packet are the same as those sent by the FXP in the callback of the quote; see [Section 6.5.2.3](#61223-interledger-payment-request) for more information.
 The end-to-end ILP payment is a chain of one or more conditional transfers that all depend on the same condition. The condition is provided by the Payer FSP when it initiates the transfer to the next ledger.
  
 The receiver of that transfer parses the ILP Packet to get the FXP ILP Address and routes the ILP payment by performing another transfer on the next ledger, attaching the same ILP Packet and condition and a new expiry that is less than the expiry of the incoming transfer.
@@ -3184,7 +3179,7 @@ Logical API service: **Update Currency Conversion Execution Information**
 
 The callback **PATCH /fxTransfers/**_{ID}_ is used to inform the client of the final result of a currency conversion execution request. The _{ID}_ in the URI should contain the **commitRequestId** (see [Table 53](#table-53)) that was used for the creation of the currency conversion execution request, or the _{ID}_ that was used in the [**GET /fxTransfers/**_{ID}_](#61331-get-fxtransfers). See [Table 55](#table-55) for data model.
 
-Specifically, it is used by the finalising entity (either the optional switch or the payee FSP) to inform an FXP of the finalised status of a currency conversion where the currency conversion is dependent on the finalised status of a determining transfer. The finalising entity will send a **PATCH /fxTransfers/_{ID}_** message to the FXP to signal the final status of the associated payment, so that the FXP can adjust its ledgers accordingly.
+Specifically, it is used by the finalising entity (either the optional switch or the Payee FSP) to inform an FXP of the finalised status of a currency conversion where the currency conversion is dependent on the finalised status of a determining transfer. The finalising entity will send a **PATCH /fxTransfers/_{ID}_** message to the FXP to signal the final status of the associated payment, so that the FXP can adjust its ledgers accordingly.
 
 ###### Table 55
 
@@ -3205,7 +3200,7 @@ under the resource **/fxTransfers**.
 
 Alternative URI: N/A
 
-Logical API service: **Return Currency conversion Execution Information Error**
+Logical API service: **Return Currency Conversion Execution Information Error**
 
 If the server is unable to execute a currency conversion, or some other processing error occurs, the error callback **PUT** **/fxTransfers/**_{ID}_**/error** is used. The _{ID}_ in the URI should contain the **commitRequestId** (see [Table 53](#table-53)) that was used for the creation of the execution request, or the _{ID}_ that was used in the [**GET /fxTransfers/**_{ID}_](#61331-get-fxtransfers). See [Table 56](#table-56) for data model.
 
@@ -4102,14 +4097,12 @@ This section describes complex types used by the API.
 | **conversionId** | 1 | CorrelationId | An end-to-end identifier for the conversion request. |
 | **determiningTransferId** | 0..1 | CorrelationId | The transaction ID of the transfer on whose success this currency conversion depends. If this is a bulk currency conversion which is not dependent on a transfer, then this field should be omitted. |
 | **counterPartyFsp** | 1 | FspId | The ID of the FXP performing the conversion. |
-| **amountType** | 1 | AmountType | This is the AmountType for the base transaction, as described in Section 7.3.1 above.<ln>
-If it is set to SEND, then any charges levied by the FXP as part of the transaction will be deducted by the FXP from the amount shown for the target party in the conversion.<ln>
-If it is set to RECEIVE, then any charges levied by the FXP as part of the transaction will be added by the FXP to the amount shown for the source party in the conversion. |
-|initiatingFsP | 1 | fspId | The id of the participant who is requesting a currency conversion. |
+| **amountType** | 1 | AmountType | This is the AmountType for the base transaction, as described in Section 7.3.1 above. If it is set to SEND, then any charges levied by the FXP as part of the transaction will be deducted by the FXP from the amount shown for the target party in the conversion. If it is set to RECEIVE, then any charges levied by the FXP as part of the transaction will be added by the FXP to the amount shown for the source party in the conversion. |
+|initiatingFsP | 1 | FspId | The id of the participant who is requesting a currency conversion. |
 | sourceAmount | 1 | FxMoney | The amount to be converted, expressed in the source currency. |
 | targetAmount | 1 | FxMoney | The amount to be converted, expressed in the target currency. |
 | expiration | 1 | DateTime | The end of the period for which the currency conversion is required to remain valid. |
-| charges | 0..16 | Charge | One or more charges which the FXP intends to levy as part of the currency conversion, or which the payee DFSP intends to add to the amount transferred. |
+| charges | 0..16 | Charge | One or more charges which the FXP intends to levy as part of the currency conversion, or which the payee FSP intends to add to the amount transferred. |
 | extensionList | 0..1 | ExtensionList | Optional extension list, specific to the deployment. |
 
 
@@ -4155,7 +4148,7 @@ If it is set to RECEIVE, then any charges levied by the FXP as part of the trans
 
 **Table 98 -- Complex type ExtensionList**
 
-#### 7.4.5 Extension
+#### 7.4.5 FxMoney
 
 [Table 99](#table-99) contains the data model for the complex type **FxMoney**.
 
@@ -4167,7 +4160,7 @@ If it is set to RECEIVE, then any charges levied by the FXP as part of the trans
  |
 | **amount** | 0..1 | Amount | The amount of the transfer, as described in Section 7.2.13 above. This amount will be present for the fixed element of the conversion, and absent for the variable element of the conversion. |
 
-**Table 99 -- Complex type Extension**
+**Table 99 -- Complex type FxMoney**
 
 #### 7.4.5 IndividualQuote
 
@@ -4368,8 +4361,8 @@ If it is set to RECEIVE, then any charges levied by the FXP as part of the trans
 | **amount** | 1 | Money | Transaction amount to be sent. |
 | **payeeReceiveAmount** | 0..1 | Money | The amount that the beneficiary will receive |
 | **transactionType** | 1 | TransactionType | Type of the transaction. |
-|**converter** | 0..1 | CurrencyConverter | **PAYER** if the payer DFSP intends to perform currency conversion; **PAYEE** if the payer DFSP wants the payee DFSP to perform currency conversion. If absent and the transfer requires currency conversion, then the converting institution will be inferred from the currency in which the quotation is requested: if the quotation is requested in the source currency, then the payee DFSP should perform currency conversion. If it is in the target currency, then the payer DFSP will perform currency conversion. | Used by the debtor party if it wants to share information about the currency conversion it proposes to make; or if it is required by scheme rules to share this information. This object contains the amount of the transfer in the source and target currencies, but does not identify the FXP being used. |
-| **conversionRate** | 0..1 | FxRate | Used by the debtor party if it wants to share information about the currency conversion it proposes to make; or if it is required by scheme rules to share this information. This object contains the amount of the transfer in the source and target currencies, but does not identify the FXP being used. |
+|**converter** | 0..1 | CurrencyConverter | **PAYER** if the Payer FSP intends to perform currency conversion; **PAYEE** if the Payer FSP wants the Payee FSP to perform currency conversion. If absent and the transfer requires currency conversion, then the converting institution will be inferred from the currency in which the quotation is requested: if the quotation is requested in the source currency, then the Payee FSP should perform currency conversion. If it is in the target currency, then the Payer FSP will perform currency conversion. |
+| **conversionRate** | 0..1 | FxRate | Used by the payer party if it wants to share information about the currency conversion it proposes to make; or if it is required by scheme rules to share this information. This object contains the amount of the transfer in the source and target currencies, but does not identify the FXP being used. |
 | **note** | 0..1 | Note | Memo associated to the transaction, intended to the Payee. |
 | **extensionList** | 0..1 | ExtensionList | Optional extension, specific to deployment. |
 
@@ -4464,8 +4457,8 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 
 | **Name** | **Description** |
 | --- | --- |
-| **PAYER** | Currency conversion should be performed by the payer DFSP |
-| **PAYEE** | Currency conversion shold be performed by the payee DFSP. |
+| **PAYER** | Currency conversion should be performed by the Payer FSP |
+| **PAYEE** | Currency conversion shold be performed by the Payee FSP. |
 
 **Table 118 -- Enumeration BulkTransferState**
 
@@ -4485,8 +4478,8 @@ The currency codes defined in ISO 421736 as three-letter alphabetic codes are us
 | **ACCOUNT_ID** | A bank account number or FSP account ID should be used in reference to a participant. The ACCOUNT_ID identifier can be in any format, as formats can greatly differ depending on country and FSP.
 | **IBAN** | A bank account number or FSP account ID is used in reference to a participant. The IBAN identifier can consist of up to 34 alphanumeric characters and should be entered without whitespace. |
 | **ALIAS** | An alias is used in reference to a participant. The alias should be created in the FSP as an alternative reference to an account owner. Another example of an alias is a username in the FSP system. The ALIAS identifier can be in any format. It is also possible to use the **PartySubIdOrType** element for identifying an account under an Alias defined by the **PartyIdentifier**. |
-| **CONSENT** | A Consent represents an agreement between a PISP, a Customer and a DFSP which allows the PISP permission to perform actions on behalf of the customer. A Consent has an authoritative source: either the DFSP who issued the Consent, or an Auth Service which administers the Consent. |
-| **THIRD_PARTY_LINK** | A Third Party Link represents an agreement between a PISP, a DFSP, and a specific Customer's account at the DFSP. The content of the link is created by the DFSP at the time when it gives permission to the PISP for specific access to a given account. |
+| **CONSENT** | A Consent represents an agreement between a PISP, a Customer and a FSP which allows the PISP permission to perform actions on behalf of the customer. A Consent has an authoritative source: either the FSP who issued the Consent, or an Auth Service which administers the Consent. |
+| **THIRD_PARTY_LINK** | A Third Party Link represents an agreement between a PISP, a FSP, and a specific Customer's account at the FSP. The content of the link is created by the FSP at the time when it gives permission to the PISP for specific access to a given account. |
 
 **Table 119 -- Enumeration PartyIdType**
 
