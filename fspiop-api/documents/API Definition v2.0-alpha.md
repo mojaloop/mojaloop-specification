@@ -2826,7 +2826,7 @@ The service types supported by the Mojaloop API are listed in the following sub-
 
 ##### 6.11.2.1 Currency Conversion Services 
 
-A request for FSPs who support currency conversion services (that is, FSPs who have the rolw of Foreign Exchange Providers or FXPs) is made using the syntax **services/FXP**
+A request for FSPs who support currency conversion services (that is, FSPs who have the role of Foreign Exchange Providers or FXPs) is made using the syntax **services/FXP**
 
 The information is requested by an FSP, and is provided by the switch, based on information held by the switch. Where an optional switch is present, an FSP must be registered by the switch as providing the FXP service. In a peer-to-peer context, an FSP may make this request of another participant directly.
 
@@ -2922,7 +2922,7 @@ Table 48 contains a description of each different version of the **/fxQuotes** r
 
 Currency conversion is a process that takes place between two FSPs: the requesting FSP and the FXP. Although the success or failure of a currency conversion may depend on the outcome of a related payment, the conversion itself is a transaction between the two FSPs. The FSP is asking the FXP to provide cover for the payment it intends to make. The conversion does not, therefore, require KYC information to support it.
 
-Either the payer FSP or the payee FSP may request currency conversion. If the payer FSP requests conversion, then the transfer itself will be denominated in the target currency and the payee FSP need know nothing about the fact that the conversion was performed: as far as it is concerned, the transfer is in the currency they expect. Conversely, if the payee FSP is undertaking the conversion, then the transfer will be denominated in the source currency.
+Either the Payer FSP or the Payee FSP may request currency conversion. If the Payer FSP requests conversion, then the transfer itself will be denominated in the target currency and the Payee FSP need know nothing about the fact that the conversion was performed: as far as it is concerned, the transfer is in the currency they expect. Conversely, if the Payee FSP is undertaking the conversion, then the transfer will be denominated in the source currency.
 
 ###### Figure FX1
 
@@ -2995,7 +2995,7 @@ The callback **PUT /fxQuotes/**_{ID}_ is used to inform the client of a requeste
 | **Name** | **Cardinality** | **Type** | **Description** |
 | --- | --- | --- | --- |
 | **condition** | 0..1 | ilpCondition | The ILP condition for the conversion. |
-| **ilpPacket** | 0..1 | ilpPacket | The ILP Packet containing the amount delivered to the requestingFSP, the ILP Address of the requesting FSP and any other end-to-end data. |
+| **ilpPacket** | 0..1 | ilpPacket | The ILP Packet containing the amount delivered to the Payee FSP, the ILP Address of the FSP that requested the conversion and any other end-to-end data. |
 | **conversionTerms** | 1 | Conversion | The terms under which the FXP will undertake the currency conversion proposed by the FSP that requested the conversion.  |
 
 **Table 50 -- PUT /fxQuotes/_{ID}_ data model**
@@ -3072,7 +3072,7 @@ If an FSP issues an instruction to execute a conversion using a conversion quota
 
 The FSP requesting the conversion must always set a transfer expiry time to allow for use cases in which a swift completion or failure is needed. If the use case does not require a swift completion, a longer expiry time can be set.
 
-The arbiter of the expiry of a conversion request is the switch; or, in the case where a switch is not present, the FXP. A single point of evaluation for timeout times is required because the communicating participants may be relatively small and informal institutions and the implementation of a system to prevent clock drift among all participants may be challenging.
+The arbiter of the expiry of a conversion request is the switch; or, in the case where a switch is not present, the FXP. A single point of evaluation for timeout times is required because the FSPs may be relatively small and informal institutions and the implementation of a system to prevent clock drift among all participants may be challenging.
 
 No participant in a currency conversion should unilaterally time a conversion out. The FSP requesting the conversion MUST request information about the status of a conversion if it suspects that the conversion has been interrupted. The response to this request may be either a finalised state, in which case the requesting FXP MUST act according to that state, or it may be RECEIVED or PENDING. These are non-finalised states which mean that the status of the conversion is indeterminate and the requesting FSP MUST take no action.
 
@@ -3092,7 +3092,7 @@ If the conversion was a PvP request dependent on a payment, then that conversion
 
 ##### 6.13.2.9 Interledger Payment Request
 
-As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the FSP requsting the conversion must attach the ILP Packet, the condition, and an expiry to the conversion. The condition and the ILP Packet are the same as those sent by the FXP in the callback of the quote; see [Section 6.5.2.3](#61223-interledger-payment-request) for more information.
+As part of supporting Interledger and the concrete implementation of the Interledger Payment Request (see [Section 4](#4-interledger-protocol)), the FSP requesting the conversion must attach the ILP Packet, the condition, and an expiry to the conversion. The condition and the ILP Packet are the same as those sent by the FXP in the callback of the quote; see [Section 6.5.2.3](#61223-interledger-payment-request) for more information.
 The end-to-end ILP payment is a chain of one or more conditional transfers that all depend on the same condition. The condition is provided by the Payer FSP when it initiates the transfer to the next ledger.
  
 The receiver of that transfer parses the ILP Packet to get the FXP ILP Address and routes the ILP payment by performing another transfer on the next ledger, attaching the same ILP Packet and condition and a new expiry that is less than the expiry of the incoming transfer.
