@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: Mojaloop Third Party API (DFSP)
+  title: Third Party Payment DFSP Admin API
   version: '2.0'
   description: |
     A Mojaloop API for DFSPs supporting Third Party functions.
@@ -51,7 +51,11 @@ paths:
                 https://github.com/mojaloop/documentation/blob/main/website/versioned_docs/v2.0.0/api/thirdparty/data-models.md#31212-post-accountrequest
               properties:
                 accountRequestId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                  title: CorrelationId
+                  type: string
+                  pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
+                  description: 'Identifier that correlates all messages of the same sequence. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to [RFC 4122](https://tools.ietf.org/html/rfc4122), that is restricted by a regular expression for interoperability reasons. A UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘).'
+                  example: b51ec534-ee48-4575-b6a9-ead2955b8069
                 partyItentifier:
                   title: PartyIdentifier
                   type: string
@@ -361,7 +365,7 @@ paths:
                   minItems: 1
                   maxItems: 256
                 extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                  $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
               required:
                 - accounts
             example:
@@ -439,7 +443,7 @@ paths:
                       maxLength: 128
                       description: Error description string.
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - errorCode
                     - errorDescription
@@ -501,7 +505,7 @@ paths:
                 Callback: PUT /tppConsentRequests/{ID} Error callback: PUT /tppConsentRequests/{ID}/error
               properties:
                 consentRequestId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                  $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                 partyIdInfo:
                   title: PartyIdInfo
                   type: object
@@ -581,7 +585,7 @@ paths:
                       maxLength: 32
                       description: FSP identifier.
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - partyIdType
                     - partyIdentifier
@@ -640,7 +644,7 @@ paths:
                 callbackUri:
                   $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/callbackUri'
                 extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                  $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
               required:
                 - consentRequestId
                 - partyIdInfo
@@ -763,7 +767,7 @@ paths:
                     authUri:
                       $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/callbackUri'
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - scopes
                     - authChannels
@@ -797,7 +801,7 @@ paths:
                     callbackUri:
                       $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/callbackUri'
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - scopes
                     - authChannels
@@ -845,7 +849,7 @@ paths:
                 authToken:
                   $ref: '#/paths/~1tppAccountRequest~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/authToken'
                 extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                  $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
               required:
                 - authToken
       responses:
@@ -1010,12 +1014,12 @@ paths:
                   properties:
                     consentId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                       description: |
                         Common ID between the PISP and FSP for the Consent object
                         determined by the DFSP who creates the Consent.
                     consentRequestId:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                      $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                     scopes:
                       minLength: 1
                       maxLength: 256
@@ -1036,7 +1040,7 @@ paths:
                         - ISSUED - The consent has been issued by the DFSP
                         - REVOKED - The consent has been revoked
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - consentId
                     - scopes
@@ -1050,14 +1054,14 @@ paths:
                   properties:
                     consentId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                       description: |
                         Common ID between the PISP and the Payer DFSP for the consent object. The ID
                         should be reused for re-sends of the same consent. A new ID should be generated
                         for each new consent.
                     consentRequestId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                       description: |
                         The ID given to the original consent request on which this consent is based.
                     scopes:
@@ -1069,7 +1073,7 @@ paths:
                     status:
                       $ref: '#/paths/~1tppConsents/post/requestBody/content/application~1json/schema/oneOf/0/properties/status'
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - consentId
                     - consentRequestId
@@ -1265,7 +1269,7 @@ paths:
                       required:
                         - status
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - credential
                 - title: ConsentsIDPatchResponseRevoked
@@ -1285,9 +1289,9 @@ paths:
                         Allowed values for the enumeration ConsentStatus
                         - REVOKED - The consent has been revoked
                     revokedAt:
-                      $ref: '#/paths/~1tppTransfers~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/completedTimestamp'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/expiration/allOf/0'
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - status
                     - revokedAt
@@ -1449,7 +1453,7 @@ paths:
                         - status
                       additionalProperties: false
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - scopes
                     - credential
@@ -1490,7 +1494,7 @@ paths:
                         - status
                       additionalProperties: false
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - scopes
                     - credential
@@ -1597,662 +1601,6 @@ paths:
           $ref: '#/paths/~1tppConsents/post/responses/501'
         '503':
           $ref: '#/paths/~1tppConsents/post/responses/503'
-  /tppTransactionRequests:
-    parameters:
-      - $ref: '#/paths/~1tppConsents/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/1'
-      - $ref: '#/paths/~1tppConsents/parameters/2'
-      - $ref: '#/paths/~1tppConsents/parameters/3'
-      - $ref: '#/paths/~1tppConsents/parameters/4'
-      - $ref: '#/paths/~1tppConsents/parameters/5'
-      - $ref: '#/paths/~1tppConsents/parameters/6'
-      - $ref: '#/paths/~1tppConsents/parameters/7'
-      - $ref: '#/paths/~1tppConsents/parameters/8'
-    post:
-      operationId: tppTransactionsPost
-      summary: tppTransactionsPost
-      description: |
-        The `/tppTransactionRequests` resource is analogous to the `/transactionRequests` resource described fspiop API. The PISP uses it to request the owner of the PISP's customer's account to transfer a specified amount from the customer's account with the DFSP to a named Payee, or a request to pay request from a named payer into the customer's account.
-      tags:
-        - transaction Requests
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/0'
-        - $ref: '#/paths/~1tppConsents/post/parameters/1'
-      requestBody:
-        description: Transaction request to be created.
-        required: true
-        content:
-          application/json:
-            schema:
-              title: tppTransactionRequestPostRequest
-              type: object
-              description: |-
-                Used by: PISP
-                The HTTP request POST /tppTransationRequest is used to request the creation of a transaction request on the server for the transfer described in the request.
-                Callback and data model information for POST /tppTransationRequest:
-                Callback - PUT /tppTransationRequest/{ID} Error Callback - PUT /tppTransationRequest/{ID}/error
-              properties:
-                transactionRequestId:
-                  allOf:
-                    - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
-                  description: |
-                    Common ID between the PISP and the Payer DFSP for the transaction request object. The ID should be reused for resends of the same transaction request. A new ID should be generated for each new transaction request.
-                payee:
-                  allOf:
-                    - $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/payee/allOf/0'
-                  description: Information about the Payee in the proposed financial transaction.
-                payer:
-                  allOf:
-                    - $ref: '#/paths/~1tppConsentRequests/post/requestBody/content/application~1json/schema/properties/partyIdInfo'
-                  description: Information about the Payer in the proposed financial transaction.
-                amountType:
-                  allOf:
-                    - title: AmountType
-                      type: string
-                      enum:
-                        - SEND
-                        - RECEIVE
-                      description: |-
-                        Below are the allowed values for the enumeration AmountType.
-                        - SEND - Amount the Payer would like to send, that is, the amount that should be withdrawn from the Payer account including any fees.
-                        - RECEIVE - Amount the Payer would like the Payee to receive, that is, the amount that should be sent to the receiver exclusive of any fees.
-                      example: RECEIVE
-                  description: 'SEND for sendAmount, RECEIVE for receiveAmount.'
-                amount:
-                  allOf:
-                    - $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/fees/allOf/0'
-                  description: Requested amount to be transferred from the Payer to Payee.
-                transactionType:
-                  allOf:
-                    - title: TransactionType
-                      type: object
-                      description: Data model for the complex type TransactionType.
-                      properties:
-                        scenario:
-                          title: TransactionScenario
-                          type: string
-                          enum:
-                            - DEPOSIT
-                            - WITHDRAWAL
-                            - TRANSFER
-                            - PAYMENT
-                            - REFUND
-                          description: |-
-                            Below are the allowed values for the enumeration.
-                            - DEPOSIT - Used for performing a Cash-In (deposit) transaction. In a normal scenario, electronic funds are transferred from a Business account to a Consumer account, and physical cash is given from the Consumer to the Business User.
-                            - WITHDRAWAL - Used for performing a Cash-Out (withdrawal) transaction. In a normal scenario, electronic funds are transferred from a Consumer’s account to a Business account, and physical cash is given from the Business User to the Consumer.
-                            - TRANSFER - Used for performing a P2P (Peer to Peer, or Consumer to Consumer) transaction.
-                            - PAYMENT - Usually used for performing a transaction from a Consumer to a Merchant or Organization, but could also be for a B2B (Business to Business) payment. The transaction could be online for a purchase in an Internet store, in a physical store where both the Consumer and Business User are present, a bill payment, a donation, and so on.
-                            - REFUND - Used for performing a refund of transaction.
-                          example: DEPOSIT
-                        subScenario:
-                          title: TransactionSubScenario
-                          type: string
-                          pattern: '^[A-Z_]{1,32}$'
-                          description: 'Possible sub-scenario, defined locally within the scheme (UndefinedEnum Type).'
-                          example: LOCALLY_DEFINED_SUBSCENARIO
-                        initiator:
-                          title: TransactionInitiator
-                          type: string
-                          enum:
-                            - PAYER
-                            - PAYEE
-                          description: |-
-                            Below are the allowed values for the enumeration.
-                            - PAYER - Sender of funds is initiating the transaction. The account to send from is either owned by the Payer or is connected to the Payer in some way.
-                            - PAYEE - Recipient of the funds is initiating the transaction by sending a transaction request. The Payer must approve the transaction, either automatically by a pre-generated OTP or by pre-approval of the Payee, or by manually approving in his or her own Device.
-                          example: PAYEE
-                        initiatorType:
-                          title: TransactionInitiatorType
-                          type: string
-                          enum:
-                            - CONSUMER
-                            - AGENT
-                            - BUSINESS
-                            - DEVICE
-                          description: |-
-                            Below are the allowed values for the enumeration.
-                            - CONSUMER - Consumer is the initiator of the transaction.
-                            - AGENT - Agent is the initiator of the transaction.
-                            - BUSINESS - Business is the initiator of the transaction.
-                            - DEVICE - Device is the initiator of the transaction.
-                          example: CONSUMER
-                        refundInfo:
-                          title: Refund
-                          type: object
-                          description: Data model for the complex type Refund.
-                          properties:
-                            originalTransactionId:
-                              $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
-                            refundReason:
-                              title: RefundReason
-                              type: string
-                              minLength: 1
-                              maxLength: 128
-                              description: Reason for the refund.
-                              example: Free text indicating reason for the refund.
-                          required:
-                            - originalTransactionId
-                        balanceOfPayments:
-                          title: BalanceOfPayments
-                          type: string
-                          pattern: '^[1-9]\d{2}$'
-                          description: '(BopCode) The API data type [BopCode](https://www.imf.org/external/np/sta/bopcode/) is a JSON String of 3 characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed.'
-                          example: '123'
-                      required:
-                        - scenario
-                        - initiator
-                        - initiatorType
-                  description: Type of transaction.
-                note:
-                  type: string
-                  minLength: 1
-                  maxLength: 256
-                  description: A memo that will be attached to the transaction.
-                expiration:
-                  type: string
-                  description: |
-                    Date and time until when the transaction request is valid. It can be set to get a quick failure in case the peer FSP takes too long to respond.
-                  example: '2016-05-24T08:38:08.699-04:00'
-                extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
-              required:
-                - transactionRequestId
-                - payee
-                - payer
-                - amountType
-                - amount
-                - transactionType
-                - expiration
-      responses:
-        '202':
-          $ref: '#/paths/~1tppConsents/post/responses/202'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-  '/tppTransactionRequests/{ID}':
-    parameters:
-      - $ref: '#/paths/~1tppAccounts~1%7BID%7D/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/1'
-      - $ref: '#/paths/~1tppConsents/parameters/2'
-      - $ref: '#/paths/~1tppConsents/parameters/3'
-      - $ref: '#/paths/~1tppConsents/parameters/4'
-      - $ref: '#/paths/~1tppConsents/parameters/5'
-      - $ref: '#/paths/~1tppConsents/parameters/6'
-      - $ref: '#/paths/~1tppConsents/parameters/7'
-      - $ref: '#/paths/~1tppConsents/parameters/8'
-    get:
-      tags:
-        - transaction Requests
-      operationId: GetThirdpartyTransactionRequests
-      summary: GetThirdpartyTransactionRequests
-      description: |
-        The HTTP request `GET /tppTransactionRequests/{ID}` is used to request the
-        retrieval of a third party transaction request.
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/0'
-      responses:
-        '202':
-          $ref: '#/paths/~1tppConsents/post/responses/202'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-    put:
-      tags:
-        - transaction Requests
-      operationId: tppUpdateTransactionRequests
-      summary: tppUpdateTransactionRequests
-      description: |
-        The HTTP request `PUT /tppTransactionRequests/{ID}` is used by the DFSP to inform the client about
-        the status of a previously requested thirdparty transaction request.
-
-        Switch(Thirdparty API Adapter) -> PISP
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/1'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              title: tppAuthorizationsPostRequest
-              description: |-
-                Used by: DFSP
-                The HTTP request PUT /tppTransactionRequests/<ID> resource will have the following content. The <ID> in the request should match the transactionRequestId which was given when the transaction request was created.
-                It is used to return the:  1. status of the customer information for validation. 2. the status of that agreement of terms for the transfer 3. a challenge that the PISP's client is to sign if the terms are agreed to and the transaction is to be authorized.
-              type: object
-              properties:
-                transactionRequestId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
-                challenge:
-                  type: string
-                  description: The challenge that the PISP's client is to sign
-                transactionId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
-                  description: The unique identifier for the proposed transaction. It is set by the payer DFSP and signed by the payee DFSP as part of the terms of the transfer
-                transferAmount:
-                  allOf:
-                    - $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/fees/allOf/0'
-                  description: The amount that will be debited from the sending customer's account as a consequence of the transaction.
-                payeeReceiveAmount:
-                  allOf:
-                    - $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/fees/allOf/0'
-                  description: The amount that will be credited to the receiving customer's account as a consequence of the transaction.
-                fees:
-                  allOf:
-                    - $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/fees/allOf/0'
-                  description: The amount of fees that the paying customer will be charged as part of the transaction.
-                payer:
-                  allOf:
-                    - $ref: '#/paths/~1tppConsentRequests/post/requestBody/content/application~1json/schema/properties/partyIdInfo'
-                  description: 'Information about the Payer type, id, sub-type/id, FSP Id in the proposed financial transaction.'
-                payee:
-                  allOf:
-                    - $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/payee/allOf/0'
-                  description: Information about the Payee in the proposed financial transaction.
-                transactionType:
-                  $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/transactionType'
-                expiration:
-                  allOf:
-                    - $ref: '#/paths/~1tppTransfers~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/completedTimestamp'
-                  description: 'The time by which the transfer must be completed, set by the payee DFSP.'
-                extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
-              required:
-                - transactionRequestId
-                - transactionId
-                - challenge
-                - transferAmount
-                - payeeReceiveAmount
-                - fees
-                - payer
-                - payee
-                - transactionType
-                - expiration
-              additionalProperties: false
-      responses:
-        '200':
-          $ref: '#/paths/~1tppAccounts~1%7BID%7D/put/responses/200'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-  '/tppTransactionRequests/{ID}/error':
-    parameters:
-      - $ref: '#/paths/~1tppAccounts~1%7BID%7D/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/1'
-      - $ref: '#/paths/~1tppConsents/parameters/2'
-      - $ref: '#/paths/~1tppConsents/parameters/3'
-      - $ref: '#/paths/~1tppConsents/parameters/4'
-      - $ref: '#/paths/~1tppConsents/parameters/5'
-      - $ref: '#/paths/~1tppConsents/parameters/6'
-      - $ref: '#/paths/~1tppConsents/parameters/7'
-      - $ref: '#/paths/~1tppConsents/parameters/8'
-    put:
-      tags:
-        - transaction Requests
-      operationId: tppTransactionRequestsError
-      summary: tppTransactionRequestsError
-      description: |
-        If the server is unable to find the transaction request, or another processing error occurs,
-        the error callback `PUT /tppTransactionRequests/{ID}/error` is used.
-        The `{ID}` in the URI should contain the `transactionRequestId` that was used for the creation of
-        the thirdparty transaction request.
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/1'
-      requestBody:
-        description: Error information returned.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/paths/~1tppAccounts~1%7BID%7D~1error/put/requestBody/content/application~1json/schema'
-      responses:
-        '200':
-          $ref: '#/paths/~1tppAccounts~1%7BID%7D/put/responses/200'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-  /tppTransfers:
-    parameters:
-      - $ref: '#/paths/~1tppConsents/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/1'
-      - $ref: '#/paths/~1tppConsents/parameters/2'
-      - $ref: '#/paths/~1tppConsents/parameters/3'
-      - $ref: '#/paths/~1tppConsents/parameters/4'
-      - $ref: '#/paths/~1tppConsents/parameters/5'
-      - $ref: '#/paths/~1tppConsents/parameters/6'
-      - $ref: '#/paths/~1tppConsents/parameters/7'
-      - $ref: '#/paths/~1tppConsents/parameters/8'
-    post:
-      operationId: tppPostTransfers
-      summary: tppPostTransfers
-      description: The HTTP request POST `/tppTransfers` is used by a PISP to initiate a 3rd party Transaction request with a DFSP
-      tags:
-        - transfers
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/0'
-        - $ref: '#/paths/~1tppConsents/post/parameters/1'
-      requestBody:
-        description: Transaction request to be created.
-        required: true
-        content:
-          application/json:
-            schema:
-              title: tppTransfersPostRequest
-              type: object
-              description: 'The object sent in the PUT /tppAuthorizations/{ID} callback.'
-              properties:
-                executionRequestId:
-                  title: CorrelationId
-                  type: string
-                  pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-                  description: 'Identifier that correlates all messages of the same sequence. The API data type UUID (Universally Unique Identifier) is a JSON String in canonical format, conforming to [RFC 4122](https://tools.ietf.org/html/rfc4122), that is restricted by a regular expression for interoperability reasons. A UUID is always 36 characters long, 32 hexadecimal symbols and 4 dashes (‘-‘).'
-                  example: b51ec534-ee48-4575-b6a9-ead2955b8069
-                transactionRequestId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
-                authenticationInfo:
-                  oneOf:
-                    - title: TransfersPostRequestGeneric
-                      type: object
-                      description: 'The object sent in the PUT /tppAuthorizations/{ID} callback.'
-                      properties:
-                        responseType:
-                          $ref: '#/paths/~1tppAuthorizations~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/1/properties/responseType'
-                        signedPayload:
-                          $ref: '#/paths/~1tppAuthorizations~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/2/properties/signedPayload'
-                        extensionList:
-                          $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
-                      required:
-                        - responseType
-                        - signedPayload
-                      additionalProperties: false
-                    - title: TransfersPostRequestFIDO
-                      type: object
-                      description: 'The object sent in the PUT /tppAuthorizations/{ID} callback.'
-                      properties:
-                        responseType:
-                          $ref: '#/paths/~1tppAuthorizations~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/1/properties/responseType'
-                        signedPayload:
-                          $ref: '#/paths/~1tppAuthorizations~1%7BID%7D/put/requestBody/content/application~1json/schema/oneOf/1/properties/signedPayload'
-                        extensionList:
-                          $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
-                      required:
-                        - responseType
-                        - signedPayload
-                      additionalProperties: false
-                extensionList:
-                  title: ExtensionList
-                  type: object
-                  description: 'Data model for the complex type ExtensionList. An optional list of extensions, specific to deployment.'
-                  properties:
-                    extension:
-                      type: array
-                      items:
-                        title: Extension
-                        type: object
-                        description: Data model for the complex type Extension.
-                        properties:
-                          key:
-                            title: ExtensionKey
-                            type: string
-                            minLength: 1
-                            maxLength: 32
-                            description: Extension key.
-                          value:
-                            title: ExtensionValue
-                            type: string
-                            minLength: 1
-                            maxLength: 128
-                            description: Extension value.
-                        required:
-                          - key
-                          - value
-                      minItems: 1
-                      maxItems: 16
-                      description: Number of Extension elements.
-                  required:
-                    - extension
-              required:
-                - executionRequestId
-                - transactionRequestId
-                - authenticationInfo
-              additionalProperties: false
-      responses:
-        '202':
-          $ref: '#/paths/~1tppConsents/post/responses/202'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-  '/tppTransfers/{ID}':
-    parameters:
-      - $ref: '#/paths/~1tppAccounts~1%7BID%7D/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/1'
-      - $ref: '#/paths/~1tppConsents/parameters/2'
-      - $ref: '#/paths/~1tppConsents/parameters/3'
-      - $ref: '#/paths/~1tppConsents/parameters/4'
-      - $ref: '#/paths/~1tppConsents/parameters/5'
-      - $ref: '#/paths/~1tppConsents/parameters/6'
-      - $ref: '#/paths/~1tppConsents/parameters/7'
-      - $ref: '#/paths/~1tppConsents/parameters/8'
-    get:
-      tags:
-        - transfers
-      operationId: tppGetTransfers
-      summary: tppGetTransfers
-      description: |
-        The HTTP request `GET /tppTransfers/{ID}` is used to request the
-        retrieval of a third party transaction request.
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/0'
-      responses:
-        '202':
-          $ref: '#/paths/~1tppConsents/post/responses/202'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-    put:
-      tags:
-        - transfers
-      operationId: tppUpdateTransfersRequest
-      summary: tppUpdateTransfersRequest
-      description: |
-        The HTTP request `PUT /tppTransfers/{ID}` is used by the DFSP to inform the client about
-        the status of a previously requested thirdparty transaction request. The ID is the executionRequestId that was provided in the corresponding POST request.
-
-        Switch(Thirdparty API Adapter) -> PISP
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/1'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              title: tppTransfersPutResponse
-              type: object
-              description: |-
-                Used by: DFSP
-                The issuing PISP will expect a response to their request for a transfer which describes the finalized state of the requested transfer.
-                This response will be given by a PUT callback call on the /tppTransfers/{ID} resource.
-                The {ID} given in the query string should be the executionRequestId which was originally used by the PISP to initiate the transaction.
-                https://github.com/mojaloop/documentation/blob/main/website/versioned_docs/v2.0.0/api/thirdparty/data-models.md#31612-post-thirdpartyrequestsauthorizations
-              properties:
-                completedTimestamp:
-                  title: DateTime
-                  type: string
-                  pattern: '^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:(\.\d{3}))(?:Z|[+-][01]\d:[0-5]\d)$'
-                  description: 'The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. The format is according to [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), expressed in a combined date, time and time zone format. A more readable version of the format is yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]. Examples are "2016-05-24T08:38:08.699-04:00", "2016-05-24T08:38:08.699Z" (where Z indicates Zulu time zone, same as UTC).'
-                  example: '2016-05-24T08:38:08.699-04:00'
-                transactionState:
-                  title: TransactionState
-                  type: string
-                  enum:
-                    - RECEIVED
-                    - PENDING
-                    - COMPLETED
-                    - REJECTED
-                  description: |-
-                    Below are the allowed values for the enumeration.
-                    - RECEIVED - Payee FSP has received the transaction from the Payer FSP.
-                    - PENDING - Payee FSP has validated the transaction.
-                    - COMPLETED - Payee FSP has successfully performed the transaction.
-                    - REJECTED - Payee FSP has failed to perform the transaction.
-                  example: RECEIVED
-                extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
-              required:
-                - transactionRequestState
-                - transactionState
-            example:
-              transactionRequestState: RECEIVED
-      responses:
-        '200':
-          $ref: '#/paths/~1tppAccounts~1%7BID%7D/put/responses/200'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
-  '/tppTransfers/{ID}/error':
-    parameters:
-      - $ref: '#/paths/~1tppAccounts~1%7BID%7D/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/0'
-      - $ref: '#/paths/~1tppConsents/parameters/1'
-      - $ref: '#/paths/~1tppConsents/parameters/2'
-      - $ref: '#/paths/~1tppConsents/parameters/3'
-      - $ref: '#/paths/~1tppConsents/parameters/4'
-      - $ref: '#/paths/~1tppConsents/parameters/5'
-      - $ref: '#/paths/~1tppConsents/parameters/6'
-      - $ref: '#/paths/~1tppConsents/parameters/7'
-      - $ref: '#/paths/~1tppConsents/parameters/8'
-    put:
-      tags:
-        - transfers
-      operationId: tppTransfersRequestsError
-      summary: tppTransfersRequestsError
-      description: |
-        If the server is unable to find the transaction request, or another processing error occurs,
-        the error callback `PUT /tppTransfers/{ID}/error` is used.
-        The `{ID}` in the URI should contain the `transactionRequestId` that was used for the creation of
-        the thirdparty transaction request.
-      parameters:
-        - $ref: '#/paths/~1tppConsents/post/parameters/1'
-      requestBody:
-        description: Error information returned.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/paths/~1tppAccounts~1%7BID%7D~1error/put/requestBody/content/application~1json/schema'
-      responses:
-        '200':
-          $ref: '#/paths/~1tppAccounts~1%7BID%7D/put/responses/200'
-        '400':
-          $ref: '#/paths/~1tppConsents/post/responses/400'
-        '401':
-          $ref: '#/paths/~1tppConsents/post/responses/401'
-        '403':
-          $ref: '#/paths/~1tppConsents/post/responses/403'
-        '404':
-          $ref: '#/paths/~1tppConsents/post/responses/404'
-        '405':
-          $ref: '#/paths/~1tppConsents/post/responses/405'
-        '406':
-          $ref: '#/paths/~1tppConsents/post/responses/406'
-        '501':
-          $ref: '#/paths/~1tppConsents/post/responses/501'
-        '503':
-          $ref: '#/paths/~1tppConsents/post/responses/503'
   /tppVerifications:
     parameters:
       - $ref: '#/paths/~1tppConsents/parameters/0'
@@ -2287,13 +1635,13 @@ paths:
                   properties:
                     verificationRequestId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                     challenge:
                       type: string
                       description: Base64 encoded bytes - The challenge generated by the DFSP.
                     consentId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                       description: |
                         The id of the stored consent object that contains the credential with which to verify
                         the signed challenge against.
@@ -2376,7 +1724,7 @@ paths:
                         - type
                       additionalProperties: false
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - verificationRequestId
                     - challenge
@@ -2389,13 +1737,13 @@ paths:
                   properties:
                     verificationRequestId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                     challenge:
                       type: string
                       description: Base64 encoded bytes - The challenge generated by the DFSP.
                     consentId:
                       allOf:
-                        - $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                        - $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                       description: |
                         The id of the stored consent object that contains the credential with which to verify
                         the signed challenge against.
@@ -2408,7 +1756,7 @@ paths:
                     genericSignedPayload:
                       $ref: '#/paths/~1tppAccountRequest~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/authToken'
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - verificationRequestId
                     - challenge
@@ -2509,7 +1857,7 @@ paths:
                     The AuthenticationResponse enumeration describes the result of authenticating verification request.
                     Below are the allowed values for the enumeration AuthenticationResponse. - VERIFIED - The challenge was correctly signed.
                 extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                  $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
               required:
                 - authenticationResponse
             example:
@@ -2618,9 +1966,9 @@ paths:
               type: object
               properties:
                 authorizationRequestId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                  $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                 transactionRequestId:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/executionRequestId'
+                  $ref: '#/paths/~1tppAccountRequest/post/requestBody/content/application~1json/schema/properties/accountRequestId'
                 challenge:
                   type: string
                   description: The challenge that the PISP's client is to sign
@@ -3005,10 +2353,44 @@ paths:
                     - initiatorType
                 expiration:
                   allOf:
-                    - $ref: '#/paths/~1tppTransfers~1%7BID%7D/put/requestBody/content/application~1json/schema/properties/completedTimestamp'
+                    - title: DateTime
+                      type: string
+                      pattern: '^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:(\.\d{3}))(?:Z|[+-][01]\d:[0-5]\d)$'
+                      description: 'The API data type DateTime is a JSON String in a lexical format that is restricted by a regular expression for interoperability reasons. The format is according to [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), expressed in a combined date, time and time zone format. A more readable version of the format is yyyy-MM-ddTHH:mm:ss.SSS[-HH:MM]. Examples are "2016-05-24T08:38:08.699-04:00", "2016-05-24T08:38:08.699Z" (where Z indicates Zulu time zone, same as UTC).'
+                      example: '2016-05-24T08:38:08.699-04:00'
                   description: 'The time by which the transfer must be completed, set by the payee DFSP.'
                 extensionList:
-                  $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                  title: ExtensionList
+                  type: object
+                  description: 'Data model for the complex type ExtensionList. An optional list of extensions, specific to deployment.'
+                  properties:
+                    extension:
+                      type: array
+                      items:
+                        title: Extension
+                        type: object
+                        description: Data model for the complex type Extension.
+                        properties:
+                          key:
+                            title: ExtensionKey
+                            type: string
+                            minLength: 1
+                            maxLength: 32
+                            description: Extension key.
+                          value:
+                            title: ExtensionValue
+                            type: string
+                            minLength: 1
+                            maxLength: 128
+                            description: Extension value.
+                        required:
+                          - key
+                          - value
+                      minItems: 1
+                      maxItems: 16
+                      description: Number of Extension elements.
+                  required:
+                    - extension
               required:
                 - authorizationRequestId
                 - transactionRequestId
@@ -3114,7 +2496,7 @@ paths:
                       enum:
                         - REJECTED
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - responseType
                 - title: tppAuthorizationsIDPutResponseFIDO
@@ -3141,7 +2523,7 @@ paths:
                         - fidoSignedPayload
                       additionalProperties: false
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - responseType
                     - signedPayload
@@ -3165,7 +2547,7 @@ paths:
                         - genericSignedPayload
                       additionalProperties: false
                     extensionList:
-                      $ref: '#/paths/~1tppTransfers/post/requestBody/content/application~1json/schema/properties/extensionList'
+                      $ref: '#/paths/~1tppAuthorizations/post/requestBody/content/application~1json/schema/properties/extensionList'
                   required:
                     - responseType
                     - signedPayload
