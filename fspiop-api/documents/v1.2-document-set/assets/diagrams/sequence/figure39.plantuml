@@ -128,10 +128,10 @@ Switch <<-- PayeeFSP: **HTTP 202**\n(Accepted)
 PayeeFSP -> PayeeFSP:Find original transaction, 1 USD\nwas received in FSP commission, \ngive back in FSP commission.\nReverse Agent commission.
 PayeeFSP ->> Payee:Customer wants a refund of Cash-in,\nyou will lose 1 USD in commission\nand 100 USD will be transfered to\nyour account, please pay customer\n101 USD in cash
 PayeeFSP <<- Payee: OK
-Switch <<- PayeeFSP: **PUT /quote/**<i><ID></i>\n(transferAmount=99 USD,\npayeeFspCommission=1 USD)
+Switch <<- PayeeFSP: **PUT /quotes/**<i><ID></i>\n(transferAmount=99 USD,\npayeeFspCommission=1 USD)
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
-PayerFSP <<- Switch: **PUT /quote/**<i><ID></i>\n(transferAmount=99 USD,\npayeeFspCommission=1 USD)
+PayerFSP <<- Switch: **PUT /quotes/**<i><ID></i>\n(transferAmount=99 USD,\npayeeFspCommission=1 USD)
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Payer gets fee subsizidized by\nFSP commission.
@@ -144,16 +144,16 @@ PayerFSP ->> Switch: **POST /transfers**\n(amount=99 USD)
 activate Switch
 PayerFSP <<-- Switch: **HTTP 202** (Accepted)
 Switch -> Switch: Reserve 99 USD from Payer FSP\naccount to Payee FSP account
-Switch ->> PayeeFSP: **POST /transfer/**<i><ID></i>
+Switch ->> PayeeFSP: **POST /transfers/**<i><ID></i>
 activate PayeeFSP
 Switch <<-- PayeeFSP: **HTTP 202** (Accepted)
 PayeeFSP -> PayeeFSP: Reverse original transaction by\ntransferring 100 USD to Payee\naccount, 99 USD from Switch\naccount, 1 USD from fee account,\nand 1 USD from fee account to\ninternal commission account
 PayeeFSP -> Payee: You have received 100 USD\nfrom Payer in Cash-in refund,\nplease pay customer his 101 USD
-Switch <<- PayeeFSP: **POST /transfer/**<i><ID></i>
+Switch <<- PayeeFSP: **PUT /transfers/**<i><ID></i>
 Switch -->> PayeeFSP: **HTTP 200** (OK)
 deactivate PayeeFSP
 Switch -> Switch: Commit reserved transfer
-PayerFSP <<- Switch: **POST /transfer/**<i><ID></i>
+PayerFSP <<- Switch: **PUT /transfers/**<i><ID></i>
 PayerFSP -->> Switch: **HTTP 200** (OK)
 deactivate Switch
 PayerFSP -> PayerFSP: Commit reserved transfer
