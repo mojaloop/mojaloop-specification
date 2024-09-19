@@ -117,6 +117,7 @@ The following conventions are used in this document to identify the specified ty
 |Version|Date|Change Description|
 |---|---|---|
 |**1.0**|2018-03-13|Initial version|
+|**1.0.1**|2024-09-19|Changed wording regarding the use of certificates for JWS from _should_ to _must_ in Section 8.1.|
 
 ## 2. Introduction
 
@@ -492,7 +493,7 @@ This section describes the application layer protection.
 
 The _JSON Web Signature_ (JWS) standard is used for providing end-to-end integrity and non-repudiation; that is, to guarantee that the sender is who it claims to be, and that the message was not tampered with.
 
-The use of JWS is mandatory and certificates should be used. For more information, see _API Signature_.
+The use of JWS is mandatory and certificates must be used. For more information, see _API Signature_.
 
 ### 8.2 JSON Web Encryption
 
