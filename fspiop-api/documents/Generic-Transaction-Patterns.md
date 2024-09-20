@@ -1793,10 +1793,10 @@ This section provides descriptions of and assumptions made for all steps in the 
 
 ## 5. References
 
-<sup>1</sup> [https://interledger.org/rfcs/0011-interledger-payment-request/ - Interledger Payment Request (IPR)](https://interledger.org/rfcs/0011-interledger-payment-request)
+<sup>1</sup> https://interledger.org/rfcs/0011-interledger-payment-request/ - Interledger Payment Request (IPR) (Link obsolete, article moved elsewhere)
 
 <sup>2</sup> [https://interledger.org/ - Interledger](https://interledger.org)
 
 <sup>3</sup> [https://interledger.org/interledger.pdf - A Protocol for Interledger Payments](https://interledger.org/interledger.pdf)
 
-<sup>4</sup> [https://interledger.org/rfcs/0001-interledger-architecture/ - Interledger Architecture](https://interledger.org/rfcs/0001-interledger-architecture)
+<sup>4</sup> https://interledger.org/rfcs/0001-interledger-architecture/ - Interledger Architecture (Link obsolete, article moved elsewhere)
