@@ -135,7 +135,7 @@ A Party is an entity such as an individual, a business, an organization that has
 
 #### 3.1.2 Interledger
 
-The API includes basic support for the Interledger Protocol (ILP) by defining a concrete implementation of the Interledger Payment Request protocol<sup>[1](https://interledger.org/rfcs/0011-interledger-payment-request)</sup>(ILP) in the logical API resources **Quotes** and **Transfers**. More details of the ILP protocol can be found on the Interledger project website<sup>[2](https://interledger.org)</sup>, in the Interledger Whitepaper<sup>[3](https://interledger.org/interledger.pdf)</sup>, and in the Interledger architecture specification<sup>[4](https://interledger.org/rfcs/0001-interledger-architecture)</sup>.
+The API includes basic support for the Interledger Protocol (ILP) by defining a concrete implementation of the Interledger Payment Request protocol<sup>[1](https://interledger.org)</sup>(ILP) in the logical API resources **Quotes** and **Transfers**. More details of the ILP protocol can be found on the Interledger project website<sup>[2](https://interledger.org)</sup>, in the Interledger Whitepaper<sup>[3](https://interledger.org/interledger.pdf)</sup>, and in the Interledger architecture specification<sup>[4](https://interledger.org/)</sup>.
 
 ### 3.2 API Resource Participants
 
