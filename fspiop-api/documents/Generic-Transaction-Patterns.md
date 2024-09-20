@@ -135,7 +135,7 @@ A Party is an entity such as an individual, a business, an organization that has
 
 #### 3.1.2 Interledger
 
-The API includes basic support for the Interledger Protocol (ILP) by defining a concrete implementation of the Interledger Payment Request protocol<sup>[1](https://interledger.org/rfcs/0011-interledger-payment-request)</sup>(ILP) in the logical API resources **Quotes** and **Transfers**. More details of the ILP protocol can be found on the Interledger project website<sup>[2](https://interledger.org)</sup>, in the Interledger Whitepaper<sup>[3](https://interledger.org/interledger.pdf)</sup>, and in the Interledger architecture specification<sup>[4](https://interledger.org/rfcs/0001-interledger-architecture)</sup>.
+The API includes basic support for the Interledger Protocol (ILP) by defining a concrete implementation of the Interledger Payment Request protocol<sup>[1](https://interledger.org)</sup>(ILP) in the logical API resources **Quotes** and **Transfers**. More details of the ILP protocol can be found on the Interledger project website<sup>[2](https://interledger.org)</sup>, in the Interledger Whitepaper<sup>[3](https://interledger.org/interledger.pdf)</sup>, and in the Interledger architecture specification<sup>[4](https://interledger.org/)</sup>.
 
 ### 3.2 API Resource Participants
 
@@ -553,7 +553,7 @@ The intermediary objects used in a _Payer-Initiated Transaction_ to perform the 
 
 Figure 1 shows the UML sequence diagram for a _Payer-Initiated Transaction_.
 
-{% uml src="assets/diagrams/sequence/figure64a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure65a.plantuml" %}
 {% enduml %}
 **Figure 1 -- Payer-Initiated Transaction**
 
@@ -1793,10 +1793,10 @@ This section provides descriptions of and assumptions made for all steps in the 
 
 ## 5. References
 
-<sup>1</sup> [https://interledger.org/rfcs/0011-interledger-payment-request/ - Interledger Payment Request (IPR)](https://interledger.org/rfcs/0011-interledger-payment-request)
+<sup>1</sup> Interledger Payment Request (IPR) (Link obsolete, article moved elsewhere)
 
 <sup>2</sup> [https://interledger.org/ - Interledger](https://interledger.org)
 
 <sup>3</sup> [https://interledger.org/interledger.pdf - A Protocol for Interledger Payments](https://interledger.org/interledger.pdf)
 
-<sup>4</sup> [https://interledger.org/rfcs/0001-interledger-architecture/ - Interledger Architecture](https://interledger.org/rfcs/0001-interledger-architecture)
+<sup>4</sup> Interledger Architecture (Link obsolete, article moved elsewhere)
