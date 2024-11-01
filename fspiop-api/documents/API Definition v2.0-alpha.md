@@ -24,7 +24,7 @@ specified types of information.
 |**1.0**|2018-03-13|Initial version|
 |**1.1**|2020-05-19|1. This version contains a new option for a Payee FSP to request a commit notification from the Switch. The Switch should then send out the commit notification using the new request **PATCH /transfers/**_{ID}_. The option to use commit notification replaces the previous option of using the ”Optional Additional Clearing Check”. The section describing this has been replaced with the new section ”Commit Notification”. As the **transfers** resource has been updated with the new **PATCH** request, this resource has been updated to version 1.1. As part of adding the possibility to use a commit notification, the following changes has been made: <br>  a. PATCH has been added as an allowed HTTP Method in Section 3.2.2. b. The call flow for **PATCH** is described in Section 3.2.3.5. <br>c. Table 6 in Section 6.1.1 has been updated to include **PATCH** as a possible HTTP Method. <br>d. Section 6.7.1 contains the new version of the **transfers** resource. <br>e. Section 6.7.2.6 contains the process for using commit notifications <br>f. Section 6.7.3.3 describes the new **PATCH /transfers**/_{ID}_ request. <br><br>2. In addition to the changes mentioned above regarding the commit notification, the following non-API affecting changes has been made: <br>a. Updated Figure 6 as it contained a copy-paste error. <br>b. Added Section 6.1.2 to describe a comprehensive view of the current version for each resource. <br>c. Added a section for each resource to be able to see the resource version history. <br>d. Minor editorial fixes. <br><br>3. The descriptions for two of the HTTP Header fields in Table 1 have been updated to add more specificity and context<br>a. The description for the **FSPIOP-Destination** header field has been updated to indicate that it should be left empty if the destination is not known to the original sender, but in all other cases should be added by the original sender of a request. <br>b. The description for the **FSPIOP-URI** header field has been updated to be more specific. <br><br>4. The examples used in this document have been updated to use the correct interpretation of the Complex type ExtensionList which is defined in Table 84. This doesn’t imply any change as such. <br>a. Listing 5 has been updated in this regard. <br><br>5. The data model is updated to add an optional ExtensionList element to the **PartyIdInfo** complex type based on the Change Request: https://github.com/mojaloop/mojaloop-specification/issues/30. Following this, the data model as specified in Table 103 has been updated. For consistency, the data model for the **POST /participants/**_{Type}/{ID}_ and **POST /participants/**_{Type}/{ID}/{SubId}_ calls in Table 10 has been updated to include the optional ExtensionList element as well. <br><br>6. A new Section 6.5.2.2 is added to describe the process involved in the rejection of a quote. <br><br>7. A note is added to Section 6.7.4.1 to clarify the usage of ABORTED state in **PUT /transfers/**_{ID}_ callbacks.|
 |**1.1.1**|2021-09-22|This document version only adds information about optional HTTP headers regarding tracing support in [Table 2](#table-2), see _Distributed Tracing Support for OpenAPI Interoperability_ for more information. There are no changes in any resources as part of this version.|
-|**2.0**|2021-10-26|- The element named **initiatorType** has been removed from the complex type [**TransactionType**](#7418-transactiontype). This information is now supposed to be carried as part of the complex type [**Party**](#7411-party) instead, to be able to have more detail of the transaction by allowing to state the type of both the Payer and Payee. Section [5.3 Mapping of Use Cases to Transaction Types](#53-mapping-of-use-cases-to-transaction-types), has been updated to reflect this change. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/25.<br>- Two new types of a [**Party**](#7411-party) have been added to represent a government and a non-governmental organization in [**PartyType**](#759-partytype). This change is based on https://github.com/mojaloop/mojaloop-specification/issues/24.<br>- Two new possible [**PartyIdType**](#7325-partyidtype)s have been added in the enumeration [**PartyIdType**](#756-partyidtype) to support third party use cases. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/100.<br>-New endpoints and data structures have been added to support currency conversion. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/89. It has provided a [**/services**](#611-api-resource-services) resource to enable FSPs to obtain a list of participants who can provide conversion between two currencies. In addition, there are two further resources, [**/fxQuotes**](#612-api-resource-fxquotes) and [**fxTransfers**](#613-api-resource-fxtransfers), which provide functionality enabling FSPs to request and confirm a currency conversion, and request and confirm the execution of a previously agreed currency conversion respectively. These resources are the analogues for currency conversion of the **/quotes** and **/transfers** resources for payments.
+|**2.0**|2021-10-26|- The element named **initiatorType** has been removed from the complex type [**TransactionType**](#7418-transactiontype). This information is now supposed to be carried as part of the complex type [**Party**](#7411-party) instead, to be able to have more detail of the transaction by allowing to state the type of both the Payer and Payee. Section [5.3 Mapping of Use Cases to Transaction Types](#53-mapping-of-use-cases-to-transaction-types), has been updated to reflect this change. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/25.<br>- Two new types of a [**Party**](#7411-party) have been added to represent a government and a non-governmental organization in [**PartyType**](#759-partytype). This change is based on https://github.com/mojaloop/mojaloop-specification/issues/24.<br>- Two new possible [**PartyIdType**](#7325-partyidtype)s have been added in the enumeration [**PartyIdType**](#756-partyidtype) to support third party use cases. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/100.<br>-New endpoints and data structures have been added to support currency conversion. This change is based on https://github.com/mojaloop/mojaloop-specification/issues/89. It has provided a [**/services**](#611-api-resource-services) resource to enable FSPs to obtain a list of participants who can provide conversion between two currencies. In addition, there are two further resources, [**/fxQuotes**](#612-api-resource-fxquotes) and [**fxTransfers**](#613-api-resource-fxtransfers), which provide functionality enabling FSPs to request and confirm a currency conversion, and request and confirm the execution of a previously agreed currency conversion respectively. These resources are the analogues for currency conversion of the **/quotes** and **/transfers** resources for payments.<br>- The definition of a correlation ID has been amended to support the use of ULIDs as well as UUIDs as globally unique identifiers.
 
 ## 2. Introduction
 
@@ -99,15 +99,16 @@ The API is based on the REST (REpresentational State Transfer<sup>1</sup>) archi
    - The common ID is used in the URI of the asynchronous callback to the client. The client therefore knows which URI to listen to for a callback regarding the request.
    - The client can use the common ID in an HTTP **GET** request directly if it does not receive a callback from the server (see [Section 3.2.2](#322-http-methods) for more information).
 
-  To keep the common IDs unique, each common ID is defined as a UUID (Universally Unique IDentifier<sup>2</sup> (UUID). To further guarantee uniqueness, it is recommended that a server should separate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receives a non-unique common ID during an HTTP **POST** request (see [Section 3.2.2](#322-http-methods) for more details). The request should be handled as detailed in [Section 3.2.5](#325-idempotent-services-in-server).
+  To keep the common IDs unique, each common ID must be generated using a technique which will create an identifier which is reliably globally unique. The Mojaloop specification does not require a particular technique, but two methods are currently supported:  lowercase UUID<sup>2</sup> and uppercase ULID <sup>3</sup>. To further guarantee uniqueness, it is recommended that a server should separate each client FSP's IDs by mapping the FSP ID and the object ID together. If a server still receives a non-unique common ID during an HTTP **POST** request (see [Section 3.2.2](#322-http-methods) for more details). The request should be handled as detailed in [Section 3.2.5](#325-idempotent-services-in-server).
+
 
 #### 3.1.2 Application-Level Protocol
 
-HTTP, as defined in RFC 7230<sup>3</sup>, is used as the application-level protocol in the API. All communication in production environments should be secured using HTTPS (HTTP over TLS<sup>4</sup>). For more details about the use of HTTP in the API, see [Section 3.2](#32-http-details).
+HTTP, as defined in RFC 7230<sup>4</sup>, is used as the application-level protocol in the API. All communication in production environments should be secured using HTTPS (HTTP over TLS<sup>5</sup>). For more details about the use of HTTP in the API, see [Section 3.2](#32-http-details).
 
 #### 3.1.3 URI Syntax
 
-The syntax of URIs follows RFC 3986<sup>5</sup> to identify resources and services provided by the API. This section introduces and notes implementation subjects specific to each syntax part.
+The syntax of URIs follows RFC 3986<sup>6</sup> to identify resources and services provided by the API. This section introduces and notes implementation subjects specific to each syntax part.
 
 A generic URI has the form shown in [Listing 1](#listing-1), where the part \[_user:password@_\]_host_\[_:port_\] is the Authority part described in [Section 3.1.3.2](#3132-authority)
 _{resource}_.
@@ -181,15 +182,15 @@ The fragment is an optional part of a URI. It is not supported for use by any se
 
 #### 3.1.4 URI Normalization and Comparison
 
-As specified in RFC 7230<sup>6</sup>, the scheme ([Section 3.1.3.1](#3131-scheme)) and host ([Section 3.1.3.2.2](#31322-host)) part of the URI should be considered case-insensitive. All other parts of the URI should be processed in a case-sensitive manner.
+As specified in RFC 7230<sup>7</sup>, the scheme ([Section 3.1.3.1](#3131-scheme)) and host ([Section 3.1.3.2.2](#31322-host)) part of the URI should be considered case-insensitive. All other parts of the URI should be processed in a case-sensitive manner.
 
 #### 3.1.5 Character Set
 
-The character set should always be assumed to be UTF-8, defined in 3629<sup>7</sup>; therefore, it does not need to be sent in any of the HTTP header fields (see [Section 3.2.1](#321-http-header-fields)). No character set other than UTF-8 is supported by the API.
+The character set should always be assumed to be UTF-8, defined in 3629<sup>8</sup>; therefore, it does not need to be sent in any of the HTTP header fields (see [Section 3.2.1](#321-http-header-fields)). No character set other than UTF-8 is supported by the API.
 
 #### 3.1.6 Data Exchange Format
 
-The API uses JSON (JavaScript Object Notation), defined in RFC 7159<sup>8</sup>, as its data exchange format. JSON is an open, lightweight, human-readable and platform-independent format, well-suited for interchanging data between systems.
+The API uses JSON (JavaScript Object Notation), defined in RFC 7159<sup>9</sup>, as its data exchange format. JSON is an open, lightweight, human-readable and platform-independent format, well-suited for interchanging data between systems.
 
 ### 3.2 HTTP Details
 
@@ -209,11 +210,11 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|**Accept**|**application/vnd.interoperability.resource+json**|0..1<br>Mandatory in a request from a client. Not used in a callback from the server.</br>The **Accept**<sup>10</sup> header field indicates the version of the API the client would like the server to use. See HTTP Accept Header [Section 3.3.4.1](#3341-http-accept-header) for more information on requesting a specific version of the API.|
-|**Content-Length**|**3495**|0..1|The **Content-Length**<sup>11</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.<br>**Note**: The API supports a maximum size of 5242880 bytes (5 Megabytes).<br>|
-|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>12</sup> header indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
-|**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**<sup>13</sup> header field indicates the date when the request was sent.|
-|**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|The **X-Forwarded-For**<sup>14</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple **X-Forwarded-For** values as in the example shown here should be expected and supported by implementers of the API.<br>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 723915. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.</br>|
+|**Accept**|**application/vnd.interoperability.resource+json**|0..1<br>Mandatory in a request from a client. Not used in a callback from the server.</br>The **Accept**<sup>11</sup> header field indicates the version of the API the client would like the server to use. See HTTP Accept Header [Section 3.3.4.1](#3341-http-accept-header) for more information on requesting a specific version of the API.|
+|**Content-Length**|**3495**|0..1|The **Content-Length**<sup>12</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.<br>**Note**: The API supports a maximum size of 5242880 bytes (5 Megabytes).<br>|
+|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>13</sup> header indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
+|**Date**|**Tue, 15 Nov 1994 08:12:31 GMT**|1|The **Date**<sup>14</sup> header field indicates the date when the request was sent.|
+|**X- Forwarded- For**|**X-Forwarded-For: 192.168.0.4, 136.225.27.13**|1..0|The **X-Forwarded-For**<sup>15</sup> header field is an unofficially accepted standard used to indicate the originating client IP address for informational purposes, as a request might pass multiple proxies, firewalls, and so on. Multiple **X-Forwarded-For** values as in the example shown here should be expected and supported by implementers of the API.<br>**Note**: An alternative to **X-Forwarded-For** is defined in RFC 723915. However, as of 2018, RFC 7239 is less-used and supported than **X-Forwarded-For**.</br>|
 |**FSPIOP- Source**|**FSP321**|1|The **FSPIOP-Source** header field is a non- HTTP standard field used by the API for identifying the sender of the HTTP request. The field should be set by the original sender of the request. Required for routing (see [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source)) and signature verification (see header field **FSPIOP-Signature**).|
 |**FSPIOP- Destination**|**FSP123**|0..1|The **FSPIOP-Destination** header field is a non-HTTP standard field used by the API for HTTP header-based routing of requests and responses to the destination. The field must be set by the original sender of the request if the destination is known (valid for all services except GET /parties) so that any entities between the client and the server do not need to parse the payload for routing purposes (see [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source) for more information regarding routing). If the destination is not known (valid for service GET /parties), the field should be left empty.|
 |**FSPIOP- Encryption**||0..1|The **FSPIOP-Encryption** header field is a non-HTTP standard field used by the API for applying end-to-end encryption of the request.<br>For more information, see API Encryption.</br>|
@@ -242,14 +243,14 @@ The API supports a maximum size of 65536 bytes (64 Kilobytes) in the HTTP header
 
 |Field|Example Values|Cardinality|Description|
 |---|---|---|---|
-|**Content-Length**|**3495**|0..1|The **Content-Length**<sup>16</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
-|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>17</sup> header field indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
+|**Content-Length**|**3495**|0..1|The **Content-Length**<sup>17</sup> header field indicates the anticipated size of the payload body. Only sent if there is a body.|
+|**Content-Type**|**application/vnd.interoperability.resource+json;version=1.0**|1|The **Content-Type**<sup>18</sup> header field indicates the specific version of the API used to send the payload body. See [Section 3.3.4.2](#3342-acceptable-version-requested-by-client) for more information.|
 
 **Table 3 -- HTTP response header fields**
 
 #### 3.2.2 HTTP Methods
 
-The following HTTP methods, as defined in RFC 7231<sup>18</sup>, are supported by the API:
+The following HTTP methods, as defined in RFC 7231<sup>19</sup>, are supported by the API:
 
 - **GET** -- The HTTP **GET** method is used from a client to request information about a previously-created object on a server. As all services in the API are asynchronous, the response to the **GET** method will not contain the requested object. The requested object will instead come as part of a callback using the HTTP **PUT** method.
 
@@ -345,7 +346,7 @@ For some services when a Switch is used, the destination FSP might be unknown. A
 
 #### 3.2.4 HTTP Response Status Codes
 
-The API supports the HTTP response status codes<sup>19</sup> in [Table 4](#table-4).
+The API supports the HTTP response status codes<sup>20</sup> in [Table 4](#table-4).
 
 ###### Table 4
 
@@ -364,7 +365,7 @@ The API supports the HTTP response status codes<sup>19</sup> in [Table 4](#table
 
  **Table 4 -- HTTP response status codes supported in the API**
 
-Any HTTP status codes 3*xx*<sup>20</sup> returned by the server should not be retried and require manual investigation.
+Any HTTP status codes 3*xx*<sup>22</sup> returned by the server should not be retried and require manual investigation.
 
 An implementation of the API should also be capable of handling other errors not defined above as the request could potentially be routed through proxy servers.
 
@@ -434,11 +435,11 @@ These types of changes affect the major API service version. Please note that th
 
 #### 3.3.4 Version Negotiation between Client and Server
 
-The API supports basic version negotiation by using HTTP content negotiation between the server and the client. A client should send the API resource version that it would like to use in the **Accept** header to the server (see [Section 3.3.4.1](#3341-http-accept-header)). If the server supports that version, it should use that version in the callback (see [Section 3.3.4.2](#3342-acceptable-version-requested-by-client)). If the server does not support the requested version, the server should reply with HTTP status 406<sup>22</sup> including a list of supported versions (see [Section 3.3.4.3](#3343-non-acceptable-version-requested-by-client)).
+The API supports basic version negotiation by using HTTP content negotiation between the server and the client. A client should send the API resource version that it would like to use in the **Accept** header to the server (see [Section 3.3.4.1](#3341-http-accept-header)). If the server supports that version, it should use that version in the callback (see [Section 3.3.4.2](#3342-acceptable-version-requested-by-client)). If the server does not support the requested version, the server should reply with HTTP status 406<sup>23</sup> including a list of supported versions (see [Section 3.3.4.3](#3343-non-acceptable-version-requested-by-client)).
 
 #### 3.3.4.1 HTTP Accept Header
 
-See below for an example of a simplified HTTP request which only includes an **Accept** header<sup>23</sup>. The **Accept** header should be used from a client requesting a service from a server specifying a major version of the API service. The example in [Listing 3](#listing-3) should be interpreted as "I would like to use major version 1 of the API resource, but if that version is not supported by the server then give me the latest supported version".
+See below for an example of a simplified HTTP request which only includes an **Accept** header<sup>24</sup>. The **Accept** header should be used from a client requesting a service from a server specifying a major version of the API service. The example in [Listing 3](#listing-3) should be interpreted as "I would like to use major version 1 of the API resource, but if that version is not supported by the server then give me the latest supported version".
 
 ###### Listing 3
 
@@ -508,47 +509,49 @@ Along with HTTP status 406, the supported versions should be listed as part of t
 
 <sup>2</sup>  [https://tools.ietf.org/html/rfc4122](https://tools.ietf.org/html/rfc4122) -- A Universally Unique IDentifier (UUID) URN Namespace
 
-<sup>3</sup>  [https://tools.ietf.org/html/rfc7230](https://tools.ietf.org/html/rfc7230) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
+<sup>3</sup> [https://github.com/ulid/spec] -- Universally Unique Lexicographically Sortable Identifier
 
-<sup>4</sup>  [https://tools.ietf.org/html/rfc5246](https://tools.ietf.org/html/rfc5246) -- The Transport Layer Security (TLS) Protocol - Version 1.2
+<sup>4</sup>  [https://tools.ietf.org/html/rfc7230](https://tools.ietf.org/html/rfc7230) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
 
-<sup>5</sup>  [https://tools.ietf.org/html/rfc3986](https://tools.ietf.org/html/rfc3986) -- Uniform Resource Identifier (URI): Generic Syntax
+<sup>5</sup>  [https://tools.ietf.org/html/rfc5246](https://tools.ietf.org/html/rfc5246) -- The Transport Layer Security (TLS) Protocol - Version 1.2
 
-<sup>6</sup>  [https://tools.ietf.org/html/rfc7230\#section-2.7.3](https://tools.ietf.org/html/rfc7230#section-2.7.3) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - http and https URI Normalization and Comparison
+<sup>6</sup>  [https://tools.ietf.org/html/rfc3986](https://tools.ietf.org/html/rfc3986) -- Uniform Resource Identifier (URI): Generic Syntax
 
-<sup>7</sup>  [https://tools.ietf.org/html/rfc3629](https://tools.ietf.org/html/rfc3629) -- UTF-8, a transformation format of ISO 10646
+<sup>7</sup>  [https://tools.ietf.org/html/rfc7230\#section-2.7.3](https://tools.ietf.org/html/rfc7230#section-2.7.3) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - http and https URI Normalization and Comparison
 
-<sup>8</sup>  [https://tools.ietf.org/html/rfc7159](https://tools.ietf.org/html/rfc7159) -- The JavaScript Object Notation (JSON) Data Interchange Format
+<sup>8</sup>  [https://tools.ietf.org/html/rfc3629](https://tools.ietf.org/html/rfc3629) -- UTF-8, a transformation format of ISO 10646
 
-<sup>9</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.2](https://tools.ietf.org/html/rfc7230#section-3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - Header Fields
+<sup>9</sup>  [https://tools.ietf.org/html/rfc7159](https://tools.ietf.org/html/rfc7159) -- The JavaScript Object Notation (JSON) Data Interchange Format
 
-<sup>10</sup>  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Accept
+<sup>10</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.2](https://tools.ietf.org/html/rfc7230#section-3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing - Header Fields
 
-<sup>11</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
+<sup>11</sup>  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Accept
 
-<sup>12</sup>  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
+<sup>12</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
 
-<sup>13</sup>  [https://tools.ietf.org/html/rfc7231\#section-7.1.1.2](https://tools.ietf.org/html/rfc7231#section-7.1.1.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Date
+<sup>13</sup>  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
 
-<sup>14</sup>  [https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) -- X-Forwarded-For
+<sup>14</sup>  [https://tools.ietf.org/html/rfc7231\#section-7.1.1.2](https://tools.ietf.org/html/rfc7231#section-7.1.1.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Date
 
-<sup>15</sup>  [https://tools.ietf.org/html/rfc7239](https://tools.ietf.org/html/rfc7239) -- Forwarded HTTP Extension
+<sup>15</sup>  [https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For) -- X-Forwarded-For
 
-<sup>16</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
+<sup>16</sup>  [https://tools.ietf.org/html/rfc7239](https://tools.ietf.org/html/rfc7239) -- Forwarded HTTP Extension
 
-<sup>17</sup>  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
+<sup>17</sup>  [https://tools.ietf.org/html/rfc7230\#section-3.3.2](https://tools.ietf.org/html/rfc7230#section-3.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing -- Content-Length
 
-<sup>18</sup>  [https://tools.ietf.org/html/rfc7231\#section-4](https://tools.ietf.org/html/rfc7231#section-4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Request Methods
+<sup>18</sup>  [https://tools.ietf.org/html/rfc7231\#section-3.1.1.5](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content -- Content-Type
 
-<sup>19</sup>  [https://tools.ietf.org/html/rfc7231\#section-6](https://tools.ietf.org/html/rfc7231#section-6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Response Status Codes
+<sup>19</sup>  [https://tools.ietf.org/html/rfc7231\#section-4](https://tools.ietf.org/html/rfc7231#section-4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Request Methods
 
-<sup>20</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.4](https://tools.ietf.org/html/rfc7231#section-6.4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Redirection 3xx
+<sup>20</sup>  [https://tools.ietf.org/html/rfc7231\#section-6](https://tools.ietf.org/html/rfc7231#section-6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Response Status Codes
 
-<sup>21</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.6](https://tools.ietf.org/html/rfc7231#section-6.6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Server Error 5xx
+<sup>21</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.4](https://tools.ietf.org/html/rfc7231#section-6.4) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Redirection 3xx
 
-<sup>22</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.5.6](https://tools.ietf.org/html/rfc7231#section-6.5.6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - 406 Not Acceptable
+<sup>22</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.6](https://tools.ietf.org/html/rfc7231#section-6.6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Server Error 5xx
 
-<sup>23</sup>  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Accept
+<sup>23</sup>  [https://tools.ietf.org/html/rfc7231\#section-6.5.6](https://tools.ietf.org/html/rfc7231#section-6.5.6) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - 406 Not Acceptable
+
+<sup>24</sup>  [https://tools.ietf.org/html/rfc7231\#section-5.3.2](https://tools.ietf.org/html/rfc7231#section-5.3.2) -- Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content - Accept
 
 ## 4. Interledger Protocol
 
@@ -3557,27 +3560,29 @@ Two examples of the **Date** type appear below:
 **1982-05-23**<br>
 **1987-08-05**
 
-#### 7.2.16 UUID
+#### 7.2.16 Uniqueidentifier
 
-The API data type **UUID** (Universally Unique Identifier) is a JSON String in canonical format, conforming to RFC 412234, that is restricted by a regular expression for interoperability reasons. A UUID is always 36 characters long, 32 hexadecimal symbols and four dashes ('**-**').
+The API data type **UniqueIdentifier** is a globally unique identifier generated by a standard method. The FSPIOP API currently supports **UUID** (Universally Unique Identifier) and **ULID** (Universally Unique Lexicographically Sortable Identifier) as unique global identifier types. The value is a JSON String in canonical format that is restricted by a regular expression for interoperability reasons. UUIDs are defined in [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt). ULIDs are defined [here](https://github.com/ulid/spec). A UUID is always 36 characters long, 32 hexadecimal symbols and four dashes ('**-**'). A ULID is 26 characters long, and is composed of numeric digits and a subset of upper-case characters.
 
 ##### 7.2.16.1 Regular Expression
 
-The regular expression for restricting the **UUID** type appears in [Listing 26](#listing-26).
+The regular expression for restricting the **UniqueIdentifier** type appears in [Listing 26](#listing-26).
 
 ###### Listing 26
 
 ```
-^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+^[0-9a-f]{8}-[0-9a-f]{4}-[1-7][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$|^[0-9A-HJKMNP-TV-Z]{26}$
 ```
 
-**Listing 26 -- Regular expression for data type UUID**
+**Listing 26 -- Regular expression for data type UniqueIdentifier**
 
 ##### 7.2.16.2 Example
 
-An example of a **UUID** type appears below:
+Examples of a **UniqueIdentifier** type appear below:
 
-**a8323bc6-c228-4df2-ae82-e5a997baf898**
+UUID: **a8323bc6-c228-4df2-ae82-e5a997baf898**
+
+ULID: **01BX5ZZKBKACTAV9WEVGEMMVRZ**
 
 #### 7.2.17 BinaryString
 
@@ -3717,13 +3722,13 @@ This section defines elements types used by the API.
 
 #### 7.3.8 CorrelationId
 
-[Table 65](#table-65) contains the data model for the element **CorrelationId**.
+[Table 65](#table-65) contains the data model for the element **CorrelationId**. 
 
 ###### Table 65
 
 | **Name** | **Cardinality** | **Format** | **Description** |
 | --- | --- | --- | --- |
-| **CorrelationId** | 1 | UUID | Identifier that correlates all messages of the same sequence. |
+| **CorrelationId** | 1 | UniqueIdentifier | Identifier that correlates all messages of the same sequence. |
 
 **Table 65 -- Element Correlation Id**
 
@@ -5318,7 +5323,7 @@ The HTTP request and response are not repeated in this section, as they are the 
 
 After receiving Party information in the callback [**PUT /parties/**_{Type}_**/**_{ID}_](#6341-put-partiestypeid), the FSP **BankNrOne** now knows that the account identified by **MSISDN** and **123456789** exists and that it is in the FSP **MobileMoney**. It also knows the name of the account holder. Depending on implementation, the name of the intended Payee (Henrik Karlsson) could be shown to Mats Hagman already in this step before sending the quote. In this example, a quote request is sent before showing the name and any fees.
 
-The FSP **BankNrOne** sends the HTTP request in [Listing 39](#listing-39) to request the quote. **BankNrOne** does not want to disclose its fees (see [Section 5.1](#51-quoting) for more information about quoting), which means that it does not include the **fees** element in the request. The **amountType** element is set to RECEIVE as Mats wants Henrik to receive 100 USD. The **transactionType** is set according to [Section 5.3](#53-mapping-of-use-cases-to-transaction-types). Information about Mats is sent in the **payer** element. **BankNrOne** has also generated two UUIDs for the quote ID (7c23e80c-d078-4077-8263-2c047876fcf6) and the transaction ID (85feac2f-39b2-491b-817e-4a03203d4f14). These IDs must be unique, as described in [Section 3.1.1](#311-architectural-style).
+The FSP **BankNrOne** sends the HTTP request in [Listing 39](#listing-39) to request the quote. **BankNrOne** does not want to disclose its fees (see [Section 5.1](#51-quoting) for more information about quoting), which means that it does not include the **fees** element in the request. The **amountType** element is set to RECEIVE as Mats wants Henrik to receive 100 USD. The **transactionType** is set according to [Section 5.3](#53-mapping-of-use-cases-to-transaction-types). Information about Mats is sent in the **payer** element. **BankNrOne** has also generated two correlation IDs for the quote ID (7c23e80c-d078-4077-8263-2c047876fcf6) and the transaction ID (85feac2f-39b2-491b-817e-4a03203d4f14). These IDs must be unique, as described in [Section 3.1.1](#311-architectural-style).
 
 See [Table 1](#table-1) for the required HTTP headers in a HTTP request, and [Section 6.5.3.2](#6532-post-quotes) for more information about the service [**POST /quotes**](#6532-post-quotes). **More** information regarding routing of requests using **FSPIOP-Destination** and **FSPIOP-Source** can be found in [Section 3.2.3.6](#3236-call-flow-routing-using-fspiop-destination-and-fspiop-source). Information about API version negotiation can be found in [Section 3.3.4](#334-version-negotiation-between-client-and-server).
 
