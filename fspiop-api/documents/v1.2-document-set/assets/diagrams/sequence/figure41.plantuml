@@ -130,7 +130,7 @@ userfsp ->> fsp2: **GET /participants/MSISDN/123456789**
 activate fsp2
 userfsp <<-- fsp2: **HTTP 202** (Accepted)
 fsp2 -> fsp2: +123456789 is\nwithin this system
-userfsp <<- fsp2: **PUT /participants/MSISDN/123456789/error**
+userfsp <<- fsp2: **PUT /participants/MSISDN/123456789**\n(FSP ID)
 userfsp -->> fsp2: **HTTP 200** (OK)
 deactivate fsp2
 userfsp -> userfsp: +123456789 found\nin FSP 2
