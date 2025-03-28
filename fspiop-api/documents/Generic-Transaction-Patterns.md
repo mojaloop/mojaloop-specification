@@ -553,7 +553,7 @@ The intermediary objects used in a _Payer-Initiated Transaction_ to perform the 
 
 Figure 1 shows the UML sequence diagram for a _Payer-Initiated Transaction_.
 
-{% uml src="assets/diagrams/sequence/figure65a.plantuml" %}
+{% uml src="assets/diagrams/sequence/figure64a.plantuml" %}
 {% enduml %}
 **Figure 1 -- Payer-Initiated Transaction**
 
